@@ -5,5 +5,8 @@
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="practico_jpa.jar" deploy-path="/lib" handle="module:/resource/practico_jpa/practico_jpa">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>
