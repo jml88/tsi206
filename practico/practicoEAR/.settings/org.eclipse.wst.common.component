@@ -2,5 +2,13 @@
     <wb-module deploy-name="practicoEAR-0.0.1-SNAPSHOT">
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
         <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+        <dependent-module archiveName="practico_web.war" deploy-path="/" handle="module:/resource/practico_web/practico_web">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="practico_ejb.jar" deploy-path="/" handle="module:/resource/practico_ejb/practico_ejb">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>

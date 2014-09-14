@@ -16,8 +16,8 @@ public class LoginBB {
 	@EJB
 	private UsersInterface u;
 	
-	protected String userName;
-	protected String password;
+	private String userName;
+	private String password;
 	
 	public LoginBB(){
 		
@@ -39,8 +39,8 @@ public class LoginBB {
 		this.password = password;
 	}
 
-	public String login(String usr, String pass){
-		u.login(usr, pass);
+	public String login(){
+		u.login(this.userName, this.password);
 		return "loginOK";
 	}
 }

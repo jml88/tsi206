@@ -30,5 +30,17 @@ public class Users implements UsersInterface {
 		User u = em.createNamedQuery("User.login", User.class).setParameter(usr, pass).getSingleResult();
 		return u != null ? true : false;
 	}
+	
+	public boolean register(String usr, String pass, String name, String email){
+		User u = new User();
+		u.setUser_name(usr);
+		u.setPassword(pass);
+		u.setName(name);
+		u.setEmail(email);
+		
+		em.persist(u);
+		
+		return true;
+	}
 
 }

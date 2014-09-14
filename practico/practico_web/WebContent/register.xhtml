@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:f="http://java.sun.com/jsf/core" 
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Registro</title>
+</h:head>
+<h:body>
+	<h:form>
+		<p:layout>
+			<p:layoutUnit position="center">
+				<p:panelGrid columns="2">
+					<p:outputLabel for="usr">Usuario: </p:outputLabel>
+					<p:inputText id="usr" label="Usuario:" value="#{registerBB.userName}"></p:inputText>
+					
+					<p:outputLabel for="pass">Contraseña: </p:outputLabel>
+					<p:password id="pass" value="#{registerBB.password}"></p:password>
+					
+					<p:outputLabel for="pass">Confirmar contraseña: </p:outputLabel>
+					<p:password id="passConfirm" value="#{registerBB.passwordConfirm}"></p:password>
+					
+					<p:outputLabel for="name">Nombre: </p:outputLabel>
+					<p:inputText id="name" value="#{registerBB.name}"></p:inputText>
+					
+					<p:outputLabel for="email">Email: </p:outputLabel>
+					<p:inputText id="email" value="#{registerBB.email}"></p:inputText>
+					<p:row>
+						<p:column colspan="2">
+							<p:commandButton value="Registrarse" action="#{registerBB.register}"></p:commandButton>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:layoutUnit>
+		</p:layout>
+	</h:form>
+</h:body>
+</html>
