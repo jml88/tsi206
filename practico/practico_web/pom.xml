@@ -25,4 +25,19 @@
       </plugin>
     </plugins>
   </build>
+  <dependencies>
+  	<dependency>
+  		<groupId>org.primefaces</groupId>
+  		<artifactId>primefaces</artifactId>
+  	</dependency>
+  </dependencies>
+  <dependencyManagement>
+  	<dependencies>
+  		<dependency>
+  			<groupId>org.primefaces</groupId>
+  			<artifactId>primefaces</artifactId>
+  			<version>5.0</version>
+  		</dependency>
+  	</dependencies>
+  </dependencyManagement>
 </project>
