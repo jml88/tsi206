@@ -30,6 +30,14 @@
   		<groupId>org.primefaces</groupId>
   		<artifactId>primefaces</artifactId>
   	</dependency>
+  	<dependency>
+  		<groupId>org.apache.shiro</groupId>
+  		<artifactId>shiro-core</artifactId>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.shiro</groupId>
+  		<artifactId>shiro-web</artifactId>
+  	</dependency>
   </dependencies>
   <dependencyManagement>
   	<dependencies>
@@ -37,6 +45,17 @@
   			<groupId>org.primefaces</groupId>
   			<artifactId>primefaces</artifactId>
   			<version>5.0</version>
+  		</dependency>
+
+  		<dependency>
+  			<groupId>org.apache.shiro</groupId>
+  			<artifactId>shiro-core</artifactId>
+  			<version>1.2.3</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>org.apache.shiro</groupId>
+  			<artifactId>shiro-web</artifactId>
+  			<version>1.2.3</version>
   		</dependency>
   	</dependencies>
   </dependencyManagement>

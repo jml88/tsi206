@@ -1,35 +1,66 @@
 package com.example.db;
 
-import javax.persistence.*;
+import java.util.List;
 
-@NamedQuery(name="User.login", query="select u.Id, u.userName "
-		+ "from User u "
-		+ "where u.userName = :usr "
-		+ "and u.password = :pass")
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
+@NamedQueries({
+	@NamedQuery(
+			name="User.login", 
+			query="select u "
+			+ "from User u "
+			+ "where u.username = :usr "
+			+ "and u.password = :pass"),
+	@NamedQuery(
+	        name = "User.list",
+	        query = "SELECT u FROM User u")
+})
 
 @Entity
 public class User {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int Id;
-	private String userName;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private long id;
+	
+	@NotNull
+	@Column(unique = true)
+	private String username;
+	
+	@NotNull
 	private String password;
+	
 	private String name;
 	private String email;
+	
+
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "UserRoles", joinColumns = { @JoinColumn(name = "userId") })
+    @Column(name = "role")
+    private List<Role> roles;
 	
 	public User(){
 		
 	}
 	
-	public String getUser_name() {
-		return userName;
+	public long getId() {
+		return id;
 	}
 
-	public void setUser_name(String user_name) {
-		this.userName = user_name;
+	public void setId(long id) {
+		this.id = id;
 	}
-	
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -52,6 +83,16 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 	
 }

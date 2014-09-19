@@ -10,9 +10,9 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<navigation-rule>
-		<from-view-id>/index.xhtml</from-view-id>
+		<from-view-id>/login.xhtml</from-view-id>
 		<navigation-case>
-			<from-action>#{loginBB.login}</from-action>
+			<from-action>#{loginBB.submit}</from-action>
 			<from-outcome>loginOK</from-outcome>
 			<to-view-id>/welcome.xhtml</to-view-id>
 		</navigation-case>
@@ -24,9 +24,17 @@
 	<navigation-rule>
 		<from-view-id>/register.xhtml</from-view-id>
 		<navigation-case>
-			<from-action>#{registerBB.register}</from-action>
+			<from-action>#{registerBB.submit}</from-action>
 			<from-outcome>registerOK</from-outcome>
 			<to-view-id>/welcome.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/welcome.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{loginBB.logout}</from-action>
+			<from-outcome>logoutOK</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>	
 </faces-config>
