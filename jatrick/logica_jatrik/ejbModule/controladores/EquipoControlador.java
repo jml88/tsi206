@@ -1,4 +1,4 @@
-package equipos.controlador;
+package controladores;
 
 import java.util.Set;
 
@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import datatypes.DatosEquipo;
-import equipos.entidades.Equipo;
+import equipos.Equipo;
 
 @Stateless
 @LocalBean

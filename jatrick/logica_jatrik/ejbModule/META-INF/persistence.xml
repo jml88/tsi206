@@ -3,7 +3,6 @@
 	<persistence-unit name="practico_ejb" transaction-type="JTA">
 	    <provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:jboss/datasources/JatrikDS</jta-data-source>
-		<class>equipos.entidades.Equipo</class>
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="create-drop"/>
 			<property name="hibernate.show_sql" value="true" />
