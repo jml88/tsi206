@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import datatypes.DatosEquipo;
-import equipos.Equipo;
+import equipos.entidades.Equipo;
 
 @Stateless
 @LocalBean

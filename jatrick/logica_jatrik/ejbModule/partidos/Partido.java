@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import equipos.Equipo;
+import equipos.entidades.Equipo;
 
 @Entity
 @Table(name = Partido.nombreTabla)

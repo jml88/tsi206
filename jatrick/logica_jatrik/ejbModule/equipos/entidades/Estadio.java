@@ -1,4 +1,4 @@
-package equipos;
+package equipos.entidades;
 
 public class Estadio {
 

@@ -5,7 +5,7 @@ import java.util.Set;
 import javax.ejb.Remote;
 
 import datatypes.DatosEquipo;
-import equipos.Equipo;
+import equipos.entidades.Equipo;
 
 @Remote
 public interface IEquipoControlador {

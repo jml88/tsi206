@@ -1,6 +1,6 @@
 package usuarios;
 
-import equipos.Equipo;
+import equipos.entidades.Equipo;
 
 public class Usuario {
 
