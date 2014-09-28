@@ -1,4 +1,4 @@
-package equipos.entidades;
+package equipos;
 
 import java.util.Set;
 
@@ -10,7 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import jugadores.entidades.Jugador;
+import jugadores.Jugador;
 
 @Entity
 @Table(name = Alineacion.nombreTabla)

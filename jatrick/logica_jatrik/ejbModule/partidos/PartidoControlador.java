@@ -1,29 +1,28 @@
-package jugadores;
+package partidos;
+
+import interfaces.IPartidoControlador;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import interfaces.IJugadorControlador;
-
 @Stateless
 @LocalBean
-public class JugadorControlador implements IJugadorControlador {
+public class PartidoControlador implements IPartidoControlador {
 	
 	@PersistenceContext( unitName = "jactrick" ) 
 	private EntityManager em;
 
 	@Override
-	public int crearJugador() {
+	public int crearPartido() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public Jugador findJugador(int codJugador) {
-		return em.find(Jugador.class, codJugador);
+	public Partido findPartido(int codPartido) {
+		return em.find(Partido.class, codPartido);
 	}
 	
-
 }

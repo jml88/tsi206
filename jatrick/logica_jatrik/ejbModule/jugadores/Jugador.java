@@ -1,4 +1,4 @@
-package jugadores.entidades;
+package jugadores;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

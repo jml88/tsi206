@@ -1,4 +1,4 @@
-package managers.entidades;
+package managers;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
-import equipos.entidades.Equipo;
+import equipos.Equipo;
 
 @Entity
 public class Manager {

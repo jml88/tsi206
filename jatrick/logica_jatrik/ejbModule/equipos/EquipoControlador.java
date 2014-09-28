@@ -26,8 +26,7 @@ public class EquipoControlador implements IEquipoControlador{
 
 	@Override
 	public Equipo findEquipo(int codigoEquipo) {
-		// TODO Auto-generated method stub
-		return null;
+		return em.find(Equipo.class, codigoEquipo);
 	}
 
 	@Override
