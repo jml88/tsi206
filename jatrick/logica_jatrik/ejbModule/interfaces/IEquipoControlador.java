@@ -1,11 +1,11 @@
-package controladores;
+package interfaces;
 
 import java.util.Set;
 
 import javax.ejb.Remote;
 
 import datatypes.DatosEquipo;
-import equipos.entidades.Equipo;
+import equipos.Equipo;
 
 @Remote
 public interface IEquipoControlador {

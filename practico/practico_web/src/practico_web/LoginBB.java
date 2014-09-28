@@ -34,8 +34,8 @@ import com.example.service.UserService;
 //@Stateless(mappedName = "loginBB")
 //@ManagedBean
 //@LocalBean
-@Named
-@RequestScoped
+@javax.inject.Named
+@javax.faces.view.ViewScoped
 @MessageDriven(activationConfig = {
 	    @ActivationConfigProperty(propertyName = "destination",
 	            propertyValue = "/jms/queue/MyQueue"),
