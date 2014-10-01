@@ -4,11 +4,13 @@ import interfaces.IEquipoControlador;
 
 import java.util.Set;
 
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import jugadores.JugadorControlador;
 import datatypes.DatosEquipo;
 
 @Stateless
@@ -17,7 +19,10 @@ public class EquipoControlador implements IEquipoControlador{
 	
 	@PersistenceContext( unitName = "jactrick" ) 
 	private EntityManager em;
-
+	
+	@EJB
+	JugadorControlador jugadorC;
+	
 	@Override
 	public int crearEquipo(DatosEquipo de) {
 		// TODO Auto-generated method stub
@@ -37,6 +42,7 @@ public class EquipoControlador implements IEquipoControlador{
 
 	@Override
 	public Set<Equipo> listarEquiposPais(int codigoPais) {
+		jugadorC.findJugador(codigoPais);
 		// TODO Auto-generated method stub
 		return null;
 	}

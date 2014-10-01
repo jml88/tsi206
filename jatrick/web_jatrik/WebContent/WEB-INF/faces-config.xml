@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+	version="2.2">
+	
+	<navigation-rule>
+		<from-view-id>/login.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>loginOK</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>admin</from-outcome>
+			<to-view-id>/admin.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+		    <from-outcome>toRegister</from-outcome>
+		    <to-view-id>/webPages/registro/registro.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/register.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>registerOK</from-outcome>
+			<to-view-id>/welcome.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/welcome.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>logoutOK</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+		<navigation-rule>
+		<from-view-id>/admin.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome></from-outcome>
+			<to-view-id>/admin.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>	
+</faces-config>
