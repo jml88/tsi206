@@ -25,8 +25,14 @@ public class EquipoControlador implements IEquipoControlador{
 	
 	@Override
 	public int crearEquipo(DatosEquipo de) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		Alineacion alineacionDefecto = new Alineacion();
+		
+		Equipo e = new Equipo(de, alineacionDefecto);
+		
+		em.persist(e);
+		
+		return e.getCodigo();
 	}
 
 	@Override
