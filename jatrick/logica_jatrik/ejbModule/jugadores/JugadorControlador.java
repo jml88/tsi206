@@ -11,7 +11,7 @@ import interfaces.IJugadorControlador;
 @LocalBean
 public class JugadorControlador implements IJugadorControlador {
 	
-	@PersistenceContext( unitName = "jactrick" ) 
+	@PersistenceContext( unitName = "jatrik" ) 
 	private EntityManager em;
 
 	@Override

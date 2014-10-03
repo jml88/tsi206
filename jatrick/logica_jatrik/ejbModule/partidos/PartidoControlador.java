@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 @LocalBean
 public class PartidoControlador implements IPartidoControlador {
 	
-	@PersistenceContext( unitName = "jactrick" ) 
+	@PersistenceContext( unitName = "jatrik" ) 
 	private EntityManager em;
 
 	@Override

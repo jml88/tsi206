@@ -11,29 +11,29 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import jugadores.JugadorControlador;
-import datatypes.DatosEquipo;
+//import datatypes.DatosEquipo;
 
 @Stateless
 @LocalBean
 public class EquipoControlador implements IEquipoControlador{
 	
-	@PersistenceContext( unitName = "jactrick" ) 
+	@PersistenceContext( unitName = "jatrik" ) 
 	private EntityManager em;
 	
 	@EJB
 	JugadorControlador jugadorC;
 	
-	@Override
-	public int crearEquipo(DatosEquipo de) {
-		
-		Alineacion alineacionDefecto = new Alineacion();
-		
-		Equipo e = new Equipo(de, alineacionDefecto);
-		
-		em.persist(e);
-		
-		return e.getCodigo();
-	}
+//	@Override
+//	public int crearEquipo(DatosEquipo de) {
+//		
+//		Alineacion alineacionDefecto = new Alineacion();
+//		
+//		Equipo e = new Equipo(de, alineacionDefecto);
+//		
+//		em.persist(e);
+//		
+//		return e.getCodigo();
+//	}
 
 	@Override
 	public Equipo findEquipo(int codigoEquipo) {

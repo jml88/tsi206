@@ -4,14 +4,14 @@ import java.util.Set;
 
 import javax.ejb.Remote;
 
-import datatypes.DatosEquipo;
+//import datatypes.DatosEquipo;
 import equipos.Equipo;
 
 @Remote
 public interface IEquipoControlador {
 	
 	
-	public int crearEquipo(DatosEquipo de);
+//	public int crearEquipo(DatosEquipo de);
 	
 	public Equipo findEquipo(int codigoEquipo);
 	

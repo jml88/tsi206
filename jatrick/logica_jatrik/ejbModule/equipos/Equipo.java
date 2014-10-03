@@ -10,7 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import datatypes.DatosEquipo;
+//import datatypes.DatosEquipo;
 import jugadores.Jugador;
 
 @Entity
@@ -36,12 +36,12 @@ public class Equipo {
 		this.plantel = new HashSet<Jugador>();
 	}
 	
-	public Equipo(DatosEquipo de, Alineacion alineacionDefecto) {
-		super();
-		this.nombre = de.getNombre();
-		this.alineacionDefecto = alineacionDefecto;
-		this.plantel = new HashSet<Jugador>();
-	}
+//	public Equipo(DatosEquipo de, Alineacion alineacionDefecto) {
+//		super();
+//		this.nombre = de.getNombre();
+//		this.alineacionDefecto = alineacionDefecto;
+//		this.plantel = new HashSet<Jugador>();
+//	}
 
 	public Equipo(String nombre, Set<Jugador> plantel, Alineacion alineacionDefecto) {
 		super();
@@ -81,8 +81,8 @@ public class Equipo {
 		this.alineacionDefecto = alineacionDefecto;
 	}
 	
-	public DatosEquipo getDatos() {
-		return new DatosEquipo(this.codigo, this.nombre);
-	}
+//	public DatosEquipo getDatos() {
+//		return new DatosEquipo(this.codigo, this.nombre);
+//	}
 
 }
