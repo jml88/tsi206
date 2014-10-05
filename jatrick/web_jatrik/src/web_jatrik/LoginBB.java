@@ -37,11 +37,6 @@ public class LoginBB implements Serializable {
     {
     	return "toRegister";
     }
-    
-    public String registrarse()
-    {
-    	return "toRegister";
-    }
 
 	public String getUsername() {
 		return username;
