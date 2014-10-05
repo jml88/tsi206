@@ -1,7 +1,6 @@
 package web_jatrik;
 
 import interfaces.IEquipoControlador;
-import interfaces.IJugadorControlador;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -20,9 +19,6 @@ public class HomeBB implements Serializable {
 	
 	@Inject
 	private IEquipoControlador iec;
-	
-	@Inject
-	private IJugadorControlador ijc;
 
     /**
 	 * 
@@ -37,13 +33,14 @@ public class HomeBB implements Serializable {
 	public HomeBB() {
 		//FIXME ver bien de donde sacar el codigo del equipo
 		this.equipo = iec.obtenerEquipo(-1);
-		this.jugadores = ijc.obtenerJugadoresEquipo(-1);
+		this.jugadores = iec.obtenerJugadoresEquipo(-1);
+		this.otrosEquipos = new HashSet<DatosEquipo>();
     }
 	
 	//NAVEGACIONES
 	public String jugarAmistoso() {
-		//FIXME agregar operacion para que obtenga otros equipos
-		this.otrosEquipos = new HashSet<DatosEquipo>();
+		this.otrosEquipos = iec.obtenerEquiposSistema();
+		this.otrosEquipos.remove(equipo);
 		return "jugarAmistoso";
 	}
 	

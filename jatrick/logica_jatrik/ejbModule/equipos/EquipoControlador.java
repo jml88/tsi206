@@ -1,37 +1,37 @@
 package equipos;
 
+import facbircas.HomeFactory;
 import interfaces.IEquipoControlador;
 
+import java.util.HashSet;
 import java.util.Set;
 
-import javax.ejb.EJB;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
-import jugadores.JugadorControlador;
+import jugadores.Jugador;
 import datatypes.DatosEquipo;
+import datatypes.DatosJugador;
 
 @Stateless
-@LocalBean
+@Named
 public class EquipoControlador implements IEquipoControlador{
 	
 	@PersistenceContext( unitName = "jatrik" ) 
 	private EntityManager em;
 	
-	@EJB
-	JugadorControlador jugadorC;
+	@Inject
+	private HomeFactory hf;
 	
 	@Override
 	public int crearEquipo(DatosEquipo de) {
-		
 		Alineacion alineacionDefecto = new Alineacion();
-		
 		Equipo e = new Equipo(de, alineacionDefecto);
-		
 		em.persist(e);
-		
 		return e.getCodigo();
 	}
 
@@ -43,29 +43,72 @@ public class EquipoControlador implements IEquipoControlador{
 	@Override
 	public DatosEquipo obtenerEquipo(int codEquipo) {
 		Equipo equipo = this.findEquipo(codEquipo);
-		if (equipo == null) {
-			
-		}
 		return equipo.getDatos();
 	}
 
 	@Override
 	public Set<Equipo> listarEquiposSistema() {
-		// TODO Auto-generated method stub
-		return null;
+		Set<Equipo> result = new HashSet<Equipo>();
+		String consulta = "SELECT e FROM Equipo e";
+		Query query = em.createQuery(consulta);
+		for (Object o : query.getResultList()) {
+			result.add((Equipo)o);
+		}
+		return result;
 	}
 
 	@Override
 	public Set<Equipo> listarEquiposPais(int codigoPais) {
-		jugadorC.findJugador(codigoPais);
-		// TODO Auto-generated method stub
-		return null;
+		Set<Equipo> result = new HashSet<Equipo>();
+		for (Equipo e : this.listarEquiposSistema()) {
+			if (e.getCodPais() == codigoPais) {
+				result.add(e);
+			}
+		}
+		return result;
 	}
 
 	@Override
 	public Set<Equipo> listarEquiposTorneo(int codTorneo) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Set<DatosEquipo> obtenerEquiposSistema() {
+		Set<DatosEquipo> result = new HashSet<DatosEquipo>(); 
+		for (Equipo e : this.listarEquiposSistema()) {
+			result.add(e.getDatos());
+		}
+		return result;
+	}
+
+	@Override
+	public Set<DatosEquipo> obtenerEquiposPais(int codigoPais) {
+		Set<DatosEquipo> result = new HashSet<DatosEquipo>(); 
+		for (Equipo e : this.listarEquiposPais(codigoPais)) {
+			result.add(e.getDatos());
+		}
+		return result;
+	}
+
+	@Override
+	public Set<DatosEquipo> obtenerEquiposTorneo(int codTorneo) {
+		Set<DatosEquipo> result = new HashSet<DatosEquipo>(); 
+		for (Equipo e : this.listarEquiposTorneo(codTorneo)) {
+			result.add(e.getDatos());
+		}
+		return result;
+	}
+	
+	@Override
+	public Set<DatosJugador> obtenerJugadoresEquipo(int codEquipo) {
+		Set<DatosJugador> result = new HashSet<DatosJugador>();
+		Equipo equipo = this.findEquipo(codEquipo);
+		for (Jugador j : equipo.getPlantel()) {
+			result.add(j.getDatos());
+		}
+		return result;
 	}
 
 }
