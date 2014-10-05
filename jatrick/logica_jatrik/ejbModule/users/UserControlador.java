@@ -6,13 +6,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import datatypes.DatosManager;
 
 @Stateless
 public class UserControlador implements IUserControlador {
@@ -24,8 +25,27 @@ public class UserControlador implements IUserControlador {
 		
 	}
 
-    public User find(Long id) {
+    public User find(int id) {
         return em.find(User.class, id);
+    }
+    
+    public DatosManager findManager(int id){
+    	Manager m = em.find(Manager.class, id);
+    	String username = m.getUsername();
+    	String name = m.getName();
+    	String email = m.getEmail(); 
+    	int codEquipo = m.getEquipo() != null ? m.getEquipo().getCodigo() : -1;
+    	Set<String> roles = new HashSet<String>();
+    	
+    	for (Role r : m.getRoles()) {
+			if (r == Role.MANAGER)
+				roles.add("MANAGER");
+			else if (r== Role.ADMIN)
+				roles.add("ADMIN");
+		}
+    	DatosManager datosManager = new DatosManager(username, name, email, codEquipo, roles);
+    	
+    	return datosManager;
     }
     
 	public User login(String usr, String pass){
@@ -43,7 +63,12 @@ public class UserControlador implements IUserControlador {
         return em.createNamedQuery("User.list", User.class).getResultList();
     }
 	
-	public Long createManager(Manager manager) {
+	public int findUserByUserName(String username){
+		return ((Number)em.createNamedQuery("User.findByName").getSingleResult()).intValue();
+	}
+	
+	public Long createManager(DatosManager datosManager, String password) {
+		Manager manager = new Manager(datosManager, password);
         em.persist(manager);
         return manager.getId();
     }

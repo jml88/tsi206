@@ -32,7 +32,10 @@ import equipos.Alineacion;
 			+ "and u.password = :pass"),
 	@NamedQuery(
 	        name = "User.list",
-	        query = "SELECT u FROM User u")
+	        query = "SELECT u FROM User u"),
+	@NamedQuery(
+			name="User.findByName",
+			query="select u.id from User u where u.username = :username")
 })
 
 @Entity
@@ -44,26 +47,26 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;
+	protected int id;
 	
 	@NotNull
 	@Column(unique = true)
-	private String username;
+	protected String username;
 	
 	@NotNull
-	private String password;
+	protected String password;
 	
 	@NotNull
-	private String name;
+	protected String name;
 	
 	@NotNull
-	private String email;
+	protected String email;
 	
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "USERROLES", joinColumns = { @JoinColumn(name = "userId") })
     @Column(name = "role")
-    private Set<Role> roles;
+    protected Set<Role> roles;
 	
 	public User(){
 		
@@ -73,7 +76,7 @@ public class User {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

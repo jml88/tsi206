@@ -32,6 +32,9 @@ public class Equipo {
 	@OneToOne
 	private Alineacion alineacionDefecto;
 	
+	@Column(name = "CODPAIS")
+	private int codPais;
+	
 	public Equipo() {
 		this.plantel = new HashSet<Jugador>();
 	}
@@ -41,6 +44,7 @@ public class Equipo {
 		this.nombre = de.getNombre();
 		this.alineacionDefecto = alineacionDefecto;
 		this.plantel = new HashSet<Jugador>();
+		this.codPais = de.getCodPais();
 	}
 
 	public Equipo(String nombre, Set<Jugador> plantel, Alineacion alineacionDefecto) {
@@ -81,8 +85,16 @@ public class Equipo {
 		this.alineacionDefecto = alineacionDefecto;
 	}
 	
+	public int getCodPais() {
+		return codPais;
+	}
+
+	public void setCodPais(int codPais) {
+		this.codPais = codPais;
+	}
+
 	public DatosEquipo getDatos() {
-		return new DatosEquipo(this.codigo, this.nombre);
+		return new DatosEquipo(this.codigo, this.nombre, this.codPais);
 	}
 
 }
