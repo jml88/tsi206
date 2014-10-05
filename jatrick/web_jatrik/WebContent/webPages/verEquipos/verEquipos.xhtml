@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="Principal">
+		<h:form id="form" prependId="false">
+			<div id="equipos">
+				<p:dataTable var="equipo" value="#{verEquiposBB.equipos}">
+					<f:facet name="header">
+						<p:columnGroup>
+							<p:column selectionMode="single"/>
+							<p:column>
+								<h:outputText value="Nombre"/>
+							</p:column>
+							<p:column>
+								<h:outputText value="Pais"/>
+							</p:column>
+						</p:columnGroup>
+					</f:facet>
+					<p:column>
+						<h:outputText value="#{equipo.nombre}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{equipo.codPais}"/>
+					</p:column>
+				</p:dataTable>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
