@@ -7,9 +7,11 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import prueba.Test;
+
 @Named("loginBB")
 @RequestScoped
-public class LoginBB implements Serializable{
+public class LoginBB implements Serializable {
 
     /**
 	 * 
@@ -22,15 +24,18 @@ public class LoginBB implements Serializable{
 	
 	@Inject
     private Conversation conversation;
+	
+	@Inject
+	private Test test;
     
-    LoginBB()
+    public LoginBB()
     {
 //    	this.conversation.begin();
     }
     
-    public String submit()
+    public String registrarse()
     {
-    	return "loginOK";
+    	return "toRegister";
     }
 
 	public String getUsername() {
@@ -49,7 +54,12 @@ public class LoginBB implements Serializable{
 		this.password = password;
 	}
     
-    
+    public String submit()
+    {
+    	test.save();
+    	System.out.println("entra++++++++++++++++++");
+    	return "loginOK";
+    }
     
     
 }
