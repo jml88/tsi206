@@ -13,17 +13,18 @@ import javax.inject.Named;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 
-import users.Manager;
-import users.Role;
-import users.User;
+import datatypes.DatosManager;
 
 @Named
 @RequestScoped
 public class RegistroBB {
 
-	private Manager manager;
+	private DatosManager datosManager;
+	private String password;
 	private String passwordConfirm;
 	
+	@Inject
+	SessionBB sessionBB;
 	@Inject
 	IUserControlador iuser;
 	
@@ -33,15 +34,15 @@ public class RegistroBB {
 	
     @PostConstruct
     public void init() {
-        manager = new Manager();
+    	datosManager = new DatosManager();
     }
     
-	public User getManager() {
-		return manager;
+	public DatosManager getDatosmanager() {
+		return datosManager;
 	}
 
-	public void setManager(Manager manager) {
-		this.manager = manager;
+	public void setDatosManager(DatosManager datosManager) {
+		this.datosManager = datosManager;
 	}
 	
 	public String getPasswordConfirm() {
@@ -54,11 +55,12 @@ public class RegistroBB {
 
 	public String registro() {
         try {
-        	Set<Role> r = new HashSet<Role>();
-        	r.add(Role.MANAGER);
-        	manager.setRoles(r);
-        	iuser.createManager(manager);
-            SecurityUtils.getSubject().login(new UsernamePasswordToken(manager.getUsername(), manager.getPassword(), false)); //en el false va remember
+        	Set<String> r = new HashSet<String>();
+        	r.add("MANAGER");
+        	datosManager.setRoles(r);
+        	iuser.createManager(datosManager, password);
+        	sessionBB.setDatosManager(datosManager);
+            SecurityUtils.getSubject().login(new UsernamePasswordToken(datosManager.getUsername(), password, false)); //en el false va remember
             //Messages.addGlobalInfo("Registration suceed, new user ID is: {0}", user.getId());
             
             

@@ -1,9 +1,12 @@
 package web_jatrik;
 
+import interfaces.IUserControlador;
+
 import java.io.IOException;
 import java.io.Serializable;
 
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.shiro.SecurityUtils;
@@ -12,6 +15,8 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+
+import datatypes.DatosManager;
 
 
 @Named("loginBB")
@@ -27,8 +32,13 @@ public class LoginBB implements Serializable {
 	
 	private String password;
 	
+	@Inject
+	private IUserControlador iuser;
+	@Inject
+	private SessionBB sessionBB;
+	
 //	@Inject
-//    private Conversation conversation;
+//  private Conversation conversation;
     
     public LoginBB()
     {
@@ -61,6 +71,10 @@ public class LoginBB implements Serializable {
 		try{
 			
 			SecurityUtils.getSubject().login(new UsernamePasswordToken(username, password, false)); //en el false va remember
+			int managerId = iuser.findUserByUserName(username);
+			DatosManager datosManager = iuser.findManager(managerId);
+			sessionBB.setDatosManager(datosManager);
+			
 //            SavedRequest savedRequest = WebUtils.getAndClearSavedRequest(Faces.getRequest());
 //            Faces.redirect(savedRequest != null ? savedRequest.getRequestUrl() : HOME_URL);
 //        	RecibeMensaje r = new RecibeMensaje();

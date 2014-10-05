@@ -19,6 +19,10 @@ public class DatosManager implements Serializable {
 	private int codEquipo;
 	private Set<String> roles;
 	
+	public DatosManager() {
+		
+	}
+	
 	public DatosManager(String username, String name, String email, int codEquipo, Set<String> roles) {
 		super();
 		this.username = username;
