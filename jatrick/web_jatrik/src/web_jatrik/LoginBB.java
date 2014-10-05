@@ -56,7 +56,6 @@ public class LoginBB implements Serializable {
     
     public String submit()
     {
-    	test.save();
     	System.out.println("entra++++++++++++++++++");
     	return "loginOK";
     }
