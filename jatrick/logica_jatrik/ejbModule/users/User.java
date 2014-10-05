@@ -17,7 +17,10 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import equipos.Alineacion;
 
 
 @NamedQueries({
@@ -34,8 +37,11 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
+@Table(name = User.nombreTabla)
 public class User {
 
+	public static final String nombreTabla = "USER";
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
@@ -47,9 +53,15 @@ public class User {
 	@NotNull
 	private String password;
 	
+	@NotNull
+	private String name;
+	
+	@NotNull
+	private String email;
+	
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "UserRoles", joinColumns = { @JoinColumn(name = "userId") })
+    @CollectionTable(name = "USERROLES", joinColumns = { @JoinColumn(name = "userId") })
     @Column(name = "role")
     private Set<Role> roles;
 	
@@ -81,6 +93,23 @@ public class User {
 		this.password = password;
 	}
 	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+		
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getName() {
+		return name;
+	}
+
 	public Set<Role> getRoles() {
 		return roles;
 	}
@@ -88,6 +117,5 @@ public class User {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-	
-	
+		
 }
