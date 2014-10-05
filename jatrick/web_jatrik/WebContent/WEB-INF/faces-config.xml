@@ -20,10 +20,10 @@
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
-		<from-view-id>/registro.xhtml</from-view-id>
+		<from-view-id>/webPages/registro/registro.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>registerOK</from-outcome>
-			<to-view-id>/webPages/login/login.xhtml</to-view-id>
+			<to-view-id>/webPages/home/home.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>

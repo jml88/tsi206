@@ -1,5 +1,6 @@
 package users;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -29,6 +30,7 @@ public class Manager extends User {
 		this.password = password;
 		this.name = datosManager.getName();
 		this.email = datosManager.getEmail();
+		this.roles = new HashSet<Role>();
 		
 		Set<String> roles = datosManager.getRoles();
 		for (String role : roles) {
