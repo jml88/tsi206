@@ -25,8 +25,10 @@ public class HomeBB implements Serializable {
 	
 	//CONSTRUCTOR
 	public HomeBB() {
+		
 		//aca se inicializan los datos necesarios para ver la pagina inicial
 		//y en cada navegacion se obtienen los datos restantes
+		this.jugadores = new HashSet<DatosJugador>();
     }
 	
 	//NAVEGACIONES
