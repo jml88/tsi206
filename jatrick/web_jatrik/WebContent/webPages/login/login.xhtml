@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition template="/WEB-INF/webpages/utiles/layout.xhtml"
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:define name="scripts">
-		<script type="text/javascript">
-			
-		</script>
-	</ui:define>
-
 	<ui:define name="Principal">
-		<p:form id="form" prependId="false">
+		<h:form id="form" prependId="false">
 			<p:layout style="min-width:400px;min-height:200px;">
 				<p:layoutUnit position="center">
 					<p:panelGrid columns="2">
@@ -28,12 +22,12 @@
 						</p:row>
 						<p:row>
 							<p:column colspan="2">
-								<p:link outcome="toRegister" value="Registrarse!"></p:link>
+								<p:commandButton value="Registrarse!" action="#{loginBB.registrarse}"></p:commandButton>
 							</p:column>
 						</p:row>
 					</p:panelGrid>
 				</p:layoutUnit>
 			</p:layout>
-		</p:form>
+		</h:form>
 	</ui:define>
 </ui:composition>
