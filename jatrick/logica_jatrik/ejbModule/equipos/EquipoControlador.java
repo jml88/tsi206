@@ -41,6 +41,15 @@ public class EquipoControlador implements IEquipoControlador{
 	}
 
 	@Override
+	public DatosEquipo obtenerEquipo(int codEquipo) {
+		Equipo equipo = this.findEquipo(codEquipo);
+		if (equipo == null) {
+			
+		}
+		return equipo.getDatos();
+	}
+
+	@Override
 	public Set<Equipo> listarEquiposSistema() {
 		// TODO Auto-generated method stub
 		return null;

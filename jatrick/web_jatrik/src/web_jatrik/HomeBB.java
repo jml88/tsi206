@@ -1,10 +1,14 @@
 package web_jatrik;
 
+import interfaces.IEquipoControlador;
+import interfaces.IJugadorControlador;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import datatypes.DatosEquipo;
@@ -13,6 +17,12 @@ import datatypes.DatosJugador;
 @Named("homeBB")
 @RequestScoped
 public class HomeBB implements Serializable {
+	
+	@Inject
+	private IEquipoControlador iec;
+	
+	@Inject
+	private IJugadorControlador ijc;
 
     /**
 	 * 
@@ -25,10 +35,9 @@ public class HomeBB implements Serializable {
 	
 	//CONSTRUCTOR
 	public HomeBB() {
-		
-		//aca se inicializan los datos necesarios para ver la pagina inicial
-		//y en cada navegacion se obtienen los datos restantes
-		this.jugadores = new HashSet<DatosJugador>();
+		//FIXME ver bien de donde sacar el codigo del equipo
+		this.equipo = iec.obtenerEquipo(-1);
+		this.jugadores = ijc.obtenerJugadoresEquipo(-1);
     }
 	
 	//NAVEGACIONES

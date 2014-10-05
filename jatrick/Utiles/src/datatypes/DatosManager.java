@@ -1,6 +1,9 @@
 package datatypes;
 
 import java.io.Serializable;
+import java.util.Set;
+
+import org.jboss.security.auth.spi.Users;
 
 
 public class DatosManager implements Serializable {
@@ -14,13 +17,15 @@ public class DatosManager implements Serializable {
 	private String name;
 	private String email;
 	private int codEquipo;
+	private Set<String> roles;
 	
-	public DatosManager(String username, String name, String email, int codEquipo) {
+	public DatosManager(String username, String name, String email, int codEquipo, Set<String> roles) {
 		super();
 		this.username = username;
 		this.name = name;
 		this.email = email;
 		this.codEquipo = codEquipo;
+		this.roles = roles;
 	}
 
 	public String getUsername() {
@@ -53,5 +58,13 @@ public class DatosManager implements Serializable {
 
 	public void setCodEquipo(int codEquipo) {
 		this.codEquipo = codEquipo;
+	}
+
+	public Set<String> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<String> roles) {
+		this.roles = roles;
 	}
 }
