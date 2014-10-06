@@ -19,7 +19,7 @@ import datatypes.DatosManager;
 @RequestScoped
 public class RegistroBB {
 
-	private DatosManager datosManager;
+	private DatosManager datosmanager;
 	private String password;
 	private String passwordConfirm;
 	
@@ -34,17 +34,25 @@ public class RegistroBB {
 	
     @PostConstruct
     public void init() {
-    	datosManager = new DatosManager();
+    	datosmanager = new DatosManager();
     }
     
 	public DatosManager getDatosmanager() {
-		return datosManager;
+		return datosmanager;
 	}
 
 	public void setDatosManager(DatosManager datosManager) {
-		this.datosManager = datosManager;
+		this.datosmanager = datosManager;
 	}
 	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public String getPasswordConfirm() {
 		return passwordConfirm;
 	}
@@ -57,10 +65,10 @@ public class RegistroBB {
         try {
         	Set<String> r = new HashSet<String>();
         	r.add("MANAGER");
-        	datosManager.setRoles(r);
-        	iuser.createManager(datosManager, password);
-        	sessionBB.setDatosManager(datosManager);
-            SecurityUtils.getSubject().login(new UsernamePasswordToken(datosManager.getUsername(), password, false)); //en el false va remember
+        	datosmanager.setRoles(r);
+        	iuser.createManager(datosmanager, password);
+        	sessionBB.setDatosManager(datosmanager);
+            SecurityUtils.getSubject().login(new UsernamePasswordToken(datosmanager.getUsername(), password, false)); //en el false va remember
             //Messages.addGlobalInfo("Registration suceed, new user ID is: {0}", user.getId());
             
             
