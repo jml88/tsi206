@@ -1,6 +1,6 @@
 package equipos;
 
-import facbircas.HomeFactory;
+import fabricas.HomeFactory;
 import interfaces.IEquipoControlador;
 import interfaces.IJugadorControlador;
 
