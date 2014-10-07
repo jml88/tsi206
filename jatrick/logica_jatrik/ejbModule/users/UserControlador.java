@@ -64,7 +64,9 @@ public class UserControlador implements IUserControlador {
     }
 	
 	public int findUserByUserName(String username){
-		return ((Number)em.createNamedQuery("User.findByName").getSingleResult()).intValue();
+		return ((Number)em.createNamedQuery("User.findByName")
+				.setParameter("username", username)
+				.getSingleResult()).intValue();
 	}
 	
 	public Long createManager(DatosManager datosManager, String password) {
