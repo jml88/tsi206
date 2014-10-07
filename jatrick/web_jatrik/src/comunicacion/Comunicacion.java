@@ -1,4 +1,4 @@
-package web_jatrik;
+package comunicacion;
 
 import interfaces.IEquipoControlador;
 import interfaces.IJugadorControlador;
@@ -7,6 +7,8 @@ import javax.faces.context.FacesContext;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
+import web_jatrik.SessionBB;
 
 public class Comunicacion {
 	
