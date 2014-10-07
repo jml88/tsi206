@@ -2,6 +2,7 @@ package comunicacion;
 
 import interfaces.IEquipoControlador;
 import interfaces.IJugadorControlador;
+import interfaces.IUserControlador;
 
 import javax.faces.context.FacesContext;
 import javax.naming.Context;
@@ -44,6 +45,10 @@ public class Comunicacion {
 //	public Interfaz getInterfaz() throws NamingException {
 //		return (Interfaz)this.ctx.lookup("java:app/logica_jatrik/ImplementacionDeInterfaz!interfaces.Interfaz");
 //	}
+	
+	public IUserControlador getIUserControlador() throws NamingException {
+		return (IUserControlador)this.ctx.lookup("java:app/logica_jatrik/UserControlador!interfaces.IUserControlador");
+	}
 	
 	public IEquipoControlador getIEquipoControlador() throws NamingException {
 		return (IEquipoControlador)this.ctx.lookup("java:app/logica_jatrik/EquipoControlador!interfaces.IEquipoControlador");

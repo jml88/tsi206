@@ -10,17 +10,15 @@ import org.apache.shiro.SecurityUtils;
 import datatypes.DatosManager;
 
 @Named("sessionBB")
-@SessionScoped	
+@SessionScoped
 public class SessionBB implements Serializable {
 
-	
 	private static final long serialVersionUID = 1L;
-	private DatosManager datosManager;	
-	
-	public SessionBB(){
-		
+	private DatosManager datosManager;
+
+	public SessionBB() {
 	}
-	
+
 	public DatosManager getDatosManager() {
 		return datosManager;
 	}
@@ -29,11 +27,9 @@ public class SessionBB implements Serializable {
 		this.datosManager = datosManager;
 	}
 
-	public String logout(){
+	public String logout() {
 		datosManager = null;
 		SecurityUtils.getSubject().logout();
 		return "logoutOK";
 	}
-	
-	
 }

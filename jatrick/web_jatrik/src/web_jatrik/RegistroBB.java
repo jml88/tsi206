@@ -1,17 +1,16 @@
 package web_jatrik;
 
-import interfaces.IUserControlador;
-
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+
+import comunicacion.Comunicacion;
 
 import datatypes.DatosManager;
 
@@ -22,11 +21,6 @@ public class RegistroBB {
 	private DatosManager datosmanager;
 	private String password;
 	private String passwordConfirm;
-	
-	@Inject
-	SessionBB sessionBB;
-	@Inject
-	IUserControlador iuser;
 	
 	public RegistroBB(){
 		
@@ -62,23 +56,23 @@ public class RegistroBB {
 	}
 
 	public String registro() {
+		String result = "";
         try {
         	Set<String> r = new HashSet<String>();
         	r.add("MANAGER");
         	datosmanager.setRoles(r);
-        	iuser.createManager(datosmanager, password);
-        	sessionBB.setDatosManager(datosmanager);
+        	Comunicacion.getInstance().getIUserControlador().createManager(datosmanager, password);
+        	Comunicacion.getInstance().getSesion().setDatosManager(datosmanager);
             SecurityUtils.getSubject().login(new UsernamePasswordToken(datosmanager.getUsername(), password, false)); //en el false va remember
             //Messages.addGlobalInfo("Registration suceed, new user ID is: {0}", user.getId());
-            
-            
-        }
-        catch (RuntimeException e) {
+            result = "registerOK"; 
+        } catch (RuntimeException e) {
             //Messages.addGlobalError("Registration failed: {0}", e.getMessage());
             e.printStackTrace(); // TODO: logger.
+        } catch (Exception e) {
+        	e.printStackTrace();
         }
-        
-        return "registerOK";
+        return result;
     }
 	
 }
