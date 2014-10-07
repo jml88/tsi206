@@ -6,7 +6,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -19,8 +20,8 @@ public class HomeBB implements Serializable {
 	
 	@Inject
 	private IEquipoControlador iec;
-
-    /**
+	
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
@@ -31,10 +32,13 @@ public class HomeBB implements Serializable {
 	
 	//CONSTRUCTOR
 	public HomeBB() {
-		//FIXME ver bien de donde sacar el codigo del equipo
-		this.equipo = iec.obtenerEquipo(-1);
-		this.jugadores = iec.obtenerJugadoresEquipo(-1);
-		this.otrosEquipos = new HashSet<DatosEquipo>();
+		try {
+			this.jugadores = iec.obtenerJugadoresEquipo(Comunicacion.getInstance().getSesion().getDatosManager().getCodEquipo());
+			this.equipo = iec.obtenerEquipo(Comunicacion.getInstance().getSesion().getDatosManager().getCodEquipo());
+			this.otrosEquipos = new HashSet<DatosEquipo>();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
     }
 	
 	//NAVEGACIONES
