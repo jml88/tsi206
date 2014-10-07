@@ -1,6 +1,6 @@
 package jugadores;
 
-import facbircas.HomeFactory;
+import fabricas.HomeFactory;
 import interfaces.IJugadorControlador;
 
 import java.util.HashSet;
