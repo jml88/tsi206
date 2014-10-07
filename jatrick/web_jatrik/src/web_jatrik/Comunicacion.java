@@ -1,5 +1,8 @@
 package web_jatrik;
 
+import interfaces.IEquipoControlador;
+import interfaces.IJugadorControlador;
+
 import javax.faces.context.FacesContext;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -29,6 +32,23 @@ public class Comunicacion {
 			throw new Exception("No esta logueado");
 		}
 		return sessionBB;
+	}
+	
+	/**
+	 * template por si es necesario agregar otra interfaz de la logica
+	 * después cuando veamos como hacer lo de web service seguramente 
+	 * la forma de hacer esto va a cambiar 
+	 */
+//	public Interfaz getInterfaz() throws NamingException {
+//		return (Interfaz)this.ctx.lookup("java:app/logica_jatrik/ImplementacionDeInterfaz!interfaces.Interfaz");
+//	}
+	
+	public IEquipoControlador getIEquipoControlador() throws NamingException {
+		return (IEquipoControlador)this.ctx.lookup("java:app/logica_jatrik/EquipoControlador!interfaces.IEquipoControlador");
+	}
+	
+	public IJugadorControlador getIJugadorControlador() throws NamingException {
+		return (IJugadorControlador)this.ctx.lookup("java:app/logica_jatrik/JugadorControlador!interfaces.IJugadorControlador");
 	}
 
 }

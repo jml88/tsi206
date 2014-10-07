@@ -1,15 +1,12 @@
 package web_jatrik;
 
-import interfaces.IEquipoControlador;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
+import javax.naming.NamingException;
 
 import datatypes.DatosEquipo;
 import datatypes.DatosJugador;
@@ -18,14 +15,12 @@ import datatypes.DatosJugador;
 @RequestScoped
 public class HomeBB implements Serializable {
 	
-	@Inject
-	private IEquipoControlador iec;
-	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	private int codEquipo;
 	private DatosEquipo equipo;
 	private Set<DatosJugador> jugadores;
 	private Set<DatosEquipo> otrosEquipos;
@@ -33,8 +28,9 @@ public class HomeBB implements Serializable {
 	//CONSTRUCTOR
 	public HomeBB() {
 		try {
-			this.jugadores = iec.obtenerJugadoresEquipo(Comunicacion.getInstance().getSesion().getDatosManager().getCodEquipo());
-			this.equipo = iec.obtenerEquipo(Comunicacion.getInstance().getSesion().getDatosManager().getCodEquipo());
+			this.codEquipo = Comunicacion.getInstance().getSesion().getDatosManager().getCodEquipo();
+			this.jugadores = Comunicacion.getInstance().getIEquipoControlador().obtenerJugadoresEquipo(this.codEquipo);
+			this.equipo = Comunicacion.getInstance().getIEquipoControlador().obtenerEquipo(this.codEquipo);
 			this.otrosEquipos = new HashSet<DatosEquipo>();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -43,9 +39,15 @@ public class HomeBB implements Serializable {
 	
 	//NAVEGACIONES
 	public String jugarAmistoso() {
-		this.otrosEquipos = iec.obtenerEquiposSistema();
-		this.otrosEquipos.remove(equipo);
-		return "jugarAmistoso";
+		String result = "";
+		try {
+			this.otrosEquipos = Comunicacion.getInstance().getIEquipoControlador().obtenerEquiposSistema();
+			this.otrosEquipos.remove(equipo);
+			result = "jugarAmistoso";
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	public String verAlineacion() {
@@ -75,5 +77,13 @@ public class HomeBB implements Serializable {
 
 	public void setOtrosEquipos(Set<DatosEquipo> otrosEquipos) {
 		this.otrosEquipos = otrosEquipos;
+	}
+
+	public int getCodEquipo() {
+		return codEquipo;
+	}
+
+	public void setCodEquipo(int codEquipo) {
+		this.codEquipo = codEquipo;
 	}
 }
