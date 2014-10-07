@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.ejb.Local;
 
 import jugadores.Jugador;
+import equipos.Equipo;
 
 @Local
 public interface IJugadorControlador {
@@ -13,6 +14,6 @@ public interface IJugadorControlador {
 	
 	public Jugador findJugador(int codJugador);
 
-	Set<Jugador> generarJugadores(int cant);
+	Set<Jugador> generarJugadores(int cant, Equipo equipo);
 
 }

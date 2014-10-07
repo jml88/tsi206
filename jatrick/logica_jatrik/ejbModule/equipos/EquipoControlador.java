@@ -33,6 +33,11 @@ public class EquipoControlador implements IEquipoControlador{
 		Alineacion alineacionDefecto = new Alineacion();
 		Equipo e = new Equipo(de, alineacionDefecto);
 		em.persist(e);
+		
+		IJugadorControlador ijc = hf.getJugadorControlador();
+		Set<Jugador> plantel = ijc.generarJugadores(20, e);
+		e.setPlantel(plantel);
+		
 		return e.getCodigo();
 	}
 
