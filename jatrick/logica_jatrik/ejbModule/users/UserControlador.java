@@ -1,5 +1,7 @@
 package users;
 
+import equipos.Equipo;
+import fabricas.HomeFactory;
 import interfaces.IEquipoControlador;
 import interfaces.IUserControlador;
 
@@ -15,9 +17,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import datatypes.DatosEquipo;
 import datatypes.DatosManager;
-import fabricas.HomeFactory;
 
 @Stateless
 public class UserControlador implements IUserControlador {
@@ -36,7 +36,7 @@ public class UserControlador implements IUserControlador {
         return em.find(User.class, id);
     }
     
-    public DatosManager findManager(int id){
+    public DatosManager obtenerManager(int id){
     	Manager m = em.find(Manager.class, id);
     	String username = m.getUsername();
     	String name = m.getName();
@@ -81,7 +81,11 @@ public class UserControlador implements IUserControlador {
         em.persist(manager);
         
         IEquipoControlador iec = hf.getEquipoControlador();
-        iec.crearEquipo(nombreEquipo);
+        int codEquipo = iec.crearEquipo(nombreEquipo);
+        
+        Equipo equipo = iec.findEquipo(codEquipo);
+        
+        manager.setEquipo(equipo);
         
         return manager.getId();
     }

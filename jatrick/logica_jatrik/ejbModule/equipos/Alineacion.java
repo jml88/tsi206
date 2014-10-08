@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -20,6 +22,7 @@ public class Alineacion {
 
 	@Id
 	@Column(name = "CODALINEACION")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int codigo;
 
 	//TODO averiguar si se puede limitar la cantidad de 

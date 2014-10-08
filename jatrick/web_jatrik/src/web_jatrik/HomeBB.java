@@ -4,12 +4,11 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.naming.NamingException;
 
 import comunicacion.Comunicacion;
-
 import datatypes.DatosEquipo;
 import datatypes.DatosJugador;
 

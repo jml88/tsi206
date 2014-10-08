@@ -7,6 +7,9 @@
 <h:body>
 	<div>
 		<h1>Jatrick1.0</h1>
+		<h:form id="formLogout" prependId="false">
+			<p:commandButton value="Logout" rendered="#{sessionBB.datosManager != null}" action="#{sessionBB.logout}"></p:commandButton>
+		</h:form>
 	</div>
 </h:body>
 </html>

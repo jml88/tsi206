@@ -59,7 +59,7 @@ public class LoginBB implements Serializable {
 			// en el false va remember
 			SecurityUtils.getSubject().login(new UsernamePasswordToken(username, password, false));
 			int managerId = Comunicacion.getInstance().getIUserControlador().findUserByUserName(username);
-			DatosManager datosManager = Comunicacion.getInstance().getIUserControlador().findManager(managerId);
+			DatosManager datosManager = Comunicacion.getInstance().getIUserControlador().obtenerManager(managerId);
 			Comunicacion.getInstance().getSesion().setDatosManager(datosManager);
 			result = "loginOK";
 

@@ -12,7 +12,7 @@ import users.User;
 public interface IUserControlador {
 
 	public User find(int id);
-	public DatosManager findManager(int id);
+	public DatosManager obtenerManager(int id);
 	public User login(String usr, String pass);
 	public List<User> list();
 	public int findUserByUserName(String username);

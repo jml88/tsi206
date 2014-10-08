@@ -17,6 +17,7 @@ public class SessionBB implements Serializable {
 	private DatosManager datosManager;
 
 	public SessionBB() {
+		datosManager = null;
 	}
 
 	public DatosManager getDatosManager() {
@@ -30,6 +31,6 @@ public class SessionBB implements Serializable {
 	public String logout() {
 		datosManager = null;
 		SecurityUtils.getSubject().logout();
-		return "logoutOK";
+		return "/webPages/login/login?faces-redirect=true";
 	}
 }
