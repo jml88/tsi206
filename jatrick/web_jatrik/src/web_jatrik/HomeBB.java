@@ -32,6 +32,7 @@ public class HomeBB implements Serializable {
 	private Set<DatosEquipo> otrosEquipos;
 	
 	public HomeBB() {
+		
     }
 	
 	@PostConstruct
