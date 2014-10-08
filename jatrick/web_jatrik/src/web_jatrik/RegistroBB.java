@@ -61,7 +61,7 @@ public class RegistroBB {
         	Set<String> r = new HashSet<String>();
         	r.add("MANAGER");
         	datosmanager.setRoles(r);
-        	Comunicacion.getInstance().getIUserControlador().createManager(datosmanager, password);
+        	Comunicacion.getInstance().getIUserControlador().createManager(datosmanager, password, "Equipo harcodeado");
         	Comunicacion.getInstance().getSesion().setDatosManager(datosmanager);
             SecurityUtils.getSubject().login(new UsernamePasswordToken(datosmanager.getUsername(), password, false)); //en el false va remember
             //Messages.addGlobalInfo("Registration suceed, new user ID is: {0}", user.getId());

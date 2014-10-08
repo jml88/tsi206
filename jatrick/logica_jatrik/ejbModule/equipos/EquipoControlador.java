@@ -29,14 +29,18 @@ public class EquipoControlador implements IEquipoControlador{
 	private HomeFactory hf;
 	
 	@Override
-	public int crearEquipo(DatosEquipo de) {
+	public int crearEquipo(String nombreEquipo) {
 		Alineacion alineacionDefecto = new Alineacion();
-		Equipo e = new Equipo(de, alineacionDefecto);
+		
+		em.persist(alineacionDefecto);
+		
+		Equipo e = new Equipo(nombreEquipo, null, alineacionDefecto);
 		em.persist(e);
 		
 		IJugadorControlador ijc = hf.getJugadorControlador();
 		Set<Jugador> plantel = ijc.generarJugadores(20, e);
 		e.setPlantel(plantel);
+		em.merge(e);
 		
 		return e.getCodigo();
 	}
