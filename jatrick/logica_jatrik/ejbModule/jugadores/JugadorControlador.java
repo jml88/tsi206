@@ -44,9 +44,9 @@ public class JugadorControlador implements IJugadorControlador {
 
 			//TODO: Hacer bien despues!!
 			Jugador j = new Jugador();
-			j.setNombre("Fulano" + String.valueOf(cant));
-			j.setApellido1("Detal" + String.valueOf(cant));
-			j.setApellido2("Paracual" + String.valueOf(cant));
+			j.setNombre("Fulano" + String.valueOf(i));
+			j.setApellido1("Detal" + String.valueOf(i));
+			j.setApellido2("Paracual" + String.valueOf(i));
 			
 			int edad = random.nextInt(3) + 17;
 			j.setEdad(edad);

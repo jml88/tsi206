@@ -35,12 +35,12 @@ public class EquipoControlador implements IEquipoControlador{
 		em.persist(alineacionDefecto);
 		
 		Equipo e = new Equipo(nombreEquipo, null, alineacionDefecto);
-		em.persist(e);
+		//em.persist(e);
 		
 		IJugadorControlador ijc = hf.getJugadorControlador();
 		Set<Jugador> plantel = ijc.generarJugadores(20, e);
 		e.setPlantel(plantel);
-		em.merge(e);
+		em.persist(e);
 		
 		return e.getCodigo();
 	}
