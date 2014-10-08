@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.naming.NamingException;
 
@@ -16,6 +18,9 @@ import datatypes.DatosJugador;
 @RequestScoped
 public class HomeBB implements Serializable {
 	
+	@Inject
+	SessionBB sesion;
+	
 	/**
 	 * 
 	 */
@@ -26,17 +31,21 @@ public class HomeBB implements Serializable {
 	private Set<DatosJugador> jugadores;
 	private Set<DatosEquipo> otrosEquipos;
 	
-	//CONSTRUCTOR
 	public HomeBB() {
+    }
+	
+	@PostConstruct
+	public void init() {
 		try {
-			this.codEquipo = Comunicacion.getInstance().getSesion().getDatosManager().getCodEquipo();
+			this.codEquipo = this.sesion.getDatosManager().getCodEquipo();
 			this.jugadores = Comunicacion.getInstance().getIEquipoControlador().obtenerJugadoresEquipo(this.codEquipo);
 			this.equipo = Comunicacion.getInstance().getIEquipoControlador().obtenerEquipo(this.codEquipo);
 			this.otrosEquipos = new HashSet<DatosEquipo>();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-    }
+		
+	}
 	
 	//NAVEGACIONES
 	public String jugarAmistoso() {
