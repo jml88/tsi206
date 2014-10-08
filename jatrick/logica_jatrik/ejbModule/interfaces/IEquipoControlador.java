@@ -11,7 +11,7 @@ import equipos.Equipo;
 @Local
 public interface IEquipoControlador {
 	
-	public int crearEquipo(DatosEquipo de);
+	public int crearEquipo(String nombreEquipo);
 	
 	public Equipo findEquipo(int codigoEquipo);
 	

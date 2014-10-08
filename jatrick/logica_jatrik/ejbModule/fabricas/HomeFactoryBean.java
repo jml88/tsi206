@@ -2,6 +2,7 @@ package fabricas;
 
 import interfaces.IEquipoControlador;
 import interfaces.IJugadorControlador;
+import interfaces.IUserControlador;
 
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
@@ -25,5 +26,9 @@ public class HomeFactoryBean implements HomeFactory {
 		return (IJugadorControlador) ctx.lookup("java:module/JugadorControlador!interfaces.IJugadorControlador");
 	}
 	
+	@Override
+	public IUserControlador getUserControlador(){
+		return (IUserControlador ) ctx.lookup("java:module/UserControlador!interfaces.IUserControlador");
+	}
 
 }

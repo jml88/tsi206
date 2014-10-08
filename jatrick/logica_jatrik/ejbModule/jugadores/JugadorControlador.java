@@ -64,6 +64,8 @@ public class JugadorControlador implements IJugadorControlador {
 			j.setPorteria(porteria);
 			
 			j.setEquipo(equipo);
+			
+			jugadores.add(j);
 		
 		}
 				

@@ -3,13 +3,20 @@ package equipos;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import users.Role;
 import datatypes.DatosEquipo;
 import jugadores.Jugador;
 
@@ -49,6 +56,7 @@ public class Equipo {
 
 	public Equipo(String nombre, Set<Jugador> plantel, Alineacion alineacionDefecto) {
 		super();
+		this.nombre = nombre;
 		this.plantel = plantel;
 		this.alineacionDefecto = alineacionDefecto;
 	}

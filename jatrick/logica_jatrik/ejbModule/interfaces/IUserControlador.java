@@ -16,7 +16,7 @@ public interface IUserControlador {
 	public User login(String usr, String pass);
 	public List<User> list();
 	public int findUserByUserName(String username);
-	public Long createManager(DatosManager datosManager, String password);
+	public int createManager(DatosManager datosManager, String password, String nombreEquipo);
 	public void update(User user);
     public void delete(User user);
 }
