@@ -24,6 +24,8 @@ public class Alineacion {
 	@Column(name = "CODALINEACION")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int codigo;
+	
+	private boolean alineacionDefecto;
 
 	//TODO averiguar si se puede limitar la cantidad de 
 	@OneToMany
@@ -169,4 +171,13 @@ public class Alineacion {
 	public void setSuplentes(Set<Jugador> suplentes) {
 		this.suplentes = suplentes;
 	}
+
+	public boolean isAlineacionDefecto() {
+		return alineacionDefecto;
+	}
+
+	public void setAlineacionDefecto(boolean alineacionDefecto) {
+		this.alineacionDefecto = alineacionDefecto;
+	}
+	
 }

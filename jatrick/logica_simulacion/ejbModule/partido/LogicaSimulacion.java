@@ -3,11 +3,18 @@ package partido;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 
+import partidos.Partido;
+
 @Stateless
 @Local
-public class LogicaSimulacion implements LogicaSimulacionI{
+public class LogicaSimulacion{
 	
-	public void simular(){
-		System.out.println("SE EJECUTO!");
+	public void simularPartido(Partido p){
+		//TODO 
 	}
+	
+	public void simularJugada(){
+		//TODO
+	}
+	
 }

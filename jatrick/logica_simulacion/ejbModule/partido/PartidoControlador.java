@@ -1,10 +1,17 @@
 package partido;
 
 
+import java.util.Calendar;
+import java.util.List;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import org.apache.commons.lang.NotImplementedException;
+
+import partidos.Partido;
 
 
 @Stateless
@@ -20,6 +27,10 @@ public class PartidoControlador {
 	
     public Partido find(Long id) {
         return em.find(Partido.class, id);
+    }
+    
+    public List<Partido> listPartidosFecha(Calendar c){
+    	throw new NotImplementedException();
     }
     
     public void crear(){
