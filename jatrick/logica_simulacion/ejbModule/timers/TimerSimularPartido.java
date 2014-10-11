@@ -35,11 +35,11 @@ public class TimerSimularPartido {
 	
 	@Timeout
 	public void simularPartido(Timer t) throws NoExisteEquipoExcepcion{
-		long idPartido = (long)t.getInfo();
-		Partido p = cp.find(idPartido);
+		DatosMinutoPartido minutoDto = (DatosMinutoPartido)t.getInfo();
+		Partido p = cp.find(minutoDto.getIdPartido());
 		if(p==null)
 		{
-			throw new NoExisteEquipoExcepcion("No existe equipo de id " + idPartido);
+			throw new NoExisteEquipoExcepcion("No existe equipo de id " + minutoDto.getIdPartido());
 		}
 		lsim.simular(p);
 	}
