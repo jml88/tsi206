@@ -2,6 +2,7 @@ package fabricas;
 
 import interfaces.IEquipoControlador;
 import interfaces.IJugadorControlador;
+import interfaces.IPartidoControlador;
 import interfaces.IUserControlador;
 
 import javax.annotation.Resource;
@@ -29,6 +30,12 @@ public class HomeFactoryBean implements HomeFactory {
 	@Override
 	public IUserControlador getUserControlador(){
 		return (IUserControlador ) ctx.lookup("java:module/UserControlador!interfaces.IUserControlador");
+	}
+
+	@Override
+	public IPartidoControlador getPartidoControlador() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

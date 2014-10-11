@@ -9,12 +9,20 @@ import partidos.Partido;
 @Local
 public class LogicaSimulacion{
 	
+	//
 	public void simularPartido(Partido p){
-		//TODO 
+		//TODO Hace el sorteo de los minutos, tiene que crear un timer para la simulacion 
 	}
 	
-	public void simularJugada(){
-		//TODO
+	//
+	public void simularJugada(Partido p){
+		//TODO Hace la logica de simular una jugada
+	}
+	
+	public void simular(Partido p)
+	{
+		//TODO Tiene que decidir si simula el partido o hace el sorteo de los tiempos de las 
+		//jugadas criticas
 	}
 	
 }

@@ -14,7 +14,7 @@ public class TimerMain {
 	
 	@PostConstruct
 	public void crearTimersPartido(){
-		tp.bla(5000);
+		tp.crearTimerPeriodico(5000);
 		
 	}
 

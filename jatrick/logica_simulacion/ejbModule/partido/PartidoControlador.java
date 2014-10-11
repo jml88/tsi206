@@ -29,9 +29,12 @@ public class PartidoControlador {
         return em.find(Partido.class, id);
     }
     
+    //Debe devolver todos los partidos que se juegan el mismo dia de c
     public List<Partido> listPartidosFecha(Calendar c){
     	throw new NotImplementedException();
     }
+    
+    
     
     public void crear(){
     	Partido p = new Partido();

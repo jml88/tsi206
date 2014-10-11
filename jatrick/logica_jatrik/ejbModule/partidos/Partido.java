@@ -1,5 +1,7 @@
 package partidos;
 
+import java.util.Calendar;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,6 +23,8 @@ public class Partido {
 	@Column(name = "CODPARTIDO")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int codigo;
+	
+	private Calendar fechaHora;
 
 	@OneToOne
 	private Equipo local;
@@ -72,6 +76,14 @@ public class Partido {
 
 	public void setAlineacionVisitante(Alineacion alineacionVisitante) {
 		this.alineacionVisitante = alineacionVisitante;
+	}
+
+	public Calendar getFechaHora() {
+		return fechaHora;
+	}
+
+	public void setFechaHora(Calendar fechaHora) {
+		this.fechaHora = fechaHora;
 	}
 	
 	
