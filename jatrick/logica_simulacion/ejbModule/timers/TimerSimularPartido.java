@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 
 import partido.LogicaSimulacion;
 import partido.PartidoControlador;
+import partidos.Partido;
 
 public class TimerSimularPartido {
 	
@@ -29,7 +30,9 @@ public class TimerSimularPartido {
 	
 	@Timeout
 	public void simularPartido(Timer t){
-		lsim.
+		int idPartido = (int)t.getInfo();
+		Partido p = new Partido();
+		lsim.simular(p);
 	}
 
 }
