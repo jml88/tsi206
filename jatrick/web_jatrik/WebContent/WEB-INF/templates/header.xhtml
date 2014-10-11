@@ -6,9 +6,16 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:body>
 	<div>
-		<h1>Jatrick1.0</h1>
 		<h:form id="formLogout" prependId="false">
-			<p:commandButton value="Logout" rendered="#{sessionBB.datosManager != null}" action="#{sessionBB.logout}"></p:commandButton>
+			<p:menubar id="menu">
+				<p:menuitem>
+					<p:outputLabel value="Jatrick-1.0"/>
+				</p:menuitem>
+				<f:facet name="options">
+					<p:commandButton value="Logout" rendered="#{sessionBB.datosManager != null}" action="#{sessionBB.logout}" />
+				</f:facet>
+			</p:menubar>
+			<p:sticky target="menu"/>
 		</h:form>
 	</div>
 </h:body>

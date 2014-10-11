@@ -1,23 +1,28 @@
 package web_jatrik;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 
 import comunicacion.Comunicacion;
-
 import datatypes.DatosManager;
 
-@Named
-@RequestScoped
-public class RegistroBB {
+@Named("registroBB")
+@ViewScoped
+public class RegistroBB implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private DatosManager datosmanager;
 	private String password;
 	private String passwordConfirm;
