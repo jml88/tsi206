@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import datatypes.DatosMinutoPartido;
 import excepciones.NoExisteEquipoExcepcion;
 import partido.LogicaSimulacion;
 import partido.PartidoControlador;
@@ -28,8 +29,8 @@ public class TimerSimularPartido {
 	@Inject
 	PartidoControlador cp;
 	
-	public void crearTimerSimularPartido(int idPartido,Calendar c){
-		ts.createTimer(c.getTime(), idPartido);
+	public void crearTimerSimularPartido(DatosMinutoPartido mp,Calendar c){
+		ts.createTimer(c.getTime(), mp);
 	}
 	
 	@Timeout
