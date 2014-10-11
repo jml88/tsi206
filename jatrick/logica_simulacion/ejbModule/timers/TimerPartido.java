@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import datatypes.DatosMinutoPartido;
 import datatypes.DatosPartido;
 import partido.PartidoControlador;
 import partidos.Partido;
@@ -40,7 +41,8 @@ public class TimerPartido {
 		List<Partido> partidos = pc.listPartidosFecha(new GregorianCalendar());
 		for(Partido p : partidos)
 		{
-			tsm.crearTimerSimularPartido(p.getCodigo(), p.getFechaHora());
+			DatosMinutoPartido dmp = new DatosMinutoPartido(0, p.getCodigo());
+			tsm.crearTimerSimularPartido(dmp, p.getFechaHora());
 		}
 		
 	}
