@@ -10,12 +10,12 @@ import partidos.Partido;
 public class LogicaSimulacion{
 	
 	//
-	public void simularPartido(Partido p){
+	private void simularPartido(Partido p){
 		//TODO Hace el sorteo de los minutos, tiene que crear un timer para la simulacion 
 	}
 	
 	//
-	public void simularJugada(Partido p){
+	private void simularJugada(Partido p){
 		//TODO Hace la logica de simular una jugada
 	}
 	

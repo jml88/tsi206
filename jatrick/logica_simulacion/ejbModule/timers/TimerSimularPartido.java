@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import partido.LogicaSimulacion;
 import partido.PartidoControlador;
 
 public class TimerSimularPartido {
@@ -20,15 +21,15 @@ public class TimerSimularPartido {
 	TimerService ts;
 	
 	@Inject
-	PartidoControlador pc;
+	LogicaSimulacion lsim;
 	
 	public void crearTimerSimularPartido(int idPartido,Calendar c){
-		
+		ts.createTimer(c.getTime(), idPartido);
 	}
 	
 	@Timeout
 	public void simularPartido(Timer t){
-		
+		lsim.
 	}
 
 }
