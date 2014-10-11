@@ -26,6 +26,9 @@ public class TimerPartido {
 	@Inject
 	PartidoControlador pc;
 	
+	@Inject
+	TimerSimularPartido tsm;
+	
 	///Crea timer periodico 
 	public void crearTimerPeriodico(int tiempo){
 		Timer t = ts.createIntervalTimer(new Date(), tiempo, null);
@@ -37,13 +40,8 @@ public class TimerPartido {
 		List<Partido> partidos = pc.listPartidosFecha(new GregorianCalendar());
 		for(Partido p : partidos)
 		{
-			ts.createTimer(p.getFechaHora().getTime(), p.getCodigo());
+			tsm.crearTimerSimularPartido(p.getCodigo(), p.getFechaHora());
 		}
-		
-	}
-	
-	private void crearTimerPartidoAmistoso()
-	{
 		
 	}
 
