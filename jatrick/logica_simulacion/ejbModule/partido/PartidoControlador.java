@@ -2,6 +2,7 @@ package partido;
 
 
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -31,7 +32,9 @@ public class PartidoControlador {
     
     //Debe devolver todos los partidos que se juegan el mismo dia de c
     public List<Partido> listPartidosFecha(Calendar c){
-    	throw new NotImplementedException();
+    	
+    	return em.createQuery("SELECT p FROM Partido p WHERE p.estado = POR_JUGAR and"
+    			+ "p.fechaHora = fecha",Partido.class).setParameter(1,c.getTime()).getResultList();
     }
     
     
