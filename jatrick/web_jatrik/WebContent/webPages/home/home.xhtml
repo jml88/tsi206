@@ -48,10 +48,11 @@
 				</p:dataTable>
 			</div>
 			<div id="botones">
-				<p:commandButton id="verAlineacion" value="Ver alineación" actionListener="#{homeBB.verAlineacion}" update="growl"/>
-				<p:commandButton id="jugarPartido" value="Jugar amistoso" actionListener="#{homeBB.jugarAmistoso}" update="growl"/>
+				<p:commandButton id="verAlineacion" value="Ver alineación" action="#{homeBB.verAlineacion}" update="growl"/>
+				<p:commandButton id="jugarAmistoso" value="Jugar amistoso" action="#{homeBB.jugarAmistoso}" update="growl"/>
 			</div>
 			<p:growl id="growl" life="2000"/>
 		</h:form>
+		<p:link outcome="/webPages/partidos/enviarOrdenesPartido.xhtml?faces-redirect=true" value="Alineaciones"/>
 	</ui:define>
 </ui:composition>
