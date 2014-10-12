@@ -41,7 +41,7 @@ public class TimerSimularPartido {
 		{
 			throw new NoExisteEquipoExcepcion("No existe equipo de id " + minutoDto.getIdPartido());
 		}
-		lsim.simular(p);
+		lsim.simular(p,minutoDto.getMinuto());
 	}
 
 }
