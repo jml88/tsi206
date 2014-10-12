@@ -2,6 +2,7 @@ package fabricas;
 
 import interfaces.IEquipoControlador;
 import interfaces.IJugadorControlador;
+import interfaces.IPartidoControlador;
 import interfaces.IUserControlador;
 
 import javax.ejb.Local;
@@ -14,5 +15,7 @@ public interface HomeFactory {
 	public IJugadorControlador getJugadorControlador();
 	
 	public IUserControlador getUserControlador();
+	
+	public IPartidoControlador getPartidoControlador();
 
 }

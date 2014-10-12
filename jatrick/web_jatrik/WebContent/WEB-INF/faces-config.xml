@@ -5,6 +5,7 @@
 	version="2.2">
 	
 	<navigation-rule>
+		<display-name>/login</display-name>
 		<from-view-id>/webPages/login/login.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>loginOK</from-outcome>
@@ -19,21 +20,36 @@
 		    <to-view-id>/webPages/registro/registro.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
 	<navigation-rule>
+		<display-name>/registro</display-name>
 		<from-view-id>/webPages/registro/registro.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>registerOK</from-outcome>
 			<to-view-id>/webPages/home/home.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
 	<navigation-rule>
-		<from-view-id>/welcome.xhtml</from-view-id>
+		<display-name>/home</display-name>
+		<from-view-id>/webPages/home/home.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>logoutOK</from-outcome>
-			<to-view-id>/login.xhtml</to-view-id>
+			<from-outcome>jugarAmistoso</from-outcome>
+			<to-view-id>/webPages/partidos/jugarAmistoso.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-		<navigation-rule>
+	
+	<navigation-rule>
+		<display-name>/jugarAmistoso</display-name>
+		<from-view-id>/webPages/partidos/jugarAmistoso.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>volver</from-outcome>
+			<to-view-id>/webPages/home/home.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<display-name>/admin</display-name>
 		<from-view-id>/admin.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome></from-outcome>
