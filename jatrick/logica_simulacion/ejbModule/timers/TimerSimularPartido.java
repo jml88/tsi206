@@ -17,7 +17,7 @@ import partidos.Partido;
 
 public class TimerSimularPartido {
 	
-	@PersistenceContext( unitName = "mongoUnit" ) 
+	@PersistenceContext( unitName = "jatrik" ) 
 	private EntityManager em;
 	
 	@Inject
