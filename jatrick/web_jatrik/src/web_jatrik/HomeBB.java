@@ -5,17 +5,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.naming.NamingException;
 
 import comunicacion.Comunicacion;
+
 import datatypes.DatosEquipo;
 import datatypes.DatosJugador;
 
 @Named("homeBB")
-@RequestScoped
+@ViewScoped
 public class HomeBB implements Serializable {
 	
 	@Inject
@@ -32,7 +32,7 @@ public class HomeBB implements Serializable {
 	private Set<DatosEquipo> otrosEquipos;
 	
 	public HomeBB() {
-		
+		super();
     }
 	
 	@PostConstruct
@@ -45,20 +45,11 @@ public class HomeBB implements Serializable {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		
 	}
 	
 	//NAVEGACIONES
 	public String jugarAmistoso() {
-		String result = "";
-		try {
-			this.otrosEquipos = Comunicacion.getInstance().getIEquipoControlador().obtenerEquiposSistema();
-			this.otrosEquipos.remove(equipo);
-			result = "jugarAmistoso";
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-		return result;
+		return "jugarAmistoso";
 	}
 	
 	public String verAlineacion() {

@@ -36,6 +36,9 @@ public class Equipo {
 	@OneToOne
 	private Alineacion alineacionDefecto;
 	
+	@OneToOne
+	private Estadio estadio;
+	
 	@Column(name = "CODPAIS")
 	private int codPais;
 	
@@ -90,6 +93,14 @@ public class Equipo {
 		this.alineacionDefecto = alineacionDefecto;
 	}
 	
+	public Estadio getEstadio() {
+		return estadio;
+	}
+
+	public void setEstadio(Estadio estadio) {
+		this.estadio = estadio;
+	}
+
 	public int getCodPais() {
 		return codPais;
 	}

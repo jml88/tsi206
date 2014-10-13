@@ -3,7 +3,7 @@ package web_jatrik;
 import java.io.IOException;
 import java.io.Serializable;
 
-import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import org.apache.shiro.SecurityUtils;
@@ -18,7 +18,7 @@ import comunicacion.Comunicacion;
 import datatypes.DatosManager;
 
 @Named("loginBB")
-@RequestScoped
+@ViewScoped
 public class LoginBB implements Serializable {
 
 	/**
