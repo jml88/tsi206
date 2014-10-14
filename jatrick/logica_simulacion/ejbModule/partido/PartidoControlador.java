@@ -8,7 +8,9 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
+import datatypes.EnumPartido;
 import partidos.Comentario;
 import partidos.ConfiguracionPartido;
 import partidos.Partido;
@@ -31,9 +33,15 @@ public class PartidoControlador {
     
     //Debe devolver todos los partidos que se juegan el mismo dia de c
     public List<Partido> listPartidosFecha(Calendar c){
-    	
-    	return em.createQuery("SELECT p FROM Partido p WHERE p.estado = POR_JUGAR and"
-    			+ "p.fechaHora = fecha",Partido.class).setParameter(1,c.getTime()).getResultList();
+    	Query q = em.createQuery("SELECT p FROM Partido p WHERE p.estado = 'POR_JUGAR' and "
+    			+ "p.fechaHora = :fecha");
+    	q.setParameter("fecha",c);
+    	return (List<Partido>)q.getResultList();
+    }
+    
+    public void partidoEnJuego(Partido p){
+    	p.setEstado(EnumPartido.JUGANDO);
+    	em.merge(p);
     }
     
     

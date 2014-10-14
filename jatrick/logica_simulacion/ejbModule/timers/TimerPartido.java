@@ -4,8 +4,13 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.annotation.Resource;
+import javax.ejb.EJB;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
+import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
 import javax.inject.Inject;
 
@@ -13,9 +18,11 @@ import partido.PartidoControlador;
 import partidos.Partido;
 import datatypes.DatosMinutoPartido;
 
+@Stateless
+@LocalBean
 public class TimerPartido {
 	
-	@Inject
+	@Resource
 	TimerService ts;
 	
 	@Inject
@@ -26,7 +33,7 @@ public class TimerPartido {
 	
 	///Crea timer periodico 
 	public void crearTimerPeriodico(int tiempo){
-		Timer t = ts.createIntervalTimer(new Date(), tiempo, null);
+		ts.createIntervalTimer(new Date(), tiempo, new TimerConfig());
 	}
 	
 	@Timeout
@@ -36,6 +43,7 @@ public class TimerPartido {
 		for(Partido p : partidos)
 		{
 			DatosMinutoPartido dmp = new DatosMinutoPartido(0, p.getCodigo());
+			pc.partidoEnJuego(p);
 			tsm.crearTimerSimularPartido(dmp, p.getFechaHora());
 		}
 		

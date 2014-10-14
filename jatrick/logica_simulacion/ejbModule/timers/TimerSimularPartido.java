@@ -2,6 +2,11 @@ package timers;
 
 import java.util.Calendar;
 
+import javax.annotation.Resource;
+import javax.ejb.EJB;
+import javax.ejb.LocalBean;
+import javax.ejb.Singleton;
+import javax.ejb.Stateless;
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
 import javax.ejb.TimerService;
@@ -9,18 +14,21 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import datatypes.DatosMinutoPartido;
-import excepciones.NoExisteEquipoExcepcion;
 import partido.LogicaSimulacion;
 import partido.PartidoControlador;
 import partidos.Partido;
+import datatypes.DatosMinutoPartido;
+import excepciones.NoExisteEquipoExcepcion;
 
+
+@Stateless
+@LocalBean
 public class TimerSimularPartido {
 	
 	@PersistenceContext( unitName = "jatrik" ) 
 	private EntityManager em;
 	
-	@Inject
+	@Resource
 	TimerService ts;
 	
 	@Inject

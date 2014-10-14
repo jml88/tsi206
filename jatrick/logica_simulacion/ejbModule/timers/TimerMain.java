@@ -1,6 +1,7 @@
 package timers;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
@@ -14,7 +15,7 @@ public class TimerMain {
 	
 	@PostConstruct
 	public void crearTimersPartido(){
-		tp.crearTimerPeriodico(5000);
+		tp.crearTimerPeriodico(10000);
 		
 	}
 

@@ -15,16 +15,16 @@ public class QuartzTest {
 
 
 
-	@PostConstruct
-	@Schedule(hour="*", minute="*", second="*/5", persistent=false)
-	public void run() {
-		System.out.println("llevetete!");
-	}
-	
-	@Timeout
-	public void timeout(Timer timer) {
-	    System.out.println("TimerBean: timeout occurred");
-	}
+//	@PostConstruct
+//	@Schedule(hour="*", minute="*", second="*/5", persistent=false)
+//	public void run() {
+//		System.out.println("llevetete!");
+//	}
+//	
+//	@Timeout
+//	public void timeout(Timer timer) {
+//	    System.out.println("TimerBean: timeout occurred");
+//	}
 
 
 	//	public static void main(String[] args) {
