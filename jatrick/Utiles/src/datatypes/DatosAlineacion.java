@@ -1,5 +1,6 @@
 package datatypes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -17,7 +18,7 @@ public class DatosAlineacion {
 	
 	private List<DatosJugador> defensas;
 	
-	private DatosJugador golero;
+	private List<DatosJugador> goleros;
 
 	/* suplentes por lesion */
 	@OneToOne
@@ -35,6 +36,15 @@ public class DatosAlineacion {
 	/* suplentes en general */
 	@OneToMany
 	private List<DatosJugador> suplentes;
+	
+	public DatosAlineacion(){
+		defecto = false;
+		goleros = new ArrayList<DatosJugador>();
+		delanteros = new ArrayList<DatosJugador>();
+		mediocampistas = new ArrayList<DatosJugador>();
+		defensas = new ArrayList<DatosJugador>();
+		suplentes = new ArrayList<DatosJugador>();
+	}
 
 	public List<DatosJugador> getDelanteros() {
 		return delanteros;
@@ -60,12 +70,12 @@ public class DatosAlineacion {
 		this.defensas = defensas;
 	}
 
-	public DatosJugador getGolero() {
-		return golero;
+	public List<DatosJugador> getGoleros() {
+		return goleros;
 	}
 
-	public void setGolero(DatosJugador golero) {
-		this.golero = golero;
+	public void setGoleros(List<DatosJugador> goleros) {
+		this.goleros = goleros;
 	}
 
 	public DatosJugador getLesionDelantero() {
@@ -114,6 +124,10 @@ public class DatosAlineacion {
 
 	public void setDefecto(boolean defecto) {
 		this.defecto = defecto;
+	}
+	
+	public void addGolero(DatosJugador golero){
+		goleros.add(golero);
 	}
 	
 	
