@@ -26,18 +26,21 @@ public class Comentario {
 	private Partido partido;
 	
 	private int minuto;
+	
+	private int nroComentario;
 
 	public Comentario() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Comentario(int id, String mensaje, Partido partido, int minuto) {
+	public Comentario(int id, String mensaje, Partido partido, int minuto,int nroComentario) {
 		super();
 		Id = id;
 		this.mensaje = mensaje;
 		this.partido = partido;
 		this.minuto = minuto;
+		this.nroComentario = nroComentario;
 	}
 
 	public String getMensaje() {
@@ -62,6 +65,14 @@ public class Comentario {
 
 	public void setMinuto(int minuto) {
 		this.minuto = minuto;
+	}
+
+	public int getNroComentario() {
+		return nroComentario;
+	}
+
+	public void setNroComentario(int nroComentario) {
+		this.nroComentario = nroComentario;
 	}
 	
 }
