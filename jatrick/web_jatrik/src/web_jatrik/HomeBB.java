@@ -49,7 +49,7 @@ public class HomeBB implements Serializable {
 	
 	//NAVEGACIONES
 	public String jugarAmistoso() {
-		return "jugarAmistoso";
+		return "/webPages/partidos/jugarAmistoso.xhtml?faces-redirect=true";
 	}
 	
 	public String verAlineacion() {

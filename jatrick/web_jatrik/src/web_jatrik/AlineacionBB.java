@@ -1,20 +1,15 @@
 package web_jatrik;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.primefaces.event.CloseEvent;
-import org.primefaces.event.DashboardReorderEvent;
 import org.primefaces.event.DragDropEvent;
-import org.primefaces.event.ToggleEvent;
-import org.primefaces.model.DashboardModel;
 
 import comunicacion.Comunicacion;
 
@@ -27,8 +22,6 @@ import datatypes.DatosJugador;
 public class AlineacionBB implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	private DashboardModel model;
 	
 	@Inject
 	SessionBB sesion;
@@ -54,24 +47,6 @@ public class AlineacionBB implements Serializable {
 		}
 		
 		datosAlineacion = new DatosAlineacion();
-		
-//		model = new DefaultDashboardModel();
-//		
-//		DashboardColumn column1 = new DefaultDashboardColumn();
-//		DashboardColumn column2 = new DefaultDashboardColumn();
-//		DashboardColumn column3 = new DefaultDashboardColumn();
-//
-//		column1.addWidget("sports");
-//        column1.addWidget("finance");
-//         
-//        column2.addWidget("lifestyle");
-//        column2.addWidget("weather");
-//         
-//        column3.addWidget("politics");
-// 
-//        model.addColumn(column1);
-//        model.addColumn(column2);
-//        model.addColumn(column3);
     }
 	 
     public int getCodEquipo() {
@@ -106,39 +81,80 @@ public class AlineacionBB implements Serializable {
 		this.datosAlineacion = datosAlineacion;
 	}
 	
-	public void onPlayerDroped(DragDropEvent ddEvent) {
+	public void onArqueroDroped(DragDropEvent ddEvent) {
         DatosJugador golero = ((DatosJugador) ddEvent.getData());
-  
-        datosAlineacion.addGolero(golero);
-        jugadores.remove(golero);
+        List<DatosJugador> goleros = datosAlineacion.getGoleros();
+        
+        if(goleros.isEmpty()){
+        	goleros.add(golero);
+            jugadores.remove(golero);
+        }
+        else{
+        	DatosJugador exGolero = goleros.get(0);
+        	goleros.remove(exGolero);
+        	jugadores.remove(golero);
+        	jugadores.add(exGolero);
+        	goleros.add(golero);
+        }
+        
     }
+	
+	public void onDefensaDroped(DragDropEvent ddEvent) {
+		DatosJugador defensa = ((DatosJugador) ddEvent.getData());
+		List<DatosJugador> defensas = datosAlineacion.getDefensas();
+		
+		if(defensas.size() < 5){
+			defensas.add(defensa);
+		    jugadores.remove(defensa);
+		}
+		else{
+			DatosJugador exDefensa = defensas.get(0);
+			defensas.remove(exDefensa);
+			jugadores.remove(defensa);
+			jugadores.add(exDefensa);
+			defensas.add(defensa);
+		}
+    }
+	
+	public void onMedioDroped(DragDropEvent ddEvent) {
+		DatosJugador medio = ((DatosJugador) ddEvent.getData());
+		List<DatosJugador> medios = datosAlineacion.getMediocampistas();
+		
+		if(medios.size() < 5){
+			medios.add(medio);
+		    jugadores.remove(medio);
+		}
+		else{
+			DatosJugador exMedio = medios.get(0);
+			medios.remove(exMedio);
+			jugadores.remove(medio);
+			jugadores.add(exMedio);
+			medios.add(medio);
+		}
+    }
+	
+	public void onDelanteroDroped(DragDropEvent ddEvent) {
+		DatosJugador delantero = ((DatosJugador) ddEvent.getData());
+		List<DatosJugador> delanteros = datosAlineacion.getDelanteros();
+		
+		if(delanteros.size() < 3){
+			delanteros.add(delantero);
+		    jugadores.remove(delantero);
+		}
+		else{
+			DatosJugador exDelantero = delanteros.get(0);
+			delanteros.remove(exDelantero);
+			jugadores.remove(delantero);
+			jugadores.add(exDelantero);
+			delanteros.add(delantero);
+		}
+    }
+	
+	public String enviarAlineación(){
+		
+		//TODO: setear alineación para el partido
+		
+		return "/webPages/home/home.xhtml?faces-redirect=true";
+	}
 
-	public void handleReorder(DashboardReorderEvent event) {
-        FacesMessage message = new FacesMessage();
-        message.setSeverity(FacesMessage.SEVERITY_INFO);
-        message.setSummary("Reordered: " + event.getWidgetId());
-        message.setDetail("Item index: " + event.getItemIndex() + ", Column index: " + event.getColumnIndex() + ", Sender index: " + event.getSenderColumnIndex());
-         
-        addMessage(message);
-    }
-     
-    public void handleClose(CloseEvent event) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Panel Closed", "Closed panel id:'" + event.getComponent().getId() + "'");
-         
-        addMessage(message);
-    }
-     
-    public void handleToggle(ToggleEvent event) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, event.getComponent().getId() + " toggled", "Status:" + event.getVisibility().name());
-         
-        addMessage(message);
-    }
-     
-    private void addMessage(FacesMessage message) {
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-     
-    public DashboardModel getModel() {
-        return model;
-    }
 }

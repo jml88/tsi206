@@ -2,6 +2,8 @@ package web_jatrik;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -32,7 +34,6 @@ public class JugarAmistosoBB implements Serializable {
 		this.equipoSelected = -1;
 		this.equipos = new HashSet<DatosEquipo>();
 		this.equiposItems = new SelectItem[this.equipos.size()];
-		this.equipoSeleccionado = null;
 	}
 	
 	@PostConstruct
@@ -90,4 +91,6 @@ public class JugarAmistosoBB implements Serializable {
 	public void setEquipoSeleccionado(DatosEquipo equipoSeleccionado) {
 		this.equipoSeleccionado = equipoSeleccionado;
 	}
+	
+	
 }

@@ -5,34 +5,41 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-	
+
 	<ui:define name="scripts">
 		<script type="text/javascript">
-
+			
 		</script>
 	</ui:define>
-	
+
 	<ui:define name="Principal">
 		<h:form id="form" prependId="false">
 			<div id="equipos">
-				<p:dataTable id="radioDT" var="equipo" value="#{jugarAmistosoBB.equipos}" rowKey="#{equipo.nombre}">
+				<p:dataTable id="radioDT" var="team"
+					value="#{jugarAmistosoBB.equipos}"
+					selection="#{jugarAmistosoBB.equipoSeleccionado}" rowKey="#{team.codigo}">
 					<f:facet name="header">
-						<p:outputLabel value="Equipos"/>
+						<p:outputLabel value="Equipos" />
 					</f:facet>
-					<p:column selectionMode="single" style="width:16px;text-align:center"/>
-			        <p:column headerText="Nombre">
-			            <h:outputText value="#{equipo.nombre}" />
-			        </p:column>
-			        <p:column headerText="Pais">
-			            <h:outputText value="#{equipo.codPais}" />
-			        </p:column>
-			    </p:dataTable>
+					<p:column selectionMode="single"/>
+					<p:column headerText="Codigo">
+						<h:outputText value="#{team.codigo}" />
+					</p:column>
+					<p:column headerText="Nombre">
+						<h:outputText value="#{team.nombre}" />
+					</p:column>
+					<p:column headerText="Pais">
+						<h:outputText value="#{team.codPais}" />
+					</p:column>
+				</p:dataTable>
 			</div>
 			<div id="botones">
-				<p:commandButton id="volver" value="Volver" action="#{jugarAmistosoBB.volver}" update="growl"/>
-				<p:commandButton id="jugarAmistoso" value="Jugar amistoso" action="#{jugarAmistosoBB.jugar}" update="growl"/>
+				<p:commandButton id="volver" value="Volver"
+					action="#{jugarAmistosoBB.volver}" update="growl" />
+				<p:commandButton id="jugarAmistoso" value="Jugar amistoso"
+					action="#{jugarAmistosoBB.jugar}" update="growl" />
 			</div>
-			<p:growl id="growl" life="2000"/>
+			<p:growl id="growl" life="2000" />
 		</h:form>
 	</ui:define>
 </ui:composition>
