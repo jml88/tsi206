@@ -1,7 +1,5 @@
 package partido;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,8 +10,6 @@ import javax.inject.Inject;
 import jugadores.Jugador;
 import partidos.ConfiguracionPartido;
 import partidos.Partido;
-import timers.TimerSimularPartido;
-import datatypes.DatosMinutoPartido;
 import datatypes.EnumPartido;
 import equipos.Alineacion;
 
@@ -21,8 +17,8 @@ import equipos.Alineacion;
 @Local
 public class LogicaSimulacion{
 	
-	@Inject
-	private TimerSimularPartido tsp;
+//	@Inject
+//	private TimerSimularPartido tsp;
 	
 	@Inject
 	PartidoControlador pc;
@@ -40,14 +36,9 @@ public class LogicaSimulacion{
 		return minutos;
 	}
 	//
-	private void simularPartido(Partido p){
-		List<Integer> minutos = this.minutosJugada();
-		for (Integer min : minutos){
-			Calendar fecha = new GregorianCalendar();
-			fecha = p.getFechaHora();
-			fecha.add(Calendar.MINUTE, min);
-			tsp.crearTimerSimularPartido(new DatosMinutoPartido(min, p.getCodigo()),fecha);
-		}
+	private List<Integer> simularPartido(Partido p){
+		return  this.minutosJugada();
+		
 	}
 	
 	//
@@ -135,14 +126,17 @@ public class LogicaSimulacion{
 		pc.crearComentario("se escapa por la punta y levanta el centro\n directo a las gradas, se ve que es de las escuela del futbol uruguayo ", p, minuto);
 	}
 	
-	public void simular(Partido p, int minuto)
+	public List<Integer> simular(Partido p, int minuto)
 	{
+		List<Integer> minutos = new LinkedList<Integer>();
 		if(p.getEstado().equals(EnumPartido.POR_JUGAR)){
-			this.simularPartido(p);
+			pc.partidoEnJuego(p);
+			minutos = this.simularPartido(p);
 		}
 		else if (p.getEstado().equals(EnumPartido.JUGANDO)){
 			this.simularJugada(p, minuto);
 		}
+		return minutos;
 	}
 	
 }

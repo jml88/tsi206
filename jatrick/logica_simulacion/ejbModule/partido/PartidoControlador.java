@@ -27,7 +27,7 @@ public class PartidoControlador {
 		
 	}
 	
-    public Partido find(Long id) {
+    public Partido find(int id) {
         return em.find(Partido.class, id);
     }
     
@@ -46,10 +46,10 @@ public class PartidoControlador {
     
     
     
-    public void crearPartido(){
-    	Partido p = new Partido();
-    	em.persist(p);
-    }
+//    public void crearPartido(){
+//    	Partido p = new Partido();
+//    	em.persist(p);
+//    }
     
     public void crearComentario(String mensaje, Partido partido, int minuto){
     	Comentario c = new Comentario();

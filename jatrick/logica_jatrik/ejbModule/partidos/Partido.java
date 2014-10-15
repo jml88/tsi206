@@ -23,6 +23,17 @@ import equipos.Equipo;
 public class Partido {
 
 	public static final String nombreTabla = "PARTIDOS";
+	
+	Partido(){
+		
+	}
+	
+	Partido(Equipo local, Equipo visitante, Calendar fecha){
+		this.local = local;
+		this.visitante = visitante;
+		this.fechaHora = fecha;
+		this.estado = EnumPartido.POR_JUGAR;
+	}
 
 	@Id
 	@Column(name = "CODPARTIDO")
