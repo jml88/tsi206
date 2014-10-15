@@ -22,7 +22,7 @@
 						<p:outputLabel value="Partido" />
 					</f:facet>
 					<p:column headerText="Fecha">
-						<h:outputText value="#{partido.fechaHora}" />
+						<h:outputText value="#{partido.fechaHora}" converter="DateConverter" />
 					</p:column>
 					<p:column headerText="Local">
 						<h:outputText value="#{verPartidosBB.nombresEquipos[partido.equipoLocalId]}" />
