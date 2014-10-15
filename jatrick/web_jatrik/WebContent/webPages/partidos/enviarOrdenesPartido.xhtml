@@ -5,45 +5,109 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-
+	
 	<ui:define name="scripts">
 		<script type="text/javascript">
-
+			function handleDrop(event, ui) {
+		        var droppedCar = ui.draggable;
+					 
+		        droppedCar.fadeOut('fast');
+		    }
 		</script>
 	</ui:define>
-
+	
 	<ui:define name="Principal">
-			<div style="height: 500px">
-				<h:form>
-					<p:growl id="msgs" showDetail="true" />
-
-					<p:dashboard id="board" model="#{alineacionBB.model}">
-						<p:ajax event="reorder" listener="#{alineacionBB.handleReorder}"
-							update="msgs" />
-
-						<p:panel id="sports" header="Sports">
-							<h:outputText value="Sports Content" />
+		<h:form id="alineacionForm">
+			<div>
+				<div style="float: left;" align="center">
+					<p:dataGrid id="jugadoresDisponiblesList" var="jug"	value="#{alineacionBB.jugadores}" columns="1">
+						<p:panel id="pnl" style="text-align:center">
+							#{jug.nombre} #{jug.apellido1} #{jug.apellido2}
 						</p:panel>
-
-						<p:panel id="finance" header="Finance">
-							<h:outputText value="Finance Content" />
-						</p:panel>
-
-						<p:panel id="lifestyle" header="Lifestyle">
-							<h:outputText value="Lifestyle Content" />
-						</p:panel>
-
-						<p:panel id="weather" header="Weather">
-							<h:outputText value="Weather Content" />
-						</p:panel>
-
-						<p:panel id="politics" header="Politics">
-							<h:outputText value="Politics Content" />
-						</p:panel>
-					</p:dashboard>
-
-					<div style="clear: both" />
-				</h:form>
+						<p:draggable for="pnl" revert="true" stack=".ui-panel"/>
+					</p:dataGrid>
+				</div>
+				<div style="float: left; margin: 20px" align="center">
+					<p:fieldset id="jugadoresArquero">
+					<p:outputPanel id="dropAreaArquero">
+					<p:dataGrid syle="margin: 30px" id="jugadoresArqueroList" var="arqueros" value="#{alineacionBB.datosAlineacion.goleros}">
+						<f:facet name="header">
+							<p:row>
+								<p:column>Arquero</p:column>
+							</p:row>
+						</f:facet>
+						<p:row>
+							<p:column>
+								<p:panel id="arquero">#{arqueros.nombre}</p:panel>
+							</p:column>
+						</p:row>
+					</p:dataGrid>
+					</p:outputPanel>
+					</p:fieldset>
+					<p:fieldset id="jugadoresDefensa">
+					<p:outputPanel id="dropAreaDefensa">
+					<p:dataGrid syle="margin: 30px" id="jugadoresDefensaList" var="defensas" value="#{alineacionBB.datosAlineacion.defensas}">
+						<f:facet name="header">
+							<p:row>
+								<p:column>Defensas</p:column>
+							</p:row>
+						</f:facet>
+						<p:row>
+							<p:column>
+								<p:panel id="defensa">#{defensas.nombre}</p:panel>
+							</p:column>
+						</p:row>
+					</p:dataGrid>
+					</p:outputPanel>
+					</p:fieldset>
+					<p:fieldset id="jugadoresMedio">
+					<p:outputPanel id="dropAreaMedio">
+					<p:dataGrid syle="margin: 30px" id="jugadoresMedioList" var="medios" value="#{alineacionBB.datosAlineacion.mediocampistas}">
+						<f:facet name="header">
+							<p:row>
+								<p:column>Medios</p:column>
+							</p:row>
+						</f:facet>
+						<p:row>
+							<p:column>
+								<p:panel id="medio">#{medios.nombre}</p:panel>
+							</p:column>
+						</p:row>
+					</p:dataGrid>
+					</p:outputPanel>
+					</p:fieldset>
+					<p:fieldset id="jugadoresDelantera">
+					<p:outputPanel id="dropAreaDelantera">
+					<p:dataGrid syle="margin: 30px" id="jugadoresDelanteraList" var="delanteros" value="#{alineacionBB.datosAlineacion.delanteros}">
+						<f:facet name="header">
+							<p:row>
+								<p:column>Delanteros</p:column>
+							</p:row>
+						</f:facet>
+						<p:row>
+							<p:column>
+								<p:panel id="delatero">#{delanteros.nombre}</p:panel>
+							</p:column>
+						</p:row>
+					</p:dataGrid>
+					</p:outputPanel>
+					</p:fieldset>
+				</div>
+				<div style="clear: both"></div>
 			</div>
+		    <p:droppable for="jugadoresArquero" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="jugadoresDisponiblesList" onDrop="handleDrop">
+        		<p:ajax listener="#{alineacionBB.onArqueroDroped}" update="dropAreaArquero jugadoresArqueroList jugadoresDisponiblesList" />
+    		</p:droppable>
+    		<p:droppable for="jugadoresDefensa" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="jugadoresDisponiblesList" onDrop="handleDrop">
+        		<p:ajax listener="#{alineacionBB.onDefensaDroped}" update="dropAreaDefensa jugadoresDefensaList jugadoresDisponiblesList" />
+    		</p:droppable>
+    		<p:droppable for="jugadoresMedio" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="jugadoresDisponiblesList" onDrop="handleDrop">
+        		<p:ajax listener="#{alineacionBB.onMedioDroped}" update="dropAreaMedio jugadoresMedioList jugadoresDisponiblesList" />
+    		</p:droppable>
+    		<p:droppable for="jugadoresDelantera" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="jugadoresDisponiblesList" onDrop="handleDrop">
+        		<p:ajax listener="#{alineacionBB.onDelanteroDroped}" update="dropAreaDelantera jugadoresDelanteraList jugadoresDisponiblesList" />
+    		</p:droppable>
+    		<p:commandButton value="Enviar Alineación" action="#{alineacionBB.enviarAlineación}"></p:commandButton>
+		</h:form>
 	</ui:define>
 </ui:composition>

@@ -2,7 +2,6 @@ package datatypes;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -124,12 +123,6 @@ public class DatosAlineacion {
 
 	public void setDefecto(boolean defecto) {
 		this.defecto = defecto;
-	}
-	
-	public void addGolero(DatosJugador golero){
-		goleros.add(golero);
-	}
-	
-	
+	}	
 
 }
