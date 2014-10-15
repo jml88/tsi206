@@ -32,16 +32,17 @@ public class PartidoControlador implements IPartidoControlador {
 		return em.find(Partido.class, codPartido);
 	}
 	
-	public List<DatosComentario> comentarioPartido(int codPartido, int nroComentario) throws NoExistePartidoExepcion{
+	public List<DatosComentario> obtenerComentariosPartido(int codPartido, int nroComentario) throws NoExistePartidoExepcion{
 		
 		Partido p = em.find(Partido.class,codPartido );
 		if(p == null){
 			throw new NoExistePartidoExepcion("No existe partido de id " + codPartido);
 		}
-		List<Comentario> comentarios = em.createQuery("SELECT c FROM Comentario c Where c.nroComentario > nroComentario"
-				+ "and c.Partido = Partido", Comentario.class)
-				.setParameter(1, nroComentario)
-				.setParameter(2, p)
+		@SuppressWarnings("unchecked")
+		List<Comentario> comentarios = (List<Comentario>)em.createQuery("SELECT c FROM Comentario c Where c.nroComentario > :nroComentario"
+				+ "and c.Partido = :Partido")
+				.setParameter("nroComentario", nroComentario)
+				.setParameter("Partido", p)
 				.getResultList();
 		List<DatosComentario> ret = new LinkedList<DatosComentario>();
 		for(Comentario c : comentarios){
