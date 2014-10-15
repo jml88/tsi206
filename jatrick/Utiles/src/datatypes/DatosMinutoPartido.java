@@ -11,7 +11,7 @@ public class DatosMinutoPartido implements Serializable {
 	
 	private int minuto;
 	
-	private long idPartido;
+	private int idPartido;
 
 	public int getMinuto() {
 		return minuto;
@@ -21,15 +21,15 @@ public class DatosMinutoPartido implements Serializable {
 		this.minuto = minuto;
 	}
 
-	public long getIdPartido() {
+	public int getIdPartido() {
 		return idPartido;
 	}
 
-	public void setIdPartido(long idPartido) {
+	public void setIdPartido(int idPartido) {
 		this.idPartido = idPartido;
 	}
 
-	public DatosMinutoPartido(int minuto, long idPartido) {
+	public DatosMinutoPartido(int minuto, int idPartido) {
 		super();
 		this.minuto = minuto;
 		this.idPartido = idPartido;

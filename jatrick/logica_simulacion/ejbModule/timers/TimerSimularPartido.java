@@ -1,11 +1,11 @@
 package timers;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.annotation.Resource;
-import javax.ejb.EJB;
 import javax.ejb.LocalBean;
-import javax.ejb.Singleton;
 import javax.ejb.Stateless;
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
@@ -29,17 +29,35 @@ public class TimerSimularPartido {
 	private EntityManager em;
 	
 	@Resource
-	TimerService ts;
+	private TimerService ts;
 	
 	@Inject
-	LogicaSimulacion lsim;
+	private LogicaSimulacion lsim;
 	
 	@Inject
-	PartidoControlador cp;
+	private PartidoControlador cp;
 	
 	public void crearTimerSimularPartido(DatosMinutoPartido mp,Calendar c){
 		ts.createTimer(c.getTime(), mp);
 	}
+	
+	private void crearPartido(List<Integer> minutos, Partido p){
+		
+			for (Integer min : minutos){
+				Calendar fecha = new GregorianCalendar();
+				fecha = p.getFechaHora();
+				fecha.add(Calendar.MINUTE, min);
+				crearTimerSimularPartido(new DatosMinutoPartido(min, p.getCodigo()),fecha);
+			}
+			if (p.getAlineacionLocal() == null){
+				p.setAlineacionLocal(p.getLocal().getAlineacionDefecto());
+			}
+			if (p.getAlineacionVisitante() == null){
+				p.setAlineacionVisitante(p.getVisitante().getAlineacionDefecto());
+			}
+			em.merge(p);
+	}
+	
 	
 	@Timeout
 	public void simularPartido(Timer t) throws NoExisteEquipoExcepcion{
@@ -49,7 +67,10 @@ public class TimerSimularPartido {
 		{
 			throw new NoExisteEquipoExcepcion("No existe equipo de id " + minutoDto.getIdPartido());
 		}
-		lsim.simular(p,minutoDto.getMinuto());
+		List<Integer> minutos = lsim.simular(p,minutoDto.getMinuto());
+		if (minutos.size() > 0){
+			crearPartido(minutos, p);
+		}
 	}
 
 }

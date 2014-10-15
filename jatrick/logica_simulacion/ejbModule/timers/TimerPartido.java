@@ -5,7 +5,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.Timeout;
@@ -43,7 +42,6 @@ public class TimerPartido {
 		for(Partido p : partidos)
 		{
 			DatosMinutoPartido dmp = new DatosMinutoPartido(0, p.getCodigo());
-			pc.partidoEnJuego(p);
 			tsm.crearTimerSimularPartido(dmp, p.getFechaHora());
 		}
 		

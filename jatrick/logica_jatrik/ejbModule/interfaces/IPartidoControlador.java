@@ -3,7 +3,6 @@ package interfaces;
 import java.util.List;
 
 import javax.ejb.Remote;
-
 import datatypes.DatosComentario;
 import excepciones.NoExistePartidoExepcion;
 import partidos.Partido;
