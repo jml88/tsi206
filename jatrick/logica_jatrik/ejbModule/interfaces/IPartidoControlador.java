@@ -2,11 +2,13 @@ package interfaces;
 
 import java.util.List;
 import java.util.Calendar;
+import java.util.Set;
 
 import javax.ejb.Remote;
 
 import datatypes.DatosAlineacion;
 import datatypes.DatosComentario;
+import datatypes.DatosPartido;
 import excepciones.NoExistePartidoExepcion;
 import partidos.Partido;
 
@@ -21,5 +23,7 @@ public interface IPartidoControlador {
 	public List<DatosComentario> obtenerComentariosPartido(int codPartido, int nroComentario) throws NoExistePartidoExepcion;
 
 	void setAlineaciónPartido(DatosAlineacion alineacion, int idPartido, int idEquipo);
+	
+	public Set<DatosPartido> obtenerPartidosUsuario(int codEquipo);
 
 }

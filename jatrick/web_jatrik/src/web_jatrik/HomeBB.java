@@ -53,7 +53,11 @@ public class HomeBB implements Serializable {
 	}
 	
 	public String verAlineacion() {
-		return "verAlineacion";
+		return "/webPages/partidos/enviarOrdenesPartido.xhtml?faces-redirect=true";
+	}
+	
+	public String verPartidos() {
+		return "/webPages/partidos/verPartidos.xhtml?faces-redirect=true";
 	}
 
 	//GETS Y SETS

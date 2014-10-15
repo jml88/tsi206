@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="scripts">
+		<script type="text/javascript">
+
+		</script>
+	</ui:define>
+	
+	<ui:define name="Principal">
+		<h:form id="form" prependId="false">
+			<div id="partidos">
+				<p:dataTable id="radioDT" var="partido"
+					value="#{verPartidosBB.partidos}"
+					selection="#{verPartidosBB.partidoSeleccionado}" rowKey="#{partido.codigo}">
+					<f:facet name="header">
+						<p:outputLabel value="Partido" />
+					</f:facet>
+					<p:column headerText="Fecha">
+						<h:outputText value="#{partido.fechaHora}" />
+					</p:column>
+					<p:column headerText="Local">
+						<h:outputText value="#{verPartidosBB.nombresEquipos[partido.equipoLocalId]}" />
+					</p:column>
+					<p:column headerText="Visitante">
+						<h:outputText value="#{verPartidosBB.nombresEquipos[partido.equipoVisitanteId]}" />
+					</p:column>
+					<p:column headerText="Editar alineacion">
+						<p:commandButton value="Editar" action="#{verPartidosBB.agregarAlineacion}">
+							<f:setPropertyActionListener value="#{partido}" target="#{verPartidosBB.partidoSeleccionado}"/>
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</div>
+			<div id="botones">
+				<p:commandButton id="volver" value="Volver" action="#{verPartidosBB.volver}"/>
+			</div>
+		
+		
+		</h:form>
+	</ui:define>
+</ui:composition>

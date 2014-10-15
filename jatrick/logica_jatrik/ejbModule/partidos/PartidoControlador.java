@@ -4,6 +4,7 @@ package partidos;
 import datatypes.DatosAlineacion;
 import datatypes.DatosComentario;
 import datatypes.DatosJugador;
+import datatypes.DatosPartido;
 import equipos.Alineacion;
 import equipos.Equipo;
 import excepciones.NoExistePartidoExepcion;
@@ -14,14 +15,17 @@ import interfaces.IPartidoControlador;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import jugadores.Jugador;
 
@@ -125,6 +129,20 @@ public class PartidoControlador implements IPartidoControlador {
 			partido.setAlineacionVisitante(alineacion);
 		
 		em.merge(partido);
+	}
+	
+	@Override
+	public Set<DatosPartido> obtenerPartidosUsuario(int codEquipo) {
+		Set<DatosPartido> result = new HashSet<DatosPartido>();
+		String consulta = "SELECT p FROM Partido p WHERE p.local.codigo = :codEquipo OR p.visitante.codigo = :codEquipo";
+		Query query = em.createQuery(consulta);
+		query.setParameter("codEquipo", codEquipo);
+		for (Object o : query.getResultList()) {
+			Partido p = (Partido)o;
+			DatosPartido dp = p.getDatos();
+			result.add(dp);
+		}
+		return result;
 	}
 	
 }

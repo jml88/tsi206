@@ -1,11 +1,16 @@
 package datatypes;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 
-public class DatosPartido {
+public class DatosPartido implements Serializable{
 	
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private int codigo;
 	
 	private Calendar fechaHora;
