@@ -1,15 +1,21 @@
 package partidos;
 
 
-import java.util.LinkedList;
-
+import datatypes.DatosAlineacion;
+import datatypes.DatosComentario;
+import datatypes.DatosJugador;
+import equipos.Alineacion;
 import equipos.Equipo;
+import excepciones.NoExistePartidoExepcion;
 import fabricas.HomeFactory;
-
-import java.util.Calendar;
-import java.util.List;
-
+import interfaces.IEquipoControlador;
+import interfaces.IJugadorControlador;
 import interfaces.IPartidoControlador;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -17,9 +23,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import datatypes.DatosComentario;
-import excepciones.NoExisteEquipoExcepcion;
-import excepciones.NoExistePartidoExepcion;
+import jugadores.Jugador;
 
 @Stateless
 @LocalBean
@@ -64,6 +68,63 @@ public class PartidoControlador implements IPartidoControlador {
 		
 		return ret;
 		
+	}
+	
+	@Override
+	public void setAlineaciónPartido(DatosAlineacion datosAlineacion, int idPartido, int idEquipo){
+		IJugadorControlador ijc = hf.getJugadorControlador();
+		IEquipoControlador iec = hf.getEquipoControlador();
+		
+		Partido partido = this.findPartido(idPartido);
+		
+		List<Jugador> delanteros = new ArrayList<Jugador>();
+		List<Jugador> defensas = new ArrayList<Jugador>();
+		List<Jugador> mediocampistas = new ArrayList<Jugador>();
+		List<Jugador> suplentes = new ArrayList<Jugador>();
+		
+		Jugador golero = null;
+		Jugador lesionDelantero = null;
+		Jugador lesionMediocampistas = null;
+		Jugador lesionDefensas = null;
+		Jugador lesionGolero = null;
+		
+		if(!datosAlineacion.getGoleros().isEmpty())
+			golero = ijc.findJugador(datosAlineacion.getGoleros().get(0).getCodigo());
+		
+		if(datosAlineacion.getLesionDelantero() != null)
+			lesionDelantero = ijc.findJugador(datosAlineacion.getLesionDelantero().getCodigo());
+		
+		if(datosAlineacion.getLesionMediocampistas() != null)
+			lesionMediocampistas = ijc.findJugador(datosAlineacion.getLesionMediocampistas().getCodigo());
+		
+		if(datosAlineacion.getLesionDefensas() != null)
+			lesionDefensas = ijc.findJugador(datosAlineacion.getLesionDefensas().getCodigo());
+		
+		if(datosAlineacion.getLesionGolero() != null)
+			lesionGolero = ijc.findJugador(datosAlineacion.getLesionGolero().getCodigo());
+		boolean defecto = datosAlineacion.isDefecto();
+		
+		for (DatosJugador datosJugador : datosAlineacion.getDefensas()) {
+			defensas.add(ijc.findJugador(datosJugador.getCodigo()));
+		}
+		for (DatosJugador datosJugador : datosAlineacion.getMediocampistas()) {
+			mediocampistas.add(ijc.findJugador(datosJugador.getCodigo()));
+		}
+		for (DatosJugador datosJugador : datosAlineacion.getDelanteros()) {
+			delanteros.add(ijc.findJugador(datosJugador.getCodigo()));
+		}
+		for (DatosJugador datosJugador : datosAlineacion.getSuplentes()) {
+			suplentes.add(ijc.findJugador(datosJugador.getCodigo()));
+		}
+		
+		int codAlineacion = iec.crearAlineacion(delanteros, mediocampistas, defensas, golero, lesionDelantero, lesionMediocampistas, lesionDefensas, lesionGolero, suplentes, defecto);
+		Alineacion alineacion = iec.findAlineacion(codAlineacion);
+		if (partido.getLocal().getCodigo() == idEquipo)
+			partido.setAlineacionLocal(alineacion);
+		else if(partido.getVisitante().getCodigo() == idEquipo)
+			partido.setAlineacionVisitante(alineacion);
+		
+		em.merge(partido);
 	}
 	
 }

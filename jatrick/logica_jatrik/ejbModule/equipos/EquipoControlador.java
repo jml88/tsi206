@@ -5,6 +5,7 @@ import interfaces.IEquipoControlador;
 import interfaces.IJugadorControlador;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.ejb.Stateless;
@@ -119,6 +120,23 @@ public class EquipoControlador implements IEquipoControlador{
 			result.add(j.getDatos());
 		}
 		return result;
+	}
+	
+	@Override
+	public int crearAlineacion(List<Jugador> delanteros, List<Jugador> mediocampistas,
+			List<Jugador> defensas, Jugador golero, Jugador lesionDelantero,
+			Jugador lesionMediocampistas, Jugador lesionDefensas,
+			Jugador lesionGolero, List<Jugador> suplentes, boolean defecto){
+		
+		Alineacion alineacion = new Alineacion(delanteros, mediocampistas, defensas, golero, lesionDelantero, lesionMediocampistas, lesionDefensas, lesionGolero, suplentes, defecto);
+		em.persist(alineacion);
+		return alineacion.getCodigo();
+		
+	}
+	
+	@Override
+	public Alineacion findAlineacion(int codigoAlineacion) {
+		return em.find(Alineacion.class, codigoAlineacion);
 	}
 
 }

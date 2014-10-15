@@ -8,11 +8,12 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.naming.NamingException;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.DragDropEvent;
 
 import comunicacion.Comunicacion;
-
 import datatypes.DatosAlineacion;
 import datatypes.DatosEquipo;
 import datatypes.DatosJugador;
@@ -27,6 +28,7 @@ public class AlineacionBB implements Serializable {
 	SessionBB sesion;
 	
 	private int codEquipo;
+	private int idPartido;
 	private DatosEquipo equipo;
 	private Set<DatosJugador> jugadores;
 	private DatosAlineacion datosAlineacion;
@@ -46,6 +48,8 @@ public class AlineacionBB implements Serializable {
 			ex.printStackTrace();
 		}
 		
+		RequestContext context = RequestContext.getCurrentInstance();
+		idPartido = (int)context.getAttributes().get("idPartido");
 		datosAlineacion = new DatosAlineacion();
     }
 	 
@@ -55,6 +59,14 @@ public class AlineacionBB implements Serializable {
     
     public void setCodEquipo(int codEquipo) {
 		this.codEquipo = codEquipo;
+	}
+
+	public int getIdPartido() {
+		return idPartido;
+	}
+
+	public void setIdPartido(int idPartido) {
+		this.idPartido = idPartido;
 	}
 
 	public DatosEquipo getEquipo() {
@@ -152,7 +164,12 @@ public class AlineacionBB implements Serializable {
 	
 	public String enviarAlineación(){
 		
-		//TODO: setear alineación para el partido
+		try {
+			Comunicacion.getInstance().getIPartidoControlador().setAlineaciónPartido(datosAlineacion, idPartido, codEquipo);
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return "/webPages/home/home.xhtml?faces-redirect=true";
 	}

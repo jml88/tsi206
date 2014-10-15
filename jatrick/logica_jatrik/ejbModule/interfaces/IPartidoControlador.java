@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Calendar;
 
 import javax.ejb.Remote;
+
+import datatypes.DatosAlineacion;
 import datatypes.DatosComentario;
 import excepciones.NoExistePartidoExepcion;
 import partidos.Partido;
@@ -17,5 +19,7 @@ public interface IPartidoControlador {
 	public Partido findPartido(int codPartido);
 	
 	public List<DatosComentario> obtenerComentariosPartido(int codPartido, int nroComentario) throws NoExistePartidoExepcion;
+
+	void setAlineaciónPartido(DatosAlineacion alineacion, int idPartido, int idEquipo);
 
 }
