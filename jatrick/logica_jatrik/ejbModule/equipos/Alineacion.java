@@ -29,13 +29,13 @@ public class Alineacion {
 	private boolean alineacionDefecto;
 
 	//TODO averiguar si se puede limitar la cantidad de 
-	@OneToMany(cascade = {CascadeType.PERSIST})
+	@OneToMany
 	private List<Jugador> delanteros;
 	
-	@OneToMany(cascade = {CascadeType.PERSIST})
+	@OneToMany
 	private List<Jugador> mediocampistas;
 	
-	@OneToMany(cascade = {CascadeType.PERSIST})
+	@OneToMany
 	private List<Jugador> defensas;
 	
 	@OneToOne
@@ -55,7 +55,7 @@ public class Alineacion {
 	private Jugador lesionGolero;
 
 	/* suplentes en general */
-	@OneToMany(cascade = {CascadeType.PERSIST})
+	@OneToMany
 	private List<Jugador> suplentes;
 	
 	public Alineacion() {
