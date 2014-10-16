@@ -61,9 +61,9 @@ public class PartidoControlador implements IPartidoControlador {
 		}
 		@SuppressWarnings("unchecked")
 		List<Comentario> comentarios = (List<Comentario>)em.createQuery("SELECT c FROM Comentario c Where c.nroComentario > :nroComentario"
-				+ "and c.Partido = :Partido")
+				+ " and c.partido.codigo = :Partido order by c.minuto asc")
 				.setParameter("nroComentario", nroComentario)
-				.setParameter("Partido", p)
+				.setParameter("Partido", p.getCodigo())
 				.getResultList();
 		List<DatosComentario> ret = new LinkedList<DatosComentario>();
 		for(Comentario c : comentarios){

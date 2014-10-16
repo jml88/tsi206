@@ -93,6 +93,7 @@ public class LogicaSimulacion{
 				disparo,   se   debe   determinar   de   alguna   forma   (puede   ser   aleatoria),   cual   de   todos   es   el   que  
 				efectivamente realiza el tiro a gol. La forma de determinar este jugador es libre a cada grupo.  
 				*/
+		Math.random();
 		return 0;
 	}
 	
@@ -114,18 +115,28 @@ public class LogicaSimulacion{
 
 		Alineacion alineacionLocal = p.getAlineacionLocal();
 		Alineacion alineacionVisitante = p.getAlineacionVisitante();
-//		long probJGL = probabilidadJugadaGol(alineacionLocal,alineacionVisitante);
-//		long probJGV = probabilidadJugadaGol(alineacionVisitante,alineacionLocal);
+		long probJGL = probabilidadJugadaGol(alineacionLocal,alineacionVisitante);
+		long probJGV = probabilidadJugadaGol(alineacionVisitante,alineacionLocal);
 		double prob = Math.random();
-		boolean chanceLocal = true;//probJGL + prob > probJGV + (1- prob);
-//		if (chanceLocal){
-//			probabilidadGol(alineacionLocal,alineacionVisitante.getGolero());
-//		}
-//		else{
-//			probabilidadGol(alineacionVisitante,alineacionLocal.getGolero());
-//		}
+		boolean chanceLocal = probJGL + prob > probJGV + (1- prob);
+		if (chanceLocal){
+			if (probabilidadGol(alineacionLocal,alineacionVisitante.getGolero()) > 0.7){
+				pc.crearComentario("Pared al borde del área para " + p.getLocal().getNombre() + "  Chuta y... GOOOOOLLLLL!!	", p, minuto);	
+			}
+			else{
+				pc.crearComentario("se escapa por la punta y levanta el centro\n directo a las gradas, se ve que es de las escuela del futbol uruguayo ", p, minuto);
+			}
+		}
+		else{
+			if (probabilidadGol(alineacionVisitante,alineacionLocal.getGolero()) > 0.7){
+				pc.crearComentario("Despiste en el area aprovechado por el ataque, GO GO GO GOOOLLLL!!", p, minuto);	
+			}
+			else{
+				pc.crearComentario("se escapa por la punta y levanta el centro\n directo a las gradas, se ve que es de las escuela del futbol uruguayo ", p, minuto);		
+			}
+		}
 		
-		pc.crearComentario("se escapa por la punta y levanta el centro\n directo a las gradas, se ve que es de las escuela del futbol uruguayo ", p, minuto);
+		
 	}
 	
 	public List<Integer> simular(Partido p, int minuto)

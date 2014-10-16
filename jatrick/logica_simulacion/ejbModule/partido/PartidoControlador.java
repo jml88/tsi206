@@ -52,10 +52,17 @@ public class PartidoControlador {
 //    }
     
     public void crearComentario(String mensaje, Partido partido, int minuto){
+    	Query q = em.createQuery("select max(c.nroComentario) from Comentario c");
+    	List<Integer> max = (List<Integer>)q.getResultList();
+    	int maximo = 1;
+    	if (max.size() != 0 && max.get(0)!= null){
+    		maximo = max.get(0) +1;
+    	};
     	Comentario c = new Comentario();
     	c.setMensaje(mensaje);
     	c.setPartido(partido);
     	c.setMinuto(minuto);
+    	c.setNroComentario(maximo);
     	em.persist(c);
     }
 	

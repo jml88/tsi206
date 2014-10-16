@@ -41,7 +41,7 @@ public class MinutoAMinutoBB implements Serializable{
 	public void init(){
 		try{
 			FacesContext faces = FacesContext.getCurrentInstance();
-			datosPartido = (DatosPartido)faces.getExternalContext().getRequestMap().get("datosPartido");
+			datosPartido = (DatosPartido)faces.getExternalContext().getApplicationMap().get("DatosPartido");
 			equipoLocal = Comunicacion.getInstance().getIEquipoControlador().obtenerEquipo(datosPartido.getEquipoLocalId());
 			equipoVisitante = Comunicacion.getInstance().getIEquipoControlador().obtenerEquipo(datosPartido.getEquipoVisitanteId());
 			numeroComentario = 0;
@@ -56,8 +56,12 @@ public class MinutoAMinutoBB implements Serializable{
 	public void getComentariosDePartido(){
 		try{
 			List<DatosComentario> comentarios = Comunicacion.getInstance().getIPartidoControlador().obtenerComentariosPartido(datosPartido.getCodigo(), numeroComentario);
-			comentarios.add(new DatosComentario(1, "mensaje", 1, 1, 5));
+//			comentarios.add(new DatosComentario(1, "mensaje", 1, 1, 5));
+			
 			for(DatosComentario c: comentarios){
+				if(numeroComentario < c.getNroComentario()){
+					numeroComentario = c.getNroComentario();
+				}
 				comentariosPartido.add(c);
 			}
 		} catch (NoExistePartidoExepcion e) {
