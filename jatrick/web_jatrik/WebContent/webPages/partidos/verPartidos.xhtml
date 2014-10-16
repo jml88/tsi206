@@ -35,6 +35,11 @@
 							<f:setPropertyActionListener value="#{partido}" target="#{verPartidosBB.partidoSeleccionado}"/>
 						</p:commandButton>
 					</p:column>
+					<p:column>
+						<p:commandButton value="Ver en vivo" action="#{verPartidosBB.verPartidoEnVivo}">
+							<f:setPropertyActionListener value="#{partido}" target="#{verPartidosBB.partidoSeleccionado}"/>
+						</p:commandButton>
+					</p:column>
 				</p:dataTable>
 			</div>
 			<div id="botones">

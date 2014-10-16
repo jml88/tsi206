@@ -64,6 +64,15 @@ public class VerPartidosBB implements Serializable {
 		return result;
 	}
 	
+	public String verPartidoEnVivo() {
+		String result = "";
+		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+		context.getApplicationMap().put("DatosPartido", this.partidoSeleccionado);
+		result = "/webPages/partido/minutoAMinuto.xhtml?faces-redirect=true";
+		return result;
+	}
+	
+	
 	public String volver() {
 		return "/webPages/home/home.xhtml?faces-redirect=true";
 	}

@@ -39,6 +39,14 @@ public class JugarAmistosoBB implements Serializable {
 	public void init() {
 		try {
 			this.equipos = Comunicacion.getInstance().getIEquipoControlador().obtenerEquiposSistema();
+			DatosEquipo miEquipo = null;
+			for (DatosEquipo de : this.equipos) {
+				if (de.getCodigo() == sesion.getDatosManager().getCodEquipo()) {
+					miEquipo = de;
+					break;
+				}
+			}
+			this.equipos.remove(miEquipo);
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
