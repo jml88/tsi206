@@ -5,9 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.ExternalContext;
+import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -47,7 +45,8 @@ public class MinutoAMinutoBB implements Serializable{
 			equipoLocal = Comunicacion.getInstance().getIEquipoControlador().obtenerEquipo(datosPartido.getEquipoLocalId());
 			equipoVisitante = Comunicacion.getInstance().getIEquipoControlador().obtenerEquipo(datosPartido.getEquipoVisitanteId());
 			numeroComentario = 0;
-			
+			comentariosPartido = new LinkedList<DatosComentario>();
+			comentariosPartido.add(new DatosComentario(-1, "El partido va a comenezar", 0, 0, 0));
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -55,8 +54,9 @@ public class MinutoAMinutoBB implements Serializable{
 	}
 	
 	public void getComentariosDePartido(){
-		try {
+		try{
 			List<DatosComentario> comentarios = Comunicacion.getInstance().getIPartidoControlador().obtenerComentariosPartido(datosPartido.getCodigo(), numeroComentario);
+			comentarios.add(new DatosComentario(1, "mensaje", 1, 1, 5));
 			for(DatosComentario c: comentarios){
 				comentariosPartido.add(c);
 			}

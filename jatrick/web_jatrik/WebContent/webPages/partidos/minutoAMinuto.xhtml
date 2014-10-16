@@ -14,18 +14,20 @@
 	
 	<ui:define name="Principal">
 		<h:form id="form" prependId="false">
+		<h:outputText value="#{minutoAMinutoBB.numeroComentario}" />
 			<!-- ACA VA EL CONTENIDO LA PAGINA -->
-			<ui:define name="Principal">
-				<h:form id="comentariosPartido">
-					<div style="float: left;" align="center">
-						<p:dataGrid id="comentariosList" var="com"	value="#{minutoAMinutoBB.comentariosPartido}" columns="1">
-							<p:panel id="pnl" style="text-align:center">
-								#{com.minuto} #{com.mensaje}
-							</p:panel>
-							<p:poll interval="3" listener="#{minutoAMinutoBB.comentariosPartido}" update="comentarioList" />
-						</p:dataGrid>
-					</div>
-				</h:form>
-			</ui:define>
+			
+				
+					<div id="comentariosList">
+						<p:dataList id="comentariosList" var="com"	value="#{minutoAMinutoBB.comentariosPartido}">
+							
+								#{com.minuto} ,#{com.mensaje}
+							
+							<p:poll interval="15" listener="#{minutoAMinutoBB.getComentariosDePartido}" update="comentariosList" />
+						</p:dataList>
+					</div>	
+				
+			
+		</h:form>
 	</ui:define>
 </ui:composition>
