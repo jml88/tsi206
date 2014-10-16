@@ -1,6 +1,7 @@
 package web_jatrik;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +13,6 @@ import javax.inject.Named;
 import javax.naming.NamingException;
 
 import comunicacion.Comunicacion;
-
 import datatypes.DatosEquipo;
 
 @Named("jugarAmistosoBB")
@@ -39,6 +39,14 @@ public class JugarAmistosoBB implements Serializable {
 	public void init() {
 		try {
 			this.equipos = Comunicacion.getInstance().getIEquipoControlador().obtenerEquiposSistema();
+			DatosEquipo miEquipo = null;
+			for (DatosEquipo de : this.equipos) {
+				if (de.getCodigo() == sesion.getDatosManager().getCodEquipo()) {
+					miEquipo = de;
+					break;
+				}
+			}
+			this.equipos.remove(miEquipo);
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
@@ -52,7 +60,7 @@ public class JugarAmistosoBB implements Serializable {
 		String result = "/webPages/partidos/jugarAmistoso.xhtml";
 		try {
 			//GregorianCalendar(year, month, dayOfMonth, hourOfDay, minute)
-			GregorianCalendar fecha = new GregorianCalendar(2014, 10, 16, 18, 30);
+			GregorianCalendar fecha = new GregorianCalendar(2014, Calendar.OCTOBER, 15, 23, 16);
 			Comunicacion.getInstance().getIPartidoControlador().crearPartidoAmistoso(sesion.getDatosManager().getCodEquipo(),
 					this.equipoSeleccionado.getCodigo(), fecha);
 			result = "/webPages/home/home.xhtml?faces-redirect=true";
