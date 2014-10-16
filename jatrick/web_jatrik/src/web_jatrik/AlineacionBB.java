@@ -5,15 +5,17 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.naming.NamingException;
 
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.DragDropEvent;
 
 import comunicacion.Comunicacion;
+
 import datatypes.DatosAlineacion;
 import datatypes.DatosEquipo;
 import datatypes.DatosJugador;
@@ -48,8 +50,8 @@ public class AlineacionBB implements Serializable {
 			ex.printStackTrace();
 		}
 		
-		RequestContext context = RequestContext.getCurrentInstance();
-		idPartido = (int)context.getAttributes().get("idPartido");
+		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+		idPartido = (int)context.getApplicationMap().get("idPartido");
 		datosAlineacion = new DatosAlineacion();
     }
 	 
@@ -171,7 +173,7 @@ public class AlineacionBB implements Serializable {
 			e.printStackTrace();
 		}
 		
-		return "/webPages/home/home.xhtml?faces-redirect=true";
+		return "/webPages/partidos/verPartidos.xhtml?faces-redirect=true";
 	}
 
 }

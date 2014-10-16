@@ -7,14 +7,15 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.naming.NamingException;
 
-import org.primefaces.context.RequestContext;
-
 import comunicacion.Comunicacion;
+
 import datatypes.DatosPartido;
 
 @Named("verPartidosBB")
@@ -57,8 +58,8 @@ public class VerPartidosBB implements Serializable {
 	
 	public String agregarAlineacion() {
 		String result = "";
-		RequestContext request = RequestContext.getCurrentInstance();
-		request.getAttributes().put("idPartido", this.partidoSeleccionado.getCodigo());
+		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+		context.getApplicationMap().put("idPartido", this.partidoSeleccionado.getCodigo());
 		result = "/webPages/partidos/enviarOrdenesPartido.xhtml?faces-redirect=true";
 		return result;
 	}
