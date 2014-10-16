@@ -40,7 +40,7 @@ public class Partido {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int codigo;
 	
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column
 	private Calendar fechaHora;
     

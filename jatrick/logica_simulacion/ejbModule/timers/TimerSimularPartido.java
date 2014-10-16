@@ -1,6 +1,7 @@
 package timers;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -37,23 +38,26 @@ public class TimerSimularPartido {
 	@Inject
 	private PartidoControlador cp;
 	
-	public void crearTimerSimularPartido(DatosMinutoPartido mp,Calendar c){
-		ts.createTimer(c.getTime(), mp);
+	public void crearTimerSimularPartido(DatosMinutoPartido mp,Calendar c, int hora, int minuto){
+		Date d = c.getTime();
+		d.setHours(hora);
+		d.setMinutes(minuto);
+		ts.createTimer(d, mp);
 	}
 	
 	private void crearPartido(List<Integer> minutos, Partido p){
-		
+		Calendar fecha = new GregorianCalendar();
+//		fecha = (Calendar) p.getFechaHora().clone();
 			for (Integer min : minutos){
-				Calendar fecha = new GregorianCalendar();
-				fecha = p.getFechaHora();
+				fecha = (Calendar) p.getFechaHora().clone();
 				fecha.add(Calendar.MINUTE, min);
-				crearTimerSimularPartido(new DatosMinutoPartido(min, p.getCodigo()),fecha);
+				crearTimerSimularPartido(new DatosMinutoPartido(min, p.getCodigo()),fecha,fecha.get(Calendar.HOUR_OF_DAY),fecha.get(Calendar.MINUTE));
 			}
 			if (p.getAlineacionLocal() == null){
-				p.setAlineacionLocal(p.getLocal().getAlineacionDefecto());
+//				p.setAlineacionLocal(p.getLocal().getAlineacionDefecto());
 			}
 			if (p.getAlineacionVisitante() == null){
-				p.setAlineacionVisitante(p.getVisitante().getAlineacionDefecto());
+//				p.setAlineacionVisitante(p.getVisitante().getAlineacionDefecto());
 			}
 			em.merge(p);
 	}

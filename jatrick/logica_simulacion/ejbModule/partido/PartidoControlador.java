@@ -34,8 +34,8 @@ public class PartidoControlador {
     //Debe devolver todos los partidos que se juegan el mismo dia de c
     public List<Partido> listPartidosFecha(Calendar c){
     	Query q = em.createQuery("SELECT p FROM Partido p WHERE p.estado = 'POR_JUGAR' and "
-    			+ "p.fechaHora = :fecha");
-    	q.setParameter("fecha",c);
+    			+ "DATE(p.fechaHora) = :fecha");
+    	q.setParameter("fecha",c.getTime());
     	return (List<Partido>)q.getResultList();
     }
     
@@ -61,6 +61,17 @@ public class PartidoControlador {
 	
     public ConfiguracionPartido findConfiguracionPartido(){
     	 return (ConfiguracionPartido)em.createQuery("select c from ConfiguracionPartido c").getSingleResult();
+    }
+    
+    public boolean tieneConfiguracionPartido(){
+   	 return em.createQuery("select c from ConfiguracionPartido c").getResultList().size() != 0;
+   }
+    
+    public void crearConfiguracionPartido(int cantidadJugadas, int duracion){
+    	ConfiguracionPartido cp = new ConfiguracionPartido();
+    	cp.setCantidadJugadas(cantidadJugadas);
+    	cp.setDuracion(duracion);
+    	em.persist(cp);
     }
 
 }

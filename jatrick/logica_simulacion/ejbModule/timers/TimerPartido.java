@@ -1,5 +1,6 @@
 package timers;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -38,11 +39,14 @@ public class TimerPartido {
 	@Timeout
 	public void crearTimers(Timer t){
 		//TODO busca los partidos en la base y crea los timers correspondientes
+		System.out.println("*****************");
+		System.out.println("Timer Timer Timer!!");
+		System.out.println("*****************");
 		List<Partido> partidos = pc.listPartidosFecha(new GregorianCalendar());
 		for(Partido p : partidos)
 		{
 			DatosMinutoPartido dmp = new DatosMinutoPartido(0, p.getCodigo());
-			tsm.crearTimerSimularPartido(dmp, p.getFechaHora());
+			tsm.crearTimerSimularPartido(dmp, p.getFechaHora(), p.getFechaHora().get(Calendar.HOUR_OF_DAY),p.getFechaHora().get(Calendar.MINUTE));
 		}
 		
 	}

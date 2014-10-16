@@ -28,9 +28,11 @@ public class LogicaSimulacion{
 		ConfiguracionPartido cp = pc.findConfiguracionPartido();
 		int jugadas = cp.getCantidadJugadas();
 		while(minutos.size() != jugadas){
-			Integer min = new Integer((int)Math.random()*90);
-			if (!minutos.contains(min)){
-				minutos.add(min);
+			double d = Math.random()*20;
+			int min = (int)d;
+			Integer mi = new Integer(min);
+			if (!minutos.contains(mi)){
+				minutos.add(mi);
 			}
 		}
 		return minutos;
@@ -112,16 +114,16 @@ public class LogicaSimulacion{
 
 		Alineacion alineacionLocal = p.getAlineacionLocal();
 		Alineacion alineacionVisitante = p.getAlineacionVisitante();
-		long probJGL = probabilidadJugadaGol(alineacionLocal,alineacionVisitante);
-		long probJGV = probabilidadJugadaGol(alineacionVisitante,alineacionLocal);
+//		long probJGL = probabilidadJugadaGol(alineacionLocal,alineacionVisitante);
+//		long probJGV = probabilidadJugadaGol(alineacionVisitante,alineacionLocal);
 		double prob = Math.random();
-		boolean chanceLocal = probJGL + prob > probJGV + (1- prob);
-		if (chanceLocal){
-			probabilidadGol(alineacionLocal,alineacionVisitante.getGolero());
-		}
-		else{
-			probabilidadGol(alineacionVisitante,alineacionLocal.getGolero());
-		}
+		boolean chanceLocal = true;//probJGL + prob > probJGV + (1- prob);
+//		if (chanceLocal){
+//			probabilidadGol(alineacionLocal,alineacionVisitante.getGolero());
+//		}
+//		else{
+//			probabilidadGol(alineacionVisitante,alineacionLocal.getGolero());
+//		}
 		
 		pc.crearComentario("se escapa por la punta y levanta el centro\n directo a las gradas, se ve que es de las escuela del futbol uruguayo ", p, minuto);
 	}
