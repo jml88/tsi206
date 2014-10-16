@@ -1,5 +1,6 @@
 package datatypes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 
-public class DatosAlineacion {
+public class DatosAlineacion implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private boolean defecto;
 	

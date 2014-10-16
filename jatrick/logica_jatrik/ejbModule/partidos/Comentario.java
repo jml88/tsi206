@@ -10,6 +10,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.TableGenerator;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import datatypes.DatosComentario;
 import partidos.Partido;
 
 @Entity
@@ -73,6 +74,16 @@ public class Comentario {
 
 	public void setNroComentario(int nroComentario) {
 		this.nroComentario = nroComentario;
+	}
+	
+	public DatosComentario getDatos(){
+		DatosComentario datos = new DatosComentario();
+		datos.setId(this.Id);
+		datos.setIdPartido(this.partido.getCodigo());
+		datos.setMensaje(this.mensaje);
+		datos.setMinuto(this.getMinuto());
+		datos.setNroComentario(this.nroComentario);
+		return datos;
 	}
 	
 }

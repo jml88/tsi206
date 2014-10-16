@@ -1,13 +1,15 @@
 package equipos;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -29,13 +31,28 @@ public class Alineacion {
 
 	//TODO averiguar si se puede limitar la cantidad de 
 	@OneToMany
-	private Set<Jugador> delanteros;
+	@JoinTable(
+            name="ALINEACION_DELANTEROS",
+            joinColumns = @JoinColumn( name="CODALINEACION"),
+            inverseJoinColumns = @JoinColumn( name="CODJUGADOR")
+    )
+	private List<Jugador> delanteros;
 	
 	@OneToMany
-	private Set<Jugador> mediocampistas;
+	@JoinTable(
+            name="ALINEACION_MEDIOCAMPISTAS",
+            joinColumns = @JoinColumn( name="CODALINEACION"),
+            inverseJoinColumns = @JoinColumn( name="CODJUGADOR")
+    )
+	private List<Jugador> mediocampistas;
 	
 	@OneToMany
-	private Set<Jugador> defensas;
+	@JoinTable(
+            name="ALINEACION_DEFENSAS",
+            joinColumns = @JoinColumn( name="CODALINEACION"),
+            inverseJoinColumns = @JoinColumn( name="CODJUGADOR")
+    )
+	private List<Jugador> defensas;
 	
 	@OneToOne
 	private Jugador golero;
@@ -55,14 +72,19 @@ public class Alineacion {
 
 	/* suplentes en general */
 	@OneToMany
-	private Set<Jugador> suplentes;
+	@JoinTable(
+            name="ALINEACION_SUPLENTES",
+            joinColumns = @JoinColumn( name="CODALINEACION"),
+            inverseJoinColumns = @JoinColumn( name="CODJUGADOR")
+    )
+	private List<Jugador> suplentes;
 	
 	public Alineacion() {
 		super();
-		this.delanteros = new HashSet<Jugador>();
-		this.defensas= new HashSet<Jugador>();
-		this.mediocampistas = new HashSet<Jugador>();
-		this.suplentes = new HashSet<Jugador>();
+		this.delanteros = new ArrayList<Jugador>();
+		this.defensas= new ArrayList<Jugador>();
+		this.mediocampistas = new ArrayList<Jugador>();
+		this.suplentes = new ArrayList<Jugador>();
 	}
 
 	/**
@@ -76,10 +98,10 @@ public class Alineacion {
 	 * @param lesionGolero
 	 * @param suplentes
 	 */
-	public Alineacion(Set<Jugador> delanteros, Set<Jugador> mediocampistas,
-			Set<Jugador> defensas, Jugador golero, Jugador lesionDelantero,
+	public Alineacion(List<Jugador> delanteros, List<Jugador> mediocampistas,
+			List<Jugador> defensas, Jugador golero, Jugador lesionDelantero,
 			Jugador lesionMediocampistas, Jugador lesionDefensas,
-			Jugador lesionGolero, Set<Jugador> suplentes) {
+			Jugador lesionGolero, List<Jugador> suplentes, boolean defecto) {
 		super();
 		this.delanteros = delanteros;
 		this.mediocampistas = mediocampistas;
@@ -90,6 +112,7 @@ public class Alineacion {
 		this.lesionDefensas = lesionDefensas;
 		this.lesionGolero = lesionGolero;
 		this.suplentes = suplentes;
+		this.alineacionDefecto = defecto;
 	}
 
 	public int getCodigo() {
@@ -100,27 +123,27 @@ public class Alineacion {
 		this.codigo = codigo;
 	}
 
-	public Set<Jugador> getDelanteros() {
+	public List<Jugador> getDelanteros() {
 		return delanteros;
 	}
 
-	public void setDelanteros(Set<Jugador> delanteros) {
+	public void setDelanteros(List<Jugador> delanteros) {
 		this.delanteros = delanteros;
 	}
 
-	public Set<Jugador> getMediocampistas() {
+	public List<Jugador> getMediocampistas() {
 		return mediocampistas;
 	}
 
-	public void setMediocampistas(Set<Jugador> mediocampistas) {
+	public void setMediocampistas(List<Jugador> mediocampistas) {
 		this.mediocampistas = mediocampistas;
 	}
 
-	public Set<Jugador> getDefensas() {
+	public List<Jugador> getDefensas() {
 		return defensas;
 	}
 
-	public void setDefensas(Set<Jugador> defensas) {
+	public void setDefensas(List<Jugador> defensas) {
 		this.defensas = defensas;
 	}
 
@@ -164,11 +187,11 @@ public class Alineacion {
 		this.lesionGolero = lesionGolero;
 	}
 
-	public Set<Jugador> getSuplentes() {
+	public List<Jugador> getSuplentes() {
 		return suplentes;
 	}
 
-	public void setSuplentes(Set<Jugador> suplentes) {
+	public void setSuplentes(List<Jugador> suplentes) {
 		this.suplentes = suplentes;
 	}
 

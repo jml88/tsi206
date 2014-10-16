@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="scripts">
+		<script type="text/javascript">
+
+		</script>
+	</ui:define>
+	
+	<ui:define name="Principal">
+		<h:form id="form" prependId="false">
+			<!-- ACA VA EL CONTENIDO LA PAGINA -->
+			<ui:define name="Principal">
+				<h:form id="comentariosPartido">
+					<div style="float: left;" align="center">
+						<p:dataGrid id="comentariosList" var="com"	value="#{minutoAMinutoBB.comentariosPartido}" columns="1">
+							<p:panel id="pnl" style="text-align:center">
+								#{com.minuto} #{com.mensaje}
+							</p:panel>
+							<p:poll interval="3" listener="#{minutoAMinutoBB.comentariosPartido}" update="comentarioList" />
+						</p:dataGrid>
+					</div>
+				</h:form>
+			</ui:define>
+	</ui:define>
+</ui:composition>

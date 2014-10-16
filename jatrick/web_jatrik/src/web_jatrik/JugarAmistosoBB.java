@@ -1,27 +1,28 @@
 package web_jatrik;
 
 import java.io.Serializable;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
-import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.naming.NamingException;
 
 import comunicacion.Comunicacion;
+
 import datatypes.DatosEquipo;
 
 @Named("jugarAmistosoBB")
 @ViewScoped
 public class JugarAmistosoBB implements Serializable {
 	
+	@Inject
+	SessionBB sesion;
+	
 	private Set<DatosEquipo> equipos;
-	private int equipoSelected;
-	private SelectItem[] equiposItems;
 	private DatosEquipo equipoSeleccionado;
 	
 	/**
@@ -31,20 +32,13 @@ public class JugarAmistosoBB implements Serializable {
 
 	public JugarAmistosoBB() {
 		super();
-		this.equipoSelected = -1;
 		this.equipos = new HashSet<DatosEquipo>();
-		this.equiposItems = new SelectItem[this.equipos.size()];
 	}
 	
 	@PostConstruct
 	public void init() {
 		try {
 			this.equipos = Comunicacion.getInstance().getIEquipoControlador().obtenerEquiposSistema();
-			this.equiposItems = new SelectItem[this.equipos.size()];
-			int i = 0;
-			for (DatosEquipo de : this.equipos) {
-				this.equiposItems[i++] = new SelectItem(de.getCodigo(), "");
-			}
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
@@ -54,9 +48,17 @@ public class JugarAmistosoBB implements Serializable {
 		return "volver";
 	}
 	
-	public String jugar(){
-		String result = "";
-		
+	public String seleccionarEquipo() {
+		String result = "/webPages/partidos/jugarAmistoso.xhtml";
+		try {
+			//GregorianCalendar(year, month, dayOfMonth, hourOfDay, minute)
+			GregorianCalendar fecha = new GregorianCalendar(2014, 10, 16, 18, 30);
+			Comunicacion.getInstance().getIPartidoControlador().crearPartidoAmistoso(sesion.getDatosManager().getCodEquipo(),
+					this.equipoSeleccionado.getCodigo(), fecha);
+			result = "/webPages/home/home.xhtml?faces-redirect=true";
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
 		return result;
 	}
 
@@ -66,22 +68,6 @@ public class JugarAmistosoBB implements Serializable {
 
 	public void setEquipos(Set<DatosEquipo> equipos) {
 		this.equipos = equipos;
-	}
-
-	public int getEquipoSelected() {
-		return equipoSelected;
-	}
-
-	public void setEquipoSelected(int equipoSelected) {
-		this.equipoSelected = equipoSelected;
-	}
-
-	public SelectItem[] getEquiposItems() {
-		return equiposItems;
-	}
-
-	public void setEquiposItems(SelectItem[] equiposItems) {
-		this.equiposItems = equiposItems;
 	}
 
 	public DatosEquipo getEquipoSeleccionado() {
