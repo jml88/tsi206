@@ -68,7 +68,7 @@ public class VerPartidosBB implements Serializable {
 		String result = "";
 		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
 		context.getApplicationMap().put("DatosPartido", this.partidoSeleccionado);
-		result = "/webPages/partido/minutoAMinuto.xhtml?faces-redirect=true";
+		result = "/webPages/partidos/minutoAMinuto.xhtml?faces-redirect=true";
 		return result;
 	}
 	
