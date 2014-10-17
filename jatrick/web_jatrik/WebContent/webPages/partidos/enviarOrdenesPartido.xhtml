@@ -109,7 +109,7 @@
     		<p:droppable for="jugadoresDelantera" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="jugadoresDisponiblesList" onDrop="handleDrop">
         		<p:ajax listener="#{alineacionBB.onDelanteroDroped}" update="dropAreaDelantera jugadoresDelanteraList jugadoresDisponiblesList" />
     		</p:droppable>
-    		<p:commandButton value="Enviar Alineación" action="#{alineacionBB.enviarAlineación}"></p:commandButton>
+    		<p:commandButton value="Enviar Alineación" action="#{alineacionBB.enviarAlineacion}"></p:commandButton>
 		</h:form>
 	</ui:define>
 </ui:composition>

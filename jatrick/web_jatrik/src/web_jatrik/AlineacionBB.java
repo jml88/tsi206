@@ -164,10 +164,10 @@ public class AlineacionBB implements Serializable {
 		}
     }
 	
-	public String enviarAlineación(){
+	public String enviarAlineacion(){
 		
 		try {
-			Comunicacion.getInstance().getIPartidoControlador().setAlineaciónPartido(datosAlineacion, idPartido, codEquipo);
+			Comunicacion.getInstance().getIPartidoControlador().setAlineacioPartido(datosAlineacion, idPartido, codEquipo);
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -22,7 +22,7 @@ public interface IPartidoControlador {
 	
 	public List<DatosComentario> obtenerComentariosPartido(int codPartido, int nroComentario) throws NoExistePartidoExepcion;
 
-	void setAlineaciónPartido(DatosAlineacion alineacion, int idPartido, int idEquipo);
+	void setAlineacioPartido(DatosAlineacion alineacion, int idPartido, int idEquipo);
 	
 	public Set<DatosPartido> obtenerPartidosUsuario(int codEquipo);
 

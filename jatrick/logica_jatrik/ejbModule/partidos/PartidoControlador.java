@@ -75,7 +75,7 @@ public class PartidoControlador implements IPartidoControlador {
 	}
 	
 	@Override
-	public void setAlineaciónPartido(DatosAlineacion datosAlineacion, int idPartido, int idEquipo){
+	public void setAlineacioPartido(DatosAlineacion datosAlineacion, int idPartido, int idEquipo){
 		IJugadorControlador ijc = hf.getJugadorControlador();
 		IEquipoControlador iec = hf.getEquipoControlador();
 		
