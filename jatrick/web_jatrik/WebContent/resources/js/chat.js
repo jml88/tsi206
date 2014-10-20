@@ -43,7 +43,7 @@ $(document).ready(function() {
 	$nickName.focus();
 
 	$('#enterRoom').click(function(evt) {
-		evt.preventDefault();
+		evt.defaultPrevented();
 		connectToChatserver();
 		$('.chat-wrapper h2').text('Chat # '+$nickName.val() + "@" + room);
 		$('.chat-signin').hide();
