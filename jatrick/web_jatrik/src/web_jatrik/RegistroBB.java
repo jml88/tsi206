@@ -26,6 +26,7 @@ public class RegistroBB implements Serializable {
 	private DatosManager datosmanager;
 	private String password;
 	private String passwordConfirm;
+	private String nombreEquipo;
 	
 	public RegistroBB(){
 		
@@ -60,13 +61,21 @@ public class RegistroBB implements Serializable {
 		this.passwordConfirm = passwordConfirm;
 	}
 
+	public String getNombreEquipo() {
+		return nombreEquipo;
+	}
+
+	public void setNombreEquipo(String nombreEquipo) {
+		this.nombreEquipo = nombreEquipo;
+	}
+
 	public String registro() {
 		String result = "";
         try {
         	Set<String> r = new HashSet<String>();
         	r.add("MANAGER");
         	datosmanager.setRoles(r);
-        	int codManager = Comunicacion.getInstance().getIUserControlador().createManager(datosmanager, password, "Equipo harcodeado");
+        	int codManager = Comunicacion.getInstance().getIUserControlador().createManager(this.datosmanager, this.password, this.nombreEquipo);
         	
         	//obtenego los datosManager actualizados luego de crearlo
         	datosmanager = Comunicacion.getInstance().getIUserControlador().obtenerManager(codManager);
