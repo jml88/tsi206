@@ -25,7 +25,7 @@ public class Partido {
 
 	public static final String nombreTabla = "PARTIDOS";
 	
-	Partido(){
+	public Partido(){
 		
 	}
 	

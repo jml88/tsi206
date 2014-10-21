@@ -3,6 +3,8 @@ package partido;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -10,10 +12,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import datatypes.EnumPartido;
 import partidos.Comentario;
 import partidos.ConfiguracionPartido;
 import partidos.Partido;
+import datatypes.EnumPartido;
 
 
 @Stateless
@@ -22,6 +24,8 @@ public class PartidoControlador {
 
 	@PersistenceContext( unitName = "jatrik" ) 
 	private EntityManager em;
+	
+	private final Lock _mutex = new ReentrantLock(true);
 	
 	public PartidoControlador(){
 		
@@ -52,6 +56,8 @@ public class PartidoControlador {
 //    }
     
     public void crearComentario(String mensaje, Partido partido, int minuto){
+    	
+    	_mutex.lock();
     	Query q = em.createQuery("select max(c.nroComentario) from Comentario c");
     	List<Integer> max = (List<Integer>)q.getResultList();
     	int maximo = 1;
@@ -64,6 +70,7 @@ public class PartidoControlador {
     	c.setMinuto(minuto);
     	c.setNroComentario(maximo);
     	em.persist(c);
+    	_mutex.unlock();
     }
 	
     public ConfiguracionPartido findConfiguracionPartido(){
@@ -77,9 +84,21 @@ public class PartidoControlador {
     public void crearConfiguracionPartido(int cantidadJugadas, int duracion){
     	ConfiguracionPartido cp = new ConfiguracionPartido();
     	cp.setCantidadJugadas(cantidadJugadas);
-    	cp.setDuracion(duracion);
+    	cp.setDuracion(duracion);	
     	em.persist(cp);
     }
+
+	public void partidoPorSimular(Partido p) {
+		p.setEstado(EnumPartido.POR_SIMULAR);
+    	em.merge(p);
+		
+	}
+	
+//	public Partido crearPartidoPrueba(){
+//		Partido p = new Partido();
+//		em.persist(p);
+//		return p;
+//	}
 
 }
 

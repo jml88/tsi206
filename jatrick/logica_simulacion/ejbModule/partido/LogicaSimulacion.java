@@ -28,7 +28,7 @@ public class LogicaSimulacion{
 		ConfiguracionPartido cp = pc.findConfiguracionPartido();
 		int jugadas = cp.getCantidadJugadas();
 		while(minutos.size() != jugadas){
-			double d = Math.random()*20;
+			double d = (Math.random()*9) +1;
 			int min = (int)d;
 			Integer mi = new Integer(min);
 			if (!minutos.contains(mi)){
@@ -54,7 +54,7 @@ public class LogicaSimulacion{
 	 * @param alineacionVisitante
 	 * @return
 	 */
-	private long probabilidadJugadaGol(Alineacion alineacionLocal, Alineacion alineacionVisitante){
+	private double probabilidadJugadaGol(Alineacion alineacionLocal, Alineacion alineacionVisitante){
 		int RegateATs = 0;
 		int RegateMEDs = 0;
 		int PotenciaDEFs = 0;
@@ -77,10 +77,10 @@ public class LogicaSimulacion{
 		return Math.abs((promLocal - promVisitante)/100);
 	}
 	
-	public long probabilidadGol(Alineacion alineacionAtaca, Jugador golero){
+	public double probabilidadGol(Alineacion alineacionAtaca, Jugador golero, double probJugadaGol){
 		/**
 		probabilidad de gol =  
-				((probabilidad de jugada gol) x (tiro de un jugador*factor_aleatorio_ataque ­ habilidad del  
+				((probabilidad de jugada gol) x (tiro de un jugador*factor_aleatorio_ataque ­ habilidad del -
 				portero*factor_aleatorio_portero))/100  
 				 
 				El   tiro   a   gol   debe   ser   realizado   por   un   único   jugador,   por   lo   cual   es   necesario   definirlo.   Dado   que  
@@ -93,10 +93,28 @@ public class LogicaSimulacion{
 				disparo,   se   debe   determinar   de   alguna   forma   (puede   ser   aleatoria),   cual   de   todos   es   el   que  
 				efectivamente realiza el tiro a gol. La forma de determinar este jugador es libre a cada grupo.  
 				*/
-		Math.random();
-		return 0;
+		double probDel = Math.random()*6;
+		double probMed = Math.random()*3;
+		double probDef = Math.random()*1;
+		Jugador jugador = null;
+		if (probDel >= probMed && probDel >= probDef){
+			jugador = eligoJugadorGol(alineacionAtaca.getDelanteros());
+		}
+		else if (probMed > probDel && probMed >= probDef){
+			jugador = eligoJugadorGol(alineacionAtaca.getMediocampistas());
+		}
+		else{
+			jugador = eligoJugadorGol(alineacionAtaca.getDefensas());
+		}
+		double probablidadGol = ((probJugadaGol) * (jugador.getAtaque()*Math.random() - golero.getPorteria()*Math.random()))/100;
+		return probablidadGol;
 	}
 	
+	private Jugador eligoJugadorGol(List<Jugador> jugadores) {
+		//TODO hacerla bien, hacerla ahora
+		return jugadores.get(0);
+		
+	}
 	public long probabilidadTarjeta(){
 		/**
 		 * Probabilidad de tarjeta = Oportunidad de gol x (promedio potencia de jugadores defensores y 
@@ -115,12 +133,12 @@ public class LogicaSimulacion{
 
 		Alineacion alineacionLocal = p.getAlineacionLocal();
 		Alineacion alineacionVisitante = p.getAlineacionVisitante();
-		long probJGL = probabilidadJugadaGol(alineacionLocal,alineacionVisitante);
-		long probJGV = probabilidadJugadaGol(alineacionVisitante,alineacionLocal);
+		double probJGL = probabilidadJugadaGol(alineacionLocal,alineacionVisitante);
+		double probJGV = probabilidadJugadaGol(alineacionVisitante,alineacionLocal);
 		double prob = Math.random();
 		boolean chanceLocal = probJGL + prob > probJGV + (1- prob);
 		if (chanceLocal){
-			if (probabilidadGol(alineacionLocal,alineacionVisitante.getGolero()) > 0.7){
+			if (probabilidadGol(alineacionLocal,alineacionVisitante.getGolero(), probJGL) > 0.7){
 				pc.crearComentario("Pared al borde del área para " + p.getLocal().getNombre() + "  Chuta y... GOOOOOLLLLL!!	", p, minuto);	
 			}
 			else{
@@ -128,7 +146,7 @@ public class LogicaSimulacion{
 			}
 		}
 		else{
-			if (probabilidadGol(alineacionVisitante,alineacionLocal.getGolero()) > 0.7){
+			if (probabilidadGol(alineacionVisitante,alineacionLocal.getGolero(),probJGV) > 0.7){
 				pc.crearComentario("Despiste en el area aprovechado por el ataque, GO GO GO GOOOLLLL!!", p, minuto);	
 			}
 			else{
@@ -142,7 +160,7 @@ public class LogicaSimulacion{
 	public List<Integer> simular(Partido p, int minuto)
 	{
 		List<Integer> minutos = new LinkedList<Integer>();
-		if(p.getEstado().equals(EnumPartido.POR_JUGAR)){
+		if(p.getEstado().equals(EnumPartido.POR_SIMULAR)){
 			pc.partidoEnJuego(p);
 			minutos = this.simularPartido(p);
 		}
