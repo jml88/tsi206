@@ -106,6 +106,7 @@ public class PartidoControlador implements IPartidoControlador {
 		
 		if(datosAlineacion.getLesionGolero() != null)
 			lesionGolero = ijc.findJugador(datosAlineacion.getLesionGolero().getCodigo());
+		
 		boolean defecto = datosAlineacion.isDefecto();
 		
 		for (DatosJugador datosJugador : datosAlineacion.getDefensas()) {
@@ -123,6 +124,13 @@ public class PartidoControlador implements IPartidoControlador {
 		
 		int codAlineacion = iec.crearAlineacion(delanteros, mediocampistas, defensas, golero, lesionDelantero, lesionMediocampistas, lesionDefensas, lesionGolero, suplentes, defecto);
 		Alineacion alineacion = iec.findAlineacion(codAlineacion);
+		
+		if(defecto){
+			Equipo e = iec.findEquipo(idEquipo);
+			e.setAlineacionDefecto(alineacion);
+			em.merge(e);
+		}
+		
 		if (partido.getLocal().getCodigo() == idEquipo)
 			partido.setAlineacionLocal(alineacion);
 		else if(partido.getVisitante().getCodigo() == idEquipo)
