@@ -1,5 +1,6 @@
 package fabricas;
 
+import interfaces.IConfiguracionControlador;
 import interfaces.IEquipoControlador;
 import interfaces.IJugadorControlador;
 import interfaces.IPartidoControlador;
@@ -36,6 +37,12 @@ public class HomeFactoryBean implements HomeFactory {
 	public IPartidoControlador getPartidoControlador() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public IConfiguracionControlador getConfiguracionControlador() {
+		// TODO Auto-generated method stub
+		return (IConfiguracionControlador ) ctx.lookup("java:module/ConfiguracionControlador!interfaces.IConfiguracionControlador");
 	}
 
 }
