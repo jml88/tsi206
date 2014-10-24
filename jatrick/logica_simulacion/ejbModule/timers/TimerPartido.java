@@ -39,9 +39,9 @@ public class TimerPartido {
 	@Timeout
 	public void crearTimers(Timer t){
 		//TODO busca los partidos en la base y crea los timers correspondientes
-		System.out.println("*****************");
-		System.out.println("Timer Timer Timer!!");
-		System.out.println("*****************");
+//		System.out.println("*****************");
+//		System.out.println("Timer Timer Timer!!");
+//		System.out.println("*****************");
 		List<Partido> partidos = pc.listPartidosFecha(new GregorianCalendar());
 		for(Partido p : partidos)
 		{

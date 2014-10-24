@@ -69,7 +69,7 @@ public class PartidoControlador implements IPartidoControlador {
 			throw new NoExistePartidoExepcion("No existe partido de id " + codPartido);
 		}
 		@SuppressWarnings("unchecked")
-		List<Comentario> comentarios = (List<Comentario>)em.createQuery("SELECT c FROM Comentario c Where c.nroComentario > :nroComentario"
+		List<Comentario> comentarios = (List<Comentario>)em.createQuery("SELECT c FROM Comentario c Where c.Id > :nroComentario"
 				+ " and c.partido.codigo = :Partido order by c.minuto asc")
 				.setParameter("nroComentario", nroComentario)
 				.setParameter("Partido", p.getCodigo())
