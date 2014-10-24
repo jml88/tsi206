@@ -26,4 +26,6 @@ public interface IPartidoControlador {
 	
 	public Set<DatosPartido> obtenerPartidosUsuario(int codEquipo);
 
+	int crearPartidoTorneo(int codEquipoLocal, int codEquipoVisitante,Calendar fecha);
+
 }
