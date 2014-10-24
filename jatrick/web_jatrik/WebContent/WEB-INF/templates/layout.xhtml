@@ -10,6 +10,8 @@
 	<title>
 		<ui:insert name="title">Jatrik1.0</ui:insert>
 	</title>
+	<h:outputStylesheet library="stylesheets" name="layout.css"  />
+	<script src="http://maps.google.com/maps/api/js?sensor=false&amp;v=3.4" type="text/javascript"></script>
 	<ui:insert name="scripts">
 		
 	
@@ -24,8 +26,20 @@
 	</div>
 	<p:separator/>
 	<div id="content">
-		<ui:insert name="Principal">
-		</ui:insert>
+		<div id="left">
+			<ui:insert name="leftMenu">
+				<ui:include src="/WEB-INF/templates/leftMenu.xhtml" />
+			</ui:insert>
+		</div>
+		<div id="center">
+			<ui:insert name="Principal"></ui:insert>
+		</div>
+		<div id="right">
+			<ui:insert name="rightMenu">
+				<ui:include src="/WEB-INF/templates/rightMenu.xhtml" />
+			</ui:insert>
+		</div>
+		<div style="clear:both"></div>
 	</div>
 	<div id="footer">
 		<ui:insert name="footer">

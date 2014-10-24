@@ -1,5 +1,7 @@
 package campeonato;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,9 +11,11 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import partidos.PartidoTorneo;
 import configuracionGral.ConfiguracionControlador;
+import configuracionGral.DatosPeriodicoPartido;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-import datatypes.DataTorneo;
+import datatypes.DatosTorneo;
 import equipos.Equipo;
 import fabricas.HomeFactory;
 import interfaces.ICampeonatoControlador;
@@ -64,9 +68,34 @@ public class CampeonatoControlador implements ICampeonatoControlador{
 	
 
 
+	public void crearPartidosTorneo(Torneo t){
+		//Crea los partidos
+		int cantidadEquipos = hf.getConfiguracionControlador().getConfiguracion().getCantEquipoTorneo();
+		Equipo[] equipos =(Equipo[])t.getEquipos().toArray();
+		
+		
+		for(int local = 0; local < cantidadEquipos; local++){
+			Equipo e = equipos[local];
+			
+			for(int visitante = local+1; visitante < cantidadEquipos; visitante++){
+				DatosPeriodicoPartido fechaPartido = hf.getConfiguracionControlador().getConfiguracion().getPeriodicoPartido();
+				Calendar c = hf.getConfiguracionControlador().getConfiguracion().getFechaArranqueCampeonato();
+				Date fecha = fechaPartido.diaPartido(c.getTime(), visitante);
+				c.setTime(fecha);
+				PartidoTorneo p = new PartidoTorneo(e, equipos[visitante+1], c, visitante);
+				em.persist(p);
+				
+				fecha = fechaPartido.diaPartido(c.getTime(), visitante+cantidadEquipos-1);
+				c.setTime(fecha);
+				PartidoTorneo segVuelta = new PartidoTorneo(equipos[visitante+1],e, c, visitante+cantidadEquipos-1);
+				em.persist(segVuelta);
+			}
+		}
+		
+	}
 
 	@Override
-	public DataTorneo obtenerTorneoAsciende(int codigoTorneo) {
+	public DatosTorneo obtenerTorneoAsciende(int codigoTorneo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -74,7 +103,7 @@ public class CampeonatoControlador implements ICampeonatoControlador{
 
 
 	@Override
-	public DataTorneo obtenerTorneoDesciende(int codigoTorneo) {
+	public DatosTorneo obtenerTorneoDesciende(int codigoTorneo) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -47,6 +47,15 @@ public class PartidoControlador implements IPartidoControlador {
 		em.persist(p);
 		return 0;
 	}
+	
+	@Override
+	public int crearPartidoTorneo(int codEquipoLocal, int  codEquipoVisitante, Calendar fecha) {
+		Equipo el = hf.getEquipoControlador().findEquipo(codEquipoLocal);
+		Equipo ev = hf.getEquipoControlador().findEquipo(codEquipoVisitante);
+		PartidoTorneo p = new PartidoTorneo(el,ev,fecha);
+		em.persist(p);
+		return 0;
+	}
 
 	@Override
 	public Partido findPartido(int codPartido) {
