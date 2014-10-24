@@ -35,10 +35,8 @@ public class TimerMain {
 			}
 		}
 		
-		Calendar f = new GregorianCalendar(2014, Calendar.OCTOBER, 15, 21, 46);
-//		pc.crearPartidoAmistoso(1, 2, f);
 		if (!pclh.tieneConfiguracionPartido()){
-			pclh.crearConfiguracionPartido(10, 90);
+			pclh.crearConfiguracionPartido(5, 90);
 		}
 		tp.crearTimerPeriodico(50000);
 		

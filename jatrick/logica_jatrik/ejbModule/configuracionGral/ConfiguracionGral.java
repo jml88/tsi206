@@ -1,11 +1,17 @@
 package configuracionGral;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = ConfiguracionGral.nombreTabla)
@@ -41,12 +47,19 @@ public class ConfiguracionGral {
 	
 	@Column(name="CantidadDescensos")
 	private int cantidadDescensos;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column
+	private Calendar fechaArranqueCampeonato;
+	
+	@Embedded
+	private DatosPeriodicoPartido periodicoPartido;
 
 	
-
 	public ConfiguracionGral(int codigo, int premio, int dineroInicial,
 			int cantJugadoresArranque, int cantEquipoTorneo, int numeroFecha,
-			int numeroTorneo, int cantidadTorneos, int cantidadDescensos) {
+			int numeroTorneo, int cantidadTorneos, int cantidadDescensos,
+			Calendar fechaArranqueCampeonato) {
 		super();
 		this.codigo = codigo;
 		this.premio = premio;
@@ -57,9 +70,10 @@ public class ConfiguracionGral {
 		this.numeroTorneo = numeroTorneo;
 		this.cantidadTorneos = cantidadTorneos;
 		this.cantidadDescensos = cantidadDescensos;
+		this.fechaArranqueCampeonato = fechaArranqueCampeonato;
 	}
 
-	
+
 	public ConfiguracionGral() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -149,6 +163,27 @@ public class ConfiguracionGral {
 	public void setCantidadDescensos(int cantidadDescensos) {
 		this.cantidadDescensos = cantidadDescensos;
 	}
+
+
+	public Calendar getFechaArranqueCampeonato() {
+		return fechaArranqueCampeonato;
+	}
+
+
+	public void setFechaArranqueCampeonato(Calendar fechaArranqueCampeonato) {
+		this.fechaArranqueCampeonato = fechaArranqueCampeonato;
+	}
+
+
+	public DatosPeriodicoPartido getPeriodicoPartido() {
+		return periodicoPartido;
+	}
+
+
+	public void setPeriodicoPartido(DatosPeriodicoPartido periodicoPartido) {
+		this.periodicoPartido = periodicoPartido;
+	}
+	
 	
 	
 	
