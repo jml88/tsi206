@@ -35,6 +35,6 @@
 	</filter-mapping>
 	<context-param>
 	    <param-name>primefaces.THEME</param-name>
-	    <param-value>excite-bike</param-value>
+	    <param-value>hot-sneaks</param-value>
 	</context-param>
 </web-app>
