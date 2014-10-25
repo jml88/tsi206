@@ -1,5 +1,7 @@
 package datatypes;
 
+import java.util.Calendar;
+
 
 public class DatosConfiguracionGral {
 
@@ -17,15 +19,29 @@ public class DatosConfiguracionGral {
 	private int numeroFecha;
 	
 	private int numeroTorneo;
+	
+	private int cantidadTorneos;
+	
+	private int cantidadDescensos;
+	
+	private Calendar fechaArranqueCampeonato;
+	
+	private DatosPeriodicoPartido periodicoPartido;
 
 	public DatosConfiguracionGral() {
 		super();
+		periodicoPartido = new DatosPeriodicoPartido();
 		// TODO Auto-generated constructor stub
 	}
 
+	
+	
+
 	public DatosConfiguracionGral(int premio, int dineroInicial,
 			int cantJugadoresArranque, int cantEquipoTorneo, int numeroFecha,
-			int numeroTorneo) {
+			int numeroTorneo, int cantidadTorneos, int cantidadDescensos,
+			Calendar fechaArranqueCampeonato,
+			DatosPeriodicoPartido periodicoPartido) {
 		super();
 		this.premio = premio;
 		this.dineroInicial = dineroInicial;
@@ -33,7 +49,14 @@ public class DatosConfiguracionGral {
 		this.cantEquipoTorneo = cantEquipoTorneo;
 		this.numeroFecha = numeroFecha;
 		this.numeroTorneo = numeroTorneo;
+		this.cantidadTorneos = cantidadTorneos;
+		this.cantidadDescensos = cantidadDescensos;
+		this.fechaArranqueCampeonato = fechaArranqueCampeonato;
+		this.periodicoPartido = periodicoPartido;
 	}
+
+
+
 
 	public int getCodigo() {
 		return codigo;
@@ -92,5 +115,57 @@ public class DatosConfiguracionGral {
 	}
 
 
+
+	public int getCantidadTorneos() {
+		return cantidadTorneos;
+	}
+
+	public void setCantidadTorneos(int cantidadTorneos) {
+		this.cantidadTorneos = cantidadTorneos;
+	}
+
+
+
+
+	public int getCantidadDescensos() {
+		return cantidadDescensos;
+	}
+
+
+
+
+	public void setCantidadDescensos(int cantidadDescensos) {
+		this.cantidadDescensos = cantidadDescensos;
+	}
+
+
+
+
+	public Calendar getFechaArranqueCampeonato() {
+		return fechaArranqueCampeonato;
+	}
+
+
+
+
+	public void setFechaArranqueCampeonato(Calendar fechaArranqueCampeonato) {
+		this.fechaArranqueCampeonato = fechaArranqueCampeonato;
+	}
+
+
+
+
+	public DatosPeriodicoPartido getPeriodicoPartido() {
+		return periodicoPartido;
+	}
+
+
+
+
+	public void setPeriodicoPartido(DatosPeriodicoPartido periodicoPartido) {
+		this.periodicoPartido = periodicoPartido;
+	}
+
+	
 
 }

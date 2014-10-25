@@ -13,6 +13,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import datatypes.DatosConfiguracionGral;
+import datatypes.DatosPeriodicoPartido;
+
 @Entity
 @Table(name = ConfiguracionGral.nombreTabla)
 public class ConfiguracionGral {
@@ -53,7 +56,7 @@ public class ConfiguracionGral {
 	private Calendar fechaArranqueCampeonato;
 	
 	@Embedded
-	private DatosPeriodicoPartido periodicoPartido;
+	private PeriodicoPartido periodicoPartido;
 
 	
 	public ConfiguracionGral(int codigo, int premio, int dineroInicial,
@@ -175,16 +178,20 @@ public class ConfiguracionGral {
 	}
 
 
-	public DatosPeriodicoPartido getPeriodicoPartido() {
+	public PeriodicoPartido getPeriodicoPartido() {
 		return periodicoPartido;
 	}
 
 
-	public void setPeriodicoPartido(DatosPeriodicoPartido periodicoPartido) {
+	public void setPeriodicoPartido(PeriodicoPartido periodicoPartido) {
 		this.periodicoPartido = periodicoPartido;
 	}
 	
-	
+	public DatosConfiguracionGral getDatos(){
+		DatosConfiguracionGral ret = new DatosConfiguracionGral(premio, dineroInicial, cantJugadoresArranque, cantEquipoTorneo, numeroFecha, numeroTorneo, cantidadTorneos, cantidadDescensos,
+										fechaArranqueCampeonato, periodicoPartido.getDatos());
+		return ret;
+	}
 	
 	
 

@@ -1,5 +1,6 @@
 package fabricas;
 
+import interfaces.ICampeonatoControlador;
 import interfaces.IConfiguracionControlador;
 import interfaces.IEquipoControlador;
 import interfaces.IJugadorControlador;
@@ -20,6 +21,8 @@ public interface HomeFactory {
 	public IPartidoControlador getPartidoControlador();
 	
 	public IConfiguracionControlador getConfiguracionControlador();
+	
+	public ICampeonatoControlador getCampeontaoControlador();
 	
 
 }

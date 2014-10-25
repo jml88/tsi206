@@ -3,6 +3,7 @@ package interfaces;
 import javax.ejb.Local;
 
 import datatypes.DatosTorneo;
+import excepciones.NoExisteConfiguracionException;
 
 @Local
 public interface ICampeonatoControlador {
@@ -22,7 +23,11 @@ public interface ICampeonatoControlador {
 	 */
 	public DatosTorneo obtenerTorneoDesciende(int codigoTorneo);
 	
-	
+	/**
+	 * Crear los campeonatos y partidos
+	 * @throws NoExisteConfiguracionException 
+	 */
+	public void crearCampeonato() throws NoExisteConfiguracionException;
 	
 	
 

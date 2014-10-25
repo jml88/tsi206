@@ -13,10 +13,12 @@ import javax.persistence.PersistenceContext;
 
 import partidos.PartidoTorneo;
 import configuracionGral.ConfiguracionControlador;
-import configuracionGral.DatosPeriodicoPartido;
+import configuracionGral.ConfiguracionGral;
+import configuracionGral.PeriodicoPartido;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import datatypes.DatosTorneo;
 import equipos.Equipo;
+import excepciones.NoExisteConfiguracionException;
 import fabricas.HomeFactory;
 import interfaces.ICampeonatoControlador;
 
@@ -31,13 +33,17 @@ public class CampeonatoControlador implements ICampeonatoControlador{
 	private HomeFactory hf;
 	
 	
-
-	public void crearCampeonato() {
-		int nivelVertical = hf.getConfiguracionControlador().getConfiguracion().getCantidadTorneos(); //se deberia tomar este valor desde propertis o una tabla
-		int cantidadEquiposPorTorneo = hf.getConfiguracionControlador().getConfiguracion().getCantEquipoTorneo(); //Idem
+	@Override
+	public void crearCampeonato() throws NoExisteConfiguracionException {
+		ConfiguracionGral cg = hf.getConfiguracionControlador().getConfiguracion();
+		if(cg == null){
+			throw new NoExisteConfiguracionException("No existe configuracion general");
+		}
+		int nivelVertical = cg.getCantidadTorneos(); //se deberia tomar este valor desde propertis o una tabla
+		int cantidadEquiposPorTorneo = cg.getCantEquipoTorneo(); //Idem
 		
 		for(int vertical = 0; vertical<nivelVertical; vertical++){
-			int cantDesc = hf.getConfiguracionControlador().getConfiguracion().getCantidadDescensos();
+			int cantDesc = cg.getCantidadDescensos();
 			int nivelHorizontal = (int)Math.pow(cantDesc,vertical);
 			for(int horizontal = 0; horizontal<nivelHorizontal; horizontal++)
 			{
@@ -78,7 +84,7 @@ public class CampeonatoControlador implements ICampeonatoControlador{
 			Equipo e = equipos[local];
 			
 			for(int visitante = local+1; visitante < cantidadEquipos; visitante++){
-				DatosPeriodicoPartido fechaPartido = hf.getConfiguracionControlador().getConfiguracion().getPeriodicoPartido();
+				PeriodicoPartido fechaPartido = hf.getConfiguracionControlador().getConfiguracion().getPeriodicoPartido();
 				Calendar c = hf.getConfiguracionControlador().getConfiguracion().getFechaArranqueCampeonato();
 				Date fecha = fechaPartido.diaPartido(c.getTime(), visitante);
 				c.setTime(fecha);

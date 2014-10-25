@@ -6,10 +6,11 @@ import java.util.Date;
 
 import javax.persistence.Embeddable;
 
+import datatypes.DatosPeriodicoPartido;
 import datatypes.EnumPeriodicoPartido;
 
 @Embeddable
-public class DatosPeriodicoPartido implements Serializable{
+public class PeriodicoPartido implements Serializable{
 
 	/**
 	 * 
@@ -24,17 +25,17 @@ public class DatosPeriodicoPartido implements Serializable{
 	
 	private EnumPeriodicoPartido periodico;
 	
-	private int day_of_week; //0..6
+	private int day_of_week; //1..7, 1 es domingo
 	
 
-	public DatosPeriodicoPartido() {
+	public PeriodicoPartido() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	
 
-	public DatosPeriodicoPartido(int dia, int hora, int minuto,
+	public PeriodicoPartido(int dia, int hora, int minuto,
 			EnumPeriodicoPartido periodico, int day_of_week) {
 		super();
 		this.dia = dia;
@@ -105,6 +106,11 @@ public class DatosPeriodicoPartido implements Serializable{
 		}
 		
 		return ret.getTime();
+	}
+	
+	public DatosPeriodicoPartido getDatos(){
+		DatosPeriodicoPartido ret = new DatosPeriodicoPartido(dia, hora, minuto, periodico, day_of_week);
+		return ret;
 	}
 
 	

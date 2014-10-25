@@ -17,12 +17,13 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 	@PersistenceContext( unitName = "jatrik" ) 
 	private EntityManager em;
 	
-	
+	@Override
 	public ConfiguracionGral getConfiguracion(){
 		ConfiguracionGral cg = (ConfiguracionGral)em.createQuery("Select cg from ConfiguracionGral cg").getSingleResult();
 		return cg;
 	}
 	
+	@Override
 	public void crearConfiguracionGral(DatosConfiguracionGral dcg){
 		if(getConfiguracion()!= null){
 			ConfiguracionGral cg = new ConfiguracionGral();
@@ -35,6 +36,7 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 		}
 	}
 	
+	@Override
 	public void modificarConfiguracion(DatosConfiguracionGral dcg) throws NoExisteConfiguracionException{
 		ConfiguracionGral cg = this.getConfiguracion();
 		if(cg == null){
@@ -47,6 +49,26 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 		cg.setNumeroTorneo(dcg.getNumeroTorneo());
 		cg.setPremio(dcg.getPremio());
 	}
+
+	@Override
+	public DatosConfiguracionGral getDatosConfiguracionGral() {
+		return getConfiguracion().getDatos();
+	}
+
+	@Override
+	public void crearOModificarConfiguracion(DatosConfiguracionGral dcg) throws NoExisteConfiguracionException {
+		ConfiguracionGral cg = getConfiguracion();
+		if(cg!= null){
+			modificarConfiguracion(dcg);
+		}
+		else{
+			crearConfiguracionGral(dcg);
+		}
+		
+	}
+
+	
+	
 	
 	
 

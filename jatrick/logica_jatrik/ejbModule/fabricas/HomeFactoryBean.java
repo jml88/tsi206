@@ -1,5 +1,6 @@
 package fabricas;
 
+import interfaces.ICampeonatoControlador;
 import interfaces.IConfiguracionControlador;
 import interfaces.IEquipoControlador;
 import interfaces.IJugadorControlador;
@@ -43,6 +44,12 @@ public class HomeFactoryBean implements HomeFactory {
 	public IConfiguracionControlador getConfiguracionControlador() {
 		// TODO Auto-generated method stub
 		return (IConfiguracionControlador ) ctx.lookup("java:module/ConfiguracionControlador!interfaces.IConfiguracionControlador");
+	}
+
+	@Override
+	public ICampeonatoControlador getCampeontaoControlador() {
+		// TODO Auto-generated method stub
+		return (ICampeonatoControlador ) ctx.lookup("java:module/CampeonatoControlador!interfaces.ICampeonatoControlador");
 	}
 
 }

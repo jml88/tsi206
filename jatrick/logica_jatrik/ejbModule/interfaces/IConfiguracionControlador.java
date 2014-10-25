@@ -11,5 +11,8 @@ public interface IConfiguracionControlador {
 	public void crearConfiguracionGral(DatosConfiguracionGral dcg);
 	
 	public void modificarConfiguracion(DatosConfiguracionGral dcg) throws NoExisteConfiguracionException;
-
+	
+	public DatosConfiguracionGral getDatosConfiguracionGral();
+	
+	public void crearOModificarConfiguracion(DatosConfiguracionGral dcg) throws NoExisteConfiguracionException;
 }
