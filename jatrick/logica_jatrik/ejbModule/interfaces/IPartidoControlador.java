@@ -20,7 +20,7 @@ public interface IPartidoControlador {
 	
 	public Partido findPartido(int codPartido);
 	
-	public List<DatosComentario> obtenerComentariosPartido(int codPartido, int nroComentario) throws NoExistePartidoExepcion;
+	public List<DatosComentario> obtenerComentariosPartido(long codPartido, int nroComentario) throws NoExistePartidoExepcion;
 
 	void setAlineacioPartido(DatosAlineacion alineacion, int idPartido, int idEquipo);
 	

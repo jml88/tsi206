@@ -1,5 +1,7 @@
 package configuracionGral;
 
+import java.util.List;
+
 import interfaces.IConfiguracionControlador;
 
 import javax.ejb.Stateless;
@@ -19,8 +21,15 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 	
 	@Override
 	public ConfiguracionGral getConfiguracion(){
-		ConfiguracionGral cg = (ConfiguracionGral)em.createQuery("Select cg from ConfiguracionGral cg").getSingleResult();
-		return cg;
+		@SuppressWarnings("unchecked")
+		List<ConfiguracionGral> cg = (List<ConfiguracionGral>)em.createQuery("Select cg from ConfiguracionGral cg").getResultList();
+		if(cg.isEmpty()){
+			return new ConfiguracionGral();
+		}
+		else{
+			return cg.get(0);
+		}
+		
 	}
 	
 	@Override

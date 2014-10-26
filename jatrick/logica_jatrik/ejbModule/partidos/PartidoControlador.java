@@ -43,7 +43,7 @@ public class PartidoControlador implements IPartidoControlador {
 	public int crearPartidoAmistoso(int codEquipoLocal, int  codEquipoVisitante, Calendar fecha) {
 		Equipo el = hf.getEquipoControlador().findEquipo(codEquipoLocal);
 		Equipo ev = hf.getEquipoControlador().findEquipo(codEquipoVisitante);
-		Partido p = new Partido(el,ev,fecha);
+		Partido p = new Amistoso(el,ev,fecha);
 		em.persist(p);
 		return 0;
 	}
@@ -62,7 +62,7 @@ public class PartidoControlador implements IPartidoControlador {
 		return em.find(Partido.class, codPartido);
 	}
 	
-	public List<DatosComentario> obtenerComentariosPartido(int codPartido, int nroComentario) throws NoExistePartidoExepcion{
+	public List<DatosComentario> obtenerComentariosPartido(long codPartido, int nroComentario) throws NoExistePartidoExepcion{
 		
 		Partido p = em.find(Partido.class,codPartido );
 		if(p == null){

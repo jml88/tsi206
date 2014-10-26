@@ -1,7 +1,6 @@
 package configuracionGral;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -188,8 +187,17 @@ public class ConfiguracionGral {
 	}
 	
 	public DatosConfiguracionGral getDatos(){
+		
+		DatosPeriodicoPartido dp;
+		if(periodicoPartido != null){
+			dp = periodicoPartido.getDatos();
+		}
+		else{
+			dp = new DatosPeriodicoPartido();
+		}
+		 
 		DatosConfiguracionGral ret = new DatosConfiguracionGral(premio, dineroInicial, cantJugadoresArranque, cantEquipoTorneo, numeroFecha, numeroTorneo, cantidadTorneos, cantidadDescensos,
-										fechaArranqueCampeonato, periodicoPartido.getDatos());
+										fechaArranqueCampeonato, dp);
 		return ret;
 	}
 	

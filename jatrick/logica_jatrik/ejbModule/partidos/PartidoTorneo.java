@@ -3,16 +3,17 @@ package partidos;
 import java.util.Calendar;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 import equipos.Equipo;
 
 @Entity
-@Table(name=PartidoTorneo.nombreTabla)
+@DiscriminatorValue("T")
 public class PartidoTorneo extends Partido {
 	
-	public static final String nombreTabla = "PARTIDOSTORNEO";
+	//public static final String nombreTabla = "PARTIDOSTORNEO";
+	
 	
 	@Column
 	private int fechaNro;
