@@ -1,6 +1,6 @@
 package datatypes;
 
-import java.util.Calendar;
+import java.util.Date;
 
 
 public class DatosConfiguracionGral {
@@ -24,7 +24,7 @@ public class DatosConfiguracionGral {
 	
 	private int cantidadDescensos;
 	
-	private Calendar fechaArranqueCampeonato;
+	private Date fechaArranqueCampeonato;
 	
 	private DatosPeriodicoPartido periodicoPartido;
 
@@ -40,7 +40,7 @@ public class DatosConfiguracionGral {
 	public DatosConfiguracionGral(int premio, int dineroInicial,
 			int cantJugadoresArranque, int cantEquipoTorneo, int numeroFecha,
 			int numeroTorneo, int cantidadTorneos, int cantidadDescensos,
-			Calendar fechaArranqueCampeonato,
+			Date fechaArranqueCampeonato,
 			DatosPeriodicoPartido periodicoPartido) {
 		super();
 		this.premio = premio;
@@ -141,14 +141,14 @@ public class DatosConfiguracionGral {
 
 
 
-	public Calendar getFechaArranqueCampeonato() {
+	public Date getFechaArranqueCampeonato() {
 		return fechaArranqueCampeonato;
 	}
 
 
 
 
-	public void setFechaArranqueCampeonato(Calendar fechaArranqueCampeonato) {
+	public void setFechaArranqueCampeonato(Date fechaArranqueCampeonato) {
 		this.fechaArranqueCampeonato = fechaArranqueCampeonato;
 	}
 

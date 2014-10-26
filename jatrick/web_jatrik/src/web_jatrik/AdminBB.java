@@ -9,6 +9,7 @@ import javax.naming.NamingException;
 
 import comunicacion.Comunicacion;
 import datatypes.DatosConfiguracionGral;
+import excepciones.NoExisteConfiguracionException;
 
 @Named("adminBB")
 @ViewScoped
@@ -21,11 +22,15 @@ public class AdminBB implements Serializable{
 	
 	private DatosConfiguracionGral configGeneral;
 	
+	private String selection;
+	
 	@PostConstruct
 	public void init(){
 		try {
 			if(Comunicacion.getInstance().getConfiguracionControlador().getDatosConfiguracionGral() != null){
 				setConfigGeneral(Comunicacion.getInstance().getConfiguracionControlador().getDatosConfiguracionGral());
+				
+				
 			}else{
 				configGeneral = new DatosConfiguracionGral();
 			}
@@ -50,12 +55,27 @@ public class AdminBB implements Serializable{
 	public String createOrModifiedConfigGralBasica(){
 		String ret ="";
 		try {
-			Comunicacion.getInstance().getConfiguracionControlador().crearConfiguracionGral(configGeneral);
+			Comunicacion.getInstance().getConfiguracionControlador().crearOModificarConfiguracion(configGeneral);
 		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoExisteConfiguracionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return ret;
+	}
+
+
+
+	public String getSelection() {
+		return selection;
+	}
+
+
+
+	public void setSelection(String selection) {
+		this.selection = selection;
 	}
 	
 	

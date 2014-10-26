@@ -1,5 +1,7 @@
 package comunicacion;
 
+import interfaces.ICampeonatoControlador;
+import interfaces.IConfiguracionControlador;
 import interfaces.IEquipoControlador;
 import interfaces.IJugadorControlador;
 import interfaces.IPartidoControlador;
@@ -61,6 +63,14 @@ public class Comunicacion {
 	
 	public IPartidoControlador getIPartidoControlador() throws NamingException {
 		return (IPartidoControlador)this.ctx.lookup("java:app/logica_jatrik/PartidoControlador!interfaces.IPartidoControlador");
+	}
+	
+	public IConfiguracionControlador getConfiguracionControlador() throws NamingException {
+		return (IConfiguracionControlador)this.ctx.lookup("java:app/logica_jatrik/ConfiguracionControlador!interfaces.IConfiguracionControlador");
+	}
+	
+	public ICampeonatoControlador getCampeonatoControlador() throws NamingException {
+		return (ICampeonatoControlador)this.ctx.lookup("java:app/logica_jatrik/CampeonatoControlador!interfaces.ICampeonatoControlador");
 	}
 
 }

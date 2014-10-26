@@ -1,47 +1,40 @@
-package configuracionGral;
+package datatypes;
 
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-import datatypes.DatosPeriodicoPartido;
 import datatypes.EnumPeriodicoPartido;
 
 @Embeddable
-public class PeriodicoPartido implements Serializable{
+public class DatosPeriodicoPartido implements Serializable{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	@Column(nullable = true)
 	private int dia;
 	
-	@Column(nullable = true)
 	private int hora;
 	
-	@Column(nullable = true)
 	private int minuto;
 	
-	@Column(nullable = true)
 	private EnumPeriodicoPartido periodico;
 	
-	@Column(nullable = true)
-	private int day_of_week; //1..7, 1 es domingo
+	private int day_of_week; //0..6
 	
 
-	public PeriodicoPartido() {
+	public DatosPeriodicoPartido() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	
 
-	public PeriodicoPartido(int dia, int hora, int minuto,
+	public DatosPeriodicoPartido(int dia, int hora, int minuto,
 			EnumPeriodicoPartido periodico, int day_of_week) {
 		super();
 		this.dia = dia;
@@ -112,11 +105,6 @@ public class PeriodicoPartido implements Serializable{
 		}
 		
 		return ret.getTime();
-	}
-	
-	public DatosPeriodicoPartido getDatos(){
-		DatosPeriodicoPartido ret = new DatosPeriodicoPartido(dia, hora, minuto, periodico, day_of_week);
-		return ret;
 	}
 
 	

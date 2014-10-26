@@ -1,6 +1,7 @@
 package configuracionGral;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -51,10 +52,11 @@ public class ConfiguracionGral {
 	private int cantidadDescensos;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column
+	@Column(nullable = true)
 	private Calendar fechaArranqueCampeonato;
 	
 	@Embedded
+	@Column(nullable = true)
 	private PeriodicoPartido periodicoPartido;
 
 	
@@ -189,15 +191,22 @@ public class ConfiguracionGral {
 	public DatosConfiguracionGral getDatos(){
 		
 		DatosPeriodicoPartido dp;
+		Date fecha;
 		if(periodicoPartido != null){
 			dp = periodicoPartido.getDatos();
 		}
 		else{
 			dp = new DatosPeriodicoPartido();
 		}
+		if(fechaArranqueCampeonato == null){
+			fecha = null;
+		}
+		else{
+			fecha = fechaArranqueCampeonato.getTime();
+		}
 		 
 		DatosConfiguracionGral ret = new DatosConfiguracionGral(premio, dineroInicial, cantJugadoresArranque, cantEquipoTorneo, numeroFecha, numeroTorneo, cantidadTorneos, cantidadDescensos,
-										fechaArranqueCampeonato, dp);
+										fecha, dp);
 		return ret;
 	}
 	
