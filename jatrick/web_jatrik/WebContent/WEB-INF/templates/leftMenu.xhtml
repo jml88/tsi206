@@ -5,6 +5,51 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	<div>
-		<h1>hola</h1>
+		<h:form id="formLeft" prependId="false">
+			<p:panelGrid columns="1" 
+				rendered="#{sessionBB.datosManager == null }">
+				<p:outputLabel style="min-width:70px;" for="usr">Usuario: </p:outputLabel>
+				<p:inputText id="usr" label="Usuario:" value="#{loginBB.username}"
+					maxlength="10"></p:inputText>
+				<p:outputLabel for="pass">Contraseña: </p:outputLabel>
+				<p:password id="pass" value="#{loginBB.password}"></p:password>
+				<p:row>
+					<p:column colspan="1">
+						<p:commandButton value="Login" action="#{loginBB.login}"></p:commandButton>
+					</p:column>
+					
+				</p:row>
+				<p:row>
+					<p:column colspan="1">
+						<p:link value="Registrarse" outcome="/webPages/registro/registro.xhtml?faces-redirect=true"></p:link>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+			<p:menu rendered="#{sessionBB.datosManager != null}">
+				<p:submenu label="Principal">
+					<p:menuitem value="Inicio" outcome="/webPages/home/home.xhtml?faces-redirect=true"
+						icon="ui-icon-disk" />
+				</p:submenu>
+				<p:submenu label="Competiciones">
+					<p:menuitem value="Liga" outcome="/webPages/competiciones/liga.xhtml?faces-redirect=true" icon="ui-icon-star"/>
+					<p:menuitem value="Copa" actionListener="#{menuView.delete}"
+						ajax="false" icon="ui-icon-close" />
+					<p:menuitem value="Amistosos" outcome="/webPages/partidos/verPartidos.xhtml?faces-redirect=true"
+						ajax="false" icon="ui-icon-close" />
+				</p:submenu>
+				<p:submenu label="Mi Club">
+					<p:menuitem value="Jugadores" outcome="/webPages/jugadores/jugadores.xhtml?faces-redirect=true"
+						icon="ui-icon-home" />
+					<p:menuitem value="Inferiores" icon="ui-icon-star" />
+					<p:menuitem value="Entrenar" icon="ui-icon-star" />
+				</p:submenu>
+				<p:submenu label="Busqueda">
+					<p:menuitem value="Jugadores" url="http://www.primefaces.org"
+						icon="ui-icon-home" />
+					<p:menuitem value="Ligas" icon="ui-icon-star" />
+					<p:menuitem value="Equipos" icon="ui-icon-star" />
+				</p:submenu>
+			</p:menu>
+		</h:form>
 	</div>
 </ui:composition>

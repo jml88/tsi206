@@ -8,24 +8,11 @@
 
 	<ui:define name="Principal">
 		<h:form id="form" prependId="false">
-			<p:layout style="min-width:400px;min-height:200px;">
+			
+			<p:layout rendered="#{sessionBB.datosManager == null}"
+				style="min-width:100px;min-height:200px;">
 				<p:layoutUnit position="center">
-					<p:panelGrid columns="2">
-						<p:outputLabel for="usr">Usuario: </p:outputLabel>
-						<p:inputText id="usr" label="Usuario:" value="#{loginBB.username}"></p:inputText>
-						<p:outputLabel for="pass">Contraseña: </p:outputLabel>
-						<p:password id="pass" value="#{loginBB.password}"></p:password>
-						<p:row>
-							<p:column colspan="2">
-								<p:commandButton value="Login" action="#{loginBB.login}"></p:commandButton>
-							</p:column>
-						</p:row>
-						<p:row>
-							<p:column colspan="2">
-								<p:link outcome="toRegister" value="Registrarse!"/>
-							</p:column>
-						</p:row>
-					</p:panelGrid>
+					
 				</p:layoutUnit>
 			</p:layout>
 		</h:form>
