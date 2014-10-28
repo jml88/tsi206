@@ -3,9 +3,6 @@ package partidos;
 import java.util.Calendar;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -26,9 +23,7 @@ import equipos.Equipo;
 
 
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="PARTIDO_TIPO",discriminatorType=DiscriminatorType.STRING)
-@DiscriminatorValue("P")
+@Inheritance(strategy=InheritanceType.JOINED)
 @Table(name=Partido.nombreTabla)
 public class Partido {
 

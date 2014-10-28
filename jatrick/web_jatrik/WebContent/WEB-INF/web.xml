@@ -5,7 +5,7 @@
 	version="3.1">
 	<display-name>web_jatrik</display-name>
 	<welcome-file-list>
-	    <welcome-file>
+		<welcome-file>
 	        login.xhtml
 	    </welcome-file>
 	</welcome-file-list>
@@ -34,7 +34,16 @@
 		<dispatcher>ERROR</dispatcher>
 	</filter-mapping>
 	<context-param>
-	    <param-name>primefaces.THEME</param-name>
-	    <param-value>hot-sneaks</param-value>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>hot-sneaks</param-value>
 	</context-param>
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>SECURE</web-resource-name>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
 </web-app>

@@ -22,36 +22,8 @@
 					<h:outputText value="..."/>
 				</p:panelGrid>
 			</div>
-			<div id="jugadores">
-				<p:dataTable var="jug" value="#{homeBB.jugadores}">
-					<p:column headerText="Jugador">
-						<h:outputText value="#{jug.nombre} #{jug.apellido1} #{jug.apellido2}"/>
-					</p:column>
-					<p:column headerText="Edad">
-						<h:outputText value="#{jug.edad}" />
-					</p:column>
-					<p:column headerText="Velocidad">
-						<h:outputText value="#{jug.velocidad}" />
-					</p:column>
-					<p:column headerText="Tecnica">
-						<h:outputText value="#{jug.tecnica}" />
-					</p:column>
-					<p:column headerText="Ataque">
-						<h:outputText value="#{jug.ataque}" />
-					</p:column>
-					<p:column headerText="Defensa">
-						<h:outputText value="#{jug.defensa}" />
-					</p:column>
-					<p:column headerText="Porteria">
-						<h:outputText value="#{jug.porteria}" />
-					</p:column>
-				</p:dataTable>
-			</div>
-			<div id="botones">
-				<p:commandButton id="verAlineacion" value="Ver alineación" action="#{homeBB.verAlineacion}" update="growl"/>
-				<p:commandButton id="jugarAmistoso" value="Jugar amistoso" action="#{homeBB.jugarAmistoso}" update="growl"/>
-				<p:commandButton id="verPartidos" value="Ver partidos" action="#{homeBB.verPartidos}" update="growl"/>
-			</div>
+
+
 			<p:growl id="growl" life="2000"/>
 		</h:form>
 		<f:view contentType="text/html">
