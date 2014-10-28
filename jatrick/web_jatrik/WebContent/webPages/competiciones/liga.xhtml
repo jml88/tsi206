@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="Principal">
+		<h:form id="form" prependId="false">
+			<p:layout>
+				<p:layoutUnit position="center">
+					<p:tabView>
+						<p:tab title="Clasificación">
+							<h:panelGrid columns="2" cellpadding="10">
+								<p:dataTable var="tabla" value="#{ligaBB.tablaLiga}">
+									<p:column headerText="Pos">
+										<h:outputText value="#{tabla.id}" />
+									</p:column>
+
+									<p:column headerText="Equipo">
+										<h:outputText value="#{car.year}" />
+									</p:column>
+
+									<p:column headerText="Ptos">
+										<h:outputText value="#{car.brand}" />
+									</p:column>
+
+									<p:column headerText="PJ">
+										<h:outputText value="#{car.color}" />
+									</p:column>
+									<p:column headerText="PG">
+										<h:outputText value="#{car.color}" />
+									</p:column>
+									<p:column headerText="PE">
+										<h:outputText value="#{car.color}" />
+									</p:column>
+									<p:column headerText="PP">
+										<h:outputText value="#{car.color}" />
+									</p:column>
+									<p:column headerText="GF">
+										<h:outputText value="#{car.color}" />
+									</p:column>
+									<p:column headerText="GC">
+										<h:outputText value="#{car.color}" />
+									</p:column>
+									<p:column headerText="AVG">
+										<h:outputText value="#{car.color}" />
+									</p:column>
+								</p:dataTable>
+							</h:panelGrid>
+						</p:tab>
+					
+						<p:tab title="Goleador">
+							<p:dataTable var="car" value="#{dtBasicView.cars}">
+								<p:column headerText="Pos">
+									<h:outputText value="#{car.id}" />
+								</p:column>
+
+								<p:column headerText="Equipo">
+									<h:outputText value="#{car.year}" />
+								</p:column>
+
+								<p:column headerText="Goles">
+									<h:outputText value="#{car.brand}" />
+								</p:column>
+							</p:dataTable>
+						</p:tab>
+
+						<p:tab title="Ranking">
+							<p:dataTable var="car" value="#{dtBasicView.cars}">
+								<p:column headerText="Id">
+									<h:outputText value="#{car.id}" />
+								</p:column>
+
+								<p:column headerText="Equipo">
+									<h:outputText value="#{car.year}" />
+								</p:column>
+
+								<p:column headerText="Ranking">
+									<h:outputText value="#{car.brand}" />
+								</p:column>
+
+								<p:column headerText="Puntos">
+									<h:outputText value="#{car.color}" />
+								</p:column>
+							</p:dataTable>
+						</p:tab>
+
+					</p:tabView>
+				</p:layoutUnit>
+			</p:layout>
+		</h:form>
+	</ui:define>
+</ui:composition>
