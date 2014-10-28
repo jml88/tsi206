@@ -1,6 +1,8 @@
 package websockets;
  
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,14 +15,36 @@ import javax.websocket.server.ServerEndpoint;
 
 import users.ChatMessage;
  
-@ServerEndpoint(value = "/chat/{room}", encoders = ChatMessageEncoder.class, decoders = ChatMessageDecoder.class)
+@ServerEndpoint(value = "/chat/{room}/{username}", encoders = ChatMessageEncoder.class, decoders = ChatMessageDecoder.class)
 public class ChatEndpoint {
 	private final Logger log = Logger.getLogger(getClass().getName());
  
+//	@OnOpen
+//	public void open(final Session session, @PathParam("room") final String room) {
+//		log.info("session openend and bound to room: " + room);
+//		session.getUserProperties().put("room", room);
+//	}
+	
+	private List<String> usersGeneral;
+	
+	public ChatEndpoint() {
+		usersGeneral = new ArrayList<String>();
+	}
+	
+	public List<String> getUsersGeneral() {
+		return usersGeneral;
+	}
+
+	public void setUsersGeneral(List<String> usersGeneral) {
+		this.usersGeneral = usersGeneral;
+	}
+
 	@OnOpen
-	public void open(final Session session, @PathParam("room") final String room) {
+	public void open(final Session session, @PathParam("room") final String room, @PathParam("username") final String username) {
 		log.info("session openend and bound to room: " + room);
+		session.getUserProperties().put("username", username);
 		session.getUserProperties().put("room", room);
+		usersGeneral.add(username);
 	}
  
 	@OnMessage

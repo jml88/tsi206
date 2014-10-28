@@ -1,9 +1,22 @@
 var wsocket;
-var serviceLocation = "ws://localhost:8080/web_jatrik/chat/";
+var serviceLocation = "wss://localhost:8443/web_jatrik/chat/";
 var $nickName;
 var $message;
 var $chatWindow;
 var room = '';
+
+function enterGral(e){
+	tecla = (document.all) ? e.keyCode : e.which;
+	if (tecla == 13){
+		messageGral = $(PrimeFaces.escapeClientId('chatForm:tabChat:enviarGral'));
+		messageGralText = messageGral.val();
+		messageGral.val('').focus();
+		list = $(PrimeFaces.escapeClientId('chatForm:tabChat:mensajesGral'));
+		list.scrollTop = list[0].scrollHeight;		
+		gralRC([{name: 'mensajeGral', value: messageGralText}]);
+		
+	}
+}
 
 function onMessageReceived(evt) {
 	//var msg = eval('(' + evt.data + ')');
@@ -23,7 +36,8 @@ function sendMessage() {
 
 function connectToChatserver() {
 	room = $('#chatroom option:selected').val();
-	wsocket = new WebSocket(serviceLocation + room);
+	username = $(PrimeFaces.escapeClientId('chatForm:hiddenUsername')).val();
+	wsocket = new WebSocket(serviceLocation + room + '/' + username);
 	wsocket.onmessage = onMessageReceived;
 }
 
@@ -36,6 +50,9 @@ function leaveRoom() {
 }
 
 $(document).ready(function() {
+	
+	connectToChatserver();
+	
 	$nickName = $('#nickname');
 	$message = $('#message');
 	$chatWindow = $('#response');
