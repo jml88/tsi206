@@ -24,24 +24,22 @@ public class DatosPeriodicoPartido implements Serializable{
 	
 	private EnumPeriodicoPartido periodico;
 	
-	private int day_of_week; //0..6
-	
 
 	public DatosPeriodicoPartido() {
 		super();
+		this.periodico = EnumPeriodicoPartido.DIA;
 		// TODO Auto-generated constructor stub
 	}
 
 	
 
 	public DatosPeriodicoPartido(int dia, int hora, int minuto,
-			EnumPeriodicoPartido periodico, int day_of_week) {
+			EnumPeriodicoPartido periodico) {
 		super();
 		this.dia = dia;
 		this.hora = hora;
 		this.minuto = minuto;
 		this.periodico = periodico;
-		this.day_of_week = day_of_week;
 	}
 
 
@@ -78,13 +76,6 @@ public class DatosPeriodicoPartido implements Serializable{
 		this.periodico = periodico;
 	}
 
-	public int getDay_of_week() {
-		return day_of_week;
-	}
-
-	public void setDay_of_week(int day_of_week) {
-		this.day_of_week = day_of_week;
-	}
 	
 	
 	public Date diaPartido(Date fecha, int numeroFecha){
