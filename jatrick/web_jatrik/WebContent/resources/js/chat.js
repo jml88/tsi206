@@ -1,5 +1,5 @@
 var wsocket;
-var serviceLocation = "ws://localhost:8080/web_jatrik/chat/";
+var serviceLocation = "wss://localhost:8443/web_jatrik/chat/";
 var $nickName;
 var $message;
 var $chatWindow;
