@@ -6,6 +6,8 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:jboss/datasources/JatrikDS</jta-data-source>
 		<class>partidos.Partido</class>
+		<class>partidos.PartidoTorneo</class>
+		<class>partidos.Amistoso</class>
 		<class>equipos.Alineacion</class>
 		<class>jugadores.Jugador</class>
 		<class>equipos.Equipo</class>
@@ -14,7 +16,7 @@
 		<class>partidos.Comentario</class>
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
-			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.show_sql" value="false" />
 		</properties>
 	</persistence-unit>
 </persistence>
