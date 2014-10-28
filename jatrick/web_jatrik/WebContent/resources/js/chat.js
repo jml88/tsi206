@@ -27,6 +27,7 @@ function onMessageReceived(evt) {
 			+ '</td></tr>');
 	$chatWindow.append($messageLine);
 }
+
 function sendMessage() {
 	var msg = '{"message":"' + $message.val() + '", "sender":"'
 	+ $nickName.val() + '", "received":""}';

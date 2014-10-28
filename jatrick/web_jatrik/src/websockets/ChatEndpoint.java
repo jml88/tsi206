@@ -12,8 +12,6 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
-
-import users.ChatMessage;
  
 @ServerEndpoint(value = "/chat/{room}/{username}", encoders = ChatMessageEncoder.class, decoders = ChatMessageDecoder.class)
 public class ChatEndpoint {

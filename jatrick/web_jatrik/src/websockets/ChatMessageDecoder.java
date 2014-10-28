@@ -8,8 +8,6 @@ import javax.json.JsonObject;
 import javax.websocket.DecodeException;
 import javax.websocket.Decoder;
 import javax.websocket.EndpointConfig;
-
-import users.ChatMessage;
  
 public class ChatMessageDecoder implements Decoder.Text<ChatMessage> {
 	@Override
