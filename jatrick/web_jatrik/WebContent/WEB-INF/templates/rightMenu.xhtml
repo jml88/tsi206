@@ -4,7 +4,41 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="scripts">
+		<h:outputScript library="js" name="chat.js" />
+	</ui:define>
+	
 	<div>
-		
+	<h:form id="chatForm" rendered="#{sessionBB.datosManager != null}">
+			<h:inputHidden id="hiddenUsername" value="{#sessionBB.datosManager.username}" />
+			<table style="background-color: #FFFFFF">
+				<tr>
+					<td>
+						<p:tabView id="tabChat" orientation="top" style="none">
+							<p:tab id="general" title="General">
+								<p:dataList id="mensajesGral" value="#{chatBB.msjGeneral}" var="msjGral" emptyMessage="">
+									#{msjGral}
+								</p:dataList>
+								<p:inputTextarea id="enviarGral" style="width: 97%; height: 50px" onkeyup="enterGral(event)" ></p:inputTextarea>
+							</p:tab>
+							<p:tab id="liga" title="Liga">
+								<p:dataList id="mensajesLiga" value="#{chatBB.msjLiga}" var="car" emptyMessage="" style="height: 300px">
+								</p:dataList>
+								<p:inputTextarea id="enviarLiga" style="width: 97%; height: 50px"></p:inputTextarea>
+							</p:tab>
+							<p:tab id="partido" title="Partido">
+								<p:dataList id="mensajesPartido" value="#{chatBB.msjPartido}" var="car" emptyMessage="" style="height: 300px">
+								</p:dataList>
+								<p:inputTextarea id="enviarPartido" style="width: 97%; height: 50px"></p:inputTextarea>
+							</p:tab>
+						</p:tabView>
+					</td>
+				</tr>
+			</table>
+			<p:remoteCommand name="gralRC" update="chatForm:tabChat:mensajesGral" actionListener="#{chatBB.sendGral}" ></p:remoteCommand>
+			<p:remoteCommand name="ligaRC" ></p:remoteCommand>
+			<p:remoteCommand name="partidoRC" ></p:remoteCommand>
+		</h:form>
 	</div>
 </ui:composition>
