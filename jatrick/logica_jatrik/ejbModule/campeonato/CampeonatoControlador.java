@@ -52,6 +52,8 @@ public class CampeonatoControlador implements ICampeonatoControlador{
 				t.setNivelVertical(vertical);
 				t.setNivelHorizontal(horizontal);
 				em.persist(t);
+				crearPartidosTorneo(t);
+				
 			}
 		}
 	}
@@ -68,6 +70,7 @@ public class CampeonatoControlador implements ICampeonatoControlador{
 			int idEquipo = hf.getEquipoControlador().crearEquipo("Equipo" + i);
 			equipos.add(hf.getEquipoControlador().findEquipo(idEquipo));
 		}
+		t.setEquipos(equipos);
 		//em.persist(t);
 		return t;
 	}
@@ -77,24 +80,38 @@ public class CampeonatoControlador implements ICampeonatoControlador{
 	public void crearPartidosTorneo(Torneo t){
 		//Crea los partidos
 		int cantidadEquipos = hf.getConfiguracionControlador().getConfiguracion().getCantEquipoTorneo();
-		Equipo[] equipos =(Equipo[])t.getEquipos().toArray();
+		List<Equipo> equipos =  t.getEquipos();
 		
 		
-		for(int local = 0; local < cantidadEquipos; local++){
-			Equipo e = equipos[local];
+		for(int cantFechas = 0; cantFechas < cantidadEquipos-1; cantFechas++){
 			
-			for(int visitante = local+1; visitante < cantidadEquipos; visitante++){
+			
+			for(int fecha = 0; fecha < (cantidadEquipos/2); fecha++){
+				
+				Equipo visitante;
+				if(fecha == 0){
+					
+					visitante = equipos.get((cantFechas - fecha + cantidadEquipos)%(cantidadEquipos));
+				}
+				else{
+					
+					visitante = equipos.get((cantFechas - fecha + cantidadEquipos)%(cantidadEquipos));
+				}
+				Equipo local = equipos.get((cantFechas+fecha)%(cantidadEquipos));
+		            
+				
+				
 				PeriodicoPartido fechaPartido = hf.getConfiguracionControlador().getConfiguracion().getPeriodicoPartido();
 				Calendar c = hf.getConfiguracionControlador().getConfiguracion().getFechaArranqueCampeonato();
-				Date fecha = fechaPartido.diaPartido(c.getTime(), visitante);
-				c.setTime(fecha);
-				PartidoTorneo p = new PartidoTorneo(e, equipos[visitante+1], c, visitante);
+				Date fechaP = fechaPartido.diaPartido(c.getTime(), (cantidadEquipos-1-fecha+cantFechas)%(cantidadEquipos-1));
+				c.setTime(fechaP);
+				PartidoTorneo p = new PartidoTorneo(local, visitante, c, cantFechas);
 				em.persist(p);
 				
-				fecha = fechaPartido.diaPartido(c.getTime(), visitante+cantidadEquipos-1);
-				c.setTime(fecha);
-				PartidoTorneo segVuelta = new PartidoTorneo(equipos[visitante+1],e, c, visitante+cantidadEquipos-1);
-				em.persist(segVuelta);
+//				fecha = fechaPartido.diaPartido(c.getTime(), visitante+cantidadEquipos-1);
+//				c.setTime(fecha);
+//				PartidoTorneo segVuelta = new PartidoTorneo(equipos.get(visitante),e, c, visitante+cantidadEquipos-1);
+//				em.persist(segVuelta);
 			}
 		}
 		

@@ -64,7 +64,9 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 		cg.setDineroInicial(dcg.getDineroInicial());
 		cg.setNumeroFecha(dcg.getNumeroFecha());
 		cg.setNumeroTorneo(dcg.getNumeroTorneo());
+		cg.setCantidadDescensos(dcg.getCantidadDescensos());
 		cg.setPremio(dcg.getPremio());
+		cg.setCantidadTorneos(dcg.getCantidadTorneos());
 		if(dcg.getFechaArranqueCampeonato()!=null){
 			Calendar c = Calendar.getInstance();
 			c.setTime(dcg.getFechaArranqueCampeonato());
@@ -73,6 +75,18 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 		else{
 			cg.setFechaArranqueCampeonato(null);
 		}
+		
+		PeriodicoPartido p = cg.getPeriodicoPartido();
+		if(p==null){
+			p = new PeriodicoPartido();
+		}
+		p.setDia(dcg.getPeriodicoPartido().getDia());
+		p.setHora(dcg.getPeriodicoPartido().getHora());
+		p.setMinuto(dcg.getPeriodicoPartido().getMinuto());
+		p.setPeriodico(dcg.getPeriodicoPartido().getPeriodico());
+		cg.setPeriodicoPartido(p);
+		
+		
 		
 		
 		em.persist(cg);

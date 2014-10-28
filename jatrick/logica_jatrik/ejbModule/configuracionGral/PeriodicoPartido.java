@@ -30,8 +30,6 @@ public class PeriodicoPartido implements Serializable{
 	@Column(nullable = true)
 	private EnumPeriodicoPartido periodico;
 	
-	@Column(nullable = true)
-	private int day_of_week; //1..7, 1 es domingo
 	
 
 	public PeriodicoPartido() {
@@ -48,7 +46,6 @@ public class PeriodicoPartido implements Serializable{
 		this.hora = hora;
 		this.minuto = minuto;
 		this.periodico = periodico;
-		this.day_of_week = day_of_week;
 	}
 
 
@@ -84,14 +81,6 @@ public class PeriodicoPartido implements Serializable{
 	public void setPeriodico(EnumPeriodicoPartido periodico) {
 		this.periodico = periodico;
 	}
-
-	public int getDay_of_week() {
-		return day_of_week;
-	}
-
-	public void setDay_of_week(int day_of_week) {
-		this.day_of_week = day_of_week;
-	}
 	
 	
 	public Date diaPartido(Date fecha, int numeroFecha){
@@ -115,7 +104,7 @@ public class PeriodicoPartido implements Serializable{
 	}
 	
 	public DatosPeriodicoPartido getDatos(){
-		DatosPeriodicoPartido ret = new DatosPeriodicoPartido(dia, hora, minuto, periodico, day_of_week);
+		DatosPeriodicoPartido ret = new DatosPeriodicoPartido(dia, hora, minuto, periodico);
 		return ret;
 	}
 

@@ -9,6 +9,8 @@ import javax.naming.NamingException;
 
 import comunicacion.Comunicacion;
 import datatypes.DatosConfiguracionGral;
+import datatypes.DatosPeriodicoPartido;
+import datatypes.EnumPeriodicoPartido;
 import excepciones.NoExisteConfiguracionException;
 
 @Named("adminBB")
@@ -22,7 +24,13 @@ public class AdminBB implements Serializable{
 	
 	private DatosConfiguracionGral configGeneral;
 	
-	private String selection;
+	private int selection;
+	
+	private int dia;
+	
+	private int hora;
+	
+	private int minuto;
 	
 	@PostConstruct
 	public void init(){
@@ -30,9 +38,30 @@ public class AdminBB implements Serializable{
 			if(Comunicacion.getInstance().getConfiguracionControlador().getDatosConfiguracionGral() != null){
 				setConfigGeneral(Comunicacion.getInstance().getConfiguracionControlador().getDatosConfiguracionGral());
 				
+				EnumPeriodicoPartido p = this.configGeneral.getPeriodicoPartido().getPeriodico();
+				switch(p){
+					
+				case MINUTO:
+					selection = 0;
+					break;
+				case HORA:
+					selection = 1;
+					break;
+				case DIA:
+					selection = 2;
+					break;
+				default:
+					selection = 0;
+					break;
+				}
+				
+				dia = this.configGeneral.getPeriodicoPartido().getDia();
+				hora = this.configGeneral.getPeriodicoPartido().getHora();
+				minuto = this.configGeneral.getPeriodicoPartido().getMinuto();
 				
 			}else{
 				configGeneral = new DatosConfiguracionGral();
+				selection = 9;
 			}
 			
 		} catch (NamingException e) {
@@ -55,6 +84,24 @@ public class AdminBB implements Serializable{
 	public String createOrModifiedConfigGralBasica(){
 		String ret ="";
 		try {
+			EnumPeriodicoPartido p;
+			switch(selection){
+				
+			case 0:
+				p = EnumPeriodicoPartido.MINUTO;
+				break;
+			case 1:
+				p = EnumPeriodicoPartido.HORA;
+				break;
+			case 2:
+				p = EnumPeriodicoPartido.DIA;
+				break;
+			default:
+				p = EnumPeriodicoPartido.MINUTO;
+				break;
+			}
+			DatosPeriodicoPartido periodico = new DatosPeriodicoPartido(dia, hora, minuto,p);
+			configGeneral.setPeriodicoPartido(periodico);
 			Comunicacion.getInstance().getConfiguracionControlador().crearOModificarConfiguracion(configGeneral);
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
@@ -67,15 +114,65 @@ public class AdminBB implements Serializable{
 	}
 
 
+	
+	public String crearPartidosYTorneos(){
+		String ret ="";
+		try {
+			Comunicacion.getInstance().getCampeonatoControlador().crearCampeonato();
+		} catch (NoExisteConfiguracionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
+	}
 
-	public String getSelection() {
+	public int getSelection() {
 		return selection;
 	}
 
 
 
-	public void setSelection(String selection) {
+	public void setSelection(int selection) {
 		this.selection = selection;
+	}
+
+
+
+	public int getDia() {
+		return dia;
+	}
+
+
+
+	public void setDia(int dia) {
+		this.dia = dia;
+	}
+
+
+
+	public int getHora() {
+		return hora;
+	}
+
+
+
+	public void setHora(int hora) {
+		this.hora = hora;
+	}
+
+
+
+	public int getMinuto() {
+		return minuto;
+	}
+
+
+
+	public void setMinuto(int minuto) {
+		this.minuto = minuto;
 	}
 	
 	

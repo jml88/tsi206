@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="scripts">
+		<script type="text/javascript">
+
+		</script>
+	</ui:define>
+	
+	<ui:define name="Principal">
+		<h:form id="form" prependId="false">
+			<!-- ACA VA EL CONTENIDO LA PAGINA -->
+			
+			
+			<p:layout>
+			<p:layoutUnit position="center">
+				<p:panelGrid columns="2">
+					<p:outputLabel for="CantequipoTorneo">Equipo pos torneo: </p:outputLabel>
+					<p:inputText id="CantequipoTorneo" label="Equipo por torneo:"
+						value="#{adminBB.configGeneral.cantEquipoTorneo}"></p:inputText>
+						
+					
+					<p:outputLabel for="jugadoresArranque">Cantidad jugadores empieza: </p:outputLabel>
+					<p:inputText id="jugadoresArranque" label="Cantidad jugadores empieza:"
+						value="#{adminBB.configGeneral.cantJugadoresArranque}"></p:inputText>
+						
+					<p:outputLabel for="descenso">Descenso: </p:outputLabel>
+					<p:inputText id="descenso" label="Descensos:"
+						value="#{adminBB.configGeneral.cantidadDescensos}"></p:inputText>
+						
+					<p:outputLabel for="torneos">Cantidad ligas: </p:outputLabel>
+					<p:inputText id="torneos" label="Cantidad ligas:"
+						value="#{adminBB.configGeneral.cantidadTorneos}"></p:inputText>
+						
+					<p:outputLabel for="dineroInicial">Dinero inicial: </p:outputLabel>
+					<p:inputText id="dineroInicial" label="Dinero inicial:"
+						value="#{adminBB.configGeneral.dineroInicial}"></p:inputText>
+						
+					<p:outputLabel for="popup">Fecha inicio campeonato: </p:outputLabel>
+					<p:calendar id="popup" value="#{adminBB.configGeneral.fechaArranqueCampeonato}" />
+					
+					<p:outputLabel for="periodico" value="Periódico:" />
+			        <p:selectOneMenu id="periodico" value="#{adminBB.selection}">
+			        	<f:selectItem itemLabel="" itemValue="9" />
+			            <f:selectItem itemLabel="Minuto" itemValue="0" />
+			            <f:selectItem itemLabel="Hora" itemValue="1" />
+			            <f:selectItem itemLabel="Dia" itemValue="2" />
+			        </p:selectOneMenu>
+			        
+						
+					<p:outputLabel for="diaSemana">Dia de la semana: </p:outputLabel>
+					<p:inputText id="diaSemana" label="Dia de la semana:"
+						value="#{adminBB.dia}"></p:inputText>
+						
+					<p:outputLabel for="hora">Hora: </p:outputLabel>
+					<p:inputText id="hora" label="Hora:"
+						value="#{adminBB.hora}"></p:inputText>
+						
+					<p:outputLabel for="minuto">Minuto: </p:outputLabel>
+					<p:inputText id="minuto" label="minuto:"
+						value="#{adminBB.minuto}"></p:inputText>
+					
+					<p:row>
+						<p:column colspan="2">
+							<p:commandButton value="Modificar" action="#{adminBB.createOrModifiedConfigGralBasica()}"></p:commandButton>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				
+				<p:panel>
+					<p:commandButton value="Crear Campeonato" action="#{adminBB.crearPartidosYTorneos}"></p:commandButton>
+				</p:panel>
+			</p:layoutUnit>
+		</p:layout>
+		
+		
+			
+		</h:form>
+	</ui:define>
+</ui:composition>
