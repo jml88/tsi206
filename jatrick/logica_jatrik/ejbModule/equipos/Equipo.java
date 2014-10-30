@@ -15,6 +15,7 @@ import javax.persistence.Table;
 
 import jugadores.Jugador;
 import datatypes.DatosEquipo;
+import datatypes.EnumEntrenamiento;
 
 @Entity
 @Table(name = Equipo.nombreTabla)
@@ -42,8 +43,15 @@ public class Equipo {
 	@Column(name = "CODPAIS")
 	private int codPais;
 	
+	@Column(name = "BOT")
+	private boolean bot;
+	
+	@Column(name="TIPOENTRENAMIENTO")
+	private EnumEntrenamiento tipoEntrenamiento;
+	
 	public Equipo() {
 		this.plantel = new HashSet<Jugador>();
+		this.tipoEntrenamiento = EnumEntrenamiento.ATAQUE;
 	}
 	
 	public Equipo(DatosEquipo de, Alineacion alineacionDefecto) {
@@ -52,6 +60,7 @@ public class Equipo {
 		this.alineacionDefecto = alineacionDefecto;
 		this.plantel = new HashSet<Jugador>();
 		this.codPais = de.getCodPais();
+		this.tipoEntrenamiento = EnumEntrenamiento.ATAQUE;
 	}
 
 	public Equipo(String nombre, Set<Jugador> plantel, Alineacion alineacionDefecto) {
@@ -59,6 +68,7 @@ public class Equipo {
 		this.nombre = nombre;
 		this.plantel = plantel;
 		this.alineacionDefecto = alineacionDefecto;
+		this.tipoEntrenamiento = EnumEntrenamiento.ATAQUE;
 	}
 	
 	public int getCodigo() {
@@ -109,8 +119,24 @@ public class Equipo {
 		this.codPais = codPais;
 	}
 
+	public boolean isBot() {
+		return bot;
+	}
+
+	public void setBot(boolean bot) {
+		this.bot = bot;
+	}
+
 	public DatosEquipo getDatos() {
-		return new DatosEquipo(this.codigo, this.nombre, this.codPais);
+		return new DatosEquipo(this.codigo, this.nombre, this.codPais, this.bot);
+	}
+
+	public EnumEntrenamiento getTipoEntrenamiento() {
+		return tipoEntrenamiento;
+	}
+
+	public void setTipoEntrenamiento(EnumEntrenamiento tipoEntrenamiento) {
+		this.tipoEntrenamiento = tipoEntrenamiento;
 	}
 
 }

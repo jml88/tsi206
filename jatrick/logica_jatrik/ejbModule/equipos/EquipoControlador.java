@@ -1,5 +1,6 @@
 package equipos;
 
+import excepciones.NoExisteEquipoExcepcion;
 import fabricas.HomeFactory;
 import interfaces.IEquipoControlador;
 import interfaces.IJugadorControlador;
@@ -15,9 +16,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import campeonato.Torneo;
+import users.Manager;
 import jugadores.Jugador;
 import datatypes.DatosEquipo;
 import datatypes.DatosJugador;
+import datatypes.EnumEntrenamiento;
 
 @Stateless
 @Named
@@ -30,7 +34,7 @@ public class EquipoControlador implements IEquipoControlador{
 	private HomeFactory hf;
 	
 	@Override
-	public int crearEquipo(String nombreEquipo) {
+	public int crearEquipo(String nombreEquipo, boolean bot) {
 		Alineacion alineacionDefecto = new Alineacion();
 		
 		em.persist(alineacionDefecto);
@@ -55,6 +59,13 @@ public class EquipoControlador implements IEquipoControlador{
 	public DatosEquipo obtenerEquipo(int codEquipo) {
 		Equipo equipo = this.findEquipo(codEquipo);
 		return equipo.getDatos();
+	}
+	
+	public void modificarEquipo(DatosEquipo equipo){
+		Equipo e = this.findEquipo(equipo.getCodigo());
+		e.setNombre(equipo.getNombre());
+		e.setBot(equipo.isBot());
+		em.merge(e);
 	}
 
 	@Override
@@ -137,6 +148,36 @@ public class EquipoControlador implements IEquipoControlador{
 	@Override
 	public Alineacion findAlineacion(int codigoAlineacion) {
 		return em.find(Alineacion.class, codigoAlineacion);
+	}
+
+	@Override
+	public Equipo asignarTorneo(Manager manager, DatosEquipo eq) {
+		List<Torneo> torneos = hf.getCampeontaoControlador().obtenerTorneos();
+		boolean encontro = false;
+		for(Torneo t : torneos){
+			for(Equipo e : t.getEquipos()){
+				if(e.isBot()){
+					manager.setEquipo(e);
+					e.setBot(false);
+					e.setNombre(eq.getNombre());
+					encontro = true;
+					em.merge(e);
+					em.merge(manager);
+					return e;
+				}
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void modificarTipoEntrenamientoEquipo(int codigoEquipo,EnumEntrenamiento tipoEntrenamiento) throws NoExisteEquipoExcepcion {
+		Equipo e = findEquipo(codigoEquipo);
+		if(e==null){
+			throw new NoExisteEquipoExcepcion("No existe el equipo de id: " + codigoEquipo);
+		}
+		
+		e.setTipoEntrenamiento(tipoEntrenamiento);
 	}
 
 }

@@ -5,20 +5,25 @@ import java.util.Set;
 
 import javax.ejb.Local;
 
+import users.Manager;
 import jugadores.Jugador;
 import datatypes.DatosEquipo;
 import datatypes.DatosJugador;
+import datatypes.EnumEntrenamiento;
 import equipos.Alineacion;
 import equipos.Equipo;
+import excepciones.NoExisteEquipoExcepcion;
 
 @Local
 public interface IEquipoControlador {
 	
-	public int crearEquipo(String nombreEquipo);
+	public int crearEquipo(String nombreEquipo, boolean bot);
 	
 	public Equipo findEquipo(int codigoEquipo);
 	
 	public DatosEquipo obtenerEquipo(int codEquipo);
+	
+	public void modificarEquipo(DatosEquipo equipo);
 	
 	public Set<Equipo> listarEquiposSistema();
 	
@@ -34,11 +39,15 @@ public interface IEquipoControlador {
 	
 	public Set<DatosJugador> obtenerJugadoresEquipo(int codEquipo);
 
-	int crearAlineacion(List<Jugador> delanteros, List<Jugador> mediocampistas,
+	public int crearAlineacion(List<Jugador> delanteros, List<Jugador> mediocampistas,
 			List<Jugador> defensas, Jugador golero, Jugador lesionDelantero,
 			Jugador lesionMediocampistas, Jugador lesionDefensas,
 			Jugador lesionGolero, List<Jugador> suplentes, boolean defecto);
 
-	Alineacion findAlineacion(int codigoAlineacion);
+	public Alineacion findAlineacion(int codigoAlineacion);
+
+	public Equipo asignarTorneo(Manager manager, DatosEquipo e);
+	
+	public void modificarTipoEntrenamientoEquipo(int codigoEquipo,EnumEntrenamiento tipoEntrenamiento) throws NoExisteEquipoExcepcion;
 	
 }
