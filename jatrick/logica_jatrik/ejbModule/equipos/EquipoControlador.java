@@ -16,6 +16,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import campeonato.Torneo;
+import users.Manager;
 import jugadores.Jugador;
 import datatypes.DatosEquipo;
 import datatypes.DatosJugador;
@@ -32,7 +34,7 @@ public class EquipoControlador implements IEquipoControlador{
 	private HomeFactory hf;
 	
 	@Override
-	public int crearEquipo(String nombreEquipo) {
+	public int crearEquipo(String nombreEquipo, boolean bot) {
 		Alineacion alineacionDefecto = new Alineacion();
 		
 		em.persist(alineacionDefecto);
@@ -149,6 +151,29 @@ public class EquipoControlador implements IEquipoControlador{
 		}
 		
 		e.setTipoEntrenamiento(tipoEntrenamiento);
+	}
+	
+	public Equipo asignarTorneo(Manager manager, DatosEquipo eq) {
+		List<Torneo> torneos = hf.getCampeontaoControlador().obtenerTorneos();
+		for(Torneo t : torneos){
+			for(Equipo e : t.getEquipos()){
+				if(e.isBot()){
+					manager.setEquipo(e);
+					e.setBot(false);
+					e.setNombre(eq.getNombre());
+					em.merge(e);
+					em.merge(manager);
+					return e;
+				}
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void modificarEquipo(DatosEquipo equipo) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

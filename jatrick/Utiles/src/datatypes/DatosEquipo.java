@@ -12,12 +12,14 @@ public class DatosEquipo implements Serializable{
 	private int codigo;
 	private String nombre;
 	private int codPais;
+	private boolean bot;
 	
-	public DatosEquipo(int codigo, String nombre, int codPais) {
+	public DatosEquipo(int codigo, String nombre, int codPais, boolean bot) {
 		super();
 		this.codigo = codigo;
 		this.nombre = nombre;
 		this.codPais = codPais;
+		this.bot = bot;
 	}
 	
 	public int getCodigo() {
@@ -43,5 +45,14 @@ public class DatosEquipo implements Serializable{
 	public void setCodPais(int codPais) {
 		this.codPais = codPais;
 	}
+
+	public boolean isBot() {
+		return bot;
+	}
+
+	public void setBot(boolean bot) {
+		this.bot = bot;
+	}
+	
 }
 

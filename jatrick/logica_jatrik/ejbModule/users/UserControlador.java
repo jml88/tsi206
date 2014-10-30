@@ -17,6 +17,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import datatypes.DatosEquipo;
 import datatypes.DatosManager;
 
 @Stateless
@@ -81,11 +82,14 @@ public class UserControlador implements IUserControlador {
         em.persist(manager);
         
         IEquipoControlador iec = hf.getEquipoControlador();
-        int codEquipo = iec.crearEquipo(nombreEquipo);
+//        int codEquipo = iec.crearEquipo(nombreEquipo, false);
         
-        Equipo equipo = iec.findEquipo(codEquipo);
+//        Equipo equipo = iec.findEquipo(codEquipo);
+        if (!datosManager.getName().equals("admin")){
+        	manager.setEquipo(iec.asignarTorneo(manager,new DatosEquipo(0, nombreEquipo, 0, false)));
+        }
         
-        manager.setEquipo(equipo);
+//        manager.setEquipo(equipo);
         
         return manager.getId();
     }

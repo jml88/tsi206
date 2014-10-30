@@ -17,6 +17,7 @@ public class DatosManager implements Serializable {
 	private String name;
 	private String email;
 	private int codEquipo;
+	private int codTorneo;
 	private Set<String> roles;
 	
 	public DatosManager() {
@@ -71,4 +72,13 @@ public class DatosManager implements Serializable {
 	public void setRoles(Set<String> roles) {
 		this.roles = roles;
 	}
+
+	public int getCodTorneo() {
+		return codTorneo;
+	}
+
+	public void setCodTorneo(int codTorneo) {
+		this.codTorneo = codTorneo;
+	}
+	
 }

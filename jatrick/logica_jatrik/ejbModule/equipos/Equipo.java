@@ -46,6 +46,9 @@ public class Equipo {
 	@Column(name="TIPOENTRENAMIENTO")
 	private EnumEntrenamiento tipoEntrenamiento;
 	
+	@Column
+	private boolean bot;
+	
 	public Equipo() {
 		this.plantel = new HashSet<Jugador>();
 		this.tipoEntrenamiento = EnumEntrenamiento.ATAQUE;
@@ -117,7 +120,7 @@ public class Equipo {
 	}
 
 	public DatosEquipo getDatos() {
-		return new DatosEquipo(this.codigo, this.nombre, this.codPais);
+		return new DatosEquipo(this.codigo, this.nombre, this.codPais, this.bot);
 	}
 
 	public EnumEntrenamiento getTipoEntrenamiento() {
@@ -128,4 +131,13 @@ public class Equipo {
 		this.tipoEntrenamiento = tipoEntrenamiento;
 	}
 
+	public boolean isBot() {
+		return bot;
+	}
+
+	public void setBot(boolean bot) {
+		this.bot = bot;
+	}
+
+	
 }
