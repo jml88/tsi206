@@ -1,9 +1,9 @@
 package configuracionGral;
 
+import interfaces.IConfiguracionControlador;
+
 import java.util.Calendar;
 import java.util.List;
-
-import interfaces.IConfiguracionControlador;
 
 import javax.ejb.Stateless;
 import javax.inject.Named;
@@ -25,7 +25,7 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 		@SuppressWarnings("unchecked")
 		List<ConfiguracionGral> cg = (List<ConfiguracionGral>)em.createQuery("Select cg from ConfiguracionGral cg").getResultList();
 		if(cg.isEmpty()){
-			ConfiguracionGral conf = new ConfiguracionGral(0, 0, 0, 0, 0, 0, 0, 0, 0, null);
+			ConfiguracionGral conf = new ConfiguracionGral(0, 0, 0, 0, 0, 0, 0, 0, 0, null, null);
 			em.persist(conf);
 			return conf;
 		}

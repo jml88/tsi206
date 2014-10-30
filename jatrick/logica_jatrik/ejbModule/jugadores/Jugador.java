@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import datatypes.DatosJugador;
+import datatypes.EnumEntrenamiento;
 import equipos.Equipo;
 import partidos.Partido;
 
@@ -71,6 +72,9 @@ public class Jugador {
 	
 	@Column(name="JATRIKS")
 	private int jatTriks;
+	
+	@OneToOne
+	private EntrenamientoJugador entrenamiento;
 	
 	@OneToOne
 	private Equipo equipo; 
@@ -291,6 +295,16 @@ public class Jugador {
 		this.temporadasRestantesContrato = temporadasRestantesContrato;
 	}
 	
+	
+	
+	public EntrenamientoJugador getEntrenamiento() {
+		return entrenamiento;
+	}
+
+	public void setEntrenamiento(EntrenamientoJugador entrenamiento) {
+		this.entrenamiento = entrenamiento;
+	}
+
 	public DatosJugador getDatos() {
 		return new DatosJugador(this.codigo, this.nombre, this.apellido1,
 				this.apellido2, this.edad, this.velocidad, this.tecnica,
@@ -298,5 +312,36 @@ public class Jugador {
 				this.temporadasRestantesContrato, this.golesCarrera,
 				this.golesLiga, this.golesCopa, this.jatTriks,
 				this.equipo.getCodigo());
+	}
+	
+	public void entrenar(EnumEntrenamiento tipo,int valor){
+		
+		switch(tipo){
+		
+		case ATAQUE:
+			if (entrenamiento.getAtaqueEntrenamiento() + valor >= 10){
+				ataque = ataque + ((entrenamiento.getAtaqueEntrenamiento() + valor) % 10);
+			}
+			entrenamiento.setAtaqueEntrenamiento((entrenamiento.getAtaqueEntrenamiento() + valor) % 10);
+			break;
+		case DEFENSA:
+			if (entrenamiento.getDefensaEntrenamiento() + valor >= 10){
+				defensa = defensa + ((entrenamiento.getDefensaEntrenamiento() + valor) % 10);
+			}
+			entrenamiento.setDefensaEntrenamiento((entrenamiento.getDefensaEntrenamiento() + valor) % 10);
+			break;
+		case PORTERO:
+			if (entrenamiento.getPorteroEntrenamiento() + valor >= 10){
+				porteria = porteria + ((entrenamiento.getPorteroEntrenamiento() + valor) % 10);
+			}
+			entrenamiento.setPorteroEntrenamiento((entrenamiento.getPorteroEntrenamiento() + valor) % 10);
+			break;
+		case TECNICA:
+			if (entrenamiento.getTecnicaEntrenamiento() + valor >= 10){
+				tecnica = tecnica + ((entrenamiento.getTecnicaEntrenamiento() + valor) % 10);
+			}
+			entrenamiento.setTecnicaEntrenamiento((entrenamiento.getTecnicaEntrenamiento() + valor) % 10);
+			break;
+		}
 	}
 }

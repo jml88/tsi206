@@ -43,9 +43,6 @@ public class Equipo {
 	@Column(name = "CODPAIS")
 	private int codPais;
 	
-	@Column(name = "BOT")
-	private boolean bot;
-	
 	@Column(name="TIPOENTRENAMIENTO")
 	private EnumEntrenamiento tipoEntrenamiento;
 	
@@ -119,16 +116,8 @@ public class Equipo {
 		this.codPais = codPais;
 	}
 
-	public boolean isBot() {
-		return bot;
-	}
-
-	public void setBot(boolean bot) {
-		this.bot = bot;
-	}
-
 	public DatosEquipo getDatos() {
-		return new DatosEquipo(this.codigo, this.nombre, this.codPais, this.bot);
+		return new DatosEquipo(this.codigo, this.nombre, this.codPais);
 	}
 
 	public EnumEntrenamiento getTipoEntrenamiento() {
