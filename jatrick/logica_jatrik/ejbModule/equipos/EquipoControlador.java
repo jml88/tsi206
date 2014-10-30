@@ -1,5 +1,6 @@
 package equipos;
 
+import excepciones.NoExisteEquipoExcepcion;
 import fabricas.HomeFactory;
 import interfaces.IEquipoControlador;
 import interfaces.IJugadorControlador;
@@ -18,6 +19,7 @@ import javax.persistence.Query;
 import jugadores.Jugador;
 import datatypes.DatosEquipo;
 import datatypes.DatosJugador;
+import datatypes.EnumEntrenamiento;
 
 @Stateless
 @Named
@@ -137,6 +139,16 @@ public class EquipoControlador implements IEquipoControlador{
 	@Override
 	public Alineacion findAlineacion(int codigoAlineacion) {
 		return em.find(Alineacion.class, codigoAlineacion);
+	}
+
+	@Override
+	public void modificarTipoEntrenamientoEquipo(int codigoEquipo,EnumEntrenamiento tipoEntrenamiento) throws NoExisteEquipoExcepcion {
+		Equipo e = findEquipo(codigoEquipo);
+		if(e==null){
+			throw new NoExisteEquipoExcepcion("No existe el equipo de id: " + codigoEquipo);
+		}
+		
+		e.setTipoEntrenamiento(tipoEntrenamiento);
 	}
 
 }

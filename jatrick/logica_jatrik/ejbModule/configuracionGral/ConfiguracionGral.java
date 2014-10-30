@@ -51,6 +51,9 @@ public class ConfiguracionGral {
 	@Column(name="CantidadDescensos")
 	private int cantidadDescensos;
 	
+	@Column(name="PuntosParaEntrenar")
+	private int puntosParaEntrenar;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = true)
 	private Calendar fechaArranqueCampeonato;
@@ -60,12 +63,15 @@ public class ConfiguracionGral {
 	private PeriodicoPartido periodicoPartido;
 
 	
-	public ConfiguracionGral(int codigo, int premio, int dineroInicial,
+	
+
+
+	public ConfiguracionGral(int premio, int dineroInicial,
 			int cantJugadoresArranque, int cantEquipoTorneo, int numeroFecha,
 			int numeroTorneo, int cantidadTorneos, int cantidadDescensos,
-			Calendar fechaArranqueCampeonato) {
+			int puntosParaEntrenar, Calendar fechaArranqueCampeonato,
+			PeriodicoPartido periodicoPartido) {
 		super();
-		this.codigo = codigo;
 		this.premio = premio;
 		this.dineroInicial = dineroInicial;
 		this.cantJugadoresArranque = cantJugadoresArranque;
@@ -74,7 +80,9 @@ public class ConfiguracionGral {
 		this.numeroTorneo = numeroTorneo;
 		this.cantidadTorneos = cantidadTorneos;
 		this.cantidadDescensos = cantidadDescensos;
+		this.puntosParaEntrenar = puntosParaEntrenar;
 		this.fechaArranqueCampeonato = fechaArranqueCampeonato;
+		this.periodicoPartido = periodicoPartido;
 	}
 
 
@@ -188,6 +196,18 @@ public class ConfiguracionGral {
 		this.periodicoPartido = periodicoPartido;
 	}
 	
+	
+	
+	public int getPuntosParaEntrenar() {
+		return puntosParaEntrenar;
+	}
+
+
+	public void setPuntosParaEntrenar(int puntosParaEntrenar) {
+		this.puntosParaEntrenar = puntosParaEntrenar;
+	}
+
+
 	public DatosConfiguracionGral getDatos(){
 		
 		DatosPeriodicoPartido dp;
@@ -206,8 +226,12 @@ public class ConfiguracionGral {
 		}
 		 
 		DatosConfiguracionGral ret = new DatosConfiguracionGral(premio, dineroInicial, cantJugadoresArranque, cantEquipoTorneo, numeroFecha, numeroTorneo, cantidadTorneos, cantidadDescensos,
-										fecha, dp);
+																puntosParaEntrenar,fecha, dp);
 		return ret;
+	}
+	
+	public int valorEntrenamiento(int edad){
+		return 1;
 	}
 	
 	

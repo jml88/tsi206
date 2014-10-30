@@ -24,6 +24,8 @@ public class DatosConfiguracionGral {
 	
 	private int cantidadDescensos;
 	
+	private int puntosDeEntrenamiento;
+	
 	private Date fechaArranqueCampeonato;
 	
 	private DatosPeriodicoPartido periodicoPartido;
@@ -34,13 +36,13 @@ public class DatosConfiguracionGral {
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	
+
+
 
 	public DatosConfiguracionGral(int premio, int dineroInicial,
 			int cantJugadoresArranque, int cantEquipoTorneo, int numeroFecha,
 			int numeroTorneo, int cantidadTorneos, int cantidadDescensos,
-			Date fechaArranqueCampeonato,
+			int puntosDeEntrenamiento, Date fechaArranqueCampeonato,
 			DatosPeriodicoPartido periodicoPartido) {
 		super();
 		this.premio = premio;
@@ -51,9 +53,14 @@ public class DatosConfiguracionGral {
 		this.numeroTorneo = numeroTorneo;
 		this.cantidadTorneos = cantidadTorneos;
 		this.cantidadDescensos = cantidadDescensos;
+		this.puntosDeEntrenamiento = puntosDeEntrenamiento;
 		this.fechaArranqueCampeonato = fechaArranqueCampeonato;
 		this.periodicoPartido = periodicoPartido;
 	}
+
+
+
+
 
 
 
@@ -164,6 +171,20 @@ public class DatosConfiguracionGral {
 
 	public void setPeriodicoPartido(DatosPeriodicoPartido periodicoPartido) {
 		this.periodicoPartido = periodicoPartido;
+	}
+
+
+
+
+	public int getPuntosDeEntrenamiento() {
+		return puntosDeEntrenamiento;
+	}
+
+
+
+
+	public void setPuntosDeEntrenamiento(int puntosDeEntrenamiento) {
+		this.puntosDeEntrenamiento = puntosDeEntrenamiento;
 	}
 
 	

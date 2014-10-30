@@ -8,8 +8,10 @@ import javax.ejb.Local;
 import jugadores.Jugador;
 import datatypes.DatosEquipo;
 import datatypes.DatosJugador;
+import datatypes.EnumEntrenamiento;
 import equipos.Alineacion;
 import equipos.Equipo;
+import excepciones.NoExisteEquipoExcepcion;
 
 @Local
 public interface IEquipoControlador {
@@ -40,5 +42,7 @@ public interface IEquipoControlador {
 			Jugador lesionGolero, List<Jugador> suplentes, boolean defecto);
 
 	Alineacion findAlineacion(int codigoAlineacion);
+	
+	public void modificarTipoEntrenamientoEquipo(int codigoEquipo,EnumEntrenamiento tipoEntrenamiento) throws NoExisteEquipoExcepcion;
 	
 }
