@@ -21,8 +21,8 @@ public class ChatMessageDecoder implements Decoder.Text<ChatMessage> {
 	@Override
 	public ChatMessage decode(final String textMessage) throws DecodeException {
 		ChatMessage chatMessage = new ChatMessage();
-		JsonObject obj = Json.createReader(new StringReader(textMessage))
-				.readObject();
+		System.out.println(chatMessage);
+		JsonObject obj = Json.createReader(new StringReader(textMessage)).readObject();
 		chatMessage.setMessage(obj.getString("message"));
 		chatMessage.setSender(obj.getString("sender"));
 		chatMessage.setReceived(new Date());

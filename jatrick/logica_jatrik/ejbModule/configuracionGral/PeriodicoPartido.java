@@ -7,7 +7,6 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-import datatypes.DatosPeriodicoPartido;
 import datatypes.EnumPeriodicoPartido;
 
 @Embeddable
@@ -40,7 +39,7 @@ public class PeriodicoPartido implements Serializable{
 	
 
 	public PeriodicoPartido(int dia, int hora, int minuto,
-			EnumPeriodicoPartido periodico, int day_of_week) {
+			EnumPeriodicoPartido periodico) {
 		super();
 		this.dia = dia;
 		this.hora = hora;
@@ -103,9 +102,8 @@ public class PeriodicoPartido implements Serializable{
 		return ret.getTime();
 	}
 	
-	public DatosPeriodicoPartido getDatos(){
-		DatosPeriodicoPartido ret = new DatosPeriodicoPartido(dia, hora, minuto, periodico);
-		return ret;
+	public PeriodicoPartido getDatos(){
+		return this;
 	}
 
 	

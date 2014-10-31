@@ -7,13 +7,10 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import org.primefaces.context.RequestContext;
-import org.primefaces.push.EventBus;
-import org.primefaces.push.EventBusFactory;
  
 @Named("chatBB")
 @SessionScoped
@@ -46,7 +43,7 @@ public class ChatBB implements Serializable {
      
     private String privateUser;
      
-    private final static String CHANNEL = "/{room}/";
+//    private final static String CHANNEL = "/{room}/";
     
     @PostConstruct
     public void init(){

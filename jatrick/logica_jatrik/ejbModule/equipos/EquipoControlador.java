@@ -1,9 +1,11 @@
 package equipos;
 
+import excepciones.NoExisteEquipoExcepcion;
 import fabricas.HomeFactory;
 import interfaces.IEquipoControlador;
 import interfaces.IJugadorControlador;
 
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,9 +17,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import partidos.Partido;
+import campeonato.Torneo;
+import users.Manager;
 import jugadores.Jugador;
 import datatypes.DatosEquipo;
 import datatypes.DatosJugador;
+import datatypes.DatosManager;
+import datatypes.EnumEntrenamiento;
 
 @Stateless
 @Named
@@ -30,12 +37,13 @@ public class EquipoControlador implements IEquipoControlador{
 	private HomeFactory hf;
 	
 	@Override
-	public int crearEquipo(String nombreEquipo) {
+	public int crearEquipo(String nombreEquipo, boolean bot) {
 		Alineacion alineacionDefecto = new Alineacion();
 		
 		em.persist(alineacionDefecto);
 		
 		Equipo e = new Equipo(nombreEquipo, null, alineacionDefecto);
+		e.setBot(bot);
 		//em.persist(e);
 		
 		IJugadorControlador ijc = hf.getJugadorControlador();
@@ -137,6 +145,50 @@ public class EquipoControlador implements IEquipoControlador{
 	@Override
 	public Alineacion findAlineacion(int codigoAlineacion) {
 		return em.find(Alineacion.class, codigoAlineacion);
+	}
+
+	@Override
+	public void modificarTipoEntrenamientoEquipo(int codigoEquipo,EnumEntrenamiento tipoEntrenamiento) throws NoExisteEquipoExcepcion {
+		Equipo e = findEquipo(codigoEquipo);
+		if(e==null){
+			throw new NoExisteEquipoExcepcion("No existe el equipo de id: " + codigoEquipo);
+		}
+		
+		e.setTipoEntrenamiento(tipoEntrenamiento);
+	}
+	
+	public Equipo asignarTorneo(Manager manager, DatosEquipo eq) {
+		//TODO asignar el torneo correctamente, o sea, el torneo de mas abajo
+		List<Torneo> torneos = hf.getCampeontaoControlador().obtenerTorneos();
+		for(Torneo t : torneos){
+			for(Equipo e : t.getEquipos()){
+				if(e.isBot()){
+					manager.setEquipo(e);
+					manager.setTorneo(t);
+					e.setBot(false);
+					e.setNombre(eq.getNombre());
+					em.merge(e);
+					em.merge(manager);
+					return e;
+				}
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void modificarEquipo(DatosEquipo equipo) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public List<Partido> obtenerProximosPartidos(DatosManager dm, int cantidad){
+		Query q = em.createQuery("select p from Partido p where p.local.codigo = :codEquipo or p.visitante = :codEquipo and DATE(p.fechaHora) > :fechaActual ");
+		q.setParameter("codEquipo", dm.getCodEquipo());
+		q.setParameter("fechaActual", (new GregorianCalendar()).getTime());
+		q.setParameter("cantidad", cantidad);
+		return q.getResultList();
 	}
 
 }

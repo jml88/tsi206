@@ -44,11 +44,15 @@ public class Torneo {
 	
 	@OneToMany
 	private List<Equipo> equipos;
+	
+	@OneToMany
+	private List<Posicion> posiciones;
 
 	public Torneo() {
 		super();
 		// TODO Auto-generated constructor stub
 		this.equipos = new LinkedList<Equipo>();
+		this.posiciones = new LinkedList<Posicion>();
 	}
 
 	public Torneo(int codigo,int nivelVertical,int nivelHorizontal,int premio, int cantEquipos, int cantCuadrosDesc,
@@ -62,6 +66,7 @@ public class Torneo {
 		this.cantCuadrosDesc = cantCuadrosDesc;
 		this.fechaDeArranque = fechaDeArranque;
 		this.equipos = new LinkedList<Equipo>();
+		this.posiciones = new LinkedList<Posicion>();
 	}
 
 	public int getCodigo() {
@@ -128,12 +133,12 @@ public class Torneo {
 		this.equipos = equipos;
 	}
 
-	
-	
-	
-	
-	
-	
-	
+	public List<Posicion> getPosiciones() {
+		return posiciones;
+	}
 
+	public void setPosiciones(List<Posicion> posiciones) {
+		this.posiciones = posiciones;
+	}
+	
 }

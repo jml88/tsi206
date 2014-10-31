@@ -1,7 +1,6 @@
 package configuracionGral;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -12,9 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import datatypes.DatosConfiguracionGral;
-import datatypes.DatosPeriodicoPartido;
 
 @Entity
 @Table(name = ConfiguracionGral.nombreTabla)
@@ -51,21 +47,54 @@ public class ConfiguracionGral {
 	@Column(name="CantidadDescensos")
 	private int cantidadDescensos;
 	
+	@Column(name="PuntosParaEntrenar")
+	private int puntosParaEntrenar;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = true)
 	private Calendar fechaArranqueCampeonato;
+	
+	@Column
+	private int juvenilEdad;
+	
+	@Column
+	private int adultoEdad;
+	
+	@Column
+	private int veteranoEdad;
+	
+	@Column
+	private int mejoraEntrenaJuvenil;
+	
+	@Column
+	private int mejoraEntrenaAdulto;
+	
+	@Column
+	private int mejoraEntrenaVeterano;
+	
+	@Column
+	private int desmejoraNoEntrenaVeterano;
+	
+	@Column
+	private int desmejoraNoEntrenaAdulto;
+	
+	@Column
+	private int desmejoraNoEntrenaJuvenil;
 	
 	@Embedded
 	@Column(nullable = true)
 	private PeriodicoPartido periodicoPartido;
 
 	
-	public ConfiguracionGral(int codigo, int premio, int dineroInicial,
+	
+
+
+	public ConfiguracionGral(int premio, int dineroInicial,
 			int cantJugadoresArranque, int cantEquipoTorneo, int numeroFecha,
 			int numeroTorneo, int cantidadTorneos, int cantidadDescensos,
-			Calendar fechaArranqueCampeonato) {
+			int puntosParaEntrenar, Calendar fechaArranqueCampeonato,
+			PeriodicoPartido periodicoPartido) {
 		super();
-		this.codigo = codigo;
 		this.premio = premio;
 		this.dineroInicial = dineroInicial;
 		this.cantJugadoresArranque = cantJugadoresArranque;
@@ -74,7 +103,9 @@ public class ConfiguracionGral {
 		this.numeroTorneo = numeroTorneo;
 		this.cantidadTorneos = cantidadTorneos;
 		this.cantidadDescensos = cantidadDescensos;
+		this.puntosParaEntrenar = puntosParaEntrenar;
 		this.fechaArranqueCampeonato = fechaArranqueCampeonato;
+		this.periodicoPartido = periodicoPartido;
 	}
 
 
@@ -188,26 +219,139 @@ public class ConfiguracionGral {
 		this.periodicoPartido = periodicoPartido;
 	}
 	
-	public DatosConfiguracionGral getDatos(){
+	
+	
+	public int getPuntosParaEntrenar() {
+		return puntosParaEntrenar;
+	}
+
+
+	public void setPuntosParaEntrenar(int puntosParaEntrenar) {
+		this.puntosParaEntrenar = puntosParaEntrenar;
+	}
+
+
+	public ConfiguracionGral getDatos(){
 		
-		DatosPeriodicoPartido dp;
-		Date fecha;
-		if(periodicoPartido != null){
-			dp = periodicoPartido.getDatos();
+		return this;
+	}
+	
+	public int valorEntrenamiento(int edad){
+		
+		if(edad <= juvenilEdad){
+			return mejoraEntrenaJuvenil;
+		}
+		else if(edad <= adultoEdad){
+			return mejoraEntrenaAdulto;
 		}
 		else{
-			dp = new DatosPeriodicoPartido();
+			return mejoraEntrenaVeterano;
 		}
-		if(fechaArranqueCampeonato == null){
-			fecha = null;
+			
+	}
+	
+	public int valorNoEntrenamiento(int edad){
+		
+		if(edad <= juvenilEdad){
+			return desmejoraNoEntrenaJuvenil;
+		}
+		else if(edad <= adultoEdad){
+			return desmejoraNoEntrenaAdulto;
 		}
 		else{
-			fecha = fechaArranqueCampeonato.getTime();
+			return desmejoraNoEntrenaVeterano;
 		}
-		 
-		DatosConfiguracionGral ret = new DatosConfiguracionGral(premio, dineroInicial, cantJugadoresArranque, cantEquipoTorneo, numeroFecha, numeroTorneo, cantidadTorneos, cantidadDescensos,
-										fecha, dp);
-		return ret;
+			
+	}
+
+
+	public int getJuvenilEdad() {
+		return juvenilEdad;
+	}
+
+
+	public void setJuvenilEdad(int juvenilEdad) {
+		this.juvenilEdad = juvenilEdad;
+	}
+
+
+	public int getAdultoEdad() {
+		return adultoEdad;
+	}
+
+
+	public void setAdultoEdad(int adultoEdad) {
+		this.adultoEdad = adultoEdad;
+	}
+
+
+	public int getVeteranoEdad() {
+		return veteranoEdad;
+	}
+
+
+	public void setVeteranoEdad(int veteranoEdad) {
+		this.veteranoEdad = veteranoEdad;
+	}
+
+
+	public int getMejoraEntrenaJuvenil() {
+		return mejoraEntrenaJuvenil;
+	}
+
+
+	public void setMejoraEntrenaJuvenil(int mejoraEntrenaJuvenil) {
+		this.mejoraEntrenaJuvenil = mejoraEntrenaJuvenil;
+	}
+
+
+	public int getMejoraEntrenaAdulto() {
+		return mejoraEntrenaAdulto;
+	}
+
+
+	public void setMejoraEntrenaAdulto(int mejoraEntrenaAdulto) {
+		this.mejoraEntrenaAdulto = mejoraEntrenaAdulto;
+	}
+
+
+	public int getMejoraEntrenaVeterano() {
+		return mejoraEntrenaVeterano;
+	}
+
+
+	public void setMejoraEntrenaVeterano(int mejoraEntrenaVeterano) {
+		this.mejoraEntrenaVeterano = mejoraEntrenaVeterano;
+	}
+
+
+	public int getDesmejoraNoEntrenaVeterano() {
+		return desmejoraNoEntrenaVeterano;
+	}
+
+
+	public void setDesmejoraNoEntrenaVeterano(int desmejoraNoEntrenaVeterano) {
+		this.desmejoraNoEntrenaVeterano = desmejoraNoEntrenaVeterano;
+	}
+
+
+	public int getDesmejoraNoEntrenaAdulto() {
+		return desmejoraNoEntrenaAdulto;
+	}
+
+
+	public void setDesmejoraNoEntrenaAdulto(int desmejoraNoEntrenaAdulto) {
+		this.desmejoraNoEntrenaAdulto = desmejoraNoEntrenaAdulto;
+	}
+
+
+	public int getDesmejoraNoEntrenaJuvenil() {
+		return desmejoraNoEntrenaJuvenil;
+	}
+
+
+	public void setDesmejoraNoEntrenaJuvenil(int desmejoraNoEntrenaJuvenil) {
+		this.desmejoraNoEntrenaJuvenil = desmejoraNoEntrenaJuvenil;
 	}
 	
 	

@@ -17,6 +17,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import datatypes.DatosEquipo;
 import datatypes.DatosManager;
 
 @Stateless
@@ -42,6 +43,8 @@ public class UserControlador implements IUserControlador {
     	String name = m.getName();
     	String email = m.getEmail(); 
     	int codEquipo = m.getEquipo() != null ? m.getEquipo().getCodigo() : -1;
+    	int codTorneo = m.getTorneo() != null ? m.getTorneo().getCodigo() : -1;
+    	
     	Set<String> roles = new HashSet<String>();
     	
     	for (Role r : m.getRoles()) {
@@ -50,7 +53,7 @@ public class UserControlador implements IUserControlador {
 			else if (r== Role.ADMIN)
 				roles.add("ADMIN");
 		}
-    	DatosManager datosManager = new DatosManager(username, name, email, codEquipo, roles);
+    	DatosManager datosManager = new DatosManager(username, name, email, codEquipo,codTorneo, roles);
     	
     	return datosManager;
     }
@@ -78,14 +81,14 @@ public class UserControlador implements IUserControlador {
 	
 	public int createManager(DatosManager datosManager, String password, String nombreEquipo) {
 		Manager manager = new Manager(datosManager, password);
-        em.persist(manager);
+		em.persist(manager);
         
         IEquipoControlador iec = hf.getEquipoControlador();
-        int codEquipo = iec.crearEquipo(nombreEquipo);
-        
-        Equipo equipo = iec.findEquipo(codEquipo);
-        
-        manager.setEquipo(equipo);
+        if (!datosManager.getName().equals("admin")){
+//        	manager.setEquipo();
+//        	manager.setTorneo(torneo);
+        	iec.asignarTorneo(manager,new DatosEquipo(0, nombreEquipo, 0, false));
+        }
         
         return manager.getId();
     }

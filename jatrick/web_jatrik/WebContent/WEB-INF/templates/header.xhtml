@@ -11,7 +11,12 @@
 					<p:outputLabel value="Jatrick-1.0"/>
 				</p:menuitem>
 				<f:facet name="options">
-					<p:commandButton value="Logout" rendered="#{sessionBB.datosManager != null}" action="#{sessionBB.logout}" />
+					
+					<p:panelGrid columns="1" rendered="#{sessionBB.datosManager != null}">
+						<h:inputHidden id="nickname" value="#{sessionBB.datosManager.username}"/>
+						<p:outputLabel value="Bienvenido #{sessionBB.datosManager.username}!"/>
+						<p:commandButton value="Logout" action="#{sessionBB.logout}" />
+					</p:panelGrid>
 				</f:facet>
 			</p:menubar>
 			<p:sticky target="menu"/>

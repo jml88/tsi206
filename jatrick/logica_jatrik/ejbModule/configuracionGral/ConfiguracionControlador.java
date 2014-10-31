@@ -1,16 +1,15 @@
 package configuracionGral;
 
+import interfaces.IConfiguracionControlador;
+
 import java.util.Calendar;
 import java.util.List;
-
-import interfaces.IConfiguracionControlador;
 
 import javax.ejb.Stateless;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import datatypes.DatosConfiguracionGral;
 import excepciones.NoExisteConfiguracionException;
 
 @Stateless
@@ -25,7 +24,7 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 		@SuppressWarnings("unchecked")
 		List<ConfiguracionGral> cg = (List<ConfiguracionGral>)em.createQuery("Select cg from ConfiguracionGral cg").getResultList();
 		if(cg.isEmpty()){
-			ConfiguracionGral conf = new ConfiguracionGral(0, 0, 0, 0, 0, 0, 0, 0, 0, null);
+			ConfiguracionGral conf = new ConfiguracionGral(0, 0, 0, 0, 0, 0, 0, 0, 0, null, null);
 			em.persist(conf);
 			return conf;
 		}
@@ -36,25 +35,15 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 	}
 	
 	@Override
-	public void crearConfiguracionGral(DatosConfiguracionGral dcg){
+	public void crearConfiguracionGral(ConfiguracionGral dcg){
 		if(getConfiguracion()== null){
-			ConfiguracionGral cg = new ConfiguracionGral();
-			cg.setCantEquipoTorneo(dcg.getCantEquipoTorneo());
-			cg.setCantJugadoresArranque(dcg.getCantJugadoresArranque());
-			cg.setDineroInicial(dcg.getDineroInicial());
-			cg.setNumeroFecha(dcg.getNumeroFecha());
-			cg.setNumeroTorneo(dcg.getNumeroTorneo());
-			cg.setPremio(dcg.getPremio());
-			Calendar c = Calendar.getInstance();
-			c.setTime(dcg.getFechaArranqueCampeonato());
-			cg.setFechaArranqueCampeonato(c);
-			em.persist(cg);
+			em.persist(dcg);
 		}
 		
 	}
 	
 	@Override
-	public void modificarConfiguracion(DatosConfiguracionGral dcg) throws NoExisteConfiguracionException{
+	public void modificarConfiguracion(ConfiguracionGral dcg) throws NoExisteConfiguracionException{
 		ConfiguracionGral cg = this.getConfiguracion();
 		if(cg == null){
 			throw new NoExisteConfiguracionException("No existe configuracion general");
@@ -68,8 +57,7 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 		cg.setPremio(dcg.getPremio());
 		cg.setCantidadTorneos(dcg.getCantidadTorneos());
 		if(dcg.getFechaArranqueCampeonato()!=null){
-			Calendar c = Calendar.getInstance();
-			c.setTime(dcg.getFechaArranqueCampeonato());
+			Calendar c = dcg.getFechaArranqueCampeonato();
 			cg.setFechaArranqueCampeonato(c);
 		}
 		else{
@@ -93,12 +81,12 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 	}
 
 	@Override
-	public DatosConfiguracionGral getDatosConfiguracionGral() {
-		return getConfiguracion().getDatos();
+	public ConfiguracionGral getDatosConfiguracionGral() {
+		return getConfiguracion();
 	}
 
 	@Override
-	public void crearOModificarConfiguracion(DatosConfiguracionGral dcg) throws NoExisteConfiguracionException {
+	public void crearOModificarConfiguracion(ConfiguracionGral dcg) throws NoExisteConfiguracionException {
 		ConfiguracionGral cg = getConfiguracion();
 		if(cg!= null){
 			modificarConfiguracion(dcg);

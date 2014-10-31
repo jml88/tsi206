@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,9 +13,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import datatypes.DatosJugador;
-import equipos.Equipo;
 import partidos.Partido;
+import datatypes.DatosJugador;
+import datatypes.EnumEntrenamiento;
+import equipos.Equipo;
 
 @Entity
 @Table(name = Jugador.nombreTabla)
@@ -71,6 +73,11 @@ public class Jugador {
 	
 	@Column(name="JATRIKS")
 	private int jatTriks;
+	
+	@Embedded
+	@Column(nullable=true)
+	private EntrenamientoJugador entrenamiento;
+	
 	
 	@OneToOne
 	private Equipo equipo; 
@@ -291,6 +298,16 @@ public class Jugador {
 		this.temporadasRestantesContrato = temporadasRestantesContrato;
 	}
 	
+	
+	
+	public EntrenamientoJugador getEntrenamiento() {
+		return entrenamiento;
+	}
+
+	public void setEntrenamiento(EntrenamientoJugador entrenamiento) {
+		this.entrenamiento = entrenamiento;
+	}
+
 	public DatosJugador getDatos() {
 		return new DatosJugador(this.codigo, this.nombre, this.apellido1,
 				this.apellido2, this.edad, this.velocidad, this.tecnica,
@@ -298,5 +315,61 @@ public class Jugador {
 				this.temporadasRestantesContrato, this.golesCarrera,
 				this.golesLiga, this.golesCopa, this.jatTriks,
 				this.equipo.getCodigo());
+	}
+	
+	public void entrenar(EnumEntrenamiento tipo,int valor,int valorNoEntrena){
+		
+		if(tipo == EnumEntrenamiento.ATAQUE){
+			if (entrenamiento.getAtaqueEntrenamiento() + valor >= 10){
+				ataque = ataque + ((entrenamiento.getAtaqueEntrenamiento() + valor) / 10);
+			}
+			entrenamiento.setAtaqueEntrenamiento((entrenamiento.getAtaqueEntrenamiento() + valor) % 10);
+		}
+		else{
+			if(entrenamiento.getAtaqueEntrenamiento()-valorNoEntrena < 0){
+				ataque = ataque - (Math.abs(entrenamiento.getAtaqueEntrenamiento() - valorNoEntrena) / 10);
+			}
+			
+			entrenamiento.setAtaqueEntrenamiento(Math.abs(entrenamiento.getAtaqueEntrenamiento() - valorNoEntrena) % 10);
+		}
+		if(tipo == EnumEntrenamiento.DEFENSA){
+			if (entrenamiento.getDefensaEntrenamiento() + valor >= 10){
+				defensa = defensa + ((entrenamiento.getDefensaEntrenamiento() + valor) % 10);
+			}
+			entrenamiento.setDefensaEntrenamiento((entrenamiento.getDefensaEntrenamiento() + valor) % 10);
+		}
+		else{
+			if(entrenamiento.getDefensaEntrenamiento()-valorNoEntrena < 0){
+				defensa = defensa - (Math.abs(entrenamiento.getDefensaEntrenamiento() - valorNoEntrena) / 10);
+			}
+			
+			entrenamiento.setDefensaEntrenamiento(Math.abs(entrenamiento.getDefensaEntrenamiento() - valorNoEntrena) % 10);
+		}
+		if(tipo == EnumEntrenamiento.PORTERO){
+			if (entrenamiento.getPorteroEntrenamiento() + valor >= 10){
+				porteria = porteria + ((entrenamiento.getPorteroEntrenamiento() + valor) % 10);
+			}
+			entrenamiento.setPorteroEntrenamiento((entrenamiento.getPorteroEntrenamiento() + valor) % 10);
+		}
+		else{
+			if(entrenamiento.getPorteroEntrenamiento()-valorNoEntrena < 0){
+				porteria = porteria - (Math.abs(entrenamiento.getPorteroEntrenamiento() - valorNoEntrena) / 10);
+			}
+			
+			entrenamiento.setPorteroEntrenamiento(Math.abs(entrenamiento.getPorteroEntrenamiento() - valorNoEntrena) % 10);
+		}
+		if(tipo == EnumEntrenamiento.TECNICA){
+			if (entrenamiento.getTecnicaEntrenamiento() + valor >= 10){
+				tecnica = tecnica + ((entrenamiento.getTecnicaEntrenamiento() + valor) % 10);
+			}
+			entrenamiento.setTecnicaEntrenamiento((entrenamiento.getTecnicaEntrenamiento() + valor) % 10);
+		}
+		else{
+			if(entrenamiento.getTecnicaEntrenamiento()-valorNoEntrena < 0){
+				tecnica = tecnica - (Math.abs(entrenamiento.getTecnicaEntrenamiento() - valorNoEntrena) / 10);
+			}
+			
+			entrenamiento.setTecnicaEntrenamiento(Math.abs(entrenamiento.getTecnicaEntrenamiento() - valorNoEntrena) % 10);
+		}
 	}
 }
