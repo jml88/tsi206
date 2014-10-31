@@ -8,10 +8,7 @@
   <installed facet="wst.jsdt.web" version="1.0"/>
   <installed facet="jst.jaxrs" version="2.0"/>
   <installed facet="jst.jsf" version="2.2"/>
-<<<<<<< HEAD
   <installed facet="jst.cdi" version="1.0"/>
   <installed facet="jboss.m2" version="1.0"/>
-=======
->>>>>>> eee27492b227b11f96e2b1154232b0f0c9c9bef5
   <installed facet="java" version="1.8"/>
 </faceted-project>
