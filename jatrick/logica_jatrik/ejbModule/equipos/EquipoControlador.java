@@ -5,6 +5,7 @@ import fabricas.HomeFactory;
 import interfaces.IEquipoControlador;
 import interfaces.IJugadorControlador;
 
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,11 +17,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import partidos.Partido;
 import campeonato.Torneo;
 import users.Manager;
 import jugadores.Jugador;
 import datatypes.DatosEquipo;
 import datatypes.DatosJugador;
+import datatypes.DatosManager;
 import datatypes.EnumEntrenamiento;
 
 @Stateless
@@ -40,6 +43,7 @@ public class EquipoControlador implements IEquipoControlador{
 		em.persist(alineacionDefecto);
 		
 		Equipo e = new Equipo(nombreEquipo, null, alineacionDefecto);
+		e.setBot(bot);
 		//em.persist(e);
 		
 		IJugadorControlador ijc = hf.getJugadorControlador();
@@ -154,11 +158,13 @@ public class EquipoControlador implements IEquipoControlador{
 	}
 	
 	public Equipo asignarTorneo(Manager manager, DatosEquipo eq) {
+		//TODO asignar el torneo correctamente, o sea, el torneo de mas abajo
 		List<Torneo> torneos = hf.getCampeontaoControlador().obtenerTorneos();
 		for(Torneo t : torneos){
 			for(Equipo e : t.getEquipos()){
 				if(e.isBot()){
 					manager.setEquipo(e);
+					manager.setTorneo(t);
 					e.setBot(false);
 					e.setNombre(eq.getNombre());
 					em.merge(e);
@@ -174,6 +180,15 @@ public class EquipoControlador implements IEquipoControlador{
 	public void modificarEquipo(DatosEquipo equipo) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public List<Partido> obtenerProximosPartidos(DatosManager dm, int cantidad){
+		Query q = em.createQuery("select p from Partido p where p.local.codigo = :codEquipo or p.visitante = :codEquipo and DATE(p.fechaHora) > :fechaActual ");
+		q.setParameter("codEquipo", dm.getCodEquipo());
+		q.setParameter("fechaActual", (new GregorianCalendar()).getTime());
+		q.setParameter("cantidad", cantidad);
+		return q.getResultList();
 	}
 
 }

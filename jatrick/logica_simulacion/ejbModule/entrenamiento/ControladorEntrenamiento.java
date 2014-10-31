@@ -1,17 +1,19 @@
 package entrenamiento;
 
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import partido.PartidoControlador;
+import jugadores.Jugador;
 import partidos.Partido;
 import configuracion.ConfiguracionControladorLocal;
-import configuracionGral.ConfiguracionGral;
 import datatypes.EnumEntrenamiento;
 import equipos.Equipo;
-import jugadores.Jugador;
 
+@Stateless
+@LocalBean
 public class ControladorEntrenamiento {
 	
 	@PersistenceContext( unitName = "jatrik" ) 
@@ -20,8 +22,6 @@ public class ControladorEntrenamiento {
 	@Inject
 	private ConfiguracionControladorLocal controladorConf;
 	
-	@Inject
-	private PartidoControlador pc;
 	
 	private void entrenarEquipo(Equipo e){
 		for (Jugador j : e.getPlantel()) {
@@ -32,7 +32,8 @@ public class ControladorEntrenamiento {
 	private void entrenarJugador(Jugador j,EnumEntrenamiento tipoEntrenamiento){
 		
 		int valorEntrenamiento = controladorConf.getConfiguracion().valorEntrenamiento(j.getEdad());
-		j.entrenar(tipoEntrenamiento, valorEntrenamiento);
+		int valorNoEntrenar = controladorConf.getConfiguracion().valorNoEntrenamiento(j.getEdad());
+		j.entrenar(tipoEntrenamiento, valorEntrenamiento,valorNoEntrenar);
 		em.persist(em);
 	}
 	

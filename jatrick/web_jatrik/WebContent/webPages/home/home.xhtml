@@ -6,7 +6,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:t="http://myfaces.apache.org/tomahawk">
-	
+
 	<ui:define name="Principal">
 		<h:form id="form" prependId="false">
 			<div id="equipo">
@@ -14,21 +14,58 @@
 					<f:facet name="header">
 						<p:outputLabel value="#{homeBB.equipo.nombre}" />
 					</f:facet>
-					<h:outputText value="Mas datos del equipo."/>
-					<h:outputText value="..."/>
-					<h:outputText value="Mas datos del equipo."/>
-					<h:outputText value="..."/>
-					<h:outputText value="Mas datos del equipo."/>
-					<h:outputText value="..."/>
+					<h:outputText value="Mas datos del equipo." />
+					<h:outputText value="..." />
+					<h:outputText value="Mas datos del equipo." />
+					<h:outputText value="..." />
+					<h:outputText value="Mas datos del equipo." />
+					<h:outputText value="..." />
 				</p:panelGrid>
 			</div>
 
 
-			<p:growl id="growl" life="2000"/>
+			<p:growl id="growl" life="2000" />
 		</h:form>
+
+		<p:dataTable id="radioDT" var="partido"
+			value="#{homeBB.partidosProximos}"
+			selection="#{homeBB.partidoSeleccionado}"
+			rowKey="#{partido.codigo}">
+			<f:facet name="header">
+				<p:outputLabel value="Partido" />
+			</f:facet>
+			<p:column headerText="Fecha">
+				<h:outputText value="#{partido.fechaHora}" converter="DateConverter" />
+			</p:column>
+			<p:column headerText="Local">
+				<h:outputText
+					value="#{partido.local.nombre}" />
+			</p:column>
+			<p:column headerText="Visitante">
+				<h:outputText
+					value="#{partido.visitante.nombre}" />
+			</p:column>
+			<p:column headerText="Editar alineacion">
+				<p:commandButton value="Editar"
+					action="#{homeBB.agregarAlineacion}">
+					<f:setPropertyActionListener value="#{partido}"
+						target="#{homeBB.partidoSeleccionado}" />
+				</p:commandButton>
+			</p:column>
+			<p:column>
+				<p:commandButton value="Ver en vivo"
+					action="#{homeBB.verPartidoEnVivo}">
+					<f:setPropertyActionListener value="#{partido}"
+						target="#{homeBB.partidoSeleccionado}" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
 		<f:view contentType="text/html">
-		<p:gmap center="41.381542, 2.122893" zoom="15" type="HYBRID" style="width:600px;height:400px" />
-		</f:view>						
-		<p:link outcome="/webPages/partidos/enviarOrdenesPartido.xhtml?faces-redirect=true" value="Alineaciones"/>
+			<p:gmap center="41.381542, 2.122893" zoom="15" type="HYBRID"
+				style="width:600px;height:400px" />
+		</f:view>
+		<p:link
+			outcome="/webPages/partidos/enviarOrdenesPartido.xhtml?faces-redirect=true"
+			value="Alineaciones" />
 	</ui:define>
 </ui:composition>

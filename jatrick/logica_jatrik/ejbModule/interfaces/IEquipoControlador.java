@@ -5,10 +5,12 @@ import java.util.Set;
 
 import javax.ejb.Local;
 
+import partidos.Partido;
 import users.Manager;
 import jugadores.Jugador;
 import datatypes.DatosEquipo;
 import datatypes.DatosJugador;
+import datatypes.DatosManager;
 import datatypes.EnumEntrenamiento;
 import equipos.Alineacion;
 import equipos.Equipo;
@@ -49,5 +51,7 @@ public interface IEquipoControlador {
 	public Equipo asignarTorneo(Manager manager, DatosEquipo e);
 	
 	public void modificarTipoEntrenamientoEquipo(int codigoEquipo,EnumEntrenamiento tipoEntrenamiento) throws NoExisteEquipoExcepcion;
+
+	public List<Partido> obtenerProximosPartidos(DatosManager dm, int cantidad);
 	
 }

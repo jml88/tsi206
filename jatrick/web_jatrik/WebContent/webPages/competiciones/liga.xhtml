@@ -13,36 +13,36 @@
 					<p:tabView>
 						<p:tab title="Clasificación">
 							<h:panelGrid columns="2" cellpadding="10">
-								<p:dataTable var="tabla" value="#{ligaBB.equipos}">
+								<p:dataTable var="tabla" value="#{ligaBB.posiciones}">
 									<p:column headerText="Pos">
 										<h:outputText value="#{car.id}" />
 									</p:column>
 
 									<p:column headerText="Equipo">
-										<h:outputText value="#{tabla.nombre}" />
+										<h:outputText value="#{tabla.equipo.nombre}" />
 									</p:column>
 
 									<p:column headerText="Ptos">
-										<h:outputText value="#{car.brand}" />
+										<h:outputText value="#{tabla.puntos}" />
 									</p:column>
 
 									<p:column headerText="PJ">
-										<h:outputText value="#{car.color}" />
+										<h:outputText value="#{tabla.partidosJugados}" />
 									</p:column>
 									<p:column headerText="PG">
-										<h:outputText value="#{car.color}" />
+										<h:outputText value="#{tabla.partidosGanados}" />
 									</p:column>
 									<p:column headerText="PE">
-										<h:outputText value="#{car.color}" />
+										<h:outputText value="#{tabla.partidosEmpatados}" />
 									</p:column>
 									<p:column headerText="PP">
-										<h:outputText value="#{car.color}" />
+										<h:outputText value="#{tabla.partidosPerdidos}" />
 									</p:column>
 									<p:column headerText="GF">
-										<h:outputText value="#{car.color}" />
+										<h:outputText value="#{tabla.golesAFavor}" />
 									</p:column>
 									<p:column headerText="GC">
-										<h:outputText value="#{car.color}" />
+										<h:outputText value="#{tabla.golesEnContra}" />
 									</p:column>
 									<p:column headerText="AVG">
 										<h:outputText value="#{car.color}" />

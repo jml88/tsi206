@@ -8,6 +8,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import campeonato.Torneo;
 import datatypes.DatosManager;
 import equipos.Equipo;
 
@@ -20,6 +21,9 @@ public class Manager extends User {
 	
 	@OneToOne
 	private Equipo equipo;
+	
+	@OneToOne
+	private Torneo torneo;
 
 	public Manager(){
 		
@@ -47,6 +51,14 @@ public class Manager extends User {
 
 	public void setEquipo(Equipo equipo) {
 		this.equipo = equipo;
+	}
+
+	public Torneo getTorneo() {
+		return torneo;
+	}
+
+	public void setTorneo(Torneo torneo) {
+		this.torneo = torneo;
 	}
 	
 }

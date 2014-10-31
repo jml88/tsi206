@@ -69,19 +69,24 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 				.getConfiguracion().getCantidadDescensos());
 		List<Equipo> equipos = new LinkedList<Equipo>();
 
+		Equipo e = null;
 		for (int i = 0; i < cantCuadros; i++) {
 			int idEquipo = hf.getEquipoControlador().crearEquipo("Equipo" + i, true);
-			equipos.add(hf.getEquipoControlador().findEquipo(idEquipo));
+			e = hf.getEquipoControlador().findEquipo(idEquipo);
+			Posicion p = new Posicion(e);
+			t.getPosiciones().add(p);
+			em.persist(p);
+			equipos.add(e);
 		}
 		t.setEquipos(equipos);
-		em.merge(t);
+//		em.merge(t);
 		return t;
 	}
 
 	public void crearPartidosTorneo(Torneo t) {
+		ConfiguracionGral conf =  hf.getConfiguracionControlador().getConfiguracion();
 		// Crea los partidos
-		int cantidadEquipos = hf.getConfiguracionControlador()
-				.getConfiguracion().getCantEquipoTorneo();
+		int cantidadEquipos = conf.getCantEquipoTorneo();
 
 		/** http://es.wikipedia.org/wiki/Sistema_de_todos_contra_todos **/
 		Integer[][][] arrayFixture = new Integer[cantidadEquipos - 1][cantidadEquipos / 2][2];
@@ -111,14 +116,13 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 			local = conversion[arrayFixture[fila][0][0]];
 			visitante = conversion[arrayFixture[fila][0][1]];
 
-			PeriodicoPartido fechaPartido = hf.getConfiguracionControlador()
-					.getConfiguracion().getPeriodicoPartido();
-			Calendar c = hf.getConfiguracionControlador().getConfiguracion()
-					.getFechaArranqueCampeonato();
+			PeriodicoPartido fechaPartido = conf.getPeriodicoPartido();
+			Calendar c = conf.getFechaArranqueCampeonato();
 			//TODO falta tomar el dato de la periodicidad y la fecha de partido
-			Date fechaP = fechaPartido.diaPartido(c.getTime(), fila);
+			Date fechaP = fechaPartido.diaPartido(c.getTime(), fila+1);
+			
 			c.setTime(fechaP);
-			PartidoTorneo p = new PartidoTorneo(local, visitante, c, fila);
+			PartidoTorneo p = new PartidoTorneo(local, visitante, c, fila+1);
 			em.persist(p);
 		}
 
@@ -132,11 +136,8 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 				local = conversion[arrayFixture[fila][columna][0]];
 				visitante = conversion[arrayFixture[fila][columna][1]];
 
-				PeriodicoPartido fechaPartido = hf
-						.getConfiguracionControlador().getConfiguracion()
-						.getPeriodicoPartido();
-				Calendar c = hf.getConfiguracionControlador()
-						.getConfiguracion().getFechaArranqueCampeonato();
+				PeriodicoPartido fechaPartido = conf.getPeriodicoPartido();
+				Calendar c = conf.getFechaArranqueCampeonato();
 				//TODO falta tomar el dato de la periodicidad y la fecha de partido
 				Date fechaP = fechaPartido.diaPartido(c.getTime(), fila);
 				c.setTime(fechaP);
@@ -151,7 +152,6 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 				// em.persist(segVuelta);
 			}
 		}
-		int i =1;
 	}
 
 	@Override
@@ -170,6 +170,14 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 	public List<Torneo> obtenerTorneos() {
 		Query q = em.createQuery("select t from Torneo t");
 		return (List<Torneo>)q.getResultList();
+	}
+	
+	@Override
+	public List<Posicion> obtenerPosiciones(int idTorneo){
+		Query q= em.createQuery("select p FROM Torneo t join t.posiciones p WHERE t.codigo = :idTorneo ORDER BY p.puntos");
+		q.setParameter("idTorneo", idTorneo);
+		return q.getResultList();
+		
 	}
 
 }

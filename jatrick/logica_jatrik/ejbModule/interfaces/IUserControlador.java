@@ -4,9 +4,8 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import datatypes.DatosManager;
-import users.Manager;
 import users.User;
+import datatypes.DatosManager;
 
 @Local
 public interface IUserControlador {

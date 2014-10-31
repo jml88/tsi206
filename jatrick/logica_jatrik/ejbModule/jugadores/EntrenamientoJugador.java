@@ -1,33 +1,30 @@
 package jugadores;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.io.Serializable;
 
-@Entity
-@Table(name = EntrenamientoJugador.nombreTabla)
-public class EntrenamientoJugador {
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
+@Embeddable
+public class EntrenamientoJugador implements Serializable {
 	
-	public static final String nombreTabla = "EntrenamientoJugador";
 	
-	@Id
-	@Column(name = "CODENTRJUG")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int codigo;
 	
-	@Column
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Column(name="TECNICAEENTR")
 	private int tecnicaEntrenamiento;
 	
-	@Column
+	@Column(name="DEFENSAENTR")
 	private int defensaEntrenamiento;
 	
-	@Column
+	@Column(name="ATAQUEENTR")
 	private int ataqueEntrenamiento;
 	
-	@Column
+	@Column(name="PORTERIAENTR")
 	private int porteroEntrenamiento;
 
 	public int getTecnicaEntrenamiento() {

@@ -9,9 +9,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.naming.NamingException;
 
-import campeonato.Torneo;
+import campeonato.Posicion;
+
 import comunicacion.Comunicacion;
-import equipos.Equipo;
 
 @Named("ligaBB")
 @ViewScoped
@@ -22,43 +22,27 @@ public class LigaBB implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	List<Equipo> equipos;
-	
-	Torneo torneo;
-	
-	
+	private List<Posicion> posiciones;
+
 	@Inject
 	SessionBB sesion;
 	
 	@PostConstruct
 	public void init() {
 		try {
-			List<Torneo> torneos = Comunicacion.getInstance().getCampeonatoControlador().obtenerTorneos();
-			for (Torneo t : torneos) {
-				for (Equipo equipo : t.getEquipos()) {
-					if (equipo.getCodigo() == sesion.getDatosManager().getCodEquipo()){
-						this.torneo = t;
-						this.equipos = this.torneo.getEquipos();
-//						this.torneo.ge
-						break;
-					}
-				}
-			}
-			
+			this.posiciones = Comunicacion.getInstance().getCampeonatoControlador().obtenerPosiciones(sesion.getDatosManager().getCodTorneo());
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public List<Equipo> getEquipos() {
-		return equipos;
+	public List<Posicion> getPosiciones() {
+		return posiciones;
 	}
 
-	public void setEquipos(List<Equipo> equipos) {
-		this.equipos = equipos;
+	public void setPosiciones(List<Posicion> posiciones) {
+		this.posiciones = posiciones;
 	}
-	
-	
 
 }

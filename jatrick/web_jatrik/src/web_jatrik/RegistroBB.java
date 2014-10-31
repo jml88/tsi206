@@ -74,11 +74,11 @@ public class RegistroBB implements Serializable {
         try {
         	Set<String> r = new HashSet<String>();
         	r.add("MANAGER");
-        	datosmanager.setRoles(r);
+        	this.datosmanager.setRoles(r);
         	int codManager = Comunicacion.getInstance().getIUserControlador().createManager(this.datosmanager, this.password, this.nombreEquipo);
         	
         	//obtenego los datosManager actualizados luego de crearlo
-        	datosmanager = Comunicacion.getInstance().getIUserControlador().obtenerManager(codManager);
+        	this.datosmanager = Comunicacion.getInstance().getIUserControlador().obtenerManager(codManager);
         	Comunicacion.getInstance().getSesion().setDatosManager(datosmanager);
             SecurityUtils.getSubject().login(new UsernamePasswordToken(datosmanager.getUsername(), password, false)); //en el false va remember
             //Messages.addGlobalInfo("Registration suceed, new user ID is: {0}", user.getId());

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import campeonato.Posicion;
 import campeonato.Torneo;
 import datatypes.DatosTorneo;
 import excepciones.NoExisteConfiguracionException;
@@ -33,6 +34,8 @@ public interface ICampeonatoControlador {
 	public void crearCampeonato() throws NoExisteConfiguracionException;
 	
 	public List<Torneo> obtenerTorneos();
+
+	public List<Posicion> obtenerPosiciones(int idTorneo);
 	
 
 }
