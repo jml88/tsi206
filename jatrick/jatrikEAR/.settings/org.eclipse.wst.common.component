@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
     <wb-module deploy-name="jatrikEAR">
-        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
         <dependent-module archiveName="logica_simulacion.jar" deploy-path="/" handle="module:/resource/logica_simulacion/logica_simulacion">
             <dependent-object/>
             <dependency-type>uses</dependency-type>
@@ -14,6 +13,10 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="Utiles.jar" deploy-path="/lib" handle="module:/resource/Utiles/Utiles">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="servicios_jatrik.war" deploy-path="/" handle="module:/resource/servicios_jatrik/servicios_jatrik">
+            <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>
