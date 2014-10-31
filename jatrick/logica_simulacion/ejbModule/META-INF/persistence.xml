@@ -14,6 +14,7 @@
 		<class>equipos.Estadio</class>
 		<class>partidos.ConfiguracionPartido</class>
 		<class>partidos.Comentario</class>
+		
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="false" />
