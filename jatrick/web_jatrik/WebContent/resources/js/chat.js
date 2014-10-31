@@ -9,36 +9,27 @@ function enterGral(e){
 	tecla = (document.all) ? e.keyCode : e.which;
 	if (tecla == 13){
 		messageGral = $(PrimeFaces.escapeClientId('chatForm:tabChat:enviarGral'));
-		messageGralText = messageGral.val();
+		messageGralText = messageGral.val().trim();
 		messageGral.val('').focus();
-		list = $(PrimeFaces.escapeClientId('chatForm:tabChat:mensajesGral'));
-		list.scrollTop = list[0].scrollHeight;		
-		gralRC([{name: 'mensajeGral', value: messageGralText}]);
-		
+//		gralRC([{name: 'mensajeGral', value: messageGralText}]);
+		var msg = '{"message":"' + messageGralText + '", "sender":"'
+		+ $nickName.val() + '", "received":""}';
+		wsocket.send(msg);
+		$message.val('').focus();
 	}
 }
 
 function onMessageReceived(evt) {
 	//var msg = eval('(' + evt.data + ')');
 	var msg = JSON.parse(evt.data); // native API
-	var $messageLine = $('<tr><td class="received">' + msg.received
-			+ '</td><td class="user label label-info">' + msg.sender
-			+ '</td><td class="message badge">' + msg.message
-			+ '</td></tr>');
+	var $messageLine = $('<tr><td>' + msg.sender + ': ' + msg.message + '</td></tr>');
 	$chatWindow.append($messageLine);
 }
 
-function sendMessage() {
-	var msg = '{"message":"' + $message.val() + '", "sender":"'
-	+ $nickName.val() + '", "received":""}';
-	wsocket.send(msg);
-	$message.val('').focus();
-}
-
 function connectToChatserver() {
-	room = $('#chatroom option:selected').val();
+//	room = $('#chatroom option:selected').val();
 	username = $(PrimeFaces.escapeClientId('chatForm:hiddenUsername')).val();
-	wsocket = new WebSocket(serviceLocation + room + '/' + username);
+	wsocket = new WebSocket(serviceLocation + username);
 	wsocket.onmessage = onMessageReceived;
 }
 

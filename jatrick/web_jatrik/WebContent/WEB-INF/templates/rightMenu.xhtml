@@ -6,20 +6,18 @@
 	xmlns:p="http://primefaces.org/ui">
 	
 	<ui:define name="scripts">
-		<h:outputScript library="js" name="chat.js" />
+		
 	</ui:define>
 	
 	<div>
 	<h:form id="chatForm" rendered="#{sessionBB.datosManager != null}">
-			<h:inputHidden id="hiddenUsername" value="{#sessionBB.datosManager.username}" />
+			<h:inputHidden id="hiddenUsername" value="#{sessionBB.datosManager.username}" />
 			<table style="background-color: #FFFFFF">
 				<tr>
 					<td>
 						<p:tabView id="tabChat" orientation="top" style="none">
 							<p:tab id="general" title="General">
-								<p:dataList id="mensajesGral" value="#{chatBB.msjGeneral}" var="msjGral" emptyMessage="">
-									#{msjGral}
-								</p:dataList>
+								<table id="response" />
 								<p:inputTextarea id="enviarGral" style="width: 97%; height: 50px" onkeyup="enterGral(event)" ></p:inputTextarea>
 							</p:tab>
 							<p:tab id="liga" title="Liga">
@@ -36,7 +34,7 @@
 					</td>
 				</tr>
 			</table>
-			<p:remoteCommand name="gralRC" update="chatForm:tabChat:mensajesGral" actionListener="#{chatBB.sendGral}" ></p:remoteCommand>
+			
 			<p:remoteCommand name="ligaRC" ></p:remoteCommand>
 			<p:remoteCommand name="partidoRC" ></p:remoteCommand>
 		</h:form>

@@ -1,7 +1,6 @@
 package configuracionGral;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -12,9 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import datatypes.DatosConfiguracionGral;
-import datatypes.DatosPeriodicoPartido;
 
 @Entity
 @Table(name = ConfiguracionGral.nombreTabla)
@@ -57,6 +53,33 @@ public class ConfiguracionGral {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = true)
 	private Calendar fechaArranqueCampeonato;
+	
+	@Column
+	private int juvenilEdad;
+	
+	@Column
+	private int adultoEdad;
+	
+	@Column
+	private int veteranoEdad;
+	
+	@Column
+	private int mejoraEntrenaJuvenil;
+	
+	@Column
+	private int mejoraEntrenaAdulto;
+	
+	@Column
+	private int mejoraEntrenaVeterano;
+	
+	@Column
+	private int desmejoraNoEntrenaVeterano;
+	
+	@Column
+	private int desmejoraNoEntrenaAdulto;
+	
+	@Column
+	private int desmejoraNoEntrenaJuvenil;
 	
 	@Embedded
 	@Column(nullable = true)
@@ -208,30 +231,127 @@ public class ConfiguracionGral {
 	}
 
 
-	public DatosConfiguracionGral getDatos(){
+	public ConfiguracionGral getDatos(){
 		
-		DatosPeriodicoPartido dp;
-		Date fecha;
-		if(periodicoPartido != null){
-			dp = periodicoPartido.getDatos();
-		}
-		else{
-			dp = new DatosPeriodicoPartido();
-		}
-		if(fechaArranqueCampeonato == null){
-			fecha = null;
-		}
-		else{
-			fecha = fechaArranqueCampeonato.getTime();
-		}
-		 
-		DatosConfiguracionGral ret = new DatosConfiguracionGral(premio, dineroInicial, cantJugadoresArranque, cantEquipoTorneo, numeroFecha, numeroTorneo, cantidadTorneos, cantidadDescensos,
-																puntosParaEntrenar,fecha, dp);
-		return ret;
+		return this;
 	}
 	
 	public int valorEntrenamiento(int edad){
-		return 1;
+		
+		if(edad <= juvenilEdad){
+			return mejoraEntrenaJuvenil;
+		}
+		else if(edad <= adultoEdad){
+			return mejoraEntrenaAdulto;
+		}
+		else{
+			return mejoraEntrenaVeterano;
+		}
+			
+	}
+	
+	public int valorNoEntrenamiento(int edad){
+		
+		if(edad <= juvenilEdad){
+			return desmejoraNoEntrenaJuvenil;
+		}
+		else if(edad <= adultoEdad){
+			return desmejoraNoEntrenaAdulto;
+		}
+		else{
+			return desmejoraNoEntrenaVeterano;
+		}
+			
+	}
+
+
+	public int getJuvenilEdad() {
+		return juvenilEdad;
+	}
+
+
+	public void setJuvenilEdad(int juvenilEdad) {
+		this.juvenilEdad = juvenilEdad;
+	}
+
+
+	public int getAdultoEdad() {
+		return adultoEdad;
+	}
+
+
+	public void setAdultoEdad(int adultoEdad) {
+		this.adultoEdad = adultoEdad;
+	}
+
+
+	public int getVeteranoEdad() {
+		return veteranoEdad;
+	}
+
+
+	public void setVeteranoEdad(int veteranoEdad) {
+		this.veteranoEdad = veteranoEdad;
+	}
+
+
+	public int getMejoraEntrenaJuvenil() {
+		return mejoraEntrenaJuvenil;
+	}
+
+
+	public void setMejoraEntrenaJuvenil(int mejoraEntrenaJuvenil) {
+		this.mejoraEntrenaJuvenil = mejoraEntrenaJuvenil;
+	}
+
+
+	public int getMejoraEntrenaAdulto() {
+		return mejoraEntrenaAdulto;
+	}
+
+
+	public void setMejoraEntrenaAdulto(int mejoraEntrenaAdulto) {
+		this.mejoraEntrenaAdulto = mejoraEntrenaAdulto;
+	}
+
+
+	public int getMejoraEntrenaVeterano() {
+		return mejoraEntrenaVeterano;
+	}
+
+
+	public void setMejoraEntrenaVeterano(int mejoraEntrenaVeterano) {
+		this.mejoraEntrenaVeterano = mejoraEntrenaVeterano;
+	}
+
+
+	public int getDesmejoraNoEntrenaVeterano() {
+		return desmejoraNoEntrenaVeterano;
+	}
+
+
+	public void setDesmejoraNoEntrenaVeterano(int desmejoraNoEntrenaVeterano) {
+		this.desmejoraNoEntrenaVeterano = desmejoraNoEntrenaVeterano;
+	}
+
+
+	public int getDesmejoraNoEntrenaAdulto() {
+		return desmejoraNoEntrenaAdulto;
+	}
+
+
+	public void setDesmejoraNoEntrenaAdulto(int desmejoraNoEntrenaAdulto) {
+		this.desmejoraNoEntrenaAdulto = desmejoraNoEntrenaAdulto;
+	}
+
+
+	public int getDesmejoraNoEntrenaJuvenil() {
+		return desmejoraNoEntrenaJuvenil;
+	}
+
+
+	public void setDesmejoraNoEntrenaJuvenil(int desmejoraNoEntrenaJuvenil) {
+		this.desmejoraNoEntrenaJuvenil = desmejoraNoEntrenaJuvenil;
 	}
 	
 	

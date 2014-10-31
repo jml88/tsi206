@@ -8,8 +8,9 @@ import javax.inject.Named;
 import javax.naming.NamingException;
 
 import comunicacion.Comunicacion;
-import datatypes.DatosConfiguracionGral;
-import datatypes.DatosPeriodicoPartido;
+
+import configuracionGral.ConfiguracionGral;
+import configuracionGral.PeriodicoPartido;
 import datatypes.EnumPeriodicoPartido;
 import excepciones.NoExisteConfiguracionException;
 
@@ -22,7 +23,7 @@ public class AdminBB implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private DatosConfiguracionGral configGeneral;
+	private ConfiguracionGral configGeneral;
 	
 	private int selection;
 	
@@ -60,7 +61,7 @@ public class AdminBB implements Serializable{
 				minuto = this.configGeneral.getPeriodicoPartido().getMinuto();
 				
 			}else{
-				configGeneral = new DatosConfiguracionGral();
+				
 				selection = 9;
 			}
 			
@@ -72,11 +73,11 @@ public class AdminBB implements Serializable{
 	
 	
 
-	public DatosConfiguracionGral getConfigGeneral() {
+	public ConfiguracionGral getConfigGeneral() {
 		return configGeneral;
 	}
 
-	public void setConfigGeneral(DatosConfiguracionGral configGeneral) {
+	public void setConfigGeneral(ConfiguracionGral configGeneral) {
 		this.configGeneral = configGeneral;
 	}
 	
@@ -100,7 +101,7 @@ public class AdminBB implements Serializable{
 				p = EnumPeriodicoPartido.MINUTO;
 				break;
 			}
-			DatosPeriodicoPartido periodico = new DatosPeriodicoPartido(dia, hora, minuto,p);
+			PeriodicoPartido periodico = new PeriodicoPartido(dia, hora, minuto,p);
 			configGeneral.setPeriodicoPartido(periodico);
 			Comunicacion.getInstance().getConfiguracionControlador().crearOModificarConfiguracion(configGeneral);
 		} catch (NamingException e) {
