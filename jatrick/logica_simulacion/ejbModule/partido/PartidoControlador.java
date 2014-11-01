@@ -2,6 +2,8 @@ package partido;
 
 
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -12,6 +14,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import campeonato.Posicion;
+import campeonato.Torneo;
 import partidos.Comentario;
 import partidos.ConfiguracionPartido;
 import partidos.Partido;
@@ -25,7 +29,6 @@ public class PartidoControlador {
 	@PersistenceContext( unitName = "jatrik" ) 
 	private EntityManager em;
 	
-	private final Lock _mutex = new ReentrantLock(true);
 	
 	public PartidoControlador(){
 		
@@ -57,7 +60,6 @@ public class PartidoControlador {
     
     public void crearComentario(String mensaje, Partido partido, int minuto){
     	
-    	_mutex.lock();
     	Query q = em.createQuery("select max(c.nroComentario) from Comentario c");
     	List<Integer> max = (List<Integer>)q.getResultList();
     	int maximo = 1;
@@ -70,7 +72,6 @@ public class PartidoControlador {
     	c.setMinuto(minuto);
     	c.setNroComentario(maximo);
     	em.persist(c);
-    	_mutex.unlock();
     }
 	
     public ConfiguracionPartido findConfiguracionPartido(){
@@ -91,6 +92,25 @@ public class PartidoControlador {
 	public void partidoPorSimular(Partido p) {
 		p.setEstado(EnumPartido.POR_SIMULAR);
     	em.merge(p);
+		
+	}
+	
+	public void actualizarDatosTorneo(Torneo t){
+		Collections.sort(t.getPosiciones(), new Comparator() 
+        {
+
+            public int compare(Object o1, Object o2) 
+            {
+            	int retorno = 0;
+            	retorno  = ((Posicion)o1).getPuntos() > ((Posicion)o1).getPuntos() ? 1 : -1;
+            	if (((Posicion)o1).getPuntos() == ((Posicion)o1).getPuntos()){ retorno = 0;}
+                return retorno;
+            }
+           }    );
+		for (Posicion posicion : t.getPosiciones()) {
+			//TODO obtener el datoo del premio desde la configuraciones
+			posicion.getEquipo().setCapital(100000);
+		}
 		
 	}
 	

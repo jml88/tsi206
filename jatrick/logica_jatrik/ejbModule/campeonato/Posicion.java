@@ -131,7 +131,21 @@ public class Posicion {
 	public void setPuntos(int puntos) {
 		this.puntos = puntos;
 	}
-	
-	
+
+	public void actualizarFecha(int golesLocal, int golesVisitante) {
+		if (golesLocal > golesVisitante){
+			puntos += 3;
+			partidosGanados += 1;
+		}else if (golesLocal < golesVisitante){
+			partidosPerdidos += 1;
+		}else{
+			partidosEmpatados += 1;
+		}
+		partidosJugados += 1;
+		golesAFavor += golesLocal;
+		golesEnContra += golesVisitante;
+	}
+
+
 
 }

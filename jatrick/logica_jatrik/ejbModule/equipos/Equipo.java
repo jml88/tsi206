@@ -49,6 +49,8 @@ public class Equipo {
 	@Column
 	private boolean bot;
 	
+	private int capital;
+	
 	public Equipo() {
 		this.plantel = new HashSet<Jugador>();
 		this.tipoEntrenamiento = EnumEntrenamiento.ATAQUE;
@@ -137,6 +139,14 @@ public class Equipo {
 
 	public void setBot(boolean bot) {
 		this.bot = bot;
+	}
+
+	public int getCapital() {
+		return capital;
+	}
+
+	public void setCapital(int capital) {
+		this.capital = capital;
 	}
 
 	

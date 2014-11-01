@@ -6,6 +6,7 @@ import excepciones.NoExisteConfiguracionException;
 import fabricas.HomeFactory;
 import interfaces.ICampeonatoControlador;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
@@ -19,6 +20,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import partidos.PartidoTorneo;
+import partidos.ResultadoPartido;
 import configuracionGral.ConfiguracionGral;
 import configuracionGral.PeriodicoPartido;
 
@@ -52,11 +54,13 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 				Torneo t = this
 						.crearTorneoDeCampeonato(cantidadEquiposPorTorneo);
 				t.setCantEquipos(cantidadEquiposPorTorneo);
-				t.setNivelVertical(vertical);
-				t.setNivelHorizontal(horizontal);
+				t.setNivelVertical(vertical + 1);
+				t.setNivelHorizontal(horizontal + 1);
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(cg.getFechaArranqueCampeonato());
+				t.setFechaDeArranque(cal);
 				em.persist(t);
 				crearPartidosTorneo(t);
-
 			}
 		}
 	}
@@ -71,7 +75,11 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 
 		Equipo e = null;
 		for (int i = 0; i < cantCuadros; i++) {
-			int idEquipo = hf.getEquipoControlador().crearEquipo("Equipo" + i, true);
+			int idEquipo = hf.getEquipoControlador().crearEquipo(
+					"Equipo" + i,
+					true,
+					hf.getConfiguracionControlador().getConfiguracion()
+							.getCantJugadoresArranque());
 			e = hf.getEquipoControlador().findEquipo(idEquipo);
 			Posicion p = new Posicion(e);
 			t.getPosiciones().add(p);
@@ -79,12 +87,13 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 			equipos.add(e);
 		}
 		t.setEquipos(equipos);
-//		em.merge(t);
+		// em.merge(t);
 		return t;
 	}
 
 	public void crearPartidosTorneo(Torneo t) {
-		ConfiguracionGral conf =  hf.getConfiguracionControlador().getConfiguracion();
+		ConfiguracionGral conf = hf.getConfiguracionControlador()
+				.getConfiguracion();
 		// Crea los partidos
 		int cantidadEquipos = conf.getCantEquipoTorneo();
 
@@ -98,11 +107,11 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 			}
 		}
 
-		Equipo[] conversion = new Equipo[cantidadEquipos+1];
+		Equipo[] conversion = new Equipo[cantidadEquipos + 1];
 		Equipo local = null;
 		Equipo visitante = null;
 		for (int i = 0; i < cantidadEquipos; i++) {
-			conversion[i+1] = t.getEquipos().get(i);
+			conversion[i + 1] = t.getEquipos().get(i);
 		}
 
 		int localidad = 0;
@@ -118,11 +127,15 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 
 			PeriodicoPartido fechaPartido = conf.getPeriodicoPartido();
 			Date c = conf.getFechaArranqueCampeonato();
-			//TODO falta tomar el dato de la periodicidad y la fecha de partido
-			Date fechaP = fechaPartido.diaPartido(c, fila+1);
-			
+			Date fechaP = fechaPartido.diaPartido(c, fila + 1);
 
-			PartidoTorneo p = new PartidoTorneo(local, visitante, new GregorianCalendar(fechaP.getYear(),fechaP.getMonth(),fechaP.getDay(),fechaP.getHours(),fechaP.getMinutes()), fila+1);
+			PartidoTorneo p = new PartidoTorneo(local, visitante,
+					new GregorianCalendar(fechaP.getYear(), fechaP.getMonth(),
+							fechaP.getDay(), fechaP.getHours(),
+							fechaP.getMinutes()), fila + 1, null);
+			ResultadoPartido rp = new ResultadoPartido();
+			em.persist(rp);
+			p.setResultado(rp);
 			em.persist(p);
 		}
 
@@ -138,9 +151,14 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 
 				PeriodicoPartido fechaPartido = conf.getPeriodicoPartido();
 				Date c = conf.getFechaArranqueCampeonato();
-				//TODO falta tomar el dato de la periodicidad y la fecha de partido
-				Date fechaP = fechaPartido.diaPartido(c, fila);
-				PartidoTorneo p = new PartidoTorneo(local, visitante, new GregorianCalendar(fechaP.getYear(),fechaP.getMonth(),fechaP.getDay(),fechaP.getHours(),fechaP.getMinutes()), fila);
+				Date fechaP = fechaPartido.diaPartido(c, fila + 1);
+				PartidoTorneo p = new PartidoTorneo(local, visitante,
+						new GregorianCalendar(fechaP.getYear(),
+								fechaP.getMonth(), fechaP.getDay(),
+								fechaP.getHours(), fechaP.getMinutes()), fila, null);
+				ResultadoPartido rp = new ResultadoPartido();
+				em.persist(rp);
+				p.setResultado(rp);
 				em.persist(p);
 				// fecha = fechaPartido.diaPartido(c.getTime(),
 				// visitante+cantidadEquipos-1);
@@ -168,15 +186,41 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 	@Override
 	public List<Torneo> obtenerTorneos() {
 		Query q = em.createQuery("select t from Torneo t");
-		return (List<Torneo>)q.getResultList();
+		return (List<Torneo>) q.getResultList();
 	}
-	
+
 	@Override
-	public List<Posicion> obtenerPosiciones(int idTorneo){
-		Query q= em.createQuery("select p FROM Torneo t join t.posiciones p WHERE t.codigo = :idTorneo ORDER BY p.puntos");
+	public List<Posicion> obtenerPosiciones(int idTorneo) {
+		Query q = em
+				.createQuery("select p FROM Torneo t join t.posiciones p WHERE t.codigo = :idTorneo ORDER BY p.puntos");
 		q.setParameter("idTorneo", idTorneo);
 		return q.getResultList();
-		
+
+	}
+
+	private int nivelTorneoMenor() {
+		Query q = em.createQuery("select max(t.nivelVertical) FROM Torneo t");
+		return (int) q.getSingleResult();
+	}
+
+	@Override
+	public void agregarTorneoNivelInferior() {
+		ConfiguracionGral cg = hf.getConfiguracionControlador()
+				.getConfiguracion();
+		int cantidadEquiposPorTorneo = cg.getCantEquipoTorneo(); // Idem
+		int nivelVertical = this.nivelTorneoMenor() + 1;
+
+		int cantDesc = cg.getCantidadDescensos();
+		int nivelHorizontal = (int) Math.pow(cantDesc, nivelVertical);
+		for (int horizontal = 0; horizontal < nivelHorizontal; horizontal++) {
+			Torneo t = this.crearTorneoDeCampeonato(cantidadEquiposPorTorneo);
+			t.setCantEquipos(cantidadEquiposPorTorneo);
+			t.setNivelVertical(nivelVertical);
+			t.setNivelHorizontal(horizontal + 1);
+			em.persist(t);
+			crearPartidosTorneo(t);
+
+		}
 	}
 
 }

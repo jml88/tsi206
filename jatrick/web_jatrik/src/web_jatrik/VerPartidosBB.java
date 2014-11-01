@@ -14,9 +14,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.naming.NamingException;
 
-import comunicacion.Comunicacion;
+import partidos.Partido;
 
-import datatypes.DatosPartido;
+import comunicacion.Comunicacion;
 
 @Named("verPartidosBB")
 @ViewScoped
@@ -30,13 +30,13 @@ public class VerPartidosBB implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Set<DatosPartido> partidos;
-	private DatosPartido partidoSeleccionado;
+	private Set<Partido> partidos;
+	private Partido partidoSeleccionado;
 	private Map<Integer, String> nombresEquipos;
 	
 	public VerPartidosBB() {
 		super();
-		this.partidos = new HashSet<DatosPartido>();
+		this.partidos = new HashSet<Partido>();
 		this.nombresEquipos = new HashMap<Integer, String>();
 		this.partidoSeleccionado = null;
 	}
@@ -45,11 +45,11 @@ public class VerPartidosBB implements Serializable {
 	public void init() {
 		try {
 			this.partidos = Comunicacion.getInstance().getIPartidoControlador().obtenerPartidosUsuario(sesion.getDatosManager().getCodEquipo());
-			for (DatosPartido dp : this.partidos) {
-				this.nombresEquipos.put(dp.getEquipoLocalId(),
-						Comunicacion.getInstance().getIEquipoControlador().obtenerEquipo(dp.getEquipoLocalId()).getNombre());
-				this.nombresEquipos.put(dp.getEquipoVisitanteId(),
-						Comunicacion.getInstance().getIEquipoControlador().obtenerEquipo(dp.getEquipoVisitanteId()).getNombre());
+			for (Partido dp : this.partidos) {
+				this.nombresEquipos.put(dp.getLocal().getCodigo(),
+						Comunicacion.getInstance().getIEquipoControlador().obtenerEquipo(dp.getLocal().getCodigo()).getNombre());
+				this.nombresEquipos.put(dp.getVisitante().getCodigo(),
+						Comunicacion.getInstance().getIEquipoControlador().obtenerEquipo(dp.getVisitante().getCodigo()).getNombre());
 			}
 		} catch (NamingException e) {
 			e.printStackTrace();
@@ -77,19 +77,19 @@ public class VerPartidosBB implements Serializable {
 		return "/webPages/home/home.xhtml?faces-redirect=true";
 	}
 
-	public Set<DatosPartido> getPartidos() {
+	public Set<Partido> getPartidos() {
 		return partidos;
 	}
 
-	public void setPartidos(Set<DatosPartido> partidos) {
+	public void setPartidos(Set<Partido> partidos) {
 		this.partidos = partidos;
 	}
 
-	public DatosPartido getPartidoSeleccionado() {
+	public Partido getPartidoSeleccionado() {
 		return partidoSeleccionado;
 	}
 
-	public void setPartidoSeleccionado(DatosPartido partidoSeleccionado) {
+	public void setPartidoSeleccionado(Partido partidoSeleccionado) {
 		this.partidoSeleccionado = partidoSeleccionado;
 	}
 

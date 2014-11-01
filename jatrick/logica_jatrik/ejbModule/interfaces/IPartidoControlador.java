@@ -8,7 +8,6 @@ import javax.ejb.Remote;
 
 import datatypes.DatosAlineacion;
 import datatypes.DatosComentario;
-import datatypes.DatosPartido;
 import excepciones.NoExistePartidoExepcion;
 import partidos.Partido;
 
@@ -24,7 +23,7 @@ public interface IPartidoControlador {
 
 	void setAlineacioPartido(DatosAlineacion alineacion, int idPartido, int idEquipo);
 	
-	public Set<DatosPartido> obtenerPartidosUsuario(int codEquipo);
+	public Set<Partido> obtenerPartidosUsuario(int codEquipo);
 
 	int crearPartidoTorneo(int codEquipoLocal, int codEquipoVisitante,Calendar fecha);
 

@@ -12,6 +12,8 @@ public class DatosMinutoPartido implements Serializable {
 	private int minuto;
 	
 	private int idPartido;
+	
+	private boolean ultimaJugada;
 
 	public int getMinuto() {
 		return minuto;
@@ -28,11 +30,21 @@ public class DatosMinutoPartido implements Serializable {
 	public void setIdPartido(int idPartido) {
 		this.idPartido = idPartido;
 	}
+	
 
-	public DatosMinutoPartido(int minuto, int idPartido) {
+	public boolean isUltimaJugada() {
+		return ultimaJugada;
+	}
+
+	public void setUltimaJugada(boolean ultimaJugada) {
+		this.ultimaJugada = ultimaJugada;
+	}
+
+	public DatosMinutoPartido(int minuto, int idPartido, boolean ultimaJugada) {
 		super();
 		this.minuto = minuto;
 		this.idPartido = idPartido;
+		this.ultimaJugada = ultimaJugada;
 	}
 
 	public DatosMinutoPartido() {

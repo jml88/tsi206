@@ -16,7 +16,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import datatypes.DatosPartido;
 import datatypes.EnumPartido;
 import equipos.Alineacion;
 import equipos.Equipo;
@@ -38,6 +37,7 @@ public class Partido {
 		this.visitante = visitante;
 		this.fechaHora = fecha;
 		this.estado = EnumPartido.POR_JUGAR;
+		this.resultado = null;
 	}
 
 	@Id
@@ -52,6 +52,9 @@ public class Partido {
     @Enumerated(EnumType.STRING)
     @Column
 	private EnumPartido estado;
+    
+    @OneToOne
+    private ResultadoPartido resultado;
 
 	@OneToOne
 	private Equipo local;
@@ -121,10 +124,17 @@ public class Partido {
 		this.estado = estado;
 	}
 	
-	public DatosPartido getDatos() {
-		return new DatosPartido(this.codigo, this.fechaHora, this.estado, this.local.getCodigo(), this.visitante.getCodigo(),
-				this.alineacionLocal != null? this.alineacionLocal.getCodigo():-1,
-				this.alineacionVisitante != null? this.alineacionVisitante.getCodigo():-1);
+	
+	public ResultadoPartido getResultado() {
+		return resultado;
+	}
+
+	public void setResultado(ResultadoPartido resultado) {
+		this.resultado = resultado;
+	}
+
+	public Partido getDatos() {
+		return this;
 	}
 
 }
