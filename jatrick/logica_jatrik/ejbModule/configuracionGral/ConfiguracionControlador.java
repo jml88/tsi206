@@ -11,6 +11,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import datatypes.EnumPeriodicoPartido;
 import excepciones.NoExisteConfiguracionException;
 
 @Stateless

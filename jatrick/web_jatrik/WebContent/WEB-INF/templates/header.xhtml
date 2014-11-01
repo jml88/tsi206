@@ -11,12 +11,12 @@
 					<p:outputLabel value="Jatrick-1.0"/>
 				</p:menuitem>
 				<f:facet name="options">
-					
+					<h:inputHidden id="nickname" value="#{sessionBB.datosManager.username}"/>
 					<p:panelGrid columns="1" rendered="#{sessionBB.datosManager != null}">
-						<h:inputHidden id="nickname" value="#{sessionBB.datosManager.username}"/>
 						<p:outputLabel value="Bienvenido #{sessionBB.datosManager.username}!"/>
 						<p:commandButton value="Logout" action="#{sessionBB.logout}" />
 					</p:panelGrid>
+					<p:link value="RSS Jatrik" type="application/rss+xml" href="/resources/rss/noticias.rss"/>
 				</f:facet>
 			</p:menubar>
 			<p:sticky target="menu"/>

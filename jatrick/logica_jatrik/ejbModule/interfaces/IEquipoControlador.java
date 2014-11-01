@@ -61,4 +61,8 @@ public interface IEquipoControlador {
 	
 	public EnumEntrenamiento entrenamientoEquipo(int idCodigoEquipo);
 	
+	public void elegirEntrenamiento(int idCodigoEquipo, EnumEntrenamiento enumEntrenamiento);
+	
+	public EnumEntrenamiento entrenamientoEquipo(int idCodigoEquipo);
+	
 }

@@ -1,6 +1,8 @@
 package web_jatrik;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -32,6 +34,8 @@ public class AdminBB implements Serializable{
 	private int hora;
 	
 	private int minuto;
+	
+	private Date fechaArranque;
 	
 	@PostConstruct
 	public void init(){
@@ -115,6 +119,7 @@ public class AdminBB implements Serializable{
 	}
 
 
+
 	
 	public String crearPartidosYTorneos(){
 		String ret ="";
@@ -177,6 +182,18 @@ public class AdminBB implements Serializable{
 
 	public void setMinuto(int minuto) {
 		this.minuto = minuto;
+	}
+
+
+
+	public Date getFechaArranque() {
+		return fechaArranque;
+	}
+
+
+
+	public void setFechaArranque(Date fechaArranque) {
+		this.fechaArranque = fechaArranque;
 	}
 	
 	
