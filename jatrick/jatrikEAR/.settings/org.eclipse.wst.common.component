@@ -15,5 +15,9 @@
         <dependent-module archiveName="Utiles.jar" deploy-path="/lib" handle="module:/resource/Utiles/Utiles">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="servicios_jatrik.war" deploy-path="/" handle="module:/resource/servicios_jatrik/servicios_jatrik">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>
