@@ -6,11 +6,11 @@
 	xmlns:p="http://primefaces.org/ui">
 	
 	<ui:define name="scripts">
-		
+		<h:outputScript library="js" name="chat.js" />
 	</ui:define>
 	
 	<div>
-	<h:form id="chatForm" rendered="#{sessionBB.datosManager != null}">
+		<h:form id="chatForm" rendered="#{sessionBB.datosManager != null}">
 			<h:inputHidden id="hiddenUsername" value="#{sessionBB.datosManager.username}" />
 			<table style="background-color: #FFFFFF">
 				<tr>
@@ -20,6 +20,7 @@
 								<table id="response" />
 								<p:inputTextarea id="enviarGral" style="width: 97%; height: 50px" onkeyup="enterGral(event)" ></p:inputTextarea>
 							</p:tab>
+							<!-- 
 							<p:tab id="liga" title="Liga">
 								<p:dataList id="mensajesLiga" value="#{chatBB.msjLiga}" var="car" emptyMessage="" style="height: 300px">
 								</p:dataList>
@@ -30,6 +31,7 @@
 								</p:dataList>
 								<p:inputTextarea id="enviarPartido" style="width: 97%; height: 50px"></p:inputTextarea>
 							</p:tab>
+							 -->
 						</p:tabView>
 					</td>
 				</tr>
