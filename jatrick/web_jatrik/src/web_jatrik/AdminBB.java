@@ -61,7 +61,7 @@ public class AdminBB implements Serializable{
 				minuto = this.configGeneral.getPeriodicoPartido().getMinuto();
 				
 			}else{
-				
+				this.configGeneral = new ConfiguracionGral();
 				selection = 9;
 			}
 			

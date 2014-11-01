@@ -3,6 +3,7 @@ package configuracionGral;
 import interfaces.IConfiguracionControlador;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -34,6 +35,18 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 		
 	}
 	
+	public ConfiguracionGral tieneConfiguracion(){
+		@SuppressWarnings("unchecked")
+		List<ConfiguracionGral> cg = (List<ConfiguracionGral>)em.createQuery("Select cg from ConfiguracionGral cg").getResultList();
+		if(cg.isEmpty()){
+			return null;
+		}
+		else{
+			return cg.get(0);
+		}
+		
+	}
+	
 	@Override
 	public void crearConfiguracionGral(ConfiguracionGral dcg){
 		if(getConfiguracion()== null){
@@ -57,7 +70,7 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 		cg.setPremio(dcg.getPremio());
 		cg.setCantidadTorneos(dcg.getCantidadTorneos());
 		if(dcg.getFechaArranqueCampeonato()!=null){
-			Calendar c = dcg.getFechaArranqueCampeonato();
+			Date c = dcg.getFechaArranqueCampeonato();
 			cg.setFechaArranqueCampeonato(c);
 		}
 		else{
@@ -82,7 +95,7 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 
 	@Override
 	public ConfiguracionGral getDatosConfiguracionGral() {
-		return getConfiguracion();
+		return tieneConfiguracion();
 	}
 
 	@Override
