@@ -6,8 +6,8 @@ import excepciones.NoExisteConfiguracionException;
 import fabricas.HomeFactory;
 import interfaces.ICampeonatoControlador;
 
-import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -117,12 +117,12 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 			visitante = conversion[arrayFixture[fila][0][1]];
 
 			PeriodicoPartido fechaPartido = conf.getPeriodicoPartido();
-			Calendar c = conf.getFechaArranqueCampeonato();
+			Date c = conf.getFechaArranqueCampeonato();
 			//TODO falta tomar el dato de la periodicidad y la fecha de partido
-			Date fechaP = fechaPartido.diaPartido(c.getTime(), fila+1);
+			Date fechaP = fechaPartido.diaPartido(c, fila+1);
 			
-			c.setTime(fechaP);
-			PartidoTorneo p = new PartidoTorneo(local, visitante, c, fila+1);
+
+			PartidoTorneo p = new PartidoTorneo(local, visitante, new GregorianCalendar(fechaP.getYear(),fechaP.getMonth(),fechaP.getDay(),fechaP.getHours(),fechaP.getMinutes()), fila+1);
 			em.persist(p);
 		}
 
@@ -137,11 +137,10 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 				visitante = conversion[arrayFixture[fila][columna][1]];
 
 				PeriodicoPartido fechaPartido = conf.getPeriodicoPartido();
-				Calendar c = conf.getFechaArranqueCampeonato();
+				Date c = conf.getFechaArranqueCampeonato();
 				//TODO falta tomar el dato de la periodicidad y la fecha de partido
-				Date fechaP = fechaPartido.diaPartido(c.getTime(), fila);
-				c.setTime(fechaP);
-				PartidoTorneo p = new PartidoTorneo(local, visitante, c, fila);
+				Date fechaP = fechaPartido.diaPartido(c, fila);
+				PartidoTorneo p = new PartidoTorneo(local, visitante, new GregorianCalendar(fechaP.getYear(),fechaP.getMonth(),fechaP.getDay(),fechaP.getHours(),fechaP.getMinutes()), fila);
 				em.persist(p);
 				// fecha = fechaPartido.diaPartido(c.getTime(),
 				// visitante+cantidadEquipos-1);

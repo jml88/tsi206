@@ -85,6 +85,8 @@ public class PeriodicoPartido implements Serializable{
 	public Date diaPartido(Date fecha, int numeroFecha){
 		Calendar ret = Calendar.getInstance();
 		ret.setTime(fecha);
+		ret.set(Calendar.HOUR, fecha.getHours());
+		ret.set(Calendar.MINUTE, fecha.getMinutes());
 		switch (this.periodico)
 		{
 			case MINUTO:
