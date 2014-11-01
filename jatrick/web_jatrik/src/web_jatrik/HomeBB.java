@@ -19,61 +19,73 @@ import datatypes.DatosPartido;
 @Named("homeBB")
 @ViewScoped
 public class HomeBB implements Serializable {
-	
+
 	@Inject
 	SessionBB sesion;
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private int codEquipo;
 	private DatosEquipo equipo;
 	private Set<DatosJugador> jugadores;
 	private Set<DatosEquipo> otrosEquipos;
 	private List<Partido> partidosProximos;
 	private Partido partidoSeleccionado;
-	
+
 	public HomeBB() {
 		super();
-    }
-	
+	}
+
 	@PostConstruct
 	public void init() {
 		try {
 			this.codEquipo = this.sesion.getDatosManager().getCodEquipo();
-//			this.jugadores = Comunicacion.getInstance().getIEquipoControlador().obtenerJugadoresEquipo(this.codEquipo);
-			this.equipo = Comunicacion.getInstance().getIEquipoControlador().obtenerEquipo(this.codEquipo);
-			this.partidosProximos = Comunicacion.getInstance().getIEquipoControlador().obtenerProximosPartidos(this.sesion.getDatosManager(), 5);
+			// this.jugadores =
+			// Comunicacion.getInstance().getIEquipoControlador().obtenerJugadoresEquipo(this.codEquipo);
+			if (!this.sesion.getDatosManager().getName().equals("admin")) {
+				this.equipo = Comunicacion.getInstance()
+						.getIEquipoControlador().obtenerEquipo(this.codEquipo);
+				this.partidosProximos = Comunicacion
+						.getInstance()
+						.getIEquipoControlador()
+						.obtenerProximosPartidos(this.sesion.getDatosManager().getCodEquipo(),
+								5);
+			}
 			this.otrosEquipos = new HashSet<DatosEquipo>();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
-	
-	//NAVEGACIONES
-	public String agregarAlineacion(){
+
+	// NAVEGACIONES
+	public String agregarAlineacion() {
 		return "";
 	}
-	
-	public String verPartidoEnVivo(){
+
+	public String verPartidoEnVivo() {
 		return "";
 	}
-	
+
 	public String jugarAmistoso() {
 		return "/webPages/partidos/jugarAmistoso.xhtml?faces-redirect=true";
 	}
-	
+
 	public String verAlineacion() {
 		return "/webPages/partidos/enviarOrdenesPartido.xhtml?faces-redirect=true";
 	}
-	
+
 	public String verPartidos() {
 		return "/webPages/partidos/verPartidos.xhtml?faces-redirect=true";
 	}
+	
+	public String entrenamiento(){
+		return "/webPages/entrenamiento/entrenamiento.xhtml?faces-redirect=true";
+	}
 
-	//GETS Y SETS
+	// GETS Y SETS
 	public DatosEquipo getEquipo() {
 		return equipo;
 	}
@@ -89,7 +101,7 @@ public class HomeBB implements Serializable {
 	public void setJugadores(Set<DatosJugador> jugadores) {
 		this.jugadores = jugadores;
 	}
-	
+
 	public Set<DatosEquipo> getOtrosEquipos() {
 		return otrosEquipos;
 	}
@@ -121,5 +133,5 @@ public class HomeBB implements Serializable {
 	public void setPartidoSeleccionado(Partido partidoSeleccionado) {
 		this.partidoSeleccionado = partidoSeleccionado;
 	}
-	
+
 }

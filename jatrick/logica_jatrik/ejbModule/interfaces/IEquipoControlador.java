@@ -10,7 +10,6 @@ import users.Manager;
 import jugadores.Jugador;
 import datatypes.DatosEquipo;
 import datatypes.DatosJugador;
-import datatypes.DatosManager;
 import datatypes.EnumEntrenamiento;
 import equipos.Alineacion;
 import equipos.Equipo;
@@ -19,7 +18,7 @@ import excepciones.NoExisteEquipoExcepcion;
 @Local
 public interface IEquipoControlador {
 	
-	public int crearEquipo(String nombreEquipo, boolean bot);
+	public int crearEquipo(String nombreEquipo, boolean bot, int cantidad);
 	
 	public Equipo findEquipo(int codigoEquipo);
 	
@@ -52,6 +51,14 @@ public interface IEquipoControlador {
 	
 	public void modificarTipoEntrenamientoEquipo(int codigoEquipo,EnumEntrenamiento tipoEntrenamiento) throws NoExisteEquipoExcepcion;
 
-	public List<Partido> obtenerProximosPartidos(DatosManager dm, int cantidad);
+	public List<Partido> obtenerProximosPartidos(int codEquipo, int cantidad);
+	
+	public void elegirEntrenamiento(int idCodigoEquipo, EnumEntrenamiento enumEntrenamiento);
+	
+	public EnumEntrenamiento entrenamientoEquipo(int idCodigoEquipo);
+	
+	public void elegirEntrenamiento(int idCodigoEquipo, EnumEntrenamiento enumEntrenamiento);
+	
+	public EnumEntrenamiento entrenamientoEquipo(int idCodigoEquipo);
 	
 }
