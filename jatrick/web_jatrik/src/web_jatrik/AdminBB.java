@@ -1,6 +1,8 @@
 package web_jatrik;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -33,6 +35,8 @@ public class AdminBB implements Serializable{
 	
 	private int minuto;
 	
+	private Date fechaArranque;
+	
 	@PostConstruct
 	public void init(){
 		try {
@@ -61,7 +65,7 @@ public class AdminBB implements Serializable{
 				minuto = this.configGeneral.getPeriodicoPartido().getMinuto();
 				
 			}else{
-				
+				this.configGeneral = new ConfiguracionGral();
 				selection = 9;
 			}
 			
@@ -101,8 +105,11 @@ public class AdminBB implements Serializable{
 				p = EnumPeriodicoPartido.MINUTO;
 				break;
 			}
+			Calendar c = Calendar.getInstance();
+			c.setTime(fechaArranque);
 			PeriodicoPartido periodico = new PeriodicoPartido(dia, hora, minuto,p);
 			configGeneral.setPeriodicoPartido(periodico);
+			configGeneral.setFechaArranqueCampeonato(c);
 			Comunicacion.getInstance().getConfiguracionControlador().crearOModificarConfiguracion(configGeneral);
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
@@ -177,6 +184,18 @@ public class AdminBB implements Serializable{
 
 	public void setMinuto(int minuto) {
 		this.minuto = minuto;
+	}
+
+
+
+	public Date getFechaArranque() {
+		return fechaArranque;
+	}
+
+
+
+	public void setFechaArranque(Date fechaArranque) {
+		this.fechaArranque = fechaArranque;
 	}
 	
 	

@@ -3,6 +3,7 @@ package configuracionGral;
 import interfaces.IConfiguracionControlador;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -10,6 +11,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import datatypes.EnumPeriodicoPartido;
 import excepciones.NoExisteConfiguracionException;
 
 @Stateless
@@ -24,9 +26,23 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 		@SuppressWarnings("unchecked")
 		List<ConfiguracionGral> cg = (List<ConfiguracionGral>)em.createQuery("Select cg from ConfiguracionGral cg").getResultList();
 		if(cg.isEmpty()){
-			ConfiguracionGral conf = new ConfiguracionGral(0, 0, 0, 0, 0, 0, 0, 0, 0, null, null);
+			Calendar c = Calendar.getInstance();
+			PeriodicoPartido pp = new PeriodicoPartido(0, 0, 0,EnumPeriodicoPartido.MINUTO);
+			ConfiguracionGral conf = new ConfiguracionGral(0, 0, 0, 0, 0, 0, 0, 0, 0, c, pp);
 			em.persist(conf);
 			return conf;
+		}
+		else{
+			return cg.get(0);
+		}
+		
+	}
+	
+	public ConfiguracionGral tieneConfiguracion(){
+		@SuppressWarnings("unchecked")
+		List<ConfiguracionGral> cg = (List<ConfiguracionGral>)em.createQuery("Select cg from ConfiguracionGral cg").getResultList();
+		if(cg.isEmpty()){
+			return null;
 		}
 		else{
 			return cg.get(0);
@@ -57,7 +73,7 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 		cg.setPremio(dcg.getPremio());
 		cg.setCantidadTorneos(dcg.getCantidadTorneos());
 		if(dcg.getFechaArranqueCampeonato()!=null){
-			Calendar c = dcg.getFechaArranqueCampeonato();
+			Date c = dcg.getFechaArranqueCampeonato();
 			cg.setFechaArranqueCampeonato(c);
 		}
 		else{
@@ -82,7 +98,7 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 
 	@Override
 	public ConfiguracionGral getDatosConfiguracionGral() {
-		return getConfiguracion();
+		return tieneConfiguracion();
 	}
 
 	@Override
