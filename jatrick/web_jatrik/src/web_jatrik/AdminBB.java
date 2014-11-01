@@ -105,11 +105,8 @@ public class AdminBB implements Serializable{
 				p = EnumPeriodicoPartido.MINUTO;
 				break;
 			}
-			Calendar c = Calendar.getInstance();
-			c.setTime(fechaArranque);
 			PeriodicoPartido periodico = new PeriodicoPartido(dia, hora, minuto,p);
 			configGeneral.setPeriodicoPartido(periodico);
-			configGeneral.setFechaArranqueCampeonato(c);
 			Comunicacion.getInstance().getConfiguracionControlador().crearOModificarConfiguracion(configGeneral);
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
@@ -120,6 +117,7 @@ public class AdminBB implements Serializable{
 		}
 		return ret;
 	}
+
 
 
 	

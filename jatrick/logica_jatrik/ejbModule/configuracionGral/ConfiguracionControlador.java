@@ -26,9 +26,7 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 		@SuppressWarnings("unchecked")
 		List<ConfiguracionGral> cg = (List<ConfiguracionGral>)em.createQuery("Select cg from ConfiguracionGral cg").getResultList();
 		if(cg.isEmpty()){
-			Calendar c = Calendar.getInstance();
-			PeriodicoPartido pp = new PeriodicoPartido(0, 0, 0,EnumPeriodicoPartido.MINUTO);
-			ConfiguracionGral conf = new ConfiguracionGral(0, 0, 0, 0, 0, 0, 0, 0, 0, c, pp);
+			ConfiguracionGral conf = new ConfiguracionGral(0, 0, 0, 0, 0, 0, 0, 0, 0, null, null);
 			em.persist(conf);
 			return conf;
 		}

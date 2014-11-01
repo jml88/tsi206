@@ -54,4 +54,8 @@ public interface IEquipoControlador {
 
 	public List<Partido> obtenerProximosPartidos(DatosManager dm, int cantidad);
 	
+	public void elegirEntrenamiento(int idCodigoEquipo, EnumEntrenamiento enumEntrenamiento);
+	
+	public EnumEntrenamiento entrenamientoEquipo(int idCodigoEquipo);
+	
 }

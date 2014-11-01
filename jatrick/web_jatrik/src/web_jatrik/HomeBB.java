@@ -72,6 +72,10 @@ public class HomeBB implements Serializable {
 	public String verPartidos() {
 		return "/webPages/partidos/verPartidos.xhtml?faces-redirect=true";
 	}
+	
+	public String entrenamiento(){
+		return "/webPages/entrenamiento/entrenamiento.xhtml?faces-redirect=true";
+	}
 
 	//GETS Y SETS
 	public DatosEquipo getEquipo() {

@@ -155,6 +155,7 @@ public class EquipoControlador implements IEquipoControlador{
 		}
 		
 		e.setTipoEntrenamiento(tipoEntrenamiento);
+		em.merge(e);
 	}
 	
 	public Equipo asignarTorneo(Manager manager, DatosEquipo eq) {
@@ -190,5 +191,24 @@ public class EquipoControlador implements IEquipoControlador{
 		q.setParameter("cantidad", cantidad);
 		return q.getResultList();
 	}
+
+	@Override
+	public void elegirEntrenamiento(int idCodigoEquipo,
+			EnumEntrenamiento enumEntrenamiento) {
+		// TODO Auto-generated method stub
+		Equipo e = findEquipo(idCodigoEquipo);
+		e.setTipoEntrenamiento(enumEntrenamiento);
+		em.persist(e);
+		
+		
+	}
+
+	@Override
+	public EnumEntrenamiento entrenamientoEquipo(int idCodigoEquipo) {
+		// TODO Auto-generated method stub
+		Equipo e = findEquipo(idCodigoEquipo);
+		return e.getTipoEntrenamiento();
+	}
+	
 
 }
