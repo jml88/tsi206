@@ -4,6 +4,7 @@ import interfaces.ICampeonatoControlador;
 import interfaces.IConfiguracionControlador;
 import interfaces.IEquipoControlador;
 import interfaces.IJugadorControlador;
+import interfaces.IMercadoDePases;
 import interfaces.IPartidoControlador;
 import interfaces.IUserControlador;
 
@@ -32,6 +33,11 @@ public class HomeFactoryBean implements HomeFactory {
 	@Override
 	public IUserControlador getUserControlador(){
 		return (IUserControlador ) ctx.lookup("java:module/UserControlador!interfaces.IUserControlador");
+	}
+	
+	@Override
+	public IMercadoDePases getMercadoPasesControlador(){
+		return (IMercadoDePases) ctx.lookup("java:module/MercadoDePasesControlador!interfaces.IUserControlador");
 	}
 
 	@Override
