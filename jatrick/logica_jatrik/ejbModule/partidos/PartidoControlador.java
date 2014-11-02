@@ -4,7 +4,6 @@ package partidos;
 import datatypes.DatosAlineacion;
 import datatypes.DatosComentario;
 import datatypes.DatosJugador;
-import datatypes.DatosPartido;
 import equipos.Alineacion;
 import equipos.Equipo;
 import excepciones.NoExistePartidoExepcion;
@@ -159,6 +158,12 @@ public class PartidoControlador implements IPartidoControlador {
 			result.add(p);
 		}
 		return result;
+	}
+	
+	@Override
+	public ResultadoPartido obtenerResultadoPartido(int idPartido){
+		Partido p = em.find(Partido.class, idPartido);
+		return p.getResultado();
 	}
 	
 }
