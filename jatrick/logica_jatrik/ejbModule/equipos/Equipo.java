@@ -1,5 +1,6 @@
 package equipos;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +20,12 @@ import datatypes.EnumEntrenamiento;
 
 @Entity
 @Table(name = Equipo.nombreTabla)
-public class Equipo {
+public class Equipo implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public static final String nombreTabla = "EQUIPOS";
 
@@ -48,6 +54,8 @@ public class Equipo {
 	
 	@Column
 	private boolean bot;
+	
+	private int capital;
 	
 	public Equipo() {
 		this.plantel = new HashSet<Jugador>();
@@ -137,6 +145,14 @@ public class Equipo {
 
 	public void setBot(boolean bot) {
 		this.bot = bot;
+	}
+
+	public int getCapital() {
+		return capital;
+	}
+
+	public void setCapital(int capital) {
+		this.capital = capital;
 	}
 
 	
