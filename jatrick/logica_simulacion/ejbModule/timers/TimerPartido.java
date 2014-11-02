@@ -46,7 +46,7 @@ public class TimerPartido {
 		for(Partido p : partidos)
 		{
 			pc.partidoPorSimular(p);
-			DatosMinutoPartido dmp = new DatosMinutoPartido(0, p.getCodigo());
+			DatosMinutoPartido dmp = new DatosMinutoPartido(0, p.getCodigo(), false);
 			tsm.crearTimerSimularPartido(dmp, p.getFechaHora(), p.getFechaHora().get(Calendar.HOUR_OF_DAY),p.getFechaHora().get(Calendar.MINUTE));
 		}
 		

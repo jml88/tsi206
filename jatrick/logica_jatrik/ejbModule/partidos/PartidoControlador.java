@@ -149,14 +149,14 @@ public class PartidoControlador implements IPartidoControlador {
 	}
 	
 	@Override
-	public Set<DatosPartido> obtenerPartidosUsuario(int codEquipo) {
-		Set<DatosPartido> result = new HashSet<DatosPartido>();
+	public Set<Partido> obtenerPartidosUsuario(int codEquipo) {
+		Set<Partido> result = new HashSet<Partido>();
 		String consulta = "SELECT p FROM Partido p WHERE p.local.codigo = :codEquipo OR p.visitante.codigo = :codEquipo";
 		Query query = em.createQuery(consulta);
 		query.setParameter("codEquipo", codEquipo);
 		for (Object o : query.getResultList()) {
 			Partido p = (Partido)o;
-			DatosPartido dp = p.getDatos();
+			Partido dp = p.getDatos();
 			result.add(dp);
 		}
 		return result;

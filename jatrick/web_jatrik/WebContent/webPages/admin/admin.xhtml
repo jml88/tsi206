@@ -18,103 +18,113 @@
 
 
 			<p:layout>
-			<p:layoutUnit position="center">
-				<p:panelGrid columns="2">
-					<p:outputLabel for="CantequipoTorneo">Equipo pos torneo: </p:outputLabel>
-					<p:inputText id="CantequipoTorneo" label="Equipo por torneo:"
-						value="#{adminBB.configGeneral.cantEquipoTorneo}"></p:inputText>
-						
-					
-					<p:outputLabel for="jugadoresArranque">Cantidad jugadores empieza: </p:outputLabel>
-					<p:inputText id="jugadoresArranque" label="Cantidad jugadores empieza:"
-						value="#{adminBB.configGeneral.cantJugadoresArranque}"></p:inputText>
-						
-					<p:outputLabel for="descenso">Descenso: </p:outputLabel>
-					<p:inputText id="descenso" label="Descensos:"
-						value="#{adminBB.configGeneral.cantidadDescensos}"></p:inputText>
-						
-					<p:outputLabel for="torneos">Cantidad ligas: </p:outputLabel>
-					<p:inputText id="torneos" label="Cantidad ligas:"
-						value="#{adminBB.configGeneral.cantidadTorneos}"></p:inputText>
-						
-					<p:outputLabel for="dineroInicial">Dinero inicial: </p:outputLabel>
-					<p:inputText id="dineroInicial" label="Dinero inicial:"
-						value="#{adminBB.configGeneral.dineroInicial}"></p:inputText>
-						
-					<p:outputLabel for="datetime" value="Fecha inicio campeonato: " />
+				<p:layoutUnit position="center">
+					<p:panelGrid columns="2">
+						<p:outputLabel for="CantequipoTorneo">Equipo por torneo: </p:outputLabel>
+						<p:inputText id="CantequipoTorneo" label="Equipo por torneo:"
+							value="#{adminBB.configGeneral.cantEquipoTorneo}"></p:inputText>
+
+
+						<p:outputLabel for="jugadoresArranque">Cantidad jugadores empieza: </p:outputLabel>
+						<p:inputText id="jugadoresArranque"
+							label="Cantidad jugadores empieza:"
+							value="#{adminBB.configGeneral.cantJugadoresArranque}"></p:inputText>
+
+						<p:outputLabel for="descenso">Descenso: </p:outputLabel>
+						<p:inputText id="descenso" label="Descensos:"
+							value="#{adminBB.configGeneral.cantidadDescensos}"></p:inputText>
+
+						<p:outputLabel for="torneos">Cantidad ligas: </p:outputLabel>
+						<p:inputText id="torneos" label="Cantidad Divisiones:"
+							value="#{adminBB.configGeneral.cantidadTorneos}"></p:inputText>
+
+						<p:outputLabel for="dineroInicial">Dinero inicial: </p:outputLabel>
+						<p:inputText id="dineroInicial" label="Dinero inicial:"
+							value="#{adminBB.configGeneral.dineroInicial}"></p:inputText>
+
+						<p:outputLabel for="datetime" value="Fecha inicio campeonato: " />
 						<p:calendar id="datetime" value="#{adminBB.configGeneral.fechaArranqueCampeonato}"
 							pattern="MM/dd/yyyy HH:mm:ss" />
-					
-					<p:outputLabel for="periodico" value="Periódico:" />
-			        <p:selectOneMenu id="periodico" value="#{adminBB.selection}">
-			        	<f:selectItem itemLabel="" itemValue="9" />
-			            <f:selectItem itemLabel="Minuto" itemValue="0" />
-			            <f:selectItem itemLabel="Hora" itemValue="1" />
-			            <f:selectItem itemLabel="Dia" itemValue="2" />
-			        </p:selectOneMenu>
-			        
-						
-					<p:outputLabel for="diaSemana">Dia de la semana: </p:outputLabel>
-					<p:inputText id="diaSemana" label="Dia de la semana:"
-						value="#{adminBB.dia}"></p:inputText>
-						
-					<p:outputLabel for="hora">Hora: </p:outputLabel>
-					<p:inputText id="hora" label="Hora:"
-						value="#{adminBB.hora}"></p:inputText>
-						
-					<p:outputLabel for="minuto">Minuto: </p:outputLabel>
-					<p:inputText id="minuto" label="minuto:"
-						value="#{adminBB.minuto}"></p:inputText>
-						
-					<p:outputLabel for="edadJuvenil">Edad de juvenil: </p:outputLabel>
-					<p:inputText id="edadJuvenil" label="Edad de juvenil:"
-						value="#{adminBB.configGeneral.juvenilEdad}"></p:inputText>
-						
-					<p:outputLabel for="mejoraEntrenaJuvenil">Puntos de mejora de juvenil: </p:outputLabel>
-					<p:inputText id="mejoraEntrenaJuvenil" label="Puntos de mejora de juvenil"
-						value="#{adminBB.configGeneral.mejoraEntrenaJuvenil}"></p:inputText>
-						
-					<p:outputLabel for="desmejoraNoEntrenaJuvenil">Puntos de desmejora de juvenil: </p:outputLabel>
-					<p:inputText id="desmejoraNoEntrenaJuvenil" label="Puntos de desmejora de juvenil"
-						value="#{adminBB.configGeneral.desmejoraNoEntrenaJuvenil}"></p:inputText>
-						
-					<p:outputLabel for="edadAdulto">Edad de adulto: </p:outputLabel>
-					<p:inputText id="edadAdulto" label="Edad de Adulto"
-						value="#{adminBB.configGeneral.adultoEdad}"></p:inputText>
-						
-					<p:outputLabel for="mejoraEntrenaAdulto">Puntos de mejora de adulto: </p:outputLabel>
-					<p:inputText id="mejoraEntrenaAdulto" label="Puntos de mejora de adulto"
-						value="#{adminBB.configGeneral.mejoraEntrenaAdulto}"></p:inputText>
-						
-					<p:outputLabel for="desmejoraNoEntrenaAdulto">Puntos de desmejora de adulto: </p:outputLabel>
-					<p:inputText id="desmejoraNoEntrenaAdulto" label="Puntos de desmejora de adulto"
-						value="#{adminBB.configGeneral.desmejoraNoEntrenaAdulto}"></p:inputText>
-					
-					<p:outputLabel for="veteranoEdad">Veterano de veterano: </p:outputLabel>
-					<p:inputText id="veteranoEdad" label="Edad de veterano"
-						value="#{adminBB.configGeneral.veteranoEdad}"></p:inputText>
-						
-					<p:outputLabel for="mejoraEntrenaVeterano">Puntos de mejora de veterano: </p:outputLabel>
-					<p:inputText id="mejoraEntrenaVeterano" label="Puntos de mejora de veterano"
-						value="#{adminBB.configGeneral.mejoraEntrenaVeterano}"></p:inputText>
-						
-					<p:outputLabel for="desmejoraNoEntrenaVeterano">Puntos de desmejora de veterano: </p:outputLabel>
-					<p:inputText id="desmejoraNoEntrenaVeterano" label="Puntos de desmejora de veterano"
-						value="#{adminBB.configGeneral.desmejoraNoEntrenaVeterano}"></p:inputText>
-					
-					
-					<p:row>
-						<p:column colspan="2">
-							<p:commandButton value="Modificar" action="#{adminBB.createOrModifiedConfigGralBasica()}"></p:commandButton>
-						</p:column>
-					</p:row>
-				</p:panelGrid>
-				
-				<p:panel>
-					<p:commandButton value="Crear Campeonato" action="#{adminBB.crearPartidosYTorneos}"></p:commandButton>
-				</p:panel>
-			</p:layoutUnit>
-		</p:layout>
+
+						<p:outputLabel for="periodico" value="Periódico:" />
+						<p:selectOneMenu id="periodico" value="#{adminBB.selection}">
+							<f:selectItem itemLabel="" itemValue="9" />
+							<f:selectItem itemLabel="Minuto" itemValue="0" />
+							<f:selectItem itemLabel="Hora" itemValue="1" />
+							<f:selectItem itemLabel="Dia" itemValue="2" />
+						</p:selectOneMenu>
+
+
+						<p:outputLabel for="diaSemana">Dia de la semana: </p:outputLabel>
+						<p:inputText id="diaSemana" label="Dia de la semana:"
+							value="#{adminBB.dia}"></p:inputText>
+
+						<p:outputLabel for="hora">Hora: </p:outputLabel>
+						<p:inputText id="hora" label="Hora:" value="#{adminBB.hora}"></p:inputText>
+
+						<p:outputLabel for="minuto">Minuto: </p:outputLabel>
+						<p:inputText id="minuto" label="minuto:" value="#{adminBB.minuto}"></p:inputText>
+
+						<p:outputLabel for="edadJuvenil">Edad de juvenil: </p:outputLabel>
+						<p:inputText id="edadJuvenil" label="Edad de juvenil:"
+							value="#{adminBB.configGeneral.juvenilEdad}"></p:inputText>
+
+						<p:outputLabel for="mejoraEntrenaJuvenil">Puntos de mejora de juvenil: </p:outputLabel>
+						<p:inputText id="mejoraEntrenaJuvenil"
+							label="Puntos de mejora de juvenil"
+							value="#{adminBB.configGeneral.mejoraEntrenaJuvenil}"></p:inputText>
+
+						<p:outputLabel for="desmejoraNoEntrenaJuvenil">Puntos de desmejora de juvenil: </p:outputLabel>
+						<p:inputText id="desmejoraNoEntrenaJuvenil"
+							label="Puntos de desmejora de juvenil"
+							value="#{adminBB.configGeneral.desmejoraNoEntrenaJuvenil}"></p:inputText>
+
+						<p:outputLabel for="edadAdulto">Edad de adulto: </p:outputLabel>
+						<p:inputText id="edadAdulto" label="Edad de Adulto"
+							value="#{adminBB.configGeneral.adultoEdad}"></p:inputText>
+
+						<p:outputLabel for="mejoraEntrenaAdulto">Puntos de mejora de adulto: </p:outputLabel>
+						<p:inputText id="mejoraEntrenaAdulto"
+							label="Puntos de mejora de adulto"
+							value="#{adminBB.configGeneral.mejoraEntrenaAdulto}"></p:inputText>
+
+						<p:outputLabel for="desmejoraNoEntrenaAdulto">Puntos de desmejora de adulto: </p:outputLabel>
+						<p:inputText id="desmejoraNoEntrenaAdulto"
+							label="Puntos de desmejora de adulto"
+							value="#{adminBB.configGeneral.desmejoraNoEntrenaAdulto}"></p:inputText>
+
+						<p:outputLabel for="veteranoEdad">Veterano de veterano: </p:outputLabel>
+						<p:inputText id="veteranoEdad" label="Edad de veterano"
+							value="#{adminBB.configGeneral.veteranoEdad}"></p:inputText>
+
+						<p:outputLabel for="mejoraEntrenaVeterano">Puntos de mejora de veterano: </p:outputLabel>
+						<p:inputText id="mejoraEntrenaVeterano"
+							label="Puntos de mejora de veterano"
+							value="#{adminBB.configGeneral.mejoraEntrenaVeterano}"></p:inputText>
+
+						<p:outputLabel for="desmejoraNoEntrenaVeterano">Puntos de desmejora de veterano: </p:outputLabel>
+						<p:inputText id="desmejoraNoEntrenaVeterano"
+							label="Puntos de desmejora de veterano"
+							value="#{adminBB.configGeneral.desmejoraNoEntrenaVeterano}"></p:inputText>
+
+
+						<p:row>
+							<p:column colspan="2">
+								<p:commandButton value="Modificar"
+									action="#{adminBB.createOrModifiedConfigGralBasica}"></p:commandButton>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+
+					<p:panel>
+						<p:commandButton value="Crear Campeonato"
+							action="#{adminBB.crearPartidosYTorneos}"></p:commandButton>
+						<p:commandButton value="Agregar Campeonato"
+							action="#{adminBB.agregarTorneosNivelInferior}"></p:commandButton>
+					</p:panel>
+				</p:layoutUnit>
+			</p:layout>
+
 
 
 		</h:form>

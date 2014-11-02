@@ -4,8 +4,10 @@ import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
+import campeonato.Torneo;
 import equipos.Equipo;
 
 @Entity
@@ -17,6 +19,9 @@ public class PartidoTorneo extends Partido {
 	
 	@Column
 	private int fechaNro;
+	
+	@ManyToOne
+	private Torneo torneo;
 
 	public PartidoTorneo() {
 		super();
@@ -30,9 +35,10 @@ public class PartidoTorneo extends Partido {
 	
 
 	public PartidoTorneo(Equipo local, Equipo visitante, Calendar fecha,
-			int fechaNro) {
+			int fechaNro, Torneo torneo) {
 		super(local, visitante, fecha);
 		this.fechaNro = fechaNro;
+		this.torneo = torneo;
 	}
 
 	public int getFechaNro() {
@@ -41,6 +47,14 @@ public class PartidoTorneo extends Partido {
 
 	public void setFechaNro(int fechaNro) {
 		this.fechaNro = fechaNro;
+	}
+
+	public Torneo getTorneo() {
+		return torneo;
+	}
+
+	public void setTorneo(Torneo torneo) {
+		this.torneo = torneo;
 	}
 
 	

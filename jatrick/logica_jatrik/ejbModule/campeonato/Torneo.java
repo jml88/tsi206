@@ -68,6 +68,16 @@ public class Torneo {
 		this.equipos = new LinkedList<Equipo>();
 		this.posiciones = new LinkedList<Posicion>();
 	}
+	
+	
+	public Posicion obtenerPosicionEquipo(Equipo e){
+		for (Posicion posicion : this.posiciones) {
+			if (posicion.getEquipo().getCodigo() == e.getCodigo()){
+				return posicion;
+			}
+		}
+		return null;
+	}
 
 	public int getCodigo() {
 		return codigo;

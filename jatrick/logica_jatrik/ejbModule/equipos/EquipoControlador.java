@@ -23,7 +23,6 @@ import users.Manager;
 import jugadores.Jugador;
 import datatypes.DatosEquipo;
 import datatypes.DatosJugador;
-import datatypes.DatosManager;
 import datatypes.EnumEntrenamiento;
 
 @Stateless
@@ -37,7 +36,7 @@ public class EquipoControlador implements IEquipoControlador{
 	private HomeFactory hf;
 	
 	@Override
-	public int crearEquipo(String nombreEquipo, boolean bot) {
+	public int crearEquipo(String nombreEquipo, boolean bot, int cantidad) {
 		Alineacion alineacionDefecto = new Alineacion();
 		
 		em.persist(alineacionDefecto);
@@ -47,7 +46,7 @@ public class EquipoControlador implements IEquipoControlador{
 		//em.persist(e);
 		
 		IJugadorControlador ijc = hf.getJugadorControlador();
-		Set<Jugador> plantel = ijc.generarJugadores(20, e);
+		Set<Jugador> plantel = ijc.generarJugadores(cantidad, e);
 		e.setPlantel(plantel);
 		em.persist(e);
 		
@@ -184,9 +183,9 @@ public class EquipoControlador implements IEquipoControlador{
 	}
 	
 	@Override
-	public List<Partido> obtenerProximosPartidos(DatosManager dm, int cantidad){
+	public List<Partido> obtenerProximosPartidos(int codEquipo, int cantidad){
 		Query q = em.createQuery("select p from Partido p where p.local.codigo = :codEquipo or p.visitante = :codEquipo and DATE(p.fechaHora) > :fechaActual ");
-		q.setParameter("codEquipo", dm.getCodEquipo());
+		q.setParameter("codEquipo", codEquipo);
 		q.setParameter("fechaActual", (new GregorianCalendar()).getTime());
 		q.setParameter("cantidad", cantidad);
 		return q.getResultList();
