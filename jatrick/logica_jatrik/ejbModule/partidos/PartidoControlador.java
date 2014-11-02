@@ -62,7 +62,7 @@ public class PartidoControlador implements IPartidoControlador {
 		return em.find(Partido.class, codPartido);
 	}
 	
-	public List<DatosComentario> obtenerComentariosPartido(long codPartido, int nroComentario) throws NoExistePartidoExepcion{
+	public List<DatosComentario> obtenerComentariosPartido(int codPartido, int nroComentario) throws NoExistePartidoExepcion{
 		
 		Partido p = em.find(Partido.class,codPartido );
 		if(p == null){
