@@ -44,6 +44,10 @@ public class Estadio {
 		return codigo;
 	}
 	
+	public void setCodigo(int codigo){
+		this.codigo = codigo;
+	}
+	
 	
 
 }
