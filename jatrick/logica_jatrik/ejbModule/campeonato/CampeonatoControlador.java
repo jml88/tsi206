@@ -129,10 +129,10 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 			Date c = conf.getFechaArranqueCampeonato();
 			Date fechaP = fechaPartido.diaPartido(c, fila + 1);
 
+			Calendar ca = Calendar.getInstance();
+			ca.setTime(fechaP);
 			PartidoTorneo p = new PartidoTorneo(local, visitante,
-					new GregorianCalendar(fechaP.getYear(), fechaP.getMonth(),
-							fechaP.getDay(), fechaP.getHours(),
-							fechaP.getMinutes()), fila + 1, null);
+					ca, fila + 1, null);
 			ResultadoPartido rp = new ResultadoPartido();
 			em.persist(rp);
 			p.setResultado(rp);
@@ -152,10 +152,10 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 				PeriodicoPartido fechaPartido = conf.getPeriodicoPartido();
 				Date c = conf.getFechaArranqueCampeonato();
 				Date fechaP = fechaPartido.diaPartido(c, fila + 1);
+				Calendar ca = Calendar.getInstance();
+				ca.setTime(fechaP);
 				PartidoTorneo p = new PartidoTorneo(local, visitante,
-						new GregorianCalendar(fechaP.getYear(),
-								fechaP.getMonth(), fechaP.getDay(),
-								fechaP.getHours(), fechaP.getMinutes()), fila, null);
+						ca, fila, null);
 				ResultadoPartido rp = new ResultadoPartido();
 				em.persist(rp);
 				p.setResultado(rp);

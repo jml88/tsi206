@@ -133,8 +133,8 @@ public class Partido {
 		this.resultado = resultado;
 	}
 
-	public Partido getDatos() {
-		return this;
-	}
+//	public Partido getDatos() {
+//		return this;
+//	}
 
 }

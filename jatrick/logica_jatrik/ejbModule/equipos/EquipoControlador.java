@@ -184,11 +184,11 @@ public class EquipoControlador implements IEquipoControlador{
 	
 	@Override
 	public List<Partido> obtenerProximosPartidos(int codEquipo, int cantidad){
-		Query q = em.createQuery("select p from Partido p where p.local.codigo = :codEquipo or p.visitante = :codEquipo and DATE(p.fechaHora) > :fechaActual ");
+		Query q = em.createQuery("select p from Partido p where p.local.codigo = :codEquipo or p.visitante = :codEquipo and p.estado = 'POR_JUGAR' or p.estado = 'POR_SIMULAR' order by p.fechaHora");
 		q.setParameter("codEquipo", codEquipo);
-		q.setParameter("fechaActual", (new GregorianCalendar()).getTime());
-		q.setParameter("cantidad", cantidad);
-		return q.getResultList();
+//		q.setParameter("fechaActual", (new GregorianCalendar()).getTime());
+//		q.setParameter("cantidad", cantidad);
+		return q.setMaxResults(cantidad).getResultList();
 	}
 
 	@Override

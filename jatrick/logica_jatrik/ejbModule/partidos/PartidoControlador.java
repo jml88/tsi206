@@ -156,8 +156,7 @@ public class PartidoControlador implements IPartidoControlador {
 		query.setParameter("codEquipo", codEquipo);
 		for (Object o : query.getResultList()) {
 			Partido p = (Partido)o;
-			Partido dp = p.getDatos();
-			result.add(dp);
+			result.add(p);
 		}
 		return result;
 	}
