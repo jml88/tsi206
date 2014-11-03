@@ -6,6 +6,7 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:jboss/datasources/JatrikDS</jta-data-source>
 		<class>partidos.Partido</class>
+		<class>partidos.PartidoTorneo</class>
 		<class>partidos.Amistoso</class>
 		<class>partidos.ConfiguracionPartido</class>
 		<class>partidos.Comentario</class>
@@ -17,6 +18,9 @@
 		<class>jugadores.EntrenamientoJugador</class>
 		<class>campeonato.Torneo</class>
 		<class>campeonato.Posicion</class>
+		<class>mensajes.Mensaje</class>
+		<class>mercadoDePases.CompraVentaJugadores</class>
+		<class>users.Manager</class>
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="false" />
