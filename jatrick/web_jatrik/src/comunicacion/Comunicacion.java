@@ -4,6 +4,7 @@ import interfaces.ICampeonatoControlador;
 import interfaces.IConfiguracionControlador;
 import interfaces.IEquipoControlador;
 import interfaces.IJugadorControlador;
+import interfaces.IMercadoDePasesControlador;
 import interfaces.IPartidoControlador;
 import interfaces.IUserControlador;
 
@@ -71,6 +72,10 @@ public class Comunicacion {
 	
 	public ICampeonatoControlador getCampeonatoControlador() throws NamingException {
 		return (ICampeonatoControlador)this.ctx.lookup("java:app/logica_jatrik/CampeonatoControlador!interfaces.ICampeonatoControlador");
+	}
+	
+	public IMercadoDePasesControlador getIMercadoDePasesControlador() throws NamingException {
+		return (IMercadoDePasesControlador)this.ctx.lookup("java:app/logica_jatrik/MercadoDePasesControlador!interfaces.IMercadoDePasesControlador");
 	}
 
 }

@@ -1,10 +1,12 @@
 package jugadores;
 
 import equipos.Equipo;
+import excepciones.NoExisteEquipoExcepcion;
 import fabricas.HomeFactory;
 import interfaces.IJugadorControlador;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -72,6 +74,17 @@ public class JugadorControlador implements IJugadorControlador {
 				
 		return jugadores;
 		
+	}
+
+	@Override
+	public List<Jugador> listarJugador(int idEquipo) throws NoExisteEquipoExcepcion {
+		Equipo e = hf.getEquipoControlador().findEquipo(idEquipo);
+		if(e == null){
+			throw new NoExisteEquipoExcepcion("No existe equipo de id: " + idEquipo);
+		}
+		return em.createQuery("Select j From Jugador j Where j.equipo.codigo = :idEquipo")
+				.setParameter("idEquipo", idEquipo)
+				.getResultList();
 	}
 
 }

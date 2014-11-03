@@ -33,14 +33,18 @@ public class CompraVentaJugadores implements Serializable {
 	private int codigo;
 	
 	@Column
-	private float precio;
+	private int precio;
 	
 	@OneToOne
 	private Jugador jugadorVenta;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable = true)
+	@Column
 	private Date fechaPuestoEnVenta;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable = true)
+	private Date fechaDeTransaccion;
 	
 	@Column
 	private Equipo equipoVenta;
@@ -58,18 +62,24 @@ public class CompraVentaJugadores implements Serializable {
 
 	
 
-	public CompraVentaJugadores(float precio, Jugador jugadorVenta,
-			Date fechaPuestoEnVenta, Equipo equipoVenta, Equipo equipoCompra,
-			boolean activo) {
+	
+	
+
+
+
+	public CompraVentaJugadores(int precio, Jugador jugadorVenta,
+			Date fechaPuestoEnVenta, Date fechaDeTransaccion,
+			Equipo equipoVenta, Equipo equipoCompra, boolean activo) {
 		super();
 		this.precio = precio;
 		this.jugadorVenta = jugadorVenta;
 		this.fechaPuestoEnVenta = fechaPuestoEnVenta;
+		this.fechaDeTransaccion = fechaDeTransaccion;
 		this.equipoVenta = equipoVenta;
 		this.equipoCompra = equipoCompra;
 		this.activo = activo;
 	}
-	
+
 
 
 
@@ -85,11 +95,11 @@ public class CompraVentaJugadores implements Serializable {
 
 
 
-	public float getPrecio() {
+	public int getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(float precio) {
+	public void setPrecio(int precio) {
 		this.precio = precio;
 	}
 
@@ -107,6 +117,15 @@ public class CompraVentaJugadores implements Serializable {
 
 	public void setFechaPuestoEnVenta(Date fechaPuestoEnVenta) {
 		this.fechaPuestoEnVenta = fechaPuestoEnVenta;
+	}
+
+	
+	public Date getFechaDeTransaccion() {
+		return fechaDeTransaccion;
+	}
+
+	public void setFechaDeTransaccion(Date fechaDeTransaccion) {
+		this.fechaDeTransaccion = fechaDeTransaccion;
 	}
 
 	public Equipo getEquipoVenta() {

@@ -4,7 +4,8 @@ import interfaces.ICampeonatoControlador;
 import interfaces.IConfiguracionControlador;
 import interfaces.IEquipoControlador;
 import interfaces.IJugadorControlador;
-import interfaces.IMercadoDePases;
+import interfaces.IMensajeControlador;
+import interfaces.IMercadoDePasesControlador;
 import interfaces.IPartidoControlador;
 import interfaces.IUserControlador;
 
@@ -25,7 +26,9 @@ public interface HomeFactory {
 	
 	public ICampeonatoControlador getCampeontaoControlador();
 
-	public IMercadoDePases getMercadoPasesControlador();
+	public IMercadoDePasesControlador getMercadoPasesControlador();
+	
+	public IMensajeControlador getMensajeControlador();
 	
 
 }

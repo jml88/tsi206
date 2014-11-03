@@ -10,10 +10,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import users.Manager;
 import jugadores.Jugador;
 import datatypes.DatosEquipo;
 import datatypes.EnumEntrenamiento;
@@ -55,7 +57,12 @@ public class Equipo implements Serializable{
 	@Column
 	private boolean bot;
 	
+	@Column
 	private int capital;
+	
+	@OneToOne
+	@JoinColumn(name="equipo")
+	private Manager usuario;
 	
 	public Equipo() {
 		this.plantel = new HashSet<Jugador>();
@@ -155,5 +162,14 @@ public class Equipo implements Serializable{
 		this.capital = capital;
 	}
 
+	public Manager getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Manager usuario) {
+		this.usuario = usuario;
+	}
+
+	
 	
 }

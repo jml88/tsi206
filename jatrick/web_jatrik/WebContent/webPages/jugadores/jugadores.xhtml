@@ -12,11 +12,20 @@
 			<p:layout>
 				<p:layoutUnit position="center">
 					<div id="jugadores">
-						<p:dataTable var="jug" value="#{homeBB.jugadores}">
+						<p:dataTable var="jug" value="#{jugadoresBB.jugadoresLista}"
+						rows="20"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="10,20,30"
+                         selectionMode="single" selection="#{jugadoresBB.jugador}" rowKey="#{jug.codigo}">
+                         
+                         	<p:ajax event="rowSelect" listener="#{jugadoresBB.verDetallesJugador}" />  
+                         	
 							<p:column headerText="Jugador">
-								<h:outputText
-									value="#{jug.nombre} #{jug.apellido1}" />
+									<h:outputText
+										value="#{jug.nombre} #{jug.apellido1}" />
 							</p:column>
+							
 							<p:column headerText="Edad">
 								<h:outputText value="#{jug.edad}" />
 							</p:column>
@@ -35,6 +44,7 @@
 							<p:column headerText="Porteria">
 								<h:outputText value="#{jug.porteria}" />
 							</p:column>
+					
 						</p:dataTable>
 					</div>
 				</p:layoutUnit>

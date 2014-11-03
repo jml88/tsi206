@@ -317,6 +317,10 @@ public class Jugador {
 				this.equipo.getCodigo());
 	}
 	
+	public String getFullName(){
+		return this.nombre + " " + this.apellido1 + " " + this.apellido2;
+	}
+	
 	public void entrenar(EnumEntrenamiento tipo,int valor,int valorNoEntrena){
 		
 		if(tipo == EnumEntrenamiento.ATAQUE){
@@ -371,5 +375,9 @@ public class Jugador {
 			
 			entrenamiento.setTecnicaEntrenamiento(Math.abs(entrenamiento.getTecnicaEntrenamiento() - valorNoEntrena) % 10);
 		}
+	}
+	
+	public String idString(){
+		return nombre + codigo;
 	}
 }

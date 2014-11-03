@@ -57,11 +57,25 @@
 		</navigation-case>
 	</navigation-rule>
 	
+	<navigation-rule>
+		<display-name>/onRowSelect</display-name>
+		<from-view-id>/webPages/jugadores/jugadores.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>OK</from-outcome>
+			<to-view-id>/webPages/jugadores/detallesJugador</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
 	
 	<converter>
 		<display-name>DateConverter</display-name>
 		<converter-id>DateConverter</converter-id>
 		<converter-class>utiles.DateConverter</converter-class>     
+	</converter>
+	<converter>
+		<display-name>entrenamientoConverter</display-name>
+		<converter-id>entrenamientoConverter</converter-id>
+		<converter-class>utiles.EntrenamientoConverter</converter-class>     
 	</converter>
 		
 </faces-config>

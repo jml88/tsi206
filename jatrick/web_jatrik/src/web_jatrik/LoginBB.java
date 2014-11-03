@@ -3,6 +3,8 @@ package web_jatrik;
 import java.io.IOException;
 import java.io.Serializable;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -14,7 +16,6 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 
 import comunicacion.Comunicacion;
-
 import datatypes.DatosManager;
 
 @Named("loginBB")
@@ -71,8 +72,10 @@ public class LoginBB implements Serializable {
 
 		} catch (UnknownAccountException ex) {
 			ex.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", ex.getMessage()));
 		} catch (IncorrectCredentialsException ex) {
 			ex.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", ex.getMessage()));
 		} catch (LockedAccountException ex) {
 			ex.printStackTrace();
 		} catch (ExcessiveAttemptsException ex) {

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="scripts">
+		<script type="text/javascript">
+
+		</script>
+	</ui:define>
+	
+	<ui:define name="Principal">
+		<h:form id="form" prependId="false">
+			<p:dataTable var="jugadores" value="#{mercadoDePasesBB.compraVentaLista}" widgetVar="mercadoTable"
+                 emptyMessage="No hay jugadores a la venta" 
+                 rows="20"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="10,20,30" stickyHeader="true">
+                 
+                <p:column  headerText="Nombre" >
+		    		<h:outputText value="#{jugadores.jugadorVenta.fullName}"/>
+				</p:column>
+				
+				<p:column filterBy="#{jugadores.jugadorVenta.edad}"  headerText="Edad" filterFunction="#{mercadoDePasesBB.filter}">
+		    		<h:outputText value="#{jugadores.jugadorVenta.edad}"/>
+				</p:column>
+				
+				<p:column filterBy="#{jugadores.jugadorVenta.salario}"  headerText="Salario" filterFunction="#{mercadoDePasesBB.filter}">
+		    		<h:outputText value="#{jugadores.jugadorVenta.salario}"/>
+				</p:column>
+				
+				<p:column filterBy="#{jugadores.jugadorVenta.porteria}"  headerText="Habilidad portero" filterFunction="#{mercadoDePasesBB.filter}">
+		    		<h:outputText value="#{jugadores.jugadorVenta.porteria}"/>
+				</p:column>
+				
+				<p:column filterBy="#{jugadores.jugadorVenta.ataque}"  headerText="Habilidad ataque" filterFunction="#{mercadoDePasesBB.filter}">
+		    		<h:outputText value="#{jugadores.jugadorVenta.ataque}"/>
+				</p:column>
+				
+				<p:column filterBy="#{jugadores.jugadorVenta.defensa}"  headerText="Habilidad defensa" filterFunction="#{mercadoDePasesBB.filter}">
+		    		<h:outputText value="#{jugadores.jugadorVenta.defensa}"/>
+				</p:column>
+				
+				<p:column filterBy="#{jugadores.jugadorVenta.tecnica}"  headerText="Habilidad tecnica" filterFunction="#{mercadoDePasesBB.filter}">
+		    		<h:outputText value="#{jugadores.jugadorVenta.porteria}"/>
+				</p:column>
+                 
+	          	<p:column filterBy="#{jugadores.precio}" headerText="Precio" footerText="precio (min)" filterFunction="#{mercadoDePasesBB.filter}">
+		    		<h:outputText value="#{jugadores.precio}">
+		        		<f:convertNumber currencySymbol="$" type="currency"/>
+		    		</h:outputText>
+				</p:column>
+			</p:dataTable>
+                 
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -4,7 +4,8 @@ import interfaces.ICampeonatoControlador;
 import interfaces.IConfiguracionControlador;
 import interfaces.IEquipoControlador;
 import interfaces.IJugadorControlador;
-import interfaces.IMercadoDePases;
+import interfaces.IMensajeControlador;
+import interfaces.IMercadoDePasesControlador;
 import interfaces.IPartidoControlador;
 import interfaces.IUserControlador;
 
@@ -36,8 +37,8 @@ public class HomeFactoryBean implements HomeFactory {
 	}
 	
 	@Override
-	public IMercadoDePases getMercadoPasesControlador(){
-		return (IMercadoDePases) ctx.lookup("java:module/MercadoDePasesControlador!interfaces.IUserControlador");
+	public IMercadoDePasesControlador getMercadoPasesControlador(){
+		return (IMercadoDePasesControlador) ctx.lookup("java:module/MercadoDePasesControlador!interfaces.IUserControlador");
 	}
 
 	@Override
@@ -56,6 +57,11 @@ public class HomeFactoryBean implements HomeFactory {
 	public ICampeonatoControlador getCampeontaoControlador() {
 		// TODO Auto-generated method stub
 		return (ICampeonatoControlador ) ctx.lookup("java:module/CampeonatoControlador!interfaces.ICampeonatoControlador");
+	}
+
+	@Override
+	public IMensajeControlador getMensajeControlador() {
+		return (IMensajeControlador ) ctx.lookup("java:module/MensajeControlador!interfaces.IMensajeControlador");
 	}
 
 }
