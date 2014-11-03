@@ -132,7 +132,7 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 			Calendar ca = Calendar.getInstance();
 			ca.setTime(fechaP);
 			PartidoTorneo p = new PartidoTorneo(local, visitante,
-					ca, fila + 1, null);
+					ca, fila + 1, t);
 			ResultadoPartido rp = new ResultadoPartido();
 			em.persist(rp);
 			p.setResultado(rp);
@@ -155,7 +155,7 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 				Calendar ca = Calendar.getInstance();
 				ca.setTime(fechaP);
 				PartidoTorneo p = new PartidoTorneo(local, visitante,
-						ca, fila, null);
+						ca, fila + 1, t);
 				ResultadoPartido rp = new ResultadoPartido();
 				em.persist(rp);
 				p.setResultado(rp);

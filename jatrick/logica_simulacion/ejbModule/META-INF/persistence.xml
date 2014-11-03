@@ -6,6 +6,7 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:jboss/datasources/JatrikDS</jta-data-source>
 		<class>partidos.Partido</class>
+		<class>partidos.PartidoTorneo</class>
 		<class>partidos.Amistoso</class>
 		<class>partidos.ConfiguracionPartido</class>
 		<class>partidos.Comentario</class>
