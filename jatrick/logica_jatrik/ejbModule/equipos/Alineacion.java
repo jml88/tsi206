@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -30,27 +30,27 @@ public class Alineacion {
 	private boolean alineacionDefecto;
 
 	//TODO averiguar si se puede limitar la cantidad de 
-	@OneToMany
+	@ManyToMany
 	@JoinTable(
             name="ALINEACION_DELANTEROS",
-            joinColumns = @JoinColumn( name="CODALINEACION"),
-            inverseJoinColumns = @JoinColumn( name="CODJUGADOR")
+            joinColumns = {@JoinColumn( name="CODALINEACION")},
+            inverseJoinColumns = {@JoinColumn( name="CODJUGADOR")}
     )
 	private List<Jugador> delanteros;
 	
-	@OneToMany
+	@ManyToMany
 	@JoinTable(
             name="ALINEACION_MEDIOCAMPISTAS",
-            joinColumns = @JoinColumn( name="CODALINEACION"),
-            inverseJoinColumns = @JoinColumn( name="CODJUGADOR")
+                    joinColumns = {@JoinColumn( name="CODALINEACION")},
+                    inverseJoinColumns = {@JoinColumn( name="CODJUGADOR")}
     )
 	private List<Jugador> mediocampistas;
 	
-	@OneToMany
+	@ManyToMany
 	@JoinTable(
             name="ALINEACION_DEFENSAS",
-            joinColumns = @JoinColumn( name="CODALINEACION"),
-            inverseJoinColumns = @JoinColumn( name="CODJUGADOR")
+                    joinColumns = {@JoinColumn( name="CODALINEACION")},
+                    inverseJoinColumns = {@JoinColumn( name="CODJUGADOR")}
     )
 	private List<Jugador> defensas;
 	
@@ -71,11 +71,11 @@ public class Alineacion {
 	private Jugador lesionGolero;
 
 	/* suplentes en general */
-	@OneToMany
+	@ManyToMany
 	@JoinTable(
             name="ALINEACION_SUPLENTES",
-            joinColumns = @JoinColumn( name="CODALINEACION"),
-            inverseJoinColumns = @JoinColumn( name="CODJUGADOR")
+                    joinColumns = {@JoinColumn( name="CODALINEACION")},
+                    inverseJoinColumns = {@JoinColumn( name="CODJUGADOR")}
     )
 	private List<Jugador> suplentes;
 	

@@ -1,5 +1,6 @@
 package partidos;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import javax.persistence.OneToMany;
 import jugadores.Jugador;
 
 @Entity
-public class ResultadoPartido {
+public class ResultadoPartido implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

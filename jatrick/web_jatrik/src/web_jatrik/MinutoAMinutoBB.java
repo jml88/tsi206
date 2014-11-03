@@ -5,16 +5,18 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.naming.NamingException;
 
+import partidos.Partido;
+
 import comunicacion.Comunicacion;
+
 import datatypes.DatosComentario;
 import datatypes.DatosEquipo;
-import datatypes.DatosPartido;
 import excepciones.NoExistePartidoExepcion;
 
 @Named("minutoAMinutoBB")
@@ -28,7 +30,7 @@ public class MinutoAMinutoBB implements Serializable{
 	
 	private List<DatosComentario> comentariosPartido;
 	
-	private DatosPartido datosPartido;
+	private Partido datosPartido;
 	
 	private DatosEquipo equipoLocal, equipoVisitante;
 	
@@ -41,9 +43,9 @@ public class MinutoAMinutoBB implements Serializable{
 	public void init(){
 		try{
 			FacesContext faces = FacesContext.getCurrentInstance();
-			datosPartido = (DatosPartido)faces.getExternalContext().getApplicationMap().get("DatosPartido");
-			equipoLocal = Comunicacion.getInstance().getIEquipoControlador().obtenerEquipo(datosPartido.getEquipoLocalId());
-			equipoVisitante = Comunicacion.getInstance().getIEquipoControlador().obtenerEquipo(datosPartido.getEquipoVisitanteId());
+			datosPartido = (Partido)faces.getExternalContext().getApplicationMap().get("DatosPartido");
+			equipoLocal = Comunicacion.getInstance().getIEquipoControlador().obtenerEquipo(datosPartido.getLocal().getCodigo());
+			equipoVisitante = Comunicacion.getInstance().getIEquipoControlador().obtenerEquipo(datosPartido.getVisitante().getCodigo());
 			numeroComentario = 0;
 			comentariosPartido = new LinkedList<DatosComentario>();
 			comentariosPartido.add(new DatosComentario(-1, "El partido va a comenezar", 0, 0, 0));
@@ -81,11 +83,11 @@ public class MinutoAMinutoBB implements Serializable{
 		this.comentariosPartido = comentariosPartido;
 	}
 
-	public DatosPartido getDatosPartido() {
+	public Partido getDatosPartido() {
 		return datosPartido;
 	}
 
-	public void setDatosPartido(DatosPartido datosPartido) {
+	public void setDatosPartido(Partido datosPartido) {
 		this.datosPartido = datosPartido;
 	}
 

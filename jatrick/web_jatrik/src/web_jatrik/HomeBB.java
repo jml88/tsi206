@@ -6,15 +6,18 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import partidos.Partido;
+
 import comunicacion.Comunicacion;
+
 import datatypes.DatosEquipo;
 import datatypes.DatosJugador;
-import datatypes.DatosPartido;
 
 @Named("homeBB")
 @ViewScoped
@@ -62,11 +65,19 @@ public class HomeBB implements Serializable {
 
 	// NAVEGACIONES
 	public String agregarAlineacion() {
-		return "";
+		String result = "";
+		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+		context.getApplicationMap().put("idPartido", this.partidoSeleccionado.getCodigo());
+		result = "/webPages/partidos/enviarOrdenesPartido.xhtml?faces-redirect=true";
+		return result;
 	}
-
+	
 	public String verPartidoEnVivo() {
-		return "";
+		String result = "";
+		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+		context.getApplicationMap().put("DatosPartido", this.partidoSeleccionado);
+		result = "/webPages/partidos/minutoAMinuto.xhtml?faces-redirect=true";
+		return result;
 	}
 
 	public String jugarAmistoso() {

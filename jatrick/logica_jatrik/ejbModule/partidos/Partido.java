@@ -1,5 +1,6 @@
 package partidos;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Column;
@@ -24,7 +25,7 @@ import equipos.Equipo;
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
 @Table(name=Partido.nombreTabla)
-public class Partido {
+public class Partido implements Serializable{
 
 	public static final String nombreTabla = "PARTIDOS";
 	
@@ -133,8 +134,9 @@ public class Partido {
 		this.resultado = resultado;
 	}
 
-	public Partido getDatos() {
-		return this;
-	}
+
+//	public Partido getDatos() {
+//		return this;
+//	}
 
 }

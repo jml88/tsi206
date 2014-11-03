@@ -4,7 +4,6 @@ package partidos;
 import datatypes.DatosAlineacion;
 import datatypes.DatosComentario;
 import datatypes.DatosJugador;
-import datatypes.DatosPartido;
 import equipos.Alineacion;
 import equipos.Equipo;
 import excepciones.NoExistePartidoExepcion;
@@ -62,7 +61,7 @@ public class PartidoControlador implements IPartidoControlador {
 		return em.find(Partido.class, codPartido);
 	}
 	
-	public List<DatosComentario> obtenerComentariosPartido(long codPartido, int nroComentario) throws NoExistePartidoExepcion{
+	public List<DatosComentario> obtenerComentariosPartido(int codPartido, int nroComentario) throws NoExistePartidoExepcion{
 		
 		Partido p = em.find(Partido.class,codPartido );
 		if(p == null){
@@ -156,10 +155,15 @@ public class PartidoControlador implements IPartidoControlador {
 		query.setParameter("codEquipo", codEquipo);
 		for (Object o : query.getResultList()) {
 			Partido p = (Partido)o;
-			Partido dp = p.getDatos();
-			result.add(dp);
+			result.add(p);
 		}
 		return result;
+	}
+	
+	@Override
+	public ResultadoPartido obtenerResultadoPartido(int idPartido){
+		Partido p = em.find(Partido.class, idPartido);
+		return p.getResultado();
 	}
 	
 }

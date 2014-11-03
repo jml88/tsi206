@@ -37,11 +37,11 @@ public class EquipoControlador implements IEquipoControlador{
 	
 	@Override
 	public int crearEquipo(String nombreEquipo, boolean bot, int cantidad) {
-		Alineacion alineacionDefecto = new Alineacion();
+//		Alineacion alineacionDefecto = new Alineacion();
+//		
+//		em.persist(alineacionDefecto);
 		
-		em.persist(alineacionDefecto);
-		
-		Equipo e = new Equipo(nombreEquipo, null, alineacionDefecto);
+		Equipo e = new Equipo(nombreEquipo, null, null);
 		e.setBot(bot);
 		//em.persist(e);
 		
@@ -184,11 +184,11 @@ public class EquipoControlador implements IEquipoControlador{
 	
 	@Override
 	public List<Partido> obtenerProximosPartidos(int codEquipo, int cantidad){
-		Query q = em.createQuery("select p from Partido p where p.local.codigo = :codEquipo or p.visitante = :codEquipo and DATE(p.fechaHora) > :fechaActual ");
+		Query q = em.createQuery("select p from Partido p where p.local.codigo = :codEquipo or p.visitante.codigo = :codEquipo and (p.estado = 'POR_JUGAR' or p.estado = 'POR_SIMULAR') order by p.fechaHora");
 		q.setParameter("codEquipo", codEquipo);
-		q.setParameter("fechaActual", (new GregorianCalendar()).getTime());
-		q.setParameter("cantidad", cantidad);
-		return q.getResultList();
+//		q.setParameter("fechaActual", (new GregorianCalendar()).getTime());
+//		q.setParameter("cantidad", cantidad);
+		return q.setMaxResults(cantidad).getResultList();
 	}
 
 	@Override

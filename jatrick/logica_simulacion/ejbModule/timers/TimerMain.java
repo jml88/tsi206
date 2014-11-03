@@ -36,9 +36,9 @@ public class TimerMain {
 		}
 		
 		if (!pclh.tieneConfiguracionPartido()){
-			pclh.crearConfiguracionPartido(5, 90);
+			pclh.crearConfiguracionPartido(4, 5);
 		}
-		tp.crearTimerPeriodico(50000);
+		tp.crearTimerPeriodico(100000);
 		
 	}
 
