@@ -28,7 +28,7 @@ public class LogicaSimulacion{
 		ConfiguracionPartido cp = pc.findConfiguracionPartido();
 		int jugadas = cp.getCantidadJugadas();
 		while(minutos.size() != jugadas){
-			double d = (Math.random()*9) +1;
+			double d = (Math.random()*cp.getDuracion()) +1;
 			int min = (int)d;
 			Integer mi = new Integer(min);
 			if (!minutos.contains(mi)){

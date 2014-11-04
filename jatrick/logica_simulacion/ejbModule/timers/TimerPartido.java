@@ -34,7 +34,9 @@ public class TimerPartido {
 	
 	///Crea timer periodico 
 	public void crearTimerPeriodico(int tiempo){
-		ts.createIntervalTimer(new Date(), tiempo, new TimerConfig());
+		TimerConfig tc = new TimerConfig();
+		tc.setPersistent(false);
+		ts.createIntervalTimer(new Date(), tiempo, tc);
 	}
 	
 	@Timeout
