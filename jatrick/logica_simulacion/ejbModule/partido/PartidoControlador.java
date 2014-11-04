@@ -1,9 +1,6 @@
 package partido;
 
 
-import interfaces.IEquipoControlador;
-import interfaces.IJugadorControlador;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -215,6 +212,17 @@ public class PartidoControlador {
 
 	public PartidoTorneo findPartidoTorneo(int codigo) {
 		return em.find(PartidoTorneo.class, codigo);
+		
+	}
+
+	public void actualizarPosicionFechaTorneo(Posicion posLocal, Posicion posVisitante,
+			PartidoTorneo pt) {
+		posLocal.actualizarFecha(pt.getResultado().getGolesLocal(), pt
+				.getResultado().getGolesVisitante());
+		em.merge(posLocal);
+		posVisitante.actualizarFecha(pt.getResultado().getGolesVisitante(),
+				pt.getResultado().getGolesLocal());
+		em.merge(posVisitante);
 		
 	}
 	

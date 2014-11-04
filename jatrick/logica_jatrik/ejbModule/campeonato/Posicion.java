@@ -139,6 +139,7 @@ public class Posicion {
 		}else if (golesLocal < golesVisitante){
 			partidosPerdidos += 1;
 		}else{
+			puntos += 1;
 			partidosEmpatados += 1;
 		}
 		partidosJugados += 1;

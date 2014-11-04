@@ -75,28 +75,16 @@ public class TimerSimularPartido {
 
 	private void actualizarDatosPartido(Partido p) {
 		cp.partidoFinalizado(p);
-		PartidoTorneo pt = cp.findPartidoTorneo(p.getCodigo());
+		PartidoTorneo pt = cp.findPartidoTorneo(p.getCodigo());	
 		if (pt != null) {
 			Posicion posLocal = ((PartidoTorneo) pt).getTorneo()
 					.obtenerPosicionEquipo(pt.getLocal());
 			Posicion posVisitante = ((PartidoTorneo) pt).getTorneo()
-					.obtenerPosicionEquipo(pt.getLocal());
-			posLocal.actualizarFecha(pt.getResultado().getGolesLocal(), p
-					.getResultado().getGolesVisitante());
-			posVisitante.actualizarFecha(pt.getResultado().getGolesVisitante(),
-					p.getResultado().getGolesLocal());
+					.obtenerPosicionEquipo(pt.getVisitante());
+			cp.actualizarPosicionFechaTorneo(posLocal, posVisitante, pt);
 
 		} else {
-			if (p instanceof PartidoTorneo) {
-				Posicion posLocal = ((PartidoTorneo) p).getTorneo()
-						.obtenerPosicionEquipo(p.getLocal());
-				Posicion posVisitante = ((PartidoTorneo) p).getTorneo()
-						.obtenerPosicionEquipo(p.getLocal());
-				posLocal.actualizarFecha(p.getResultado().getGolesLocal(), p
-						.getResultado().getGolesVisitante());
-				posVisitante.actualizarFecha(p.getResultado()
-						.getGolesVisitante(), p.getResultado().getGolesLocal());
-			}
+		
 		}
 	}
 
