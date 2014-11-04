@@ -3,30 +3,41 @@ body, html {
     font-size: 12px;
 }
 
+body{
+	background-image: url("images/soccer_balls_on_dark_blue.jpg");
+}
+
 #content{
 	margin: auto;
 	width: 90%;
 	height: 1000px;
+	border-radius: 25px;
+	box-shadow: 0px 5px 5px 10px #1C1C1C;
 }
 
 #left{
 	float: left;
 	width: 19%;
 	height: 100%;
-	background-color: green;
+	/*background-color: #5882FA;*/
+	background-image: url("images/blue.jpg");
+	border-top-left-radius: 20px;
+	border-bottom-left-radius: 20px;
 }
 
 #center{
 	float: left;
-	width: 63%;
+	width: 62%;
 	height: 100%;
-	background-color: red;
-	overflow: scroll; 
+	background-color: white;
+	overflow: auto; 
 }
 
 #right{
 	float:left;
-	width: 16%;
+	width: 19%;
 	height: 100%;
-	background-color: yellow;
+	background-image: url("images/blue.jpg");
+	border-top-right-radius: 20px;
+	border-bottom-right-radius: 20px;
 }
