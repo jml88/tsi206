@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -50,12 +51,22 @@ public class Torneo implements Serializable{
 	
 	@OneToMany
 	private List<Posicion> posiciones;
+	
+	@OneToOne
+	private Torneo asciende;
+	
+	@OneToOne
+	private Torneo desciende;
 
 	public Torneo() {
 		super();
 		// TODO Auto-generated constructor stub
 		this.equipos = new LinkedList<Equipo>();
 		this.posiciones = new LinkedList<Posicion>();
+		this.asciende = null;
+		this.desciende = null;
+		this.cantCuadrosDesc = 0;
+		this.cantidadPartidosJugados = 0;
 	}
 
 	public Torneo(int codigo,int nivelVertical,int nivelHorizontal,int premio, int cantEquipos, int cantCuadrosDesc,
@@ -165,6 +176,22 @@ public class Torneo implements Serializable{
 
 	public void setCantidadPartidosJugados(int cantidadPartidosJugados) {
 		this.cantidadPartidosJugados = cantidadPartidosJugados;
+	}
+
+	public Torneo getAsciende() {
+		return asciende;
+	}
+
+	public void setAsciende(Torneo asciende) {
+		this.asciende = asciende;
+	}
+
+	public Torneo getDesciende() {
+		return desciende;
+	}
+
+	public void setDesciende(Torneo desciende) {
+		this.desciende = desciende;
 	}
 
 	public boolean isUltimoPartidoTorneo() {

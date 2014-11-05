@@ -121,6 +121,7 @@ public class PartidoControlador {
                 return retorno;
             }
            }    );
+		t.getNivelVertical();
 		for (Posicion posicion : t.getPosiciones()) {
 			//TODO obtener el datoo del premio desde la configuraciones
 			posicion.getEquipo().setCapital(100000);
@@ -239,6 +240,7 @@ public class PartidoControlador {
 		if (!rp.getGoleadoresLocal().contains(jL)){
 			rp.getGoleadoresLocal().add(jL);
 		}
+		em.merge(rp);
 	}
 	
 	public void sumarGolVisitante(ResultadoPartido rp, Jugador jV) {
@@ -248,6 +250,7 @@ public class PartidoControlador {
 		if (!rp.getGoleadoresVisitante().contains(jV)){
 			rp.getGoleadoresVisitante().add(jV);
 		}
+		em.merge(rp);
 	}
 
 	
