@@ -1,5 +1,6 @@
 package equipos;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,12 @@ import jugadores.Jugador;
 
 @Entity
 @Table(name = Alineacion.nombreTabla)
-public class Alineacion {
+public class Alineacion implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public static final String nombreTabla = "ALINEACIONES";
 
