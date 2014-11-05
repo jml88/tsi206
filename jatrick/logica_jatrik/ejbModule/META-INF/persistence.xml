@@ -20,9 +20,10 @@
 		<class>campeonato.Posicion</class>
 		<class>mensajes.Mensaje</class>
 		<class>mercadoDePases.CompraVentaJugadores</class>
+		<class>configuracionGral.ConfiguracionGral</class>
 		<class>users.Manager</class>
 		<properties>
-			<property name="hibernate.hbm2ddl.auto" value="create-update" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="false" />
 		</properties>
 	</persistence-unit>

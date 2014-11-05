@@ -11,10 +11,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.naming.NamingException;
 
+import partidos.Comentario;
 import partidos.Partido;
-
 import comunicacion.Comunicacion;
-
 import datatypes.DatosComentario;
 import datatypes.DatosEquipo;
 import excepciones.NoExistePartidoExepcion;
@@ -28,7 +27,7 @@ public class MinutoAMinutoBB implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private List<DatosComentario> comentariosPartido;
+	private List<Comentario> comentariosPartido;
 	
 	private Partido datosPartido;
 	
@@ -47,8 +46,8 @@ public class MinutoAMinutoBB implements Serializable{
 			equipoLocal = Comunicacion.getInstance().getIEquipoControlador().obtenerEquipo(datosPartido.getLocal().getCodigo());
 			equipoVisitante = Comunicacion.getInstance().getIEquipoControlador().obtenerEquipo(datosPartido.getVisitante().getCodigo());
 			numeroComentario = 0;
-			comentariosPartido = new LinkedList<DatosComentario>();
-			comentariosPartido.add(new DatosComentario(-1, "El partido va a comenezar", 0, 0, 0));
+			comentariosPartido = new LinkedList<Comentario>();
+			comentariosPartido.add(new Comentario(-1, "El partido va a comenzar",null,0));
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -57,12 +56,12 @@ public class MinutoAMinutoBB implements Serializable{
 	
 	public void getComentariosDePartido(){
 		try{
-			List<DatosComentario> comentarios = Comunicacion.getInstance().getIPartidoControlador().obtenerComentariosPartido(datosPartido.getCodigo(), numeroComentario);
+			List<Comentario> comentarios = Comunicacion.getInstance().getIPartidoControlador().obtenerComentariosPartido(datosPartido.getCodigo(), numeroComentario);
 //			comentarios.add(new DatosComentario(1, "mensaje", 1, 1, 5));
 			
-			for(DatosComentario c: comentarios){
-				if(numeroComentario < c.getNroComentario()){
-					numeroComentario = c.getNroComentario();
+			for(Comentario c: comentarios){
+				if(numeroComentario < c.getId()){
+					numeroComentario = c.getId();
 				}
 				comentariosPartido.add(c);
 			}
@@ -75,11 +74,11 @@ public class MinutoAMinutoBB implements Serializable{
 		}
 	}
 
-	public List<DatosComentario> getComentariosPartido() {
+	public List<Comentario> getComentariosPartido() {
 		return comentariosPartido;
 	}
 
-	public void setComentariosPartido(List<DatosComentario> comentariosPartido) {
+	public void setComentariosPartido(List<Comentario> comentariosPartido) {
 		this.comentariosPartido = comentariosPartido;
 	}
 

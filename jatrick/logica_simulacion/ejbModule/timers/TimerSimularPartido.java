@@ -11,6 +11,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
+import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -75,28 +76,20 @@ public class TimerSimularPartido {
 
 	private void actualizarDatosPartido(Partido p) {
 		cp.partidoFinalizado(p);
-		PartidoTorneo pt = cp.findPartidoTorneo(p.getCodigo());
+		PartidoTorneo pt = cp.findPartidoTorneo(p.getCodigo());	
 		if (pt != null) {
+			if (pt.getTorneo().isUltimoPartidoTorneo()){
+				cp.actualizarDatosTorneo(pt.getTorneo());	
+			}
+			
 			Posicion posLocal = ((PartidoTorneo) pt).getTorneo()
 					.obtenerPosicionEquipo(pt.getLocal());
 			Posicion posVisitante = ((PartidoTorneo) pt).getTorneo()
-					.obtenerPosicionEquipo(pt.getLocal());
-			posLocal.actualizarFecha(pt.getResultado().getGolesLocal(), p
-					.getResultado().getGolesVisitante());
-			posVisitante.actualizarFecha(pt.getResultado().getGolesVisitante(),
-					p.getResultado().getGolesLocal());
+					.obtenerPosicionEquipo(pt.getVisitante());
+			cp.actualizarPosicionFechaTorneo(posLocal, posVisitante, pt);
 
 		} else {
-			if (p instanceof PartidoTorneo) {
-				Posicion posLocal = ((PartidoTorneo) p).getTorneo()
-						.obtenerPosicionEquipo(p.getLocal());
-				Posicion posVisitante = ((PartidoTorneo) p).getTorneo()
-						.obtenerPosicionEquipo(p.getLocal());
-				posLocal.actualizarFecha(p.getResultado().getGolesLocal(), p
-						.getResultado().getGolesVisitante());
-				posVisitante.actualizarFecha(p.getResultado()
-						.getGolesVisitante(), p.getResultado().getGolesLocal());
-			}
+		
 		}
 	}
 

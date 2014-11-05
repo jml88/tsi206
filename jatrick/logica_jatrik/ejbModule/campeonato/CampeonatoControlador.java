@@ -8,7 +8,6 @@ import interfaces.ICampeonatoControlador;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -61,8 +60,18 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 				t.setFechaDeArranque(cal);
 				em.persist(t);
 				crearPartidosTorneo(t);
+				if (vertical != 0){
+					asignarTorneoAsciende(t);
+				}
 			}
 		}
+	}
+
+	private void asignarTorneoAsciende(Torneo t) {
+		Query q = em.createQuery("SELECT t FROM Torneo t where t.nivelVertical = :nivel and :cantidad > (select count(*) from Torneo t1 where t1.asciende.codigo = t.codigo)");
+		q.setParameter("nivel", t.getNivelVertical()-1);
+		q.setParameter("cantidad", Math.pow(2, t.getNivelVertical())/2);
+		t.setAsciende((Torneo) q.getResultList().get(0));
 	}
 
 	private Torneo crearTorneoDeCampeonato(int cantCuadros) {
@@ -192,7 +201,7 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 	@Override
 	public List<Posicion> obtenerPosiciones(int idTorneo) {
 		Query q = em
-				.createQuery("select p FROM Torneo t join t.posiciones p WHERE t.codigo = :idTorneo ORDER BY p.puntos");
+				.createQuery("select p FROM Torneo t join t.posiciones p WHERE t.codigo = :idTorneo ORDER BY p.puntos DESC,(p.golesAFavor - p.golesEnContra) DESC");
 		q.setParameter("idTorneo", idTorneo);
 		return q.getResultList();
 

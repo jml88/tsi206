@@ -1,5 +1,6 @@
 package campeonato;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,13 +11,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import equipos.Equipo;
 
 @Entity
-public class Torneo {
+public class Torneo implements Serializable{
 	
 	@Id
 	@Column(name = "CODTORNEO")
@@ -42,17 +44,25 @@ public class Torneo {
     @Column(name="FECHADEARRANQUE")
 	private Calendar fechaDeArranque;
 	
+	private int cantidadPartidosJugados;
+	
 	@OneToMany
 	private List<Equipo> equipos;
 	
 	@OneToMany
 	private List<Posicion> posiciones;
+	
+	@OneToOne
+	private Torneo asciende;
 
 	public Torneo() {
 		super();
 		// TODO Auto-generated constructor stub
 		this.equipos = new LinkedList<Equipo>();
 		this.posiciones = new LinkedList<Posicion>();
+		this.asciende = null;
+		this.cantCuadrosDesc = 0;
+		this.cantidadPartidosJugados = 0;
 	}
 
 	public Torneo(int codigo,int nivelVertical,int nivelHorizontal,int premio, int cantEquipos, int cantCuadrosDesc,
@@ -67,6 +77,7 @@ public class Torneo {
 		this.fechaDeArranque = fechaDeArranque;
 		this.equipos = new LinkedList<Equipo>();
 		this.posiciones = new LinkedList<Posicion>();
+		this.cantidadPartidosJugados = 0;
 	}
 	
 	
@@ -77,6 +88,10 @@ public class Torneo {
 			}
 		}
 		return null;
+	}
+	
+	public void sumarPartidoJugado(){
+		this.cantidadPartidosJugados = +1;
 	}
 
 	public int getCodigo() {
@@ -149,6 +164,26 @@ public class Torneo {
 
 	public void setPosiciones(List<Posicion> posiciones) {
 		this.posiciones = posiciones;
+	}
+
+	public int getCantidadPartidosJugados() {
+		return cantidadPartidosJugados;
+	}
+
+	public void setCantidadPartidosJugados(int cantidadPartidosJugados) {
+		this.cantidadPartidosJugados = cantidadPartidosJugados;
+	}
+
+	public Torneo getAsciende() {
+		return asciende;
+	}
+
+	public void setAsciende(Torneo asciende) {
+		this.asciende = asciende;
+	}
+
+	public boolean isUltimoPartidoTorneo() {
+		return cantidadPartidosJugados == ((equipos.size()-1)*(equipos.size()/2))-1;
 	}
 	
 }

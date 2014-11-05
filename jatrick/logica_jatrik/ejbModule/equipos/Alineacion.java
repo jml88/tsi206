@@ -26,6 +26,7 @@ public class Alineacion implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+
 	public static final String nombreTabla = "ALINEACIONES";
 
 	@Id

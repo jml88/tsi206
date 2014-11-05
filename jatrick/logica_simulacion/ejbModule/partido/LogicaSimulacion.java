@@ -28,7 +28,7 @@ public class LogicaSimulacion{
 		ConfiguracionPartido cp = pc.findConfiguracionPartido();
 		int jugadas = cp.getCantidadJugadas();
 		while(minutos.size() != jugadas){
-			double d = (Math.random()*9) +1;
+			double d = (Math.random()*cp.getDuracion()) +1;
 			int min = (int)d;
 			Integer mi = new Integer(min);
 			if (!minutos.contains(mi)){
@@ -77,7 +77,7 @@ public class LogicaSimulacion{
 		return Math.abs((promLocal - promVisitante)/100);
 	}
 	
-	public double probabilidadGol(Alineacion alineacionAtaca, Jugador golero, double probJugadaGol){
+	public Object[] probabilidadGol(Alineacion alineacionAtaca, Jugador golero, double probJugadaGol){
 		/**
 		probabilidad de gol =  
 				((probabilidad de jugada gol) x (tiro de un jugador*factor_aleatorio_ataque ­ habilidad del -
@@ -107,7 +107,11 @@ public class LogicaSimulacion{
 			jugador = eligoJugadorGol(alineacionAtaca.getDefensas());
 		}
 		double probablidadGol = ((probJugadaGol) * (jugador.getAtaque()*Math.random() - golero.getPorteria()*Math.random()))/100;
-		return probablidadGol;
+//		String[] s = new String[2];
+		Object[] ob = new Object[2];
+		ob[0] = Math.random();
+		ob[1] = jugador;
+		return ob;
 	}
 	
 	private Jugador eligoJugadorGol(List<Jugador> jugadores) {
@@ -138,16 +142,24 @@ public class LogicaSimulacion{
 		double prob = Math.random();
 		boolean chanceLocal = probJGL + prob > probJGV + (1- prob);
 		if (chanceLocal){
-			if (probabilidadGol(alineacionLocal,alineacionVisitante.getGolero(), probJGL) > 0.7){
+			Object[] objt = probabilidadGol(alineacionLocal,alineacionVisitante.getGolero(), probJGL);
+			double probG = (double) objt[0];
+			Jugador jL = (Jugador)objt[1];
+			if ( probG > 0.7){
 				pc.crearComentario("Pared al borde del área para " + p.getLocal().getNombre() + "  Chuta y... GOOOOOLLLLL!!	", p, minuto);	
+				pc.sumarGolLocal(p.getResultado(), jL);
 			}
 			else{
 				pc.crearComentario("se escapa por la punta y levanta el centro\n directo a las gradas, se ve que es de las escuela del futbol uruguayo ", p, minuto);
 			}
 		}
 		else{
-			if (probabilidadGol(alineacionVisitante,alineacionLocal.getGolero(),probJGV) > 0.7){
+			Object[] objt = probabilidadGol(alineacionVisitante,alineacionLocal.getGolero(),probJGV);
+			double probG = (double) objt[0];
+			Jugador jV = (Jugador)objt[1];
+			if (probG > 0.7){
 				pc.crearComentario("Despiste en el area aprovechado por el ataque, GO GO GO GOOOLLLL!!", p, minuto);	
+				pc.sumarGolVisitante(p.getResultado(), jV);
 			}
 			else{
 				pc.crearComentario("se escapa por la punta y levanta el centro\n directo a las gradas, se ve que es de las escuela del futbol uruguayo ", p, minuto);		

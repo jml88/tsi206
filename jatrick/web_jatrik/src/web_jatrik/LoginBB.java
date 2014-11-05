@@ -62,7 +62,7 @@ public class LoginBB implements Serializable {
 			int managerId = Comunicacion.getInstance().getIUserControlador().findUserByUserName(username);
 			DatosManager datosManager = Comunicacion.getInstance().getIUserControlador().obtenerManager(managerId);
 			Comunicacion.getInstance().getSesion().setDatosManager(datosManager);
-			result = "loginOK";
+			result = "/webPages/home/home.xhtml?faces-redirect=true";
 
 			// SavedRequest savedRequest =
 			// WebUtils.getAndClearSavedRequest(Faces.getRequest());

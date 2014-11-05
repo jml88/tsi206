@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 
 import jugadores.Jugador;
@@ -24,9 +26,19 @@ public class ResultadoPartido implements Serializable{
 	private int golesVisitante;
 	
 	@OneToMany
+	@JoinTable(
+            name="RESULTADO_LOCALES",
+            joinColumns = {@JoinColumn( name="CODRESULTADO")},
+            inverseJoinColumns = {@JoinColumn( name="CODJUGADOR")}
+    )
 	private List<Jugador> goleadoresLocal;
 	
 	@OneToMany
+	@JoinTable(
+            name="RESULTADO_VISITANTES",
+            joinColumns = {@JoinColumn( name="CODRESULTADO")},
+            inverseJoinColumns = {@JoinColumn( name="CODJUGADOR")}
+    )
 	private List<Jugador> goleadoresVisitante;
 	
 	public ResultadoPartido(){
@@ -70,5 +82,11 @@ public class ResultadoPartido implements Serializable{
 		this.goleadoresVisitante = goleadoresVisitante;
 	}	
 
+	public void agregarGolLocal(){
+		golesLocal++;
+	}
 	
+	public void agregarGolVisitante(){
+		golesVisitante++;
+	}
 }
