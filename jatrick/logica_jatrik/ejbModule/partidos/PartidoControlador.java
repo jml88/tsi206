@@ -61,7 +61,7 @@ public class PartidoControlador implements IPartidoControlador {
 		return em.find(Partido.class, codPartido);
 	}
 	
-	public List<DatosComentario> obtenerComentariosPartido(int codPartido, int nroComentario) throws NoExistePartidoExepcion{
+	public List<Comentario> obtenerComentariosPartido(int codPartido, int nroComentario) throws NoExistePartidoExepcion{
 		
 		Partido p = em.find(Partido.class,codPartido );
 		if(p == null){
@@ -73,12 +73,8 @@ public class PartidoControlador implements IPartidoControlador {
 				.setParameter("nroComentario", nroComentario)
 				.setParameter("Partido", p.getCodigo())
 				.getResultList();
-		List<DatosComentario> ret = new LinkedList<DatosComentario>();
-		for(Comentario c : comentarios){
-			ret.add(c.getDatos());
-		}
 		
-		return ret;
+		return comentarios;
 		
 	}
 	

@@ -1,20 +1,18 @@
 package partidos;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.TableGenerator;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import datatypes.DatosComentario;
-import partidos.Partido;
 
 @Entity
-public class Comentario {
+public class Comentario implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -27,21 +25,18 @@ public class Comentario {
 	private Partido partido;
 	
 	private int minuto;
-	
-	private int nroComentario;
 
 	public Comentario() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Comentario(int id, String mensaje, Partido partido, int minuto,int nroComentario) {
+	public Comentario(int id, String mensaje, Partido partido, int minuto) {
 		super();
 		Id = id;
 		this.mensaje = mensaje;
 		this.partido = partido;
 		this.minuto = minuto;
-		this.nroComentario = nroComentario;
 	}
 
 	public String getMensaje() {
@@ -68,21 +63,20 @@ public class Comentario {
 		this.minuto = minuto;
 	}
 
-	public int getNroComentario() {
-		return nroComentario;
+	public int getId() {
+		return Id;
 	}
 
-	public void setNroComentario(int nroComentario) {
-		this.nroComentario = nroComentario;
+	public void setId(int id) {
+		Id = id;
 	}
-	
+
 	public DatosComentario getDatos(){
 		DatosComentario datos = new DatosComentario();
 		datos.setId(this.Id);
 		datos.setIdPartido(this.partido.getCodigo());
 		datos.setMensaje(this.mensaje);
 		datos.setMinuto(this.getMinuto());
-		datos.setNroComentario(this.nroComentario);
 		return datos;
 	}
 	

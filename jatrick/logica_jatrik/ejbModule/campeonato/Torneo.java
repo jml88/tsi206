@@ -1,5 +1,6 @@
 package campeonato;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,7 +17,7 @@ import javax.persistence.TemporalType;
 import equipos.Equipo;
 
 @Entity
-public class Torneo {
+public class Torneo implements Serializable{
 	
 	@Id
 	@Column(name = "CODTORNEO")
@@ -41,6 +42,8 @@ public class Torneo {
 	@Temporal(TemporalType.TIMESTAMP)
     @Column(name="FECHADEARRANQUE")
 	private Calendar fechaDeArranque;
+	
+	private int cantidadPartidosJugados;
 	
 	@OneToMany
 	private List<Equipo> equipos;
@@ -67,6 +70,7 @@ public class Torneo {
 		this.fechaDeArranque = fechaDeArranque;
 		this.equipos = new LinkedList<Equipo>();
 		this.posiciones = new LinkedList<Posicion>();
+		this.cantidadPartidosJugados = 0;
 	}
 	
 	
@@ -77,6 +81,10 @@ public class Torneo {
 			}
 		}
 		return null;
+	}
+	
+	public void sumarPartidoJugado(){
+		this.cantidadPartidosJugados = +1;
 	}
 
 	public int getCodigo() {
@@ -149,6 +157,18 @@ public class Torneo {
 
 	public void setPosiciones(List<Posicion> posiciones) {
 		this.posiciones = posiciones;
+	}
+
+	public int getCantidadPartidosJugados() {
+		return cantidadPartidosJugados;
+	}
+
+	public void setCantidadPartidosJugados(int cantidadPartidosJugados) {
+		this.cantidadPartidosJugados = cantidadPartidosJugados;
+	}
+
+	public boolean isUltimoPartidoTorneo() {
+		return cantidadPartidosJugados == ((equipos.size()-1)*(equipos.size()/2))-1;
 	}
 	
 }

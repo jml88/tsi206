@@ -70,5 +70,11 @@ public class ResultadoPartido implements Serializable{
 		this.goleadoresVisitante = goleadoresVisitante;
 	}	
 
+	public void agregarGolLocal(){
+		golesLocal++;
+	}
 	
+	public void agregarGolVisitante(){
+		golesVisitante++;
+	}
 }

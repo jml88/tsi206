@@ -1,5 +1,6 @@
 package jugadores;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ import equipos.Equipo;
 
 @Entity
 @Table(name = Jugador.nombreTabla)
-public class Jugador {
+public class Jugador implements Serializable{
 
 	public static final String nombreTabla = "JUGADORES";
 

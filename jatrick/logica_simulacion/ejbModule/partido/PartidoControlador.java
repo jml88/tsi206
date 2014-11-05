@@ -18,6 +18,7 @@ import partidos.Comentario;
 import partidos.ConfiguracionPartido;
 import partidos.Partido;
 import partidos.PartidoTorneo;
+import partidos.ResultadoPartido;
 import campeonato.Posicion;
 import campeonato.Torneo;
 import datatypes.DatosAlineacion;
@@ -57,6 +58,10 @@ public class PartidoControlador {
     }
     
     public void partidoFinalizado(Partido p	){
+    	PartidoTorneo pt = findPartidoTorneo(p.getCodigo());
+    	if (pt != null){
+    		pt.getTorneo().sumarPartidoJugado();
+    	}
     	p.setEstado(EnumPartido.FINALIZADO);
     	em.merge(p);
     }
@@ -70,7 +75,7 @@ public class PartidoControlador {
     
     public void crearComentario(String mensaje, Partido partido, int minuto){
     	
-    	Query q = em.createQuery("select max(c.nroComentario) from Comentario c");
+    	Query q = em.createQuery("select max(c.Id) from Comentario c");
     	List<Integer> max = (List<Integer>)q.getResultList();
     	int maximo = 1;
     	if (max.size() != 0 && max.get(0)!= null){
@@ -80,7 +85,6 @@ public class PartidoControlador {
     	c.setMensaje(mensaje);
     	c.setPartido(partido);
     	c.setMinuto(minuto);
-    	c.setNroComentario(maximo);
     	em.persist(c);
     }
 	
@@ -225,6 +229,27 @@ public class PartidoControlador {
 		em.merge(posVisitante);
 		
 	}
+	
+
+
+	public void sumarGolLocal(ResultadoPartido rp, Jugador jL) {
+		rp.agregarGolLocal();
+		jL.setGolesCarrera(jL.getGolesCarrera()+1); 
+		jL.setGolesLiga(jL.getGolesLiga()+1);
+		if (!rp.getGoleadoresLocal().contains(jL)){
+			rp.getGoleadoresLocal().add(jL);
+		}
+	}
+	
+	public void sumarGolVisitante(ResultadoPartido rp, Jugador jV) {
+		rp.agregarGolVisitante();
+		jV.setGolesCarrera(jV.getGolesCarrera()+1); 
+		jV.setGolesLiga(jV.getGolesLiga()+1);
+		if (!rp.getGoleadoresVisitante().contains(jV)){
+			rp.getGoleadoresVisitante().add(jV);
+		}
+	}
+
 	
 //	public Partido crearPartidoPrueba(){
 //		Partido p = new Partido();
