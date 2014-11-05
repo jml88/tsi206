@@ -56,5 +56,7 @@ public interface IEquipoControlador {
 	public void elegirEntrenamiento(int idCodigoEquipo, EnumEntrenamiento enumEntrenamiento);
 	
 	public EnumEntrenamiento entrenamientoEquipo(int idCodigoEquipo);
+
+	public List<Partido> obtenerAnterioresPartidos(int codEquipo, int cantidad);
 	
 }

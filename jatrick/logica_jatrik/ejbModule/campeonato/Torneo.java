@@ -54,9 +54,6 @@ public class Torneo implements Serializable{
 	
 	@OneToOne
 	private Torneo asciende;
-	
-	@OneToOne
-	private Torneo desciende;
 
 	public Torneo() {
 		super();
@@ -64,7 +61,6 @@ public class Torneo implements Serializable{
 		this.equipos = new LinkedList<Equipo>();
 		this.posiciones = new LinkedList<Posicion>();
 		this.asciende = null;
-		this.desciende = null;
 		this.cantCuadrosDesc = 0;
 		this.cantidadPartidosJugados = 0;
 	}
@@ -184,14 +180,6 @@ public class Torneo implements Serializable{
 
 	public void setAsciende(Torneo asciende) {
 		this.asciende = asciende;
-	}
-
-	public Torneo getDesciende() {
-		return desciende;
-	}
-
-	public void setDesciende(Torneo desciende) {
-		this.desciende = desciende;
 	}
 
 	public boolean isUltimoPartidoTorneo() {
