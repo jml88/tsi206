@@ -11,6 +11,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
+import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -77,6 +78,10 @@ public class TimerSimularPartido {
 		cp.partidoFinalizado(p);
 		PartidoTorneo pt = cp.findPartidoTorneo(p.getCodigo());	
 		if (pt != null) {
+			if (pt.getTorneo().isUltimoPartidoTorneo()){
+				cp.actualizarDatosTorneo(pt.getTorneo());	
+			}
+			
 			Posicion posLocal = ((PartidoTorneo) pt).getTorneo()
 					.obtenerPosicionEquipo(pt.getLocal());
 			Posicion posVisitante = ((PartidoTorneo) pt).getTorneo()
