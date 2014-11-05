@@ -4,11 +4,11 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-	<div>
+	<div class ="ui-menu2">
 		<h:form id="formLogout" prependId="false">
-			<p:menubar id="menu">
+			<p:menubar id="menu" styleClass="ui-menu2">
 				<p:menuitem>
-					<p:outputLabel value="Jatrick-1.0"/>
+					<h1 class="header-title">Jatrik 1.0</h1>
 				</p:menuitem>
 				
 				<f:facet name="options">
@@ -20,7 +20,6 @@
 					<p:link value="RSS Jatrik" type="application/rss+xml" href="/resources/rss/noticias.rss"/>
 				</f:facet>
 			</p:menubar>
-			<p:sticky target="menu"/>
 		</h:form>
 		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 	 	<p:growl id="growl" showDetail="true" sticky="true" />  
