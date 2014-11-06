@@ -5,28 +5,39 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-	
+
 	<ui:define name="scripts">
 		<script type="text/javascript">
-
+			
 		</script>
 	</ui:define>
-	
+
 	<ui:define name="Principal">
 		<h:form id="form" prependId="false">
-			<!-- ACA VA EL CONTENIDO LA PAGINA -->
-			
-				
-					<div id="comentariosList">
-						<p:dataList id="comentariosList" var="com"	value="#{minutoAMinutoBB.comentariosPartido}">
-							
-								#{com.minuto} ,#{com.mensaje}
-							
-							<p:poll interval="15" listener="#{minutoAMinutoBB.getComentariosDePartido}" update="comentariosList" />
-						</p:dataList>
-					</div>	
-				
-			
+			<table style="width: 100%; text-align: center;">
+				<tr>
+					<td><h3>#{minutoAMinutoBB.datosPartido.local.nombre} vs
+							#{minutoAMinutoBB.datosPartido.visitante.nombre}</h3></td>
+				</tr>
+				<tr style="text-align: left;">
+					<td>
+						<div id="comentariosListDiv" style="text-align: left;">
+							<p:dataTable id="comentariosList" var="com"
+								value="#{minutoAMinutoBB.comentariosPartido}">
+									<p:column>
+										<h:outputText value="#{com.minuto}" />
+									</p:column>
+									<p:column>
+										<h:outputText value="#{com.mensaje}" />
+									</p:column>
+							</p:dataTable>
+							<p:poll interval="15"
+								listener="#{minutoAMinutoBB.getComentariosDePartido}"
+								update="comentariosList" />
+						</div>
+					</td>
+				</tr>
+			</table>
 		</h:form>
 	</ui:define>
 </ui:composition>
