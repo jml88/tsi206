@@ -46,10 +46,10 @@ public class CompraVentaJugadores implements Serializable {
 	@Column(nullable = true)
 	private Date fechaDeTransaccion;
 	
-	@Column
+	@OneToOne
 	private Equipo equipoVenta;
 	
-	@Column(nullable = true)
+	@OneToOne(optional = true)
 	private Equipo equipoCompra;
 	
 	@Column
@@ -79,6 +79,28 @@ public class CompraVentaJugadores implements Serializable {
 		this.equipoCompra = equipoCompra;
 		this.activo = activo;
 	}
+
+
+	
+
+	public int getCodigo() {
+		return codigo;
+	}
+
+
+
+
+
+
+
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
+
+
+
+
 
 
 

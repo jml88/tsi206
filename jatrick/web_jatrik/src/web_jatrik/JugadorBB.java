@@ -23,7 +23,6 @@ import jugadores.Jugador;
 @Named("jugadorBB")
 @ViewScoped
 public class JugadorBB implements Serializable {
-
 	/**
 	 * 
 	 */
@@ -31,20 +30,11 @@ public class JugadorBB implements Serializable {
 	
 	private Jugador jugador;
 	
-	
-	
 	private int precio;
 	
 	@Inject
 	private SessionBB session;
 
-	public Jugador getJugador() {
-		return jugador;
-	}
-
-	public void setJugador(Jugador jugador) {
-		this.jugador = jugador;
-	}
 	
 	@PostConstruct
 	public void init(){
@@ -110,6 +100,21 @@ public class JugadorBB implements Serializable {
 		return "";
 	}
 	
+	public Jugador getJugador() {
+		return jugador;
+	}
+
+	public void setJugador(Jugador jugador) {
+		this.jugador = jugador;
+	}
+	
+	public int getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(int precio) {
+		this.precio = precio;
+	}
 
 	
 	

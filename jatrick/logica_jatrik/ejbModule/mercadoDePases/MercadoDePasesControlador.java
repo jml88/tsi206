@@ -11,6 +11,7 @@ import fabricas.HomeFactory;
 import interfaces.IMercadoDePasesControlador;
 
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -35,10 +36,15 @@ public class MercadoDePasesControlador implements IMercadoDePasesControlador {
 	@Override
 	public List<CompraVentaJugadores> listarJugadoresEnVenta() {
 		// TODO Auto-generated method stub
-		return em.createQuery("Select cv from CompraVentaJugadores cv Where "
+		List<CompraVentaJugadores> compraVentaLista = em.createQuery("Select cv from CompraVentaJugadores cv Where "
 				+ "cv.activo = :booleano")
 				.setParameter("booleano", true)
 				.getResultList();
+		List<Jugador> jugadores = new LinkedList<Jugador>();
+		for (CompraVentaJugadores cvj : compraVentaLista) {
+			jugadores.add(cvj.getJugadorVenta());
+		}
+		return compraVentaLista;
 		
 	}
 
@@ -56,11 +62,13 @@ public class MercadoDePasesControlador implements IMercadoDePasesControlador {
 			throw new NoExisteJugadorExcepcion("No existe Juagador de id: " + codigoJugador);
 		}
 		
-		if(em.createQuery("SELECT cv FROM CompraVentaJugadores cv WHERE "
+		List<CompraVentaJugadores> res = em.createQuery("SELECT cv FROM CompraVentaJugadores cv WHERE "
 				+ "cv.jugadorVenta.codigo = :jugador AND cv.activo = :booleano")
 				.setParameter("jugador",j.getCodigo())
 				.setParameter("booleano", true)
-				.setMaxResults(1).getResultList()!=null){
+				.setMaxResults(1).getResultList();
+		
+		if(!res.isEmpty()){
 			
 			throw new YaExisteJugadorALaVenta("El jugador de id "+ j.getCodigo() +" está a la venta");
 		}
@@ -89,7 +97,7 @@ public class MercadoDePasesControlador implements IMercadoDePasesControlador {
 				.setParameter("jugador",j.getCodigo())
 				.setParameter("booleano", true)
 				.getResultList();
-		if(l.size() == 0 || l.get(0) == null){
+		if(l == null || l.size() == 0 || l.get(0) == null){
 			throw new NoExisteJugadorALaVenta("El jugador a la venta de id: " +codigoJugador + " no esta a la venta");
 		}
 		
