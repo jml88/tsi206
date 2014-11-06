@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="scripts">
+		<script type="text/javascript">
+
+		</script>
+	</ui:define>
+	
+	private int capitalActual;
+	
+	//positivos
+	private int publicidad;
+	
+	private int ventasJugadoresUltimoMes;
+	
+	private int socios;
+	
+	private int entradaUltimos4Partidos;
+	
+	//negativos
+	private int sueldos;
+	
+	private int pagoJuveniles;
+
+	private int compraJugadoresUltimoMes;
+	
+	<ui:define name="Principal">
+		<h:form id="form" prependId="false">
+			<div align="center">
+				<p:panelGrid columns="2" >
+					<p:outputLabel value = "Capital: "/>
+					<p:output value = "#{finanzasBB.capitalSumado}">
+						<f:convertNumber currencySymbol="$" type="currency"/>
+					</h:outputText>
+					
+					<p:outputLabel value = "Publicidad: "/>
+					<h:outputText  value = "#{finanzasBB.publicidad} ">
+						<f:convertNumber currencySymbol="$" type="currency"/>
+					</h:outputText>
+					
+					<p:outputLabel value = "Venta de jugadores ultimo mes: "/>
+					<h:outputText  value = "#{finanzasBB.ventasJugadoresUltimoMes}">
+						<f:convertNumber currencySymbol="$" type="currency">
+					</h:outputText>
+					
+					<p:outputLabel value = "Entrada por socios: "/>
+					<h:outputText  value = "#{finanzasBB.socios}"/>
+						<f:convertNumber currencySymbol="$" type="currency">
+					</h:outputText>
+					
+					<p:outputLabel value = "Entrada ultimos 4 partidos: "/>
+					<h:outputText  value = "#{finanzasBB.entradaUltimos4Partidos}">
+						<f:convertNumber currencySymbol="$" type="currency"/>
+					</h:outputText>
+					
+					<p:outputLabel value = "Sueldos"/>
+					<h:outputText  value = "#{finanzasBB.sueldos}">
+						<f:convertNumber currencySymbol="$" type="currency"/>
+					</h:outputText>
+					
+					<p:outputLabel value = "Pago de juveniles: "/>
+					<h:outputText  value = "#{finanzasBB.pagoJuveniles}">
+						<f:convertNumber currencySymbol="$" type="currency">
+					</h:outputText>
+					
+					<p:outputLabel value = "Compra jugadores ultimo mes: "/>
+					<h:outputText  value = "#{finanzasBB.compraJugadoresUltimoMes}">
+						<f:convertNumber currencySymbol="$" type="currency"/>
+					</h:outputText>
+					
+					<p:outputLabel value = "Saldo actual: "/>
+					<h:outputText  value = "#{finanzasBB.capitalActual}">
+						<f:convertNumber currencySymbol="$" type="currency"/>
+					</h:outputText>
+					
+				</p:panelGrid>
+				
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
