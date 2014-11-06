@@ -47,6 +47,7 @@ public class Posicion implements Serializable{
 		this.golesAFavor = 0;
 		this.golesEnContra = 0;
 		this.partidosEmpatados = 0;
+		this.partidosJugados = 0;
 		this.partidosGanados = 0;
 		this.partidosPerdidos = 0;
 		this.puntos = 0;
@@ -59,6 +60,7 @@ public class Posicion implements Serializable{
 		this.partidosEmpatados = 0;
 		this.partidosGanados = 0;
 		this.partidosPerdidos = 0;
+		this.partidosJugados = 
 		this.puntos = 0;
 	}
 
@@ -147,6 +149,17 @@ public class Posicion implements Serializable{
 		partidosJugados += 1;
 		golesAFavor += golesLocal;
 		golesEnContra += golesVisitante;
+	}
+
+	public void resetearPosicion() {
+		this.equipo = null;
+		this.golesAFavor = 0;
+		this.golesEnContra = 0;
+		this.partidosEmpatados = 0;
+		this.partidosJugados = 0;
+		this.partidosGanados = 0;
+		this.partidosPerdidos = 0;
+		this.puntos = 0;
 	}
 
 

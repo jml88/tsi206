@@ -38,6 +38,8 @@ public interface ICampeonatoControlador {
 	public List<Posicion> obtenerPosiciones(int idTorneo);
 
 	public void agregarTorneoNivelInferior();
+
+	public void crearPartidosTorneo(Torneo t);
 	
 
 }

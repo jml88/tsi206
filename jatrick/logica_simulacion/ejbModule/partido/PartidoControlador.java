@@ -9,10 +9,14 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.naming.NamingException;
 import javax.persistence.EntityManager;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import comunicacion.Comunicacion;
 import jugadores.Jugador;
 import partidos.Comentario;
 import partidos.ConfiguracionPartido;
@@ -77,10 +81,6 @@ public class PartidoControlador {
     	
     	Query q = em.createQuery("select max(c.Id) from Comentario c");
     	List<Integer> max = (List<Integer>)q.getResultList();
-    	int maximo = 1;
-    	if (max.size() != 0 && max.get(0)!= null){
-    		maximo = max.get(0) +1;
-    	};
     	Comentario c = new Comentario();
     	c.setMensaje(mensaje);
     	c.setPartido(partido);
@@ -121,11 +121,56 @@ public class PartidoControlador {
                 return retorno;
             }
            }    );
-		t.getNivelVertical();
+		;
+		try {
+		List<Torneo> torneosDescenso = obtenerTorneosDescenso(t);
+		int d = 0;
+		for(int i = t.getCantEquipos() - t.getCantCuadrosDesc() ; i < t.getCantEquipos(); i++ ){
+			Posicion p = t.getPosiciones().get(i);
+			equipoDesciende(p.getEquipo(),t);
+			p.resetearPosicion();
+			torneosDescenso.get(d++).getEquipos().add(p.getEquipo());
+		}
+		
+		equipoAsciende(t.getPosiciones().get(0).getEquipo(),t);
+		
+			Comunicacion.getInstance().getCampeonatoControlador().crearPartidosTorneo(t);
+	
 		for (Posicion posicion : t.getPosiciones()) {
-			//TODO obtener el datoo del premio desde la configuraciones
+
 			posicion.getEquipo().setCapital(100000);
 		}
+		resetearDatos(t);
+		
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+
+	private List<Torneo> obtenerTorneosDescenso(Torneo t) {
+		// TODO Auto-generated method stub
+		Query q = em.createQuery("SELECT t FROM Torneo t where t.asciende.codigo = :torneo");
+		q.setParameter("torneo", t.getCodigo());
+		return q.getResultList();
+	}
+
+	private void equipoAsciende(Equipo e, Torneo t) {
+		t.getAsciende().getEquipos().add(e);
+		
+	}
+
+	private void equipoDesciende(Equipo equipo, Torneo t) {
+		em.createQuery("Select ");
+		
+	}
+
+	private void resetearDatos(Torneo t) {
+		
+		t.setCantidadPartidosJugados(0);
+		
 		
 	}
 	

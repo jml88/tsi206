@@ -91,7 +91,7 @@ public class Torneo implements Serializable{
 	}
 	
 	public void sumarPartidoJugado(){
-		this.cantidadPartidosJugados = +1;
+		this.cantidadPartidosJugados += 1;
 	}
 
 	public int getCodigo() {

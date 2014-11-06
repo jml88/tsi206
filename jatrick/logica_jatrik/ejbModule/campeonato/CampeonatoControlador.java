@@ -70,7 +70,7 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 	private void asignarTorneoAsciende(Torneo t) {
 		Query q = em.createQuery("SELECT t FROM Torneo t where t.nivelVertical = :nivel and :cantidad > (select count(*) from Torneo t1 where t1.asciende.codigo = t.codigo)");
 		q.setParameter("nivel", t.getNivelVertical()-1);
-		q.setParameter("cantidad", Math.pow(2, t.getNivelVertical())/2);
+		q.setParameter("cantidad", (long)(Math.pow(2, t.getNivelVertical())/2));
 		t.setAsciende((Torneo) q.getResultList().get(0));
 	}
 
@@ -100,6 +100,7 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 		return t;
 	}
 
+	@Override
 	public void crearPartidosTorneo(Torneo t) {
 		ConfiguracionGral conf = hf.getConfiguracionControlador()
 				.getConfiguracion();
