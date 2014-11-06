@@ -17,6 +17,11 @@ import jugadores.Jugador;
 @Entity
 public class ResultadoPartido implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int codigo;
@@ -49,6 +54,16 @@ public class ResultadoPartido implements Serializable{
 		
 	}
 	
+
+	public int getCodigo() {
+		return codigo;
+	}
+
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
+
 
 	public int getGolesLocal() {
 		return golesLocal;

@@ -45,6 +45,12 @@ public class EquipoControlador implements IEquipoControlador{
 		e.setBot(bot);
 		//em.persist(e);
 		
+		Estadio estadio = new Estadio();
+		estadio.setCapacidad(5000);
+		estadio.setNombre(nombreEquipo + "Arena");
+		
+		e.setEstadio(estadio);
+		
 		IJugadorControlador ijc = hf.getJugadorControlador();
 		Set<Jugador> plantel = ijc.generarJugadores(cantidad, e);
 		e.setPlantel(plantel);

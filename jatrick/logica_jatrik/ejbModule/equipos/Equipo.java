@@ -45,7 +45,7 @@ public class Equipo implements Serializable{
 	@OneToOne
 	private Alineacion alineacionDefecto;
 	
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.PERSIST})
 	private Estadio estadio;
 	
 	@Column(name = "CODPAIS")

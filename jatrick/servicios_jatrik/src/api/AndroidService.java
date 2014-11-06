@@ -25,7 +25,10 @@ import users.Manager;
 import users.User;
 import comunicacion.Comunicacion;
 import datatypes.EnumPartido;
+import entidadesRest.ComentarioRest;
 import entidadesRest.EquipoRest;
+import entidadesRest.PartidoRest;
+import entidadesRest.ResultadoRest;
 import equipos.Equipo;
 import equipos.Estadio;
 
@@ -107,7 +110,18 @@ public class AndroidService {
 			Manager manager = (Manager) iuc.find(codManager);
 			int codEquipo = manager.getEquipo().getCodigo();
 			
-			List<Partido> partidos = iec.obtenerProximosPartidos(codEquipo, 5);
+			List<Partido> partidos = iec.obtenerAnterioresPartidos(codEquipo, 5);
+			
+			List<PartidoRest> partidosResult = new ArrayList<PartidoRest>();
+			for (Partido p : partidos) {
+				PartidoRest pRest = new PartidoRest();
+				pRest.setCodigo(p.getCodigo());
+				pRest.setNombreLocal(p.getLocal().getNombre());
+				pRest.setNombreVisistante(p.getVisitante().getNombre());
+				pRest.setFecha(p.getFechaHora().getTimeInMillis());
+				partidosResult.add(pRest);
+				
+			}
 		
 //			List<Partido> partidos = new ArrayList<Partido>();
 //			Partido partido = new Partido();
@@ -137,7 +151,7 @@ public class AndroidService {
 //			partidos.add(partido);
 //			partidos.add(partido2);
 					
-			return Response.ok(partidos, MediaType.APPLICATION_JSON).build();
+			return Response.ok(partidosResult, MediaType.APPLICATION_JSON).build();
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -161,7 +175,19 @@ public class AndroidService {
 			Manager manager = (Manager) iuc.find(codManager);
 			int codEquipo = manager.getEquipo().getCodigo();
 			
-			List<Partido> partidos = iec.obtenerAnterioresPartidos(codEquipo, 5);
+			
+			List<Partido> partidos = iec.obtenerProximosPartidos(codEquipo, 5);
+			
+			List<PartidoRest> partidosResult = new ArrayList<PartidoRest>();
+			for (Partido p : partidos) {
+				PartidoRest pRest = new PartidoRest();
+				pRest.setCodigo(p.getCodigo());
+				pRest.setNombreLocal(p.getLocal().getNombre());
+				pRest.setNombreVisistante(p.getVisitante().getNombre());
+				pRest.setFecha(p.getFechaHora().getTimeInMillis());
+				partidosResult.add(pRest);
+				
+			}
 		
 //			List<Partido> partidos = new ArrayList<Partido>();
 //			Partido partido = new Partido();
@@ -191,7 +217,7 @@ public class AndroidService {
 //			partidos.add(partido);
 //			partidos.add(partido2);
 					
-			return Response.ok(partidos, MediaType.APPLICATION_JSON).build();
+			return Response.ok(partidosResult, MediaType.APPLICATION_JSON).build();
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -215,7 +241,19 @@ public class AndroidService {
 		try {
 			IPartidoControlador ipc = Comunicacion.getInstance().getIPartidoControlador();
 			List<Comentario> comentarios = ipc.obtenerComentariosPartido(Integer.parseInt(idPartido), Integer.parseInt(nroComentario));
-			return Response.ok(comentarios, MediaType.APPLICATION_JSON).build();
+			
+			List<ComentarioRest> comentariosRest = new ArrayList<ComentarioRest>();
+			
+			for (Comentario c : comentarios) {
+				ComentarioRest cRest = new ComentarioRest();
+				cRest.setCodigo(c.getId());
+				cRest.setCodPartido(c.getPartido().getCodigo());
+				cRest.setMensaje(c.getMensaje());
+				cRest.setMinuto(c.getMinuto());
+				comentariosRest.add(cRest);				
+			}
+			
+			return Response.ok(comentariosRest, MediaType.APPLICATION_JSON).build();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -283,47 +321,66 @@ public class AndroidService {
 			return Response.status(Response.Status.FORBIDDEN).build();
 		
 		//TODO: esto es lo posta
-//		try {
-//			IPartidoControlador ipc = Comunicacion.getInstance().getIPartidoControlador();
-//			ResultadoPartido resultado = ipc.obtenerResultadoPartido(Integer.parseInt(idPartido));
-//			return Response.ok(resultado, MediaType.APPLICATION_JSON).build();
-//			
-//		} catch (NamingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-//		}
+		try {
+			IPartidoControlador ipc = Comunicacion.getInstance().getIPartidoControlador();
+			ResultadoPartido resultado = ipc.obtenerResultadoPartido(Integer.parseInt(idPartido));
+			
+			List<String> goleadoresLocal = new ArrayList<String>();
+			List<String> goleadoresVisitante = new ArrayList<String>();
+			
+			for (Jugador j : resultado.getGoleadoresLocal()) {
+				goleadoresLocal.add(j.getNombre() + j.getApellido1());
+			}
+			
+			for (Jugador j : resultado.getGoleadoresVisitante()) {
+				goleadoresVisitante.add(j.getNombre() + j.getApellido1());
+			}
+			
+			ResultadoRest json = new ResultadoRest();
+			json.setCodigo(resultado.getCodigo());
+			json.setGolesLocal(resultado.getGolesLocal());
+			json.setGolesVisitante(resultado.getGolesVisitante());
+			json.setGoleadoresLocal(goleadoresLocal);
+			json.setGoleadoresVisitante(goleadoresVisitante);
+			
+			return Response.ok(json, MediaType.APPLICATION_JSON).build();
+			
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+		}
 		
 		//TODO: sacar todo esto
-		ResultadoPartido resultado = new ResultadoPartido();
-		resultado.setGolesLocal(5);
-		resultado.setGolesVisitante(4);
-		
-		List<Jugador> jugadoresLocal = new ArrayList<Jugador>();
-		Jugador j1 = new Jugador();
-		j1.setApellido1("ApellidoJ1");
-		j1.setNombre("NombreJ1");
-		
-		Jugador j2 = new Jugador();
-		j2.setApellido1("ApellidoJ2");
-		j2.setNombre("NombreJ2");
-		jugadoresLocal.add(j1);
-		jugadoresLocal.add(j2);
-		resultado.setGoleadoresLocal(jugadoresLocal);
-		
-		List<Jugador> jugadoresVisitante = new ArrayList<Jugador>();
-		Jugador j3 = new Jugador();
-		j3.setApellido1("ApellidoJ3");
-		j3.setNombre("NombreJ3");
-		
-		Jugador j4 = new Jugador();
-		j4.setApellido1("ApellidoJ3");
-		j4.setNombre("NombreJ3");
-		jugadoresVisitante.add(j3);
-		jugadoresVisitante.add(j4);
-		resultado.setGoleadoresVisitante(jugadoresVisitante);
-	
-		return Response.ok(resultado, MediaType.APPLICATION_JSON).build();
+//		ResultadoPartido resultado = new ResultadoPartido();
+//		resultado.setGolesLocal(5);
+//		resultado.setGolesVisitante(4);
+//		
+//		List<Jugador> jugadoresLocal = new ArrayList<Jugador>();
+//		Jugador j1 = new Jugador();
+//		j1.setApellido1("ApellidoJ1");
+//		j1.setNombre("NombreJ1");
+//		
+//		Jugador j2 = new Jugador();
+//		j2.setApellido1("ApellidoJ2");
+//		j2.setNombre("NombreJ2");
+//		jugadoresLocal.add(j1);
+//		jugadoresLocal.add(j2);
+//		resultado.setGoleadoresLocal(jugadoresLocal);
+//		
+//		List<Jugador> jugadoresVisitante = new ArrayList<Jugador>();
+//		Jugador j3 = new Jugador();
+//		j3.setApellido1("ApellidoJ3");
+//		j3.setNombre("NombreJ3");
+//		
+//		Jugador j4 = new Jugador();
+//		j4.setApellido1("ApellidoJ3");
+//		j4.setNombre("NombreJ3");
+//		jugadoresVisitante.add(j3);
+//		jugadoresVisitante.add(j4);
+//		resultado.setGoleadoresVisitante(jugadoresVisitante);
+//	
+//		return Response.ok(resultado, MediaType.APPLICATION_JSON).build();
 		//*******************************************************************
 	}
 	
