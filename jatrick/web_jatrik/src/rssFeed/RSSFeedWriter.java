@@ -83,38 +83,3 @@ public class RSSFeedWriter {
 		eventWriter.add(end);
 	}
 }
-
-/*
-FORMATO DEL XML
-//TODO falta adaptarlo para lo que se quiera mostrar.
-
-<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
-<channel>
-	<title></title>
-	<link></link>
-	<description></description>
-	<item>
-		<title></title>
-		<link></link>
-		<description></description>
-	</item>
-	<item>
-		<title></title>
-		<description></description>
-		<link></link>
-	</item>
-	.
-	.
-	.
-	.
-	<item>
-		<title></title>
-		<description></description>
-		<link></link>
-	</item>
-</channel>
-</rss>
-
-*/
-

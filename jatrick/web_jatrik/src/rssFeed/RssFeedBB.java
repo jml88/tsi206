@@ -1,36 +1,32 @@
 package rssFeed;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import partidos.Partido;
+
 public class RssFeedBB {
 
-	public void metodo() {
-		// create the rss feed
+	public void escribirNoticias() {
+		
+		Set<Partido> partidos = new HashSet<Partido>();
 		String title = "Jatrik-TSI2-v1.0";
 		String description = "Noticias sobre los ultimos resultados.";
 		String link = "https://localhost:8443/web_jatrik/faces/";
 		Feed rssFeeder = new Feed(title, link, description);
-
-		// now add one example entry
-		FeedItem feed1 = new FeedItem();
-		feed1.setTitle("Titulo de una noticia.");
-		feed1.setDescription("Descripcion de una noticia.");
-		feed1.setLink("Link de una noticia");
-		rssFeeder.getItems().add(feed1);
-
-		FeedItem feed2 = new FeedItem();
-		feed2.setTitle("Titulo de otra noticia.");
-		feed2.setDescription("Descripcion de otra noticia.");
-		feed2.setLink("Link de otra noticia");
-		rssFeeder.getItems().add(feed2);
-
-		FeedItem feed3 = new FeedItem();
-		feed3.setTitle("Titulos de mas noticias.");
-		feed3.setDescription("Descripcions de mas noticias.");
-		feed3.setLink("Links de mas noticias");
-		rssFeeder.getItems().add(feed3);
-
-		// now write the file
-		RSSFeedWriter writer = new RSSFeedWriter(rssFeeder,
-				"WebContent/resources/rss/noticias.rss");
+		for (Partido p : partidos) {
+			FeedItem feed = new FeedItem();
+			String titulo = p.getLocal().getNombre() + " Vs " + p.getVisitante().getNombre();
+			feed.setTitle(titulo);
+			String descripcion = "Se ha jugado el partido contra " + p.getVisitante().getNombre() +"\n"
+					+ "El resultado ha sido " + p.getLocal().getNombre() + " " + p.getResultado().getGolesLocal() 
+					+ " : " + p.getResultado().getGolesVisitante() + " " + p.getVisitante().getNombre();
+			feed.setDescription(descripcion);
+			String linkFeed = "https://localhost:8443/web_jatrik/faces/";
+			feed.setLink(linkFeed);
+			rssFeeder.items.add(feed);
+		}
+		RSSFeedWriter writer = new RSSFeedWriter(rssFeeder, "noticias.rss");
 		try {
 			writer.write();
 		} catch (Exception e) {
