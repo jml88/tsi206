@@ -84,6 +84,15 @@ public class ConfiguracionGral {
 	@Column
 	private boolean modificado;
 	
+	@Column
+	private int publicidadMinima;
+	
+	@Column
+	private int publicidadMedia;
+	
+	@Column
+	private int publicidadMaxima;
+	
 	@Embedded
 	@Column(nullable = true)
 	private PeriodicoPartido periodicoPartido;
@@ -96,12 +105,50 @@ public class ConfiguracionGral {
 	private int capacidadMinimaEstadio;
 	
 	@Column
-	private int agrandarEstadio;	
+	private int capacidadAgrandarEstadio;	
 
 	@Column
-	private int cuestaAgrandar;
+	private int cuestaAgrandarEstadio;
 	
-
+	@Column
+	private int sociosEmpieza;
+	
+	@Column
+	private int seguidoresEmpieza;
+	
+	
+	public void mergeConfiguracionGral(ConfiguracionGral dcg){
+		
+		this.setCantEquipoTorneo(dcg.getCantEquipoTorneo());
+		this.setCantJugadoresArranque(dcg.getCantJugadoresArranque());
+		this.setDineroInicial(dcg.getDineroInicial());
+		this.setNumeroTorneo(dcg.getNumeroTorneo());
+		this.setCantidadDescensos(dcg.getCantidadDescensos());
+		this.setPremio(dcg.getPremio());
+		this.setCantidadTorneos(dcg.getCantidadTorneos());
+		this.setAdultoEdad(dcg.getAdultoEdad());
+		this.setCapacidadAgrandarEstadio(dcg.getCapacidadAgrandarEstadio());
+		this.setCantidadDescensos(dcg.getCantidadDescensos());
+		this.setCapacidadMaximaEstadio(dcg.getCapacidadMaximaEstadio());
+		this.setCapacidadMinimaEstadio(dcg.getCapacidadMinimaEstadio());
+		this.setCuestaAgrandarEstadio(dcg.getCuestaAgrandarEstadio());
+		this.setDesmejoraNoEntrenaAdulto(dcg.getDesmejoraNoEntrenaAdulto());
+		this.setDesmejoraNoEntrenaJuvenil(dcg.getDesmejoraNoEntrenaJuvenil());
+		this.setDesmejoraNoEntrenaVeterano(dcg.getDesmejoraNoEntrenaVeterano());
+		this.setJuvenilEdad(dcg.getJuvenilEdad());
+		this.setMejoraEntrenaAdulto(dcg.getMejoraEntrenaAdulto());
+		this.setMejoraEntrenaJuvenil(dcg.getMejoraEntrenaJuvenil());
+		this.setMejoraEntrenaVeterano(dcg.getMejoraEntrenaVeterano());
+		this.setPremio(dcg.getPremio());
+		this.setPuntosParaEntrenar(dcg.getPuntosParaEntrenar());
+		this.setVeteranoEdad(dcg.getVeteranoEdad());
+		this.setPublicidadMaxima(dcg.getPublicidadMaxima());
+		this.setPublicidadMinima(dcg.getPublicidadMinima());
+		this.setPublicidadMedia(dcg.getPublicidadMedia());
+		this.setSociosEmpieza(dcg.getSociosEmpieza());
+		this.setSeguidoresEmpieza(dcg.getSeguidoresEmpieza());
+		
+	}
 
 	
 
@@ -139,8 +186,8 @@ public class ConfiguracionGral {
 		this.periodicoPartido = periodicoPartido;
 		this.capacidadMaximaEstadio = capacidadMaximaEstadio;
 		this.capacidadMinimaEstadio = capacidadMinimaEstadio;
-		this.agrandarEstadio = agrandarEstadio;
-		this.cuestaAgrandar = cuestaAgrandar;
+		this.capacidadAgrandarEstadio = agrandarEstadio;
+		this.cuestaAgrandarEstadio = cuestaAgrandar;
 		this.modificado= false;
 	}
 
@@ -421,24 +468,76 @@ public class ConfiguracionGral {
 	}
 
 
-	public int getAgrandarEstadio() {
-		return agrandarEstadio;
+	public int getPublicidadMinima() {
+		return publicidadMinima;
 	}
 
 
-	public void setAgrandarEstadio(int agrandarEstadio) {
-		this.agrandarEstadio = agrandarEstadio;
+	public void setPublicidadMinima(int publicidadMinima) {
+		this.publicidadMinima = publicidadMinima;
 	}
 
 
-	public int getCuestaAgrandar() {
-		return cuestaAgrandar;
+	public int getPublicidadMedia() {
+		return publicidadMedia;
 	}
 
 
-	public void setCuestaAgrandar(int cuestaAgrandar) {
-		this.cuestaAgrandar = cuestaAgrandar;
+	public void setPublicidadMedia(int publicidadMedia) {
+		this.publicidadMedia = publicidadMedia;
 	}
+
+
+	public int getPublicidadMaxima() {
+		return publicidadMaxima;
+	}
+
+
+	public void setPublicidadMaxima(int publicidadMaxima) {
+		this.publicidadMaxima = publicidadMaxima;
+	}
+
+
+	public int getSociosEmpieza() {
+		return sociosEmpieza;
+	}
+
+
+	public void setSociosEmpieza(int sociosEmpieza) {
+		this.sociosEmpieza = sociosEmpieza;
+	}
+
+
+	public int getSeguidoresEmpieza() {
+		return seguidoresEmpieza;
+	}
+
+
+	public void setSeguidoresEmpieza(int seguidoresEmpieza) {
+		this.seguidoresEmpieza = seguidoresEmpieza;
+	}
+
+
+	public int getCapacidadAgrandarEstadio() {
+		return capacidadAgrandarEstadio;
+	}
+
+
+	public void setCapacidadAgrandarEstadio(int capacidadAgrandarEstadio) {
+		this.capacidadAgrandarEstadio = capacidadAgrandarEstadio;
+	}
+
+
+	public int getCuestaAgrandarEstadio() {
+		return cuestaAgrandarEstadio;
+	}
+
+
+	public void setCuestaAgrandarEstadio(int cuestaAgrandarEstadio) {
+		this.cuestaAgrandarEstadio = cuestaAgrandarEstadio;
+	}
+	
+	
 
 	
 	

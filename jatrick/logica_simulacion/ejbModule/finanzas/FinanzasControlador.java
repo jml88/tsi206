@@ -11,6 +11,8 @@ import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.sun.javafx.collections.ListListenerHelper;
+
 import jugadores.Jugador;
 import partidos.Partido;
 import campeonato.Torneo;
@@ -52,7 +54,7 @@ public class FinanzasControlador {
 			dineroTransaccion = jugador.getSalario();
 		}
 		
-		ingresarTransaccion(e,dineroTransaccion, EnumTipoTransaccion.SUELDOS_JUGADORES);
+		ingresarTransaccion(e,-dineroTransaccion, EnumTipoTransaccion.SUELDOS_JUGADORES);
 		e.setCapital(capital);
 		em.merge(e);
 	}
@@ -208,15 +210,73 @@ public class FinanzasControlador {
 	public void pagoDeJuveniles(Equipo e){
 		e.setCapital(e.getCapital() - e.getGastoJuveniles());
 		em.merge(e);
-		ingresarTransaccion(e,e.getGastoJuveniles(), EnumTipoTransaccion.PAGO_JUVENILES);
+		ingresarTransaccion(e,-e.getGastoJuveniles(), EnumTipoTransaccion.PAGO_JUVENILES);
 	}
 	
 	
-	public void pagarPremio(Equipo e){
+	public void pagarPremio(Torneo torneo) throws NoExisteEquipoExcepcion{
 		int premio = conf.getConfiguracion().getPremio();
-		e.setCapital(premio);
-		em.merge(e);
-		ingresarTransaccion(e, premio, EnumTipoTransaccion.PREMIO);
+		
+		List<Equipo> equipos = torneo.getEquipos();
+		
+		for (Equipo equipo : equipos) {
+			Torneo t = obtenerTorneoActual(equipo.getCodigo());
+			Object o = em.createQuery("SELECT Count(p2) pos FROM Posicion p1 INNER JOIN Posicion p2"
+					+ " p1.equipo.codigo = :equipo AND p1.torneo.codigo = :torneo"
+					+ " HAVING p2.puntos > p1.puntos")
+					.setParameter("equipo", equipo.getCodigo())
+					.setParameter("torneo", t.getCodigo()).getSingleResult();
+			int pos = ((Number) o).intValue() + 1;
+			if(pos == 1){
+				equipo.setCapital(premio);
+				em.merge(equipo);
+				ingresarTransaccion(equipo, premio, EnumTipoTransaccion.PREMIO);
+			}
+		}
+		
 	}
+	
+	public void actualizarFinTorneos() throws NoExisteEquipoExcepcion, NamingException{
+		List<Torneo> torneosActuales = em.createQuery("SELECT t FROM Torneo WHERE t.actual = :true")
+				.setParameter("true", true)
+				.getResultList();
+		
+		for (Torneo torneo : torneosActuales) {
+			//pagar premio
+			pagarPremio(torneo);
+			
+			List<Equipo> equipos = torneo.getEquipos();
+			for (Equipo equipo : equipos) {
+				
+				//actualizar cantidad de socios
+				actualizarCantidadSocios(equipo);
+				LinkedList<Jugador> jugadores = new LinkedList<Jugador>(equipo.getPlantel());
+				//generar publicidad
+				generarPublicidad(equipo);
+				for (Jugador jugador : jugadores) {
+					//Actualizar sueldo de jugador
+					jugador.calcularSueldoJugador();
+					em.merge(jugador);
+				
+				}
+			}
+		}
+	}
+	
+	public void actualizarPorMes(){
+		List<Equipo> equipos = em.createQuery("SELECT e FROM Equipo e").getResultList();
+		for (Equipo equipo : equipos) {
+			pagarSueldosAEquipo(equipo);
+			cobrarPublicidad(equipo);
+			pagoDeJuveniles(equipo);
+		}
+	}
+	
+	public void actualizarDespuesPartido(Partido p){
+		actualizarCantidadSeguidoresCuadro(p);
+		cobrarEntradasPartido(p);
+	}
+	
+	
 	
 }

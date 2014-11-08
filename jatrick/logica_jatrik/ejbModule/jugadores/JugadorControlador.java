@@ -53,11 +53,11 @@ public class JugadorControlador implements IJugadorControlador {
 			int edad = random.nextInt(3) + 17;
 			j.setEdad(edad);
 			
-			int velocidad = random.nextInt(4)+1;
-			int tecnica = random.nextInt(4)+1;
-			int ataque = random.nextInt(4)+1;
-			int defensa = random.nextInt(4)+1;
-			int porteria = random.nextInt(4)+1;
+			int velocidad = random.nextInt(98)+1;
+			int tecnica = random.nextInt(98)+1;
+			int ataque = random.nextInt(98)+1;
+			int defensa = random.nextInt(98)+1;
+			int porteria = random.nextInt(98)+1;
 			
 			j.setVelocidad(velocidad);
 			j.setTecnica(tecnica);

@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Named;
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -62,29 +63,8 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 		if(cg == null){
 			throw new NoExisteConfiguracionException("No existe configuracion general");
 		}
-		cg.setCantEquipoTorneo(dcg.getCantEquipoTorneo());
-		cg.setCantJugadoresArranque(dcg.getCantJugadoresArranque());
-		cg.setDineroInicial(dcg.getDineroInicial());
-		cg.setNumeroTorneo(dcg.getNumeroTorneo());
-		cg.setCantidadDescensos(dcg.getCantidadDescensos());
-		cg.setPremio(dcg.getPremio());
-		cg.setCantidadTorneos(dcg.getCantidadTorneos());
-		cg.setAdultoEdad(dcg.getAdultoEdad());
-		cg.setAgrandarEstadio(dcg.getAgrandarEstadio());
-		cg.setCantidadDescensos(dcg.getCantidadDescensos());
-		cg.setCapacidadMaximaEstadio(dcg.getCapacidadMaximaEstadio());
-		cg.setCapacidadMinimaEstadio(dcg.getCapacidadMinimaEstadio());
-		cg.setCuestaAgrandar(dcg.getCuestaAgrandar());
-		cg.setDesmejoraNoEntrenaAdulto(dcg.getDesmejoraNoEntrenaAdulto());
-		cg.setDesmejoraNoEntrenaJuvenil(dcg.getDesmejoraNoEntrenaJuvenil());
-		cg.setDesmejoraNoEntrenaVeterano(dcg.getDesmejoraNoEntrenaVeterano());
-		cg.setJuvenilEdad(dcg.getJuvenilEdad());
-		cg.setMejoraEntrenaAdulto(dcg.getMejoraEntrenaAdulto());
-		cg.setMejoraEntrenaJuvenil(dcg.getMejoraEntrenaJuvenil());
-		cg.setMejoraEntrenaVeterano(dcg.getMejoraEntrenaVeterano());
-		cg.setPremio(dcg.getPremio());
-		cg.setPuntosParaEntrenar(dcg.getPuntosParaEntrenar());
-		cg.setVeteranoEdad(dcg.getVeteranoEdad());
+		cg.mergeConfiguracionGral(dcg);
+		
 		if(dcg.getFechaArranqueCampeonato()!=null){
 			Date c = dcg.getFechaArranqueCampeonato();
 			cg.setFechaArranqueCampeonato(c);

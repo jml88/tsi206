@@ -17,6 +17,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import configuracionGral.ConfiguracionGral;
 import partidos.Partido;
 import campeonato.Torneo;
 import users.Manager;
@@ -166,6 +167,7 @@ public class EquipoControlador implements IEquipoControlador{
 	public Equipo asignarTorneo(Manager manager, DatosEquipo eq) {
 		//TODO asignar el torneo correctamente, o sea, el torneo de mas abajo
 		List<Torneo> torneos = hf.getCampeontaoControlador().obtenerTorneos();
+		ConfiguracionGral config = hf.getConfiguracionControlador().getConfiguracion();
 		for(Torneo t : torneos){
 			for(Equipo e : t.getEquipos()){
 				if(e.isBot()){
@@ -175,6 +177,16 @@ public class EquipoControlador implements IEquipoControlador{
 					e.setNombre(eq.getNombre());
 					Estadio estadio = e.getEstadio();
 					estadio.setNombre(eq.getNombre() + " Arena");
+					estadio.setCapacidad(config.getCapacidadMinimaEstadio());
+					
+					e.setCapital(config.getDineroInicial());
+					e.setPublicidad(config.getPublicidadMinima());
+					
+					e.setSeguidores(config.getSeguidoresEmpieza());
+					e.setSocios(config.getSociosEmpieza());
+					
+					e.setGastoJuveniles(0);
+					
 					em.merge(e);
 					em.merge(manager);
 					return e;
