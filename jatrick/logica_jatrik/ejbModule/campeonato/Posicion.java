@@ -152,7 +152,7 @@ public class Posicion implements Serializable{
 	}
 
 	public void resetearPosicion() {
-		this.equipo = null;
+//		this.equipo = null;
 		this.golesAFavor = 0;
 		this.golesEnContra = 0;
 		this.partidosEmpatados = 0;

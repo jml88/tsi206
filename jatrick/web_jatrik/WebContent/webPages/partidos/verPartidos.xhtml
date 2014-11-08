@@ -19,16 +19,16 @@
 					value="#{verPartidosBB.partidos}"
 					selection="#{verPartidosBB.partidoSeleccionado}" rowKey="#{partido.codigo}">
 					<f:facet name="header">
-						<p:outputLabel value="Partido" />
+						<p:outputLabel value="Partidos amistosos" />
 					</f:facet>
 					<p:column headerText="Fecha">
 						<h:outputText value="#{partido.fechaHora}" converter="DateConverter" />
 					</p:column>
 					<p:column headerText="Local">
-						<h:outputText value="#{verPartidosBB.nombresEquipos[partido.equipoLocalId]}" />
+						<h:outputText value="#{verPartidosBB.nombresEquipos[partido.local.codigo]}" />
 					</p:column>
 					<p:column headerText="Visitante">
-						<h:outputText value="#{verPartidosBB.nombresEquipos[partido.equipoVisitanteId]}" />
+						<h:outputText value="#{verPartidosBB.nombresEquipos[partido.visitante.codigo]}" />
 					</p:column>
 					<p:column headerText="Editar alineacion">
 						<p:commandButton value="Editar" action="#{verPartidosBB.agregarAlineacion}">

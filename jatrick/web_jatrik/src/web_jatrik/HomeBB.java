@@ -36,7 +36,10 @@ public class HomeBB implements Serializable {
 	private Set<DatosJugador> jugadores;
 	private Set<DatosEquipo> otrosEquipos;
 	private List<Partido> partidosProximos;
+	private List<Partido> partidosAnteriores;
 	private Partido partidoSeleccionado;
+	private Partido partidoSeleccionadoAnterior;
+	
 
 	public HomeBB() {
 		super();
@@ -55,6 +58,11 @@ public class HomeBB implements Serializable {
 						.getInstance()
 						.getIEquipoControlador()
 						.obtenerProximosPartidos(this.sesion.getDatosManager().getCodEquipo(),
+								5);
+				this.partidosAnteriores = Comunicacion
+						.getInstance()
+						.getIEquipoControlador()
+						.obtenerAnterioresPartidos(this.sesion.getDatosManager().getCodEquipo(),
 								5);
 			}
 			this.otrosEquipos = new HashSet<DatosEquipo>();
@@ -143,6 +151,22 @@ public class HomeBB implements Serializable {
 
 	public void setPartidoSeleccionado(Partido partidoSeleccionado) {
 		this.partidoSeleccionado = partidoSeleccionado;
+	}
+
+	public List<Partido> getPartidosAnteriores() {
+		return partidosAnteriores;
+	}
+
+	public void setPartidosAnteriores(List<Partido> partidosAnteriores) {
+		this.partidosAnteriores = partidosAnteriores;
+	}
+
+	public Partido getPartidoSeleccionadoAnterior() {
+		return partidoSeleccionadoAnterior;
+	}
+
+	public void setPartidoSeleccionadoAnterior(Partido partidoSeleccionadoAnterior) {
+		this.partidoSeleccionadoAnterior = partidoSeleccionadoAnterior;
 	}
 
 }

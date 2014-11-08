@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -44,7 +46,8 @@ public class Torneo implements Serializable{
     @Column(name="FECHADEARRANQUE")
 	private Calendar fechaDeArranque;
 	
-	private int cantidadPartidosJugados;
+	@Column
+	private boolean actual;
 	
 	@OneToMany
 	private List<Equipo> equipos;
@@ -62,13 +65,12 @@ public class Torneo implements Serializable{
 		this.posiciones = new LinkedList<Posicion>();
 		this.asciende = null;
 		this.cantCuadrosDesc = 0;
-		this.cantidadPartidosJugados = 0;
+		this.actual = true;
 	}
 
-	public Torneo(int codigo,int nivelVertical,int nivelHorizontal,int premio, int cantEquipos, int cantCuadrosDesc,
+	public Torneo(int nivelVertical,int nivelHorizontal,int premio, int cantEquipos, int cantCuadrosDesc,
 			Calendar fechaDeArranque) {
 		super();
-		this.codigo = codigo;
 		this.nivelVertical = nivelVertical;
 		this.nivelHorizontal = nivelHorizontal;
 		this.premio = premio;
@@ -77,7 +79,7 @@ public class Torneo implements Serializable{
 		this.fechaDeArranque = fechaDeArranque;
 		this.equipos = new LinkedList<Equipo>();
 		this.posiciones = new LinkedList<Posicion>();
-		this.cantidadPartidosJugados = 0;
+		this.actual = true;
 	}
 	
 	
@@ -88,10 +90,6 @@ public class Torneo implements Serializable{
 			}
 		}
 		return null;
-	}
-	
-	public void sumarPartidoJugado(){
-		this.cantidadPartidosJugados += 1;
 	}
 
 	public int getCodigo() {
@@ -166,14 +164,6 @@ public class Torneo implements Serializable{
 		this.posiciones = posiciones;
 	}
 
-	public int getCantidadPartidosJugados() {
-		return cantidadPartidosJugados;
-	}
-
-	public void setCantidadPartidosJugados(int cantidadPartidosJugados) {
-		this.cantidadPartidosJugados = cantidadPartidosJugados;
-	}
-
 	public Torneo getAsciende() {
 		return asciende;
 	}
@@ -182,8 +172,12 @@ public class Torneo implements Serializable{
 		this.asciende = asciende;
 	}
 
-	public boolean isUltimoPartidoTorneo() {
-		return cantidadPartidosJugados == ((equipos.size()-1)*(equipos.size()/2))-1;
+	public boolean isActual() {
+		return actual;
+	}
+
+	public void setActual(boolean actual) {
+		this.actual = actual;
 	}
 	
 }

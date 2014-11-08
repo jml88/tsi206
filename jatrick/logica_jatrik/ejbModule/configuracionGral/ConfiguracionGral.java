@@ -82,6 +82,9 @@ public class ConfiguracionGral {
 	@Column
 	private int desmejoraNoEntrenaJuvenil;
 	
+	@Column
+	private boolean modificado;
+	
 	@Embedded
 	@Column(nullable = true)
 	private PeriodicoPartido periodicoPartido;
@@ -107,12 +110,14 @@ public class ConfiguracionGral {
 		this.puntosParaEntrenar = puntosParaEntrenar;
 		this.fechaArranqueCampeonato = fechaArranqueCampeonato;
 		this.periodicoPartido = periodicoPartido;
+		this.modificado= false;
 	}
 
 
 	public ConfiguracionGral() {
 		super();
 		// TODO Auto-generated constructor stub
+		this.modificado= false;
 	}
 
 
@@ -353,6 +358,16 @@ public class ConfiguracionGral {
 
 	public void setDesmejoraNoEntrenaJuvenil(int desmejoraNoEntrenaJuvenil) {
 		this.desmejoraNoEntrenaJuvenil = desmejoraNoEntrenaJuvenil;
+	}
+
+
+	public boolean isModificado() {
+		return modificado;
+	}
+
+
+	public void setModificado(boolean modificado) {
+		this.modificado = modificado;
 	}
 	
 	
