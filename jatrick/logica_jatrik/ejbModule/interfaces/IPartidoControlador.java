@@ -31,4 +31,6 @@ public interface IPartidoControlador {
 
 	ResultadoPartido obtenerResultadoPartido(int idPartido);
 
+	Set<Partido> obtenerPartidosAmistososUsuario(int codEquipo);
+
 }

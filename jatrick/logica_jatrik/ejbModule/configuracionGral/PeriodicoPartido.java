@@ -104,6 +104,32 @@ public class PeriodicoPartido implements Serializable{
 		return ret.getTime();
 	}
 	
+	
+	public Date diaFinTorneo(Date fecha, int numeroFecha){
+		Calendar ret = Calendar.getInstance();
+		ret.setTime(fecha);
+		ret.set(Calendar.HOUR_OF_DAY, fecha.getHours());
+		ret.set(Calendar.MINUTE, fecha.getMinutes());
+		switch (this.periodico)
+		{
+			case MINUTO:
+				ret.add(Calendar.MINUTE, numeroFecha*this.minuto);
+				ret.add(Calendar.MINUTE, -(this.minuto/2));
+				break;
+			case HORA:
+				ret.add(Calendar.HOUR_OF_DAY, numeroFecha*this.hora);
+				ret.add(Calendar.MINUTE, -(this.hora/2));
+				break;
+			case DIA:
+				ret.add(Calendar.DAY_OF_YEAR, numeroFecha*this.dia);
+				ret.add(Calendar.MINUTE, -(this.dia/2));
+				break;
+			
+		}
+		
+		return ret.getTime();
+	}
+	
 	public PeriodicoPartido getDatos(){
 		return this;
 	}

@@ -19,6 +19,9 @@ public class TimerMain {
 	@Inject
 	TimerPartido tp;
 	
+	@Inject
+	TimerActualizarTorneo tat;
+	
 	@Resource
 	TimerService ts;
 	
@@ -39,6 +42,7 @@ public class TimerMain {
 			pclh.crearConfiguracionPartido(4, 5);
 		}
 		tp.crearTimerPeriodico(100000);
+		tat.crearTimerimerActualizarTorneo(100000);
 		
 	}
 

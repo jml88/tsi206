@@ -136,7 +136,7 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 			visitante = conversion[arrayFixture[fila][0][1]];
 
 			PeriodicoPartido fechaPartido = conf.getPeriodicoPartido();
-			Date c = conf.getFechaArranqueCampeonato();
+			Date c = t.getFechaDeArranque().getTime();//conf.getFechaArranqueCampeonato();
 			Date fechaP = fechaPartido.diaPartido(c, fila + 1);
 
 			Calendar ca = Calendar.getInstance();
@@ -148,7 +148,7 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 			p.setResultado(rp);
 			em.persist(p);
 		}
-
+		em.flush();
 		nroEquipo = cantidadEquipos - 1;
 		for (int fila = 0; fila < cantidadEquipos - 1; fila++) {
 			for (int columna = 1; columna < cantidadEquipos / 2; columna++) {
@@ -179,6 +179,7 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 				// em.persist(segVuelta);
 			}
 		}
+		em.flush();
 	}
 
 	@Override
@@ -227,6 +228,8 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 			t.setCantEquipos(cantidadEquiposPorTorneo);
 			t.setNivelVertical(nivelVertical);
 			t.setNivelHorizontal(horizontal + 1);
+			t.setActual(true);
+//			t.setFechaDeArranque(cal);
 			em.persist(t);
 			crearPartidosTorneo(t);
 

@@ -155,6 +155,19 @@ public class PartidoControlador implements IPartidoControlador {
 	}
 	
 	@Override
+	public Set<Partido> obtenerPartidosAmistososUsuario(int codEquipo) {
+		Set<Partido> result = new HashSet<Partido>();
+		String consulta = "SELECT p FROM Amistoso p WHERE p.local.codigo = :codEquipo OR p.visitante.codigo = :codEquipo";
+		Query query = em.createQuery(consulta);
+		query.setParameter("codEquipo", codEquipo);
+		for (Object o : query.getResultList()) {
+			Partido p = (Partido)o;
+			result.add(p);
+		}
+		return result;
+	}
+	
+	@Override
 	public ResultadoPartido obtenerResultadoPartido(int idPartido){
 		Partido p = em.find(Partido.class, idPartido);
 		return p.getResultado();

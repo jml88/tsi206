@@ -141,6 +141,7 @@ public class ConfiguracionGral {
 		this.capacidadMinimaEstadio = capacidadMinimaEstadio;
 		this.agrandarEstadio = agrandarEstadio;
 		this.cuestaAgrandar = cuestaAgrandar;
+		this.modificado= false;
 	}
 
 
@@ -438,6 +439,7 @@ public class ConfiguracionGral {
 	public void setCuestaAgrandar(int cuestaAgrandar) {
 		this.cuestaAgrandar = cuestaAgrandar;
 	}
+
 	
 	
 
