@@ -56,7 +56,7 @@ public class Torneo implements Serializable{
 	@ManyToMany(mappedBy = "torneos")
 	private List<Equipo> equipos;
 	
-	@OneToMany(mappedBy = "torneo")
+	@OneToMany
 	private List<Posicion> posiciones;
 	
 	@OneToOne

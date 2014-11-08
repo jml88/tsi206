@@ -11,7 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 import jugadores.Jugador;
 
@@ -31,7 +31,7 @@ public class ResultadoPartido implements Serializable{
 	
 	private int golesVisitante;
 	
-	@OneToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
             name="RESULTADO_LOCALES",
             joinColumns = {@JoinColumn( name="CODRESULTADO")},
@@ -39,7 +39,7 @@ public class ResultadoPartido implements Serializable{
     )
 	private List<Jugador> goleadoresLocal;
 	
-	@OneToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
             name="RESULTADO_VISITANTES",
             joinColumns = {@JoinColumn( name="CODRESULTADO")},

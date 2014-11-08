@@ -39,7 +39,7 @@ public class TimerMain {
 		}
 		
 		if (!pclh.tieneConfiguracionPartido()){
-			pclh.crearConfiguracionPartido(4, 5);
+			pclh.crearConfiguracionPartido(1, 2);
 		}
 		tp.crearTimerPeriodico(100000);
 		tat.crearTimerimerActualizarTorneo(100000);

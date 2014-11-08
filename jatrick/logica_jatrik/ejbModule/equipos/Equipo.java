@@ -2,6 +2,7 @@ package equipos;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -87,6 +88,7 @@ public class Equipo implements Serializable{
 	public Equipo() {
 		this.plantel = new HashSet<Jugador>();
 		this.tipoEntrenamiento = EnumEntrenamiento.ATAQUE;
+		this.torneos = new LinkedList<Torneo>();
 	}
 	
 	public Equipo(DatosEquipo de, Alineacion alineacionDefecto) {
@@ -96,6 +98,7 @@ public class Equipo implements Serializable{
 		this.plantel = new HashSet<Jugador>();
 		this.codPais = de.getCodPais();
 		this.tipoEntrenamiento = EnumEntrenamiento.ATAQUE;
+		this.torneos = new LinkedList<Torneo>();
 	}
 
 	public Equipo(String nombre, Set<Jugador> plantel, Alineacion alineacionDefecto) {
@@ -104,6 +107,7 @@ public class Equipo implements Serializable{
 		this.plantel = plantel;
 		this.alineacionDefecto = alineacionDefecto;
 		this.tipoEntrenamiento = EnumEntrenamiento.ATAQUE;
+		this.torneos = new LinkedList<Torneo>();
 	}
 	
 	public int getCodigo() {

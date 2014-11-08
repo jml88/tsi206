@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,10 +23,9 @@ import partidos.PartidoTorneo;
 import partidos.ResultadoPartido;
 import campeonato.Posicion;
 import campeonato.Torneo;
-
 import comunicacion.Comunicacion;
-
 import configuracionGral.ConfiguracionGral;
+import configuracionGral.PeriodicoPartido;
 import datatypes.DatosAlineacion;
 import datatypes.DatosJugador;
 import datatypes.EnumPartido;
@@ -143,9 +143,15 @@ public class PartidoControlador {
 			t.setActual(false);
 			Torneo nuevoTorneo = t;
 			if (t.getAsciende() == null) {
+				PeriodicoPartido fechaPartido = obtenerConfiguracionGral().getPeriodicoPartido();
+				Date c = t.getFechaDeArranque().getTime();
+				Date fechaP = fechaPartido.diaPartido(c, t.getCantEquipos());
+				Calendar ca = Calendar.getInstance();
+				ca.setTime(fechaP);
 				nuevoTorneo = new Torneo(t.getNivelVertical(),
 						t.getNivelHorizontal(), t.getPremio(),
-						t.getCantEquipos(), t.getCantCuadrosDesc(), null);
+						t.getCantEquipos(), t.getCantCuadrosDesc(), ca);
+				em.persist(nuevoTorneo);
 				List<Equipo> equipos = new LinkedList<Equipo>(t.getEquipos());
 				List<Posicion> posciones = new LinkedList<Posicion>();
 				for (Posicion pos : t.getPosiciones()) {
@@ -153,11 +159,15 @@ public class PartidoControlador {
 					p.setPuntos(pos.getPuntos());
 					p.setGolesAFavor(pos.getGolesAFavor());
 					p.setGolesEnContra(pos.getGolesEnContra());
+					p.setTorneo(nuevoTorneo);
 					em.persist(p);
 					posciones.add(p);
 
 				}
 				nuevoTorneo.setEquipos(equipos);
+				for (Equipo eq : equipos) {
+					eq.getTorneos().add(nuevoTorneo);
+				}
 				nuevoTorneo.setPosiciones(posciones);
 				nuevoTorneo.setActual(true);
 			}
@@ -171,12 +181,22 @@ public class PartidoControlador {
 					Torneo tDescenso = torneosDescenso.get(d++);
 					tDescenso.setActual(false);
 					Posicion p = nuevoTorneo.getPosiciones().get(i);
+					
+					PeriodicoPartido fechaPartido = obtenerConfiguracionGral().getPeriodicoPartido();
+					Date c = tDescenso.getFechaDeArranque().getTime();
+					Date fechaP = fechaPartido.diaPartido(c, tDescenso.getCantEquipos());
+					Calendar ca = Calendar.getInstance();
+					ca.setTime(fechaP);
 					nuevoTorneoD = new Torneo(tDescenso.getNivelVertical(),
 							tDescenso.getNivelHorizontal(),
 							tDescenso.getPremio(), tDescenso.getCantEquipos(),
-							tDescenso.getCantCuadrosDesc(), null);
+							tDescenso.getCantCuadrosDesc(), ca);
+					em.persist(nuevoTorneoD);
 					List<Equipo> equiposD = new LinkedList<Equipo>(
 							tDescenso.getEquipos());
+					for (Equipo eq : equiposD) {
+						eq.getTorneos().add(nuevoTorneoD);
+					}
 					nuevoTorneoD.setEquipos(equiposD);
 					List<Posicion> poscionesD = new LinkedList<Posicion>();
 					for (Posicion pos : tDescenso.getPosiciones()) {
@@ -184,6 +204,7 @@ public class PartidoControlador {
 						posi.setPuntos(pos.getPuntos());
 						posi.setGolesAFavor(pos.getGolesAFavor());
 						posi.setGolesEnContra(pos.getGolesEnContra());
+						posi.setTorneo(nuevoTorneoD);
 						em.persist(posi);
 						poscionesD.add(posi);
 					}
@@ -191,10 +212,10 @@ public class PartidoControlador {
 
 					equipoDesciende(p, nuevoTorneoD, nuevoTorneo);
 					p.resetearPosicion();
-					em.persist(nuevoTorneo);
+					
 					nuevoTorneoD.setAsciende(nuevoTorneo);
 					em.merge(nuevoTorneo);
-					em.persist(nuevoTorneoD);
+					
 					Comunicacion.getInstance().getCampeonatoControlador()
 							.crearPartidosTorneo(nuevoTorneoD);
 					em.flush();

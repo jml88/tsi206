@@ -145,6 +145,14 @@ public class Posicion implements Serializable{
 		this.puntos = puntos;
 	}
 
+	public Torneo getTorneo() {
+		return torneo;
+	}
+
+	public void setTorneo(Torneo torneo) {
+		this.torneo = torneo;
+	}
+
 	public void actualizarFecha(int golesLocal, int golesVisitante) {
 		if (golesLocal > golesVisitante){
 			puntos += 3;

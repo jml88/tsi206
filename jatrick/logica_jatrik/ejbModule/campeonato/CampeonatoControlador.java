@@ -58,7 +58,7 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(cg.getFechaArranqueCampeonato());
 				t.setFechaDeArranque(cal);
-				em.persist(t);
+//				em.persist(t);
 				crearPartidosTorneo(t);
 				if (vertical != 0){
 					asignarTorneoAsciende(t);
@@ -81,7 +81,7 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 		t.setCantCuadrosDesc(hf.getConfiguracionControlador()
 				.getConfiguracion().getCantidadDescensos());
 		List<Equipo> equipos = new LinkedList<Equipo>();
-
+		em.persist(t);
 		Equipo e = null;
 		for (int i = 0; i < cantCuadros; i++) {
 			int idEquipo = hf.getEquipoControlador().crearEquipo(
@@ -90,13 +90,15 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 					hf.getConfiguracionControlador().getConfiguracion()
 							.getCantJugadoresArranque());
 			e = hf.getEquipoControlador().findEquipo(idEquipo);
+			e.getTorneos().add(t);
 			Posicion p = new Posicion(e);
+			p.setTorneo(t);
 			t.getPosiciones().add(p);
 			em.persist(p);
 			equipos.add(e);
 		}
 		t.setEquipos(equipos);
-		// em.merge(t);
+		
 		return t;
 	}
 
@@ -230,7 +232,7 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 			t.setNivelHorizontal(horizontal + 1);
 			t.setActual(true);
 //			t.setFechaDeArranque(cal);
-			em.persist(t);
+//			em.persist(t);
 			crearPartidosTorneo(t);
 
 		}
