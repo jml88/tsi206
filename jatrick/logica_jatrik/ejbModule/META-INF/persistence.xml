@@ -22,6 +22,7 @@
 		<class>mercadoDePases.CompraVentaJugadores</class>
 		<class>configuracionGral.ConfiguracionGral</class>
 		<class>users.Manager</class>
+		<class>finanzas.Finanzas</class>
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="true" />
