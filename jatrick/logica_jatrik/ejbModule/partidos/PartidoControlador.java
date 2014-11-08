@@ -2,7 +2,6 @@ package partidos;
 
 
 import datatypes.DatosAlineacion;
-import datatypes.DatosComentario;
 import datatypes.DatosJugador;
 import equipos.Alineacion;
 import equipos.Equipo;
@@ -15,7 +14,6 @@ import interfaces.IPartidoControlador;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -147,6 +145,19 @@ public class PartidoControlador implements IPartidoControlador {
 	public Set<Partido> obtenerPartidosUsuario(int codEquipo) {
 		Set<Partido> result = new HashSet<Partido>();
 		String consulta = "SELECT p FROM Partido p WHERE p.local.codigo = :codEquipo OR p.visitante.codigo = :codEquipo";
+		Query query = em.createQuery(consulta);
+		query.setParameter("codEquipo", codEquipo);
+		for (Object o : query.getResultList()) {
+			Partido p = (Partido)o;
+			result.add(p);
+		}
+		return result;
+	}
+	
+	@Override
+	public Set<Partido> obtenerPartidosAmistososUsuario(int codEquipo) {
+		Set<Partido> result = new HashSet<Partido>();
+		String consulta = "SELECT p FROM Amistoso p WHERE p.local.codigo = :codEquipo OR p.visitante.codigo = :codEquipo";
 		Query query = em.createQuery(consulta);
 		query.setParameter("codEquipo", codEquipo);
 		for (Object o : query.getResultList()) {
