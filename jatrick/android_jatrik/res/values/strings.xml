@@ -26,5 +26,12 @@
     <string name="value_estadio">Nombre del estadio</string>
     <string name="label_socios">Socios:</string>
     <string name="value_socios">Número de socios</string>
+    <string name="label_partidosJugados">Partidos jugados</string>
+    <string name="label_proximosPartidos">Próximos partidos</string>
+    <string name="title_activity_estadisticas_partido">Estadisticas del Partido</string>
+    <string name="label_estadisticas">aca va: local vs visita, etc</string>
+    <string name="label_resultado">Resultado del partido:</string>
+    <string name="title_activity_minuto_aminuto">Ver partido en vivo</string>
+    <string name="label_minutoAminuto">aca va: local vs visita, etc</string>
 
 </resources>

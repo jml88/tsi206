@@ -9,6 +9,8 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
@@ -105,6 +107,17 @@ public class PrincialActivity extends Activity implements
 		return super.onOptionsItemSelected(item);
 	}
 	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    switch(resultCode)
+	    {
+	    case 1:
+	        setResult(1);
+	        finish();
+	    }
+	    super.onActivityResult(requestCode, resultCode, data);
+	}
+	
 	public boolean logout(){
 		String loggedInUserName = PrefUtils.getFromPrefs(PrincialActivity.this, PrefUtils.PREFS_LOGIN_USERNAME_KEY, null);
 		String loggedInUserPassword = PrefUtils.getFromPrefs(PrincialActivity.this, PrefUtils.PREFS_LOGIN_PASSWORD_KEY, null);
@@ -113,6 +126,7 @@ public class PrincialActivity extends Activity implements
 			PrefUtils.saveToPrefs(PrincialActivity.this, PrefUtils.PREFS_LOGIN_USERNAME_KEY, null);
 			PrefUtils.saveToPrefs(PrincialActivity.this, PrefUtils.PREFS_LOGIN_PASSWORD_KEY, null);
 			System.out.println("LOGOUT");
+			setResult(1);
 			finish();
 			return true;
 		}
@@ -175,7 +189,7 @@ public class PrincialActivity extends Activity implements
 			String urlString = "http://192.168.56.1:8080/servicios_jatrik/rest/api/getEquipoManager/" + username + '/' + password;
 			String respuesta = "";
 			try {
-				respuesta = new RestAPI().execute(opcion,urlString).get();
+				respuesta = new RestAPI(new ProgressDialog(getActivity())).execute(opcion,urlString).get();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -192,8 +206,8 @@ public class PrincialActivity extends Activity implements
 				TextView nombreEquipoTextView = (TextView) rootView.findViewById(R.id.nombreEquipoTextView);
 			    nombreEquipoTextView.setText(nombreEquipo);
 			    
-			    JSONObject estadioJSON = json.getJSONObject("estadio");
-			    String nombreEstadio = estadioJSON.getString("nombre") + " (" + estadioJSON.getString("capacidad") + ")";
+			    //JSONObject estadioJSON = json.getJSONObject("estadio");
+			    String nombreEstadio = json.getString("nombreEstadio") + " (" + json.getString("capacidadEstadio") + ")";
 			    
 			    TextView nombreEstadioTextView = (TextView) rootView.findViewById(R.id.nombreEstadioValue);
 			    nombreEstadioTextView.setText(nombreEstadio);
