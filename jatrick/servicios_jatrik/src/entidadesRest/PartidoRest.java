@@ -4,7 +4,7 @@ public class PartidoRest {
 	
 	private int codigo;
 	private String nombreLocal;
-	private String nombreVisistante;
+	private String nombreVisitante;
 	private long fecha;
 	
 	public PartidoRest() {
@@ -27,12 +27,12 @@ public class PartidoRest {
 		this.nombreLocal = nombreLocal;
 	}
 
-	public String getNombreVisistante() {
-		return nombreVisistante;
+	public String getNombreVisitante() {
+		return nombreVisitante;
 	}
 
-	public void setNombreVisistante(String nombreVisistante) {
-		this.nombreVisistante = nombreVisistante;
+	public void setNombreVisitante(String nombreVisitante) {
+		this.nombreVisitante = nombreVisitante;
 	}
 
 	public long getFecha() {

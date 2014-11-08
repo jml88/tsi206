@@ -2,7 +2,6 @@ package partidos;
 
 
 import datatypes.DatosAlineacion;
-import datatypes.DatosComentario;
 import datatypes.DatosJugador;
 import equipos.Alineacion;
 import equipos.Equipo;
@@ -15,7 +14,6 @@ import interfaces.IPartidoControlador;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
