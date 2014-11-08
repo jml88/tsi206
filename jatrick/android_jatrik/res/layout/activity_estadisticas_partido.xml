@@ -1,0 +1,77 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.tsi206.jatrik.EstadisticasPartidoActivity" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/labelPartidoEstadisticas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+	    android:padding="10dp"
+	    android:textSize="12sp"
+	    android:textStyle="bold"
+        android:text="@string/label_estadisticas" />
+    
+    <ListView
+	    android:id="@+id/listEstadisticasPartido"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent" >
+	</ListView>
+	
+    <View 
+        android:layout_height="1px"
+        android:layout_width="fill_parent" 
+        android:background="#000000"/>
+    
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dp"
+        android:layout_marginStart="7dp"
+        android:columnCount="2" >
+    
+    <TextView
+        android:id="@+id/labelResultado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="0"
+        android:layout_gravity="start|top"
+        android:layout_row="0"
+	    android:padding="10dp"
+	    android:textSize="12sp"
+	    android:textStyle="bold"
+        android:text="@string/label_resultado"/>
+    
+    <TextView
+        android:id="@+id/valueResultado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="0"
+        android:layout_gravity="start|top"
+        android:layout_row="1"
+	    android:padding="10dp"
+	    android:textSize="12sp"
+	    android:textStyle="bold"/>
+
+    </GridLayout>
+	
+    </LinearLayout>
+
+</RelativeLayout>

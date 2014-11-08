@@ -1,8 +1,10 @@
 package com.tsi206.jatrik;
 
 import java.util.concurrent.ExecutionException;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,11 +16,14 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.tsi206.jatrik.util.PrefUtils;
 
 @TargetApi(Build.VERSION_CODES.GINGERBREAD)
 public class LoginActivity extends ActionBarActivity {
 
+	private String apiServer;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,6 +41,9 @@ public class LoginActivity extends ActionBarActivity {
 		
 		String loggedInUserName = PrefUtils.getFromPrefs(LoginActivity.this, PrefUtils.PREFS_LOGIN_USERNAME_KEY, null);
 		String loggedInUserPassword = PrefUtils.getFromPrefs(LoginActivity.this, PrefUtils.PREFS_LOGIN_PASSWORD_KEY, null);
+		
+		MyApp app = ((MyApp)getApplicationContext());
+		apiServer = app.getApiServer();
 		
 		if (loggedInUserName != null & loggedInUserPassword != null){
 			this.login(loggedInUserName, loggedInUserPassword);
@@ -63,11 +71,12 @@ public class LoginActivity extends ActionBarActivity {
 	}
 	
 	public void login(String username, String password){
-String urlString = "http://192.168.56.1:8080/servicios_jatrik/rest/api/login/" + username + '/' + password;
+String urlString = apiServer + "login/" + username + '/' + password;
 	    
 	    if(username != null && !username.isEmpty() && password != null && !password.isEmpty()) {
+	    	String opcion = "Login";
 	    	try {
-				String result = new CallAPI().execute(urlString).get();
+				String result = new RestAPI(new ProgressDialog(this)).execute(opcion, urlString).get();
 				System.out.println(result);
 				
 				if(result.equals("LoginFAIL")){
@@ -83,7 +92,7 @@ String urlString = "http://192.168.56.1:8080/servicios_jatrik/rest/api/login/" +
 					
 					//Voy a la segunda pantalla
 					Intent intent = new Intent(this, PrincialActivity.class);
-					startActivity(intent);
+					startActivityForResult(intent, 0);
 					finish();
 				}
 	    	} catch (RuntimeException e){

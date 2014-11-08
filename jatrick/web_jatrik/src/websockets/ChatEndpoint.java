@@ -41,9 +41,11 @@ public class ChatEndpoint {
 	@OnOpen
 	public void open(final Session session, @PathParam("username") final String username) {
 //		log.info("session openend and bound to room: " + room);
-		session.getUserProperties().put("username", username);
+		if ((!username.equals("undefined")) && (!session.getUserProperties().containsKey(username))) {
+			session.getUserProperties().put("username", username);
+			usersGeneral.add(username);
+		}
 //		session.getUserProperties().put("room", room);
-		usersGeneral.add(username);
 	}
  
 	@OnMessage
@@ -51,7 +53,7 @@ public class ChatEndpoint {
 //		String room = (String) session.getUserProperties().get("room");
 		try {
 			for (Session s : session.getOpenSessions()) {
-				if (s.isOpen() && (!s.getUserProperties().get("username").equals(chatMessage.getSender()))) {
+				if (s.isOpen()) {
 					s.getBasicRemote().sendObject(chatMessage);
 				}
 			}
