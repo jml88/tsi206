@@ -3,6 +3,7 @@ package comunicacion;
 import interfaces.ICampeonatoControlador;
 import interfaces.IConfiguracionControlador;
 import interfaces.IEquipoControlador;
+import interfaces.IFinanzasControlador;
 import interfaces.IJugadorControlador;
 import interfaces.IMercadoDePasesControlador;
 import interfaces.IPartidoControlador;
@@ -76,6 +77,10 @@ public class Comunicacion {
 	
 	public IMercadoDePasesControlador getIMercadoDePasesControlador() throws NamingException {
 		return (IMercadoDePasesControlador)this.ctx.lookup("java:app/logica_jatrik/MercadoDePasesControlador!interfaces.IMercadoDePasesControlador");
+	}
+	
+	public IFinanzasControlador getIFinanzasControlador() throws NamingException {
+		return (IFinanzasControlador)this.ctx.lookup("java:app/logica_jatrik/FinanzasControlador!interfaces.IFinanzasControlador");
 	}
 
 }

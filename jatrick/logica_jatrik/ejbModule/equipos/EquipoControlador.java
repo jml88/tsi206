@@ -227,6 +227,29 @@ public class EquipoControlador implements IEquipoControlador{
 	public Equipo getEquipo(int codigoEquipo) {
 		return em.find(Equipo.class, codigoEquipo);
 	}
+
+	@Override
+	public Torneo obtenerTorneoActual(int codEquipo) throws NoExisteEquipoExcepcion {
+		Equipo e = findEquipo(codEquipo);
+		if(e==null){
+			throw new NoExisteEquipoExcepcion("No existe el equipo de id: " + codEquipo);
+		}
+		
+		List<Torneo> torneos = e.getTorneos();
+		if(torneos == null){
+			return null;
+		}
+		Torneo torneoMasActual = torneos.get(0);
+		for (Torneo torneo : torneos) {
+			
+			if(torneoMasActual.getFechaDeArranque().compareTo(torneo.getFechaDeArranque())>0  ){
+				torneoMasActual = torneo; 
+			}
+		}
+		
+		return torneoMasActual;
+		
+	}
 	
 
 }

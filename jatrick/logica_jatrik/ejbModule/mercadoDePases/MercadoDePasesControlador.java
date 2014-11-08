@@ -1,5 +1,6 @@
 package mercadoDePases;
 
+import datatypes.EnumTipoTransaccion;
 import equipos.Equipo;
 import excepciones.CapitalNegativo;
 import excepciones.NoExisteEquipoExcepcion;
@@ -8,6 +9,7 @@ import excepciones.NoExisteJugadorExcepcion;
 import excepciones.NoSePuedeComprarException;
 import excepciones.YaExisteJugadorALaVenta;
 import fabricas.HomeFactory;
+import finanzas.Finanzas;
 import interfaces.IMercadoDePasesControlador;
 
 import java.util.Calendar;
@@ -21,7 +23,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import jugadores.Jugador;
-import mensajes.Mensaje;;
+import mensajes.Mensaje;
 
 @Stateless
 @Named
@@ -125,6 +127,12 @@ public class MercadoDePasesControlador implements IMercadoDePasesControlador {
 		
 		j.setEquipo(e);
 		em.merge(e);
+		
+		Finanzas debito = new Finanzas(cv.getPrecio(), Calendar.getInstance().getTime(), equipoVende, EnumTipoTransaccion.VENTA_JUGADORES);
+		em.persist(debito);
+		
+		Finanzas credito = new Finanzas(-cv.getPrecio(), Calendar.getInstance().getTime(), e, EnumTipoTransaccion.COMPRA_JUGADORES);
+		em.persist(credito);
 		
 		Mensaje m = new Mensaje("Compra y venta", "El jugador " + j.getFullName() + " se ha vendido", null, e.getUsuario(), Calendar.getInstance().getTime(),false);
 		em.persist(m);

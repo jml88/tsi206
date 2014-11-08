@@ -381,4 +381,9 @@ public class Jugador implements Serializable{
 	public String idString(){
 		return nombre + codigo;
 	}
+	
+	public int calcularSueldoJugador(){
+		
+		return (this.getAtaque() + this.getDefensa() + this.getPorteria() + this.getTecnica()) / (this.getEdad())*10;
+	}
 }

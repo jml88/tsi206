@@ -3,6 +3,7 @@ package fabricas;
 import interfaces.ICampeonatoControlador;
 import interfaces.IConfiguracionControlador;
 import interfaces.IEquipoControlador;
+import interfaces.IFinanzasControlador;
 import interfaces.IJugadorControlador;
 import interfaces.IMensajeControlador;
 import interfaces.IMercadoDePasesControlador;
@@ -29,6 +30,8 @@ public interface HomeFactory {
 	public IMercadoDePasesControlador getMercadoPasesControlador();
 	
 	public IMensajeControlador getMensajeControlador();
+	
+	public IFinanzasControlador getFinanzasControlador();
 	
 
 }

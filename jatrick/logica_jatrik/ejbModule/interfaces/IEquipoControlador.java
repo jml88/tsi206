@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.ejb.Local;
 
+import campeonato.Torneo;
 import partidos.Partido;
 import users.Manager;
 import jugadores.Jugador;
@@ -59,4 +60,7 @@ public interface IEquipoControlador {
 
 	public List<Partido> obtenerAnterioresPartidos(int codEquipo, int cantidad);
 	
+	public Equipo getEquipo(int codigoEquipo);
+	
+	public Torneo obtenerTorneoActual(int codEquipo) throws NoExisteEquipoExcepcion;;
 }
