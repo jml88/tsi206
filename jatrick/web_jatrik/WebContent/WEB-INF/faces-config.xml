@@ -73,6 +73,11 @@
 		<converter-class>utiles.DateConverter</converter-class>     
 	</converter>
 	<converter>
+		<display-name>DateConverterDate</display-name>
+		<converter-id>DateConverterDate</converter-id>
+		<converter-class>utiles.DateConverterDate</converter-class>     
+	</converter>
+	<converter>
 		<display-name>entrenamientoConverter</display-name>
 		<converter-id>entrenamientoConverter</converter-id>
 		<converter-class>utiles.EntrenamientoConverter</converter-class>     
