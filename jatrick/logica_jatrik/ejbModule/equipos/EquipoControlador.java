@@ -47,7 +47,7 @@ public class EquipoControlador implements IEquipoControlador{
 		
 		Estadio estadio = new Estadio();
 		estadio.setCapacidad(5000);
-		estadio.setNombre(nombreEquipo + "Arena");
+		estadio.setNombre(nombreEquipo + " Arena");
 		
 		e.setEstadio(estadio);
 		
@@ -173,6 +173,8 @@ public class EquipoControlador implements IEquipoControlador{
 					manager.setTorneo(t);
 					e.setBot(false);
 					e.setNombre(eq.getNombre());
+					Estadio estadio = e.getEstadio();
+					estadio.setNombre(eq.getNombre() + " Arena");
 					em.merge(e);
 					em.merge(manager);
 					return e;
@@ -219,6 +221,11 @@ public class EquipoControlador implements IEquipoControlador{
 		// TODO Auto-generated method stub
 		Equipo e = findEquipo(idCodigoEquipo);
 		return e.getTipoEntrenamiento();
+	}
+
+	@Override
+	public Equipo getEquipo(int codigoEquipo) {
+		return em.find(Equipo.class, codigoEquipo);
 	}
 	
 
