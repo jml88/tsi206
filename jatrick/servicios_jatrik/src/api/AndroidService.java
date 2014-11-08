@@ -117,7 +117,7 @@ public class AndroidService {
 				PartidoRest pRest = new PartidoRest();
 				pRest.setCodigo(p.getCodigo());
 				pRest.setNombreLocal(p.getLocal().getNombre());
-				pRest.setNombreVisistante(p.getVisitante().getNombre());
+				pRest.setNombreVisitante(p.getVisitante().getNombre());
 				pRest.setFecha(p.getFechaHora().getTimeInMillis());
 				partidosResult.add(pRest);
 				
@@ -183,7 +183,7 @@ public class AndroidService {
 				PartidoRest pRest = new PartidoRest();
 				pRest.setCodigo(p.getCodigo());
 				pRest.setNombreLocal(p.getLocal().getNombre());
-				pRest.setNombreVisistante(p.getVisitante().getNombre());
+				pRest.setNombreVisitante(p.getVisitante().getNombre());
 				pRest.setFecha(p.getFechaHora().getTimeInMillis());
 				partidosResult.add(pRest);
 				
@@ -230,7 +230,7 @@ public class AndroidService {
 	@Produces("application/json")
 	public Response getComentariosPartido(
 			@PathParam("idPartido") String idPartido, 											
-			@PathParam("idPartido") String nroComentario, 
+			@PathParam("nroComentario") String nroComentario, 
 			@PathParam("username") String username, 
 			@PathParam("password") String password){
 		
@@ -260,55 +260,7 @@ public class AndroidService {
 			e.printStackTrace();
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
-		
-		//TODO: Sacar esto
-//		List<Partido> partidos = new ArrayList<Partido>();
-//		Partido partido = new Partido();
-//		Equipo local = new Equipo();
-//		local.setCodigo(1);
-//		local.setBot(false);
-//		local.setNombre("Equipo Local F.C.");
-//		
-//		Equipo visita = new Equipo();
-//		visita.setCodigo(2);
-//		visita.setBot(false);
-//		visita.setNombre("Equipo Visita 2 F.C.");
-//		
-//		partido.setCodigo(40);
-//		partido.setLocal(local);
-//		partido.setVisitante(visita);
-//		partido.setEstado(EnumPartido.FINALIZADO);
-//		partido.setFechaHora(Calendar.getInstance());
-//		
-//		Partido partido2 = new Partido();
-//		partido2.setCodigo(60);
-//		partido2.setLocal(local);
-//		partido2.setVisitante(visita);
-//		partido2.setEstado(EnumPartido.POR_JUGAR);
-//		partido2.setFechaHora(Calendar.getInstance());
-//		
-//		partidos.add(partido);
-//		partidos.add(partido2);
-//		
-//		List<DatosComentario> comentarios = new ArrayList<DatosComentario>();
-//		DatosComentario comentario1 = new DatosComentario();
-//		comentario1.setId(0);
-//		comentario1.setIdPartido(partido.getCodigo());
-//		comentario1.setNroComentario(0);
-//		comentario1.setMensaje("Gol del local");
-//		comentario1.setMinuto(4);
-//		DatosComentario comentario2 = new DatosComentario();
-//		comentario2.setId(1);
-//		comentario2.setIdPartido(partido.getCodigo());
-//		comentario2.setNroComentario(1);
-//		comentario2.setMensaje("Gol del visitante");
-//		comentario2.setMinuto(7);
-//		
-//		comentarios.add(comentario1);
-//		comentarios.add(comentario2);
-//		//****************************************************************
-//				
-//		return Response.ok(comentarios, MediaType.APPLICATION_JSON).build();
+
 	}
 	
 	@Path("/getResultadoPartido/{idPartido}/{username}/{password}")

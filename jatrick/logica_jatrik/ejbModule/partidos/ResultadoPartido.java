@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +31,7 @@ public class ResultadoPartido implements Serializable{
 	
 	private int golesVisitante;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(
             name="RESULTADO_LOCALES",
             joinColumns = {@JoinColumn( name="CODRESULTADO")},
@@ -38,7 +39,7 @@ public class ResultadoPartido implements Serializable{
     )
 	private List<Jugador> goleadoresLocal;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(
             name="RESULTADO_VISITANTES",
             joinColumns = {@JoinColumn( name="CODRESULTADO")},
