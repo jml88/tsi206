@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#webPages#login#login.xhtml"
+  PATH="/webPages/login/login.xhtml" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#webPages#login#login.xhtml:0" NAME="item"
+   PATH="/webPages/login/login.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="loginOK::#webPages#home#home.xhtml"
+    NAME="output" PATH="/webPages/home/home.xhtml"
+    TARGET="rules:#webPages#home#home.xhtml" TITLE="loginOK" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="admin::#admin.xhtml" NAME="output1"
+    PATH="/admin.xhtml" TARGET="rules:#admin.xhtml" TITLE="admin" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="toRegister::#webPages#registro#registro.xhtml" NAME="output2"
+    PATH="/webPages/registro/registro.xhtml"
+    TARGET="rules:#webPages#registro#registro.xhtml" TITLE="toRegister" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#webPages#registro#registro.xhtml"
+  PATH="/webPages/registro/registro.xhtml" SHAPE="272,209,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#webPages#registro#registro.xhtml:0"
+   NAME="item" PATH="/webPages/registro/registro.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="registerOK::#webPages#home#home.xhtml"
+    NAME="output" PATH="/webPages/home/home.xhtml"
+    TARGET="rules:#webPages#home#home.xhtml" TITLE="registerOK" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#webPages#home#home.xhtml"
+  PATH="/webPages/home/home.xhtml" SHAPE="512,193,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#webPages#home#home.xhtml:0" NAME="item"
+   PATH="/webPages/home/home.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="jugarAmistoso::#webPages#partidos#jugarAmistoso.xhtml"
+    NAME="output" PATH="/webPages/partidos/jugarAmistoso.xhtml"
+    TARGET="rules:#webPages#partidos#jugarAmistoso.xhtml"
+    TITLE="jugarAmistoso" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#webPages#partidos#jugarAmistoso.xhtml"
+  PATH="/webPages/partidos/jugarAmistoso.xhtml" SHAPE="720,209,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#webPages#partidos#jugarAmistoso.xhtml:0"
+   NAME="item" PATH="/webPages/partidos/jugarAmistoso.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="volver::#webPages#home#home.xhtml"
+    NAME="output" PATH="/webPages/home/home.xhtml"
+    TARGET="rules:#webPages#home#home.xhtml" TITLE="volver" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#admin.xhtml" PATH="/admin.xhtml"
+  SHAPE="272,33,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#admin.xhtml:0" NAME="item"
+   PATH="/admin.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="::#admin.xhtml" NAME="output"
+    PATH="/admin.xhtml" TARGET="rules:#admin.xhtml" TITLE="[any]" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#webPages#jugadores#jugadores.xhtml"
+  PATH="/webPages/jugadores/jugadores.xhtml" SHAPE="32,193,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#webPages#jugadores#jugadores.xhtml:0"
+   NAME="item" PATH="/webPages/jugadores/jugadores.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="OK::#webPages#jugadores#detallesJugador"
+    NAME="output" PATH="/webPages/jugadores/detallesJugador"
+    TARGET="rules:#webPages#jugadores#detallesJugador" TITLE="OK" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#webPages#jugadores#detallesJugador"
+  PATH="/webPages/jugadores/detallesJugador" SHAPE="240,321,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>
