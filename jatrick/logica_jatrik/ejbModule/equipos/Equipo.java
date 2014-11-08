@@ -2,6 +2,7 @@ package equipos;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -11,10 +12,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.jboss.resteasy.spi.touri.MappedBy;
+
+import campeonato.Torneo;
 import users.Manager;
 import jugadores.Jugador;
 import datatypes.DatosEquipo;
@@ -60,8 +66,22 @@ public class Equipo implements Serializable{
 	@Column
 	private int capital;
 	
-	@OneToOne
-	@JoinColumn(name="equipo")
+	@Column
+	private int publicidad;
+	
+	@Column
+	private int socios;
+	
+	@ManyToMany
+	private List<Torneo> torneos;
+	
+	@Column
+	private int seguidores;
+	
+	@Column
+	private int gastoJuveniles;
+	
+	@OneToOne(mappedBy= "equipo")
 	private Manager usuario;
 	
 	public Equipo() {
@@ -168,6 +188,48 @@ public class Equipo implements Serializable{
 
 	public void setUsuario(Manager usuario) {
 		this.usuario = usuario;
+	}
+
+	
+
+	public List<Torneo> getTorneos() {
+		return torneos;
+	}
+
+	public void setTorneos(List<Torneo> torneos) {
+		this.torneos = torneos;
+	}
+
+	public int getPublicidad() {
+		return publicidad;
+	}
+
+	public void setPublicidad(int publicidad) {
+		this.publicidad = publicidad;
+	}
+
+	public int getSocios() {
+		return socios;
+	}
+
+	public void setSocios(int socios) {
+		this.socios = socios;
+	}
+
+	public int getSeguidores() {
+		return seguidores;
+	}
+
+	public void setSeguidores(int seguidores) {
+		this.seguidores = seguidores;
+	}
+
+	public int getGastoJuveniles() {
+		return gastoJuveniles;
+	}
+
+	public void setGastoJuveniles(int gastoJuveniles) {
+		this.gastoJuveniles = gastoJuveniles;
 	}
 
 	

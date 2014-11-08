@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -20,6 +21,11 @@ import equipos.Equipo;
 @Entity
 public class Torneo implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name = "CODTORNEO")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -46,10 +52,10 @@ public class Torneo implements Serializable{
 	
 	private int cantidadPartidosJugados;
 	
-	@OneToMany
+	@ManyToMany(mappedBy = "torneos")
 	private List<Equipo> equipos;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "torneo")
 	private List<Posicion> posiciones;
 	
 	@OneToOne
