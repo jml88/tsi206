@@ -9,7 +9,7 @@ import datatypes.EnumTipoTransaccion;
 import excepciones.NoExisteEquipoExcepcion;
 import finanzas.Finanzas;
 
-@Local
+
 public interface IFinanzasControlador {
 	
 	public List<Finanzas> obtenerTransaccionesDesde(int codigoEquipo,Date date) throws NoExisteEquipoExcepcion;

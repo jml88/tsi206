@@ -18,7 +18,7 @@
 			<div align="center">
 				<p:panelGrid columns="3" >
 					<p:outputLabel value = "Capital: "/>
-					<p:output value = "#{finanzasBB.capitalCalculado}">
+					<h:outputText value = "#{finanzasBB.capitalCalculado}">
 						<f:convertNumber currencySymbol="$" type="currency"/>
 					</h:outputText>
 					<h:outputText  value = "-"/>
@@ -31,13 +31,13 @@
 					
 					<p:outputLabel value = "Total venta de jugadores: "/>
 					<h:outputText  value = "#{finanzasBB.ventasJugadoresUltimoMes}">
-						<f:convertNumber currencySymbol="$" type="currency">
+						<f:convertNumber currencySymbol="$" type="currency"/>
 					</h:outputText>
 					<h:outputText  value = "-"/>
 					
 					<p:outputLabel value = "Entrada por socios: "/>
-					<h:outputText  value = "#{finanzasBB.socios}"/>
-						<f:convertNumber currencySymbol="$" type="currency">
+					<h:outputText  value = "#{finanzasBB.socios}">
+						<f:convertNumber currencySymbol="$" type="currency"/>
 					</h:outputText>
 					<h:outputText  value = "-"/>
 					
@@ -56,7 +56,7 @@
 					<p:outputLabel value = "Pago de juveniles: "/>
 					<h:outputText  value = "-"/>
 					<h:outputText  value = "#{finanzasBB.pagoJuveniles}">
-						<f:convertNumber currencySymbol="$" type="currency">
+						<f:convertNumber currencySymbol="$" type="currency"/>
 					</h:outputText>
 					
 					<p:outputLabel value = "Compra jugadores: "/>
@@ -82,7 +82,7 @@
 		    		</p:column>
 		 
 		    		<p:column headerText="Tipo de transaccion">
-		        		<h:outputText value="#{finanzasBB.tipoTransaccionToString(trans.tipoTransaccion)}" />
+		        		<h:outputText value="#{trans.tipoTransaccion}" />
 		    		</p:column>
 				</p:dataTable>
 			</div>

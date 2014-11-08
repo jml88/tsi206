@@ -40,6 +40,8 @@ public interface ICampeonatoControlador {
 	public void agregarTorneoNivelInferior();
 
 	public void crearPartidosTorneo(Torneo t);
+
+	public List<Torneo> obtenerTorneosActuales();
 	
 
 }

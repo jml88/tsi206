@@ -1,6 +1,8 @@
 package finanzas;
 
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,6 +17,7 @@ import com.sun.javafx.collections.ListListenerHelper;
 
 import jugadores.Jugador;
 import partidos.Partido;
+import campeonato.Posicion;
 import campeonato.Torneo;
 import configuracion.ConfiguracionControladorLocal;
 import datatypes.EnumTipoTransaccion;
@@ -83,14 +86,13 @@ public class FinanzasControlador {
 	
 	
 	public void generarPublicidad(Equipo e) throws NoExisteEquipoExcepcion, NamingException{
-		//TODO crear 3 tipos de publicidad, si estuvo en el primer tercio, segundo tercio o tercer tercio
-		Torneo t = obtenerTorneoActual(e.getCodigo());
-		Object o = em.createQuery("SELECT Count(p2) pos FROM Posicion p1 INNER JOIN Posicion p2"
-				+ " p1.equipo.codigo = :equipo AND p1.torneo.codigo = :torneo"
-				+ " HAVING p2.puntos > p1.puntos")
+Torneo t = obtenerTorneoActual(e.getCodigo());
+		
+		Posicion p = (Posicion)em.createQuery("Select p from Posicion p where p.equipo.codigo = :equipo AND p.torneo.codigo = :torneo")
 				.setParameter("equipo", e.getCodigo())
-				.setParameter("torneo", t.getCodigo()).getSingleResult();
-		int pos = ((Number) o).intValue() + 1;
+				.setParameter("torneo", t.getCodigo())
+				.getSingleResult();
+		int pos = ordenarPosiciones(t).indexOf(p);
 		int cantidadCuadros = conf.getConfiguracion().getCantEquipoTorneo();
 		
 		if(pos/(cantidadCuadros/3) == 0){
@@ -182,14 +184,31 @@ public class FinanzasControlador {
 		
 	}
 	
+	private List<Posicion> ordenarPosiciones(Torneo t) {
+		Collections.sort(t.getPosiciones(), new Comparator() {
+
+			public int compare(Object o1, Object o2) {
+				int retorno = 0;
+				retorno = ((Posicion) o1).getPuntos() > ((Posicion) o1)
+						.getPuntos() ? 1 : -1;
+				if (((Posicion) o1).getPuntos() == ((Posicion) o1).getPuntos()) {
+					retorno = 0;
+				}
+				return retorno;
+			}
+		});
+		;
+		return t.getPosiciones();
+	}
+	
 	public void actualizarCantidadSocios(Equipo e) throws NoExisteEquipoExcepcion{
 		Torneo t = obtenerTorneoActual(e.getCodigo());
-		Object o = em.createQuery("SELECT Count(p2) pos FROM Posicion p1 INNER JOIN Posicion p2"
-				+ " p1.equipo.codigo = :equipo AND p1.torneo.codigo = :torneo"
-				+ " HAVING p2.puntos > p1.puntos")
+		
+		Posicion p = (Posicion)em.createQuery("Select p from Posicion p where p.equipo.codigo = :equipo AND p.torneo.codigo = :torneo")
 				.setParameter("equipo", e.getCodigo())
-				.setParameter("torneo", t.getCodigo()).getSingleResult();
-		int pos = ((Number) o).intValue() + 1;
+				.setParameter("torneo", t.getCodigo())
+				.getSingleResult();
+		int pos = ordenarPosiciones(t).indexOf(p);
 		int cantidadCuadros = conf.getConfiguracion().getCantEquipoTorneo();
 		
 		
@@ -217,27 +236,16 @@ public class FinanzasControlador {
 	public void pagarPremio(Torneo torneo) throws NoExisteEquipoExcepcion{
 		int premio = conf.getConfiguracion().getPremio();
 		
-		List<Equipo> equipos = torneo.getEquipos();
-		
-		for (Equipo equipo : equipos) {
-			Torneo t = obtenerTorneoActual(equipo.getCodigo());
-			Object o = em.createQuery("SELECT Count(p2) pos FROM Posicion p1 INNER JOIN Posicion p2"
-					+ " p1.equipo.codigo = :equipo AND p1.torneo.codigo = :torneo"
-					+ " HAVING p2.puntos > p1.puntos")
-					.setParameter("equipo", equipo.getCodigo())
-					.setParameter("torneo", t.getCodigo()).getSingleResult();
-			int pos = ((Number) o).intValue() + 1;
-			if(pos == 1){
-				equipo.setCapital(premio);
-				em.merge(equipo);
-				ingresarTransaccion(equipo, premio, EnumTipoTransaccion.PREMIO);
-			}
-		}
+		List<Posicion> posiciones = ordenarPosiciones(torneo);
+		Equipo equipo = posiciones.get(0).getEquipo();
+		equipo.setCapital(premio);
+		em.merge(equipo);
+		ingresarTransaccion(equipo, premio, EnumTipoTransaccion.PREMIO);
 		
 	}
 	
 	public void actualizarFinTorneos() throws NoExisteEquipoExcepcion, NamingException{
-		List<Torneo> torneosActuales = em.createQuery("SELECT t FROM Torneo WHERE t.actual = :true")
+		List<Torneo> torneosActuales = em.createQuery("SELECT t FROM Torneo t WHERE t.actual = :true")
 				.setParameter("true", true)
 				.getResultList();
 		
@@ -263,13 +271,13 @@ public class FinanzasControlador {
 		}
 	}
 	
-	public void actualizarPorMes(){
-		List<Equipo> equipos = em.createQuery("SELECT e FROM Equipo e").getResultList();
-		for (Equipo equipo : equipos) {
-			pagarSueldosAEquipo(equipo);
-			cobrarPublicidad(equipo);
-			pagoDeJuveniles(equipo);
-		}
+	public void actualizarPorMes(Partido p){
+			pagarSueldosAEquipo(p.getLocal());
+			pagarSueldosAEquipo(p.getVisitante());
+			cobrarPublicidad(p.getLocal());
+			cobrarPublicidad(p.getVisitante());
+			pagoDeJuveniles(p.getLocal());
+			pagoDeJuveniles(p.getVisitante());
 	}
 	
 	public void actualizarDespuesPartido(Partido p){
