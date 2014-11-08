@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import equipos.Equipo;
@@ -14,12 +15,20 @@ import equipos.Equipo;
 @Entity
 public class Posicion implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int codigo;
 	
 	@OneToOne
 	private Equipo equipo;
+	
+	@ManyToOne
+	private Torneo torneo;
 	
 	@Column
 	private int partidosJugados;
@@ -152,7 +161,7 @@ public class Posicion implements Serializable{
 	}
 
 	public void resetearPosicion() {
-		this.equipo = null;
+//		this.equipo = null;
 		this.golesAFavor = 0;
 		this.golesEnContra = 0;
 		this.partidosEmpatados = 0;

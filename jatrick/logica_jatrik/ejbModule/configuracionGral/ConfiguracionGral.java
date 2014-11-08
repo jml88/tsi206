@@ -1,6 +1,5 @@
 package configuracionGral;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -82,11 +81,28 @@ public class ConfiguracionGral {
 	@Column
 	private int desmejoraNoEntrenaJuvenil;
 	
+	@Column
+	private boolean modificado;
+	
 	@Embedded
 	@Column(nullable = true)
 	private PeriodicoPartido periodicoPartido;
-
 	
+	//Estadio
+	@Column
+	private int capacidadMaximaEstadio;
+	
+	@Column
+	private int capacidadMinimaEstadio;
+	
+	@Column
+	private int agrandarEstadio;	
+
+	@Column
+	private int cuestaAgrandar;
+	
+
+
 	
 
 
@@ -94,7 +110,12 @@ public class ConfiguracionGral {
 			int cantJugadoresArranque, int cantEquipoTorneo, int numeroFecha,
 			int numeroTorneo, int cantidadTorneos, int cantidadDescensos,
 			int puntosParaEntrenar, Date fechaArranqueCampeonato,
-			PeriodicoPartido periodicoPartido) {
+			int juvenilEdad, int adultoEdad, int veteranoEdad,
+			int mejoraEntrenaJuvenil, int mejoraEntrenaAdulto,
+			int mejoraEntrenaVeterano, int desmejoraNoEntrenaVeterano,
+			int desmejoraNoEntrenaAdulto, int desmejoraNoEntrenaJuvenil,
+			PeriodicoPartido periodicoPartido, int capacidadMaximaEstadio,
+			int capacidadMinimaEstadio, int agrandarEstadio, int cuestaAgrandar) {
 		super();
 		this.premio = premio;
 		this.dineroInicial = dineroInicial;
@@ -106,13 +127,27 @@ public class ConfiguracionGral {
 		this.cantidadDescensos = cantidadDescensos;
 		this.puntosParaEntrenar = puntosParaEntrenar;
 		this.fechaArranqueCampeonato = fechaArranqueCampeonato;
+		this.juvenilEdad = juvenilEdad;
+		this.adultoEdad = adultoEdad;
+		this.veteranoEdad = veteranoEdad;
+		this.mejoraEntrenaJuvenil = mejoraEntrenaJuvenil;
+		this.mejoraEntrenaAdulto = mejoraEntrenaAdulto;
+		this.mejoraEntrenaVeterano = mejoraEntrenaVeterano;
+		this.desmejoraNoEntrenaVeterano = desmejoraNoEntrenaVeterano;
+		this.desmejoraNoEntrenaAdulto = desmejoraNoEntrenaAdulto;
+		this.desmejoraNoEntrenaJuvenil = desmejoraNoEntrenaJuvenil;
 		this.periodicoPartido = periodicoPartido;
+		this.capacidadMaximaEstadio = capacidadMaximaEstadio;
+		this.capacidadMinimaEstadio = capacidadMinimaEstadio;
+		this.agrandarEstadio = agrandarEstadio;
+		this.cuestaAgrandar = cuestaAgrandar;
 	}
 
 
 	public ConfiguracionGral() {
 		super();
 		// TODO Auto-generated constructor stub
+		this.modificado= false;
 	}
 
 
@@ -353,6 +388,55 @@ public class ConfiguracionGral {
 
 	public void setDesmejoraNoEntrenaJuvenil(int desmejoraNoEntrenaJuvenil) {
 		this.desmejoraNoEntrenaJuvenil = desmejoraNoEntrenaJuvenil;
+	}
+
+
+	public boolean isModificado() {
+		return modificado;
+	}
+
+
+	public void setModificado(boolean modificado) {
+		this.modificado = modificado;
+	}
+	
+	public int getCapacidadMaximaEstadio() {
+		return capacidadMaximaEstadio;
+	}
+
+
+	public void setCapacidadMaximaEstadio(int capacidadMaximaEstadio) {
+		this.capacidadMaximaEstadio = capacidadMaximaEstadio;
+	}
+
+
+	public int getCapacidadMinimaEstadio() {
+		return capacidadMinimaEstadio;
+	}
+
+
+	public void setCapacidadMinimaEstadio(int capacidadMinimaEstadio) {
+		this.capacidadMinimaEstadio = capacidadMinimaEstadio;
+	}
+
+
+	public int getAgrandarEstadio() {
+		return agrandarEstadio;
+	}
+
+
+	public void setAgrandarEstadio(int agrandarEstadio) {
+		this.agrandarEstadio = agrandarEstadio;
+	}
+
+
+	public int getCuestaAgrandar() {
+		return cuestaAgrandar;
+	}
+
+
+	public void setCuestaAgrandar(int cuestaAgrandar) {
+		this.cuestaAgrandar = cuestaAgrandar;
 	}
 	
 	
