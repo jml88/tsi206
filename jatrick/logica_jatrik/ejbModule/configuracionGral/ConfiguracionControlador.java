@@ -2,13 +2,11 @@ package configuracionGral;
 
 import interfaces.IConfiguracionControlador;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Named;
-import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -27,7 +25,7 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 		@SuppressWarnings("unchecked")
 		List<ConfiguracionGral> cg = (List<ConfiguracionGral>)em.createQuery("Select cg from ConfiguracionGral cg").getResultList();
 		if(cg.isEmpty()){
-			ConfiguracionGral conf = new ConfiguracionGral(0, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, 0, 0, 0);
+			ConfiguracionGral conf = new ConfiguracionGral(10000,1000 ,20,8, 0, 0, 2,1, 10, new Date(),21,30,33, 4, 1, 0,1, 0,-1, null,90000,10000,10000, 10000);
 			em.persist(conf);
 			return conf;
 		}
@@ -41,7 +39,11 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 		@SuppressWarnings("unchecked")
 		List<ConfiguracionGral> cg = (List<ConfiguracionGral>)em.createQuery("Select cg from ConfiguracionGral cg").getResultList();
 		if(cg.isEmpty()){
-			return null;
+			PeriodicoPartido p = new PeriodicoPartido(0, 5, 0, EnumPeriodicoPartido.MINUTO);
+			ConfiguracionGral conf = new ConfiguracionGral(10000,1000 ,20,8, 0, 0, 2,1, 10, new Date(),21,30,33, 4, 1, 0,1, 0,-1, p,90000,10000,10000, 10000);
+			em.persist(conf);
+			return conf;
+
 		}
 		else{
 			return cg.get(0);

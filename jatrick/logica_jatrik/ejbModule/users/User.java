@@ -1,5 +1,6 @@
 package users;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CollectionTable;
@@ -41,7 +42,12 @@ import equipos.Alineacion;
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
 @Table(name = User.nombreTabla)
-public class User {
+public class User implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public static final String nombreTabla = "USER";
 	

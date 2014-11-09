@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -31,6 +32,8 @@ import datatypes.DatosJugador;
 import datatypes.EnumPartido;
 import equipos.Alineacion;
 import equipos.Equipo;
+import excepciones.NoExisteEquipoExcepcion;
+import finanzas.FinanzasControlador;
 
 @Stateless
 @LocalBean
@@ -38,7 +41,10 @@ public class PartidoControlador {
 
 	@PersistenceContext(unitName = "jatrik")
 	private EntityManager em;
-
+	
+	@Inject
+	private FinanzasControlador fc;
+	
 	public PartidoControlador() {
 
 	}
@@ -111,6 +117,15 @@ public class PartidoControlador {
 				"SELECT 1 FROM PartidoTorneo p where p.estado <> 'FINALIZADO'")
 				.getResultList().size() == 0) {
 			List<Torneo> torneos = this.obtenerTorneosActuales();
+			try {
+				fc.actualizarFinTorneos();
+			} catch (NoExisteEquipoExcepcion e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NamingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			for (Torneo torneo : torneos) {
 				this.actualizarDatosTorneo(torneo);
 			}
@@ -139,6 +154,7 @@ public class PartidoControlador {
 	public void actualizarDatosTorneo(Torneo t) {
 		ordenarPosiciones(t);
 		try {
+			
 			List<Torneo> torneosDescenso = obtenerTorneosDescenso(t);
 			t.setActual(false);
 			Torneo nuevoTorneo = t;
@@ -235,14 +251,12 @@ public class PartidoControlador {
 			em.flush();
 
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
 	private List<Torneo> obtenerTorneosDescenso(Torneo t) {
-		// TODO Auto-generated method stub
 		Query q = em
 				.createQuery("SELECT t FROM Torneo t where t.asciende.codigo = :torneo");
 		q.setParameter("torneo", t.getCodigo());
