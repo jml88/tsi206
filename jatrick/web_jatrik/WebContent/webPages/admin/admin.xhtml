@@ -43,7 +43,8 @@
 							value="#{adminBB.configGeneral.dineroInicial}"></p:inputText>
 
 						<p:outputLabel for="datetime" value="Fecha inicio campeonato: " />
-						<p:calendar id="datetime" value="#{adminBB.configGeneral.fechaArranqueCampeonato}"
+						<p:calendar id="datetime"
+							value="#{adminBB.configGeneral.fechaArranqueCampeonato}"
 							pattern="MM/dd/yyyy HH:mm:ss" />
 
 						<p:outputLabel for="periodico" value="Periódico:" />
@@ -106,27 +107,50 @@
 						<p:inputText id="desmejoraNoEntrenaVeterano"
 							label="Puntos de desmejora de veterano"
 							value="#{adminBB.configGeneral.desmejoraNoEntrenaVeterano}"></p:inputText>
-							
+
 						<p:outputLabel for="capacidadMaximaEstadio">Capacidad máxima estadio: </p:outputLabel>
 						<p:inputText id="capacidadMaximaEstadio"
 							label="Capacidad maxima estadio"
 							value="#{adminBB.configGeneral.capacidadMaximaEstadio}"></p:inputText>
-							
+
 						<p:outputLabel for="capacidadMinimaEstadio">Capacidad minima estadio: </p:outputLabel>
 						<p:inputText id="capacidadMinimaEstadio"
 							label="Capacidad minimo estadio"
 							value="#{adminBB.configGeneral.capacidadMinimaEstadio}"></p:inputText>
-							
+
 						<p:outputLabel for="cuestaAgrandar">Cuesta agrandar estadio: </p:outputLabel>
-						<p:inputText id="cuestaAgrandar"
-							label="Cuesta agrandar estadio"
+						<p:inputText id="cuestaAgrandar" label="Cuesta agrandar estadio"
 							value="#{adminBB.configGeneral.cuestaAgrandarEstadio}"></p:inputText>
-							
+
 						<p:outputLabel for="agrandarEstadio">Capacidad en agrandar estadio: </p:outputLabel>
 						<p:inputText id="agrandarEstadio"
 							label="Capacidad en agrandar estadio"
 							value="#{adminBB.configGeneral.capacidadAgrandarEstadio}"></p:inputText>
 
+						<p:outputLabel for="sociosEmpieza">Socios Iniciales: </p:outputLabel>
+						<p:inputText id="sociosEmpieza" label="Socios Iniciales"
+							value="#{adminBB.configGeneral.sociosEmpieza}"></p:inputText>
+
+						<p:outputLabel for="seguidoresEmpieza">Concurrencia al estadio inicial: </p:outputLabel>
+						<p:inputText id="seguidoresEmpieza"
+							label="Concurrencia al estadio inicial"
+							value="#{adminBB.configGeneral.seguidoresEmpieza}"></p:inputText>
+
+						<p:outputLabel for="publicidadMinima">Publicidad minima: </p:outputLabel>
+						<p:inputText id="publicidadMinima" label="Publicidad minima"
+							value="#{adminBB.configGeneral.publicidadMinima}"></p:inputText>
+
+						<p:outputLabel for="publicidadMedia">Publicidad media: </p:outputLabel>
+						<p:inputText id="publicidadMedia" label="Publicidad media"
+							value="#{adminBB.configGeneral.publicidadMedia}"></p:inputText>
+
+						<p:outputLabel for="publicidadMaxima">Publicidad maxima: </p:outputLabel>
+						<p:inputText id="publicidadMaxima" label="Publicidad maxima"
+							value="#{adminBB.configGeneral.publicidadMaxima}"></p:inputText>
+
+						<p:outputLabel for="premio">Premio: </p:outputLabel>
+						<p:inputText id="premio" label="Premio"
+							value="#{adminBB.configGeneral.premio}"></p:inputText>
 
 						<p:row>
 							<p:column colspan="2">
