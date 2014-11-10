@@ -127,13 +127,15 @@ public class EquipoControlador implements IEquipoControlador{
 	}
 	
 	@Override
-	public Set<DatosJugador> obtenerJugadoresEquipo(int codEquipo) {
-		Set<DatosJugador> result = new HashSet<DatosJugador>();
+	public Set<Jugador> obtenerJugadoresEquipo(int codEquipo) {
+//		Set<DatosJugador> result = new HashSet<DatosJugador>();
 		Equipo equipo = this.findEquipo(codEquipo);
-		for (Jugador j : equipo.getPlantel()) {
-			result.add(j.getDatos());
-		}
-		return result;
+//		for (Jugador j : equipo.getPlantel()) {
+//			result.add(j.getDatos());
+//		}
+//		return result;
+		
+		return equipo.getPlantel();
 	}
 	
 	@Override
