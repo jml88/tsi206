@@ -23,6 +23,11 @@ import equipos.Equipo;
 @Table(name = Jugador.nombreTabla)
 public class Jugador implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public static final String nombreTabla = "JUGADORES";
 
 	@Id
@@ -136,6 +141,7 @@ public class Jugador implements Serializable{
 		this.jatTriks = jatTriks;
 		this.equipo = equipo;
 		this.partidosJugados = partidosJugados;
+		salario = calcularSueldoJugador();
 	}
 
 	public Jugador(DatosJugador dj, Equipo equipo) {
@@ -380,5 +386,10 @@ public class Jugador implements Serializable{
 	
 	public String idString(){
 		return nombre + codigo;
+	}
+	
+	public int calcularSueldoJugador(){
+		
+		return (this.getAtaque() + this.getDefensa() + this.getPorteria() + this.getTecnica()) / (this.getEdad())*10;
 	}
 }

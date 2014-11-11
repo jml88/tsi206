@@ -12,64 +12,55 @@
 		</script>
 	</ui:define>
 	
-	private int capitalActual;
-	
-	//positivos
-	private int publicidad;
-	
-	private int ventasJugadoresUltimoMes;
-	
-	private int socios;
-	
-	private int entradaUltimos4Partidos;
-	
-	//negativos
-	private int sueldos;
-	
-	private int pagoJuveniles;
-
-	private int compraJugadoresUltimoMes;
-	
+		
 	<ui:define name="Principal">
 		<h:form id="form" prependId="false">
 			<div align="center">
-				<p:panelGrid columns="2" >
+				<p:panelGrid columns="3" >
 					<p:outputLabel value = "Capital: "/>
-					<p:output value = "#{finanzasBB.capitalSumado}">
+					<h:outputText value = "#{finanzasBB.capitalCalculado}">
 						<f:convertNumber currencySymbol="$" type="currency"/>
 					</h:outputText>
+					<h:outputText  value = "-"/>
 					
 					<p:outputLabel value = "Publicidad: "/>
 					<h:outputText  value = "#{finanzasBB.publicidad} ">
 						<f:convertNumber currencySymbol="$" type="currency"/>
 					</h:outputText>
+					<h:outputText  value = "-"/>
 					
-					<p:outputLabel value = "Venta de jugadores ultimo mes: "/>
+					<p:outputLabel value = "Total venta de jugadores: "/>
 					<h:outputText  value = "#{finanzasBB.ventasJugadoresUltimoMes}">
-						<f:convertNumber currencySymbol="$" type="currency">
+						<f:convertNumber currencySymbol="$" type="currency"/>
 					</h:outputText>
+					<h:outputText  value = "-"/>
 					
 					<p:outputLabel value = "Entrada por socios: "/>
-					<h:outputText  value = "#{finanzasBB.socios}"/>
-						<f:convertNumber currencySymbol="$" type="currency">
+					<h:outputText  value = "#{finanzasBB.socios}">
+						<f:convertNumber currencySymbol="$" type="currency"/>
 					</h:outputText>
+					<h:outputText  value = "-"/>
 					
-					<p:outputLabel value = "Entrada ultimos 4 partidos: "/>
+					<p:outputLabel value = "Entrada de partidos: "/>
 					<h:outputText  value = "#{finanzasBB.entradaUltimos4Partidos}">
 						<f:convertNumber currencySymbol="$" type="currency"/>
 					</h:outputText>
+					<h:outputText  value = "-"/>
 					
 					<p:outputLabel value = "Sueldos"/>
+					<h:outputText  value = "-"/>
 					<h:outputText  value = "#{finanzasBB.sueldos}">
 						<f:convertNumber currencySymbol="$" type="currency"/>
 					</h:outputText>
 					
 					<p:outputLabel value = "Pago de juveniles: "/>
+					<h:outputText  value = "-"/>
 					<h:outputText  value = "#{finanzasBB.pagoJuveniles}">
-						<f:convertNumber currencySymbol="$" type="currency">
+						<f:convertNumber currencySymbol="$" type="currency"/>
 					</h:outputText>
 					
-					<p:outputLabel value = "Compra jugadores ultimo mes: "/>
+					<p:outputLabel value = "Compra jugadores: "/>
+					<h:outputText  value = "-"/>
 					<h:outputText  value = "#{finanzasBB.compraJugadoresUltimoMes}">
 						<f:convertNumber currencySymbol="$" type="currency"/>
 					</h:outputText>
@@ -78,9 +69,22 @@
 					<h:outputText  value = "#{finanzasBB.capitalActual}">
 						<f:convertNumber currencySymbol="$" type="currency"/>
 					</h:outputText>
-					
 				</p:panelGrid>
-				
+			</div>
+			<div>
+				<p:dataTable var="trans" value="#{finanzasBB.finanzas}">
+		    		<p:column headerText="fechaTransaccion">
+		        		<h:outputText value="#{trans.fechaTransaccion}" converter="DateConverterDate"/>
+		    		</p:column>
+		 
+		    		<p:column headerText="Monto">
+		        		<h:outputText value="#{trans.monto}" />
+		    		</p:column>
+		 
+		    		<p:column headerText="Tipo de transaccion">
+		        		<h:outputText value="#{trans.tipoTransaccion}" />
+		    		</p:column>
+				</p:dataTable>
 			</div>
 		</h:form>
 	</ui:define>

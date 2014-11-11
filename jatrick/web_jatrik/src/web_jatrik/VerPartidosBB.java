@@ -44,7 +44,7 @@ public class VerPartidosBB implements Serializable {
 	@PostConstruct
 	public void init() {
 		try {
-			this.partidos = Comunicacion.getInstance().getIPartidoControlador().obtenerPartidosUsuario(sesion.getDatosManager().getCodEquipo());
+			this.partidos = Comunicacion.getInstance().getIPartidoControlador().obtenerPartidosAmistososUsuario(sesion.getDatosManager().getCodEquipo());
 			for (Partido dp : this.partidos) {
 				this.nombresEquipos.put(dp.getLocal().getCodigo(),
 						Comunicacion.getInstance().getIEquipoControlador().obtenerEquipo(dp.getLocal().getCodigo()).getNombre());

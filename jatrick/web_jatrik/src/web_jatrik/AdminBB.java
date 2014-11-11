@@ -103,6 +103,7 @@ public class AdminBB implements Serializable{
 			}
 			PeriodicoPartido periodico = new PeriodicoPartido(dia, hora, minuto,p);
 			configGeneral.setPeriodicoPartido(periodico);
+			configGeneral.setModificado(true);
 			Comunicacion.getInstance().getConfiguracionControlador().crearOModificarConfiguracion(configGeneral);
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block

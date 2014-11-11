@@ -2,7 +2,6 @@ package configuracionGral;
 
 import interfaces.IConfiguracionControlador;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 		@SuppressWarnings("unchecked")
 		List<ConfiguracionGral> cg = (List<ConfiguracionGral>)em.createQuery("Select cg from ConfiguracionGral cg").getResultList();
 		if(cg.isEmpty()){
-			ConfiguracionGral conf = new ConfiguracionGral(0, 0, 0, 0, 0, 0, 0, 0, 0, null, null);
+			ConfiguracionGral conf = new ConfiguracionGral(10000,1000 ,20,8, 0, 0, 2,1, 10, new Date(),21,30,33, 4, 1, 0,1, 0,-1, null,90000,10000,10000, 10000);
 			em.persist(conf);
 			return conf;
 		}
@@ -40,7 +39,11 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 		@SuppressWarnings("unchecked")
 		List<ConfiguracionGral> cg = (List<ConfiguracionGral>)em.createQuery("Select cg from ConfiguracionGral cg").getResultList();
 		if(cg.isEmpty()){
-			return null;
+			PeriodicoPartido p = new PeriodicoPartido(0, 5, 0, EnumPeriodicoPartido.MINUTO);
+			ConfiguracionGral conf = new ConfiguracionGral(10000,1000 ,20,8, 0, 0, 2,1, 10, new Date(),21,30,33, 4, 1, 0,1, 0,-1, p,90000,10000,10000, 10000);
+			em.persist(conf);
+			return conf;
+
 		}
 		else{
 			return cg.get(0);
@@ -62,14 +65,8 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 		if(cg == null){
 			throw new NoExisteConfiguracionException("No existe configuracion general");
 		}
-		cg.setCantEquipoTorneo(dcg.getCantEquipoTorneo());
-		cg.setCantJugadoresArranque(dcg.getCantJugadoresArranque());
-		cg.setDineroInicial(dcg.getDineroInicial());
-		cg.setNumeroFecha(dcg.getNumeroFecha());
-		cg.setNumeroTorneo(dcg.getNumeroTorneo());
-		cg.setCantidadDescensos(dcg.getCantidadDescensos());
-		cg.setPremio(dcg.getPremio());
-		cg.setCantidadTorneos(dcg.getCantidadTorneos());
+		cg.mergeConfiguracionGral(dcg);
+		
 		if(dcg.getFechaArranqueCampeonato()!=null){
 			Date c = dcg.getFechaArranqueCampeonato();
 			cg.setFechaArranqueCampeonato(c);

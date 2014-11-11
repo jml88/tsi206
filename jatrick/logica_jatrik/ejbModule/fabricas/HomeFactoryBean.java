@@ -3,6 +3,7 @@ package fabricas;
 import interfaces.ICampeonatoControlador;
 import interfaces.IConfiguracionControlador;
 import interfaces.IEquipoControlador;
+import interfaces.IFinanzasControlador;
 import interfaces.IJugadorControlador;
 import interfaces.IMensajeControlador;
 import interfaces.IMercadoDePasesControlador;
@@ -62,6 +63,11 @@ public class HomeFactoryBean implements HomeFactory {
 	@Override
 	public IMensajeControlador getMensajeControlador() {
 		return (IMensajeControlador ) ctx.lookup("java:module/MensajeControlador!interfaces.IMensajeControlador");
+	}
+
+	@Override
+	public IFinanzasControlador getFinanzasControlador() {
+		return (IFinanzasControlador) ctx.lookup("java:module/FinanzasControlador!interfaces.IFinanzasControlador");
 	}
 
 }

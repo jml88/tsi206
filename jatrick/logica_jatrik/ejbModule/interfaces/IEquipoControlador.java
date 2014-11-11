@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.ejb.Local;
 
+import campeonato.Torneo;
 import partidos.Partido;
 import users.Manager;
 import jugadores.Jugador;
@@ -38,7 +39,7 @@ public interface IEquipoControlador {
 	
 	public Set<DatosEquipo> obtenerEquiposTorneo(int codTorneo);
 	
-	public Set<DatosJugador> obtenerJugadoresEquipo(int codEquipo);
+	public Set<Jugador> obtenerJugadoresEquipo(int codEquipo);
 
 	public int crearAlineacion(List<Jugador> delanteros, List<Jugador> mediocampistas,
 			List<Jugador> defensas, Jugador golero, Jugador lesionDelantero,
@@ -59,4 +60,7 @@ public interface IEquipoControlador {
 
 	public List<Partido> obtenerAnterioresPartidos(int codEquipo, int cantidad);
 	
+	public Equipo getEquipo(int codigoEquipo);
+	
+	public Torneo obtenerTorneoActual(int codEquipo) throws NoExisteEquipoExcepcion;;
 }

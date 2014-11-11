@@ -17,6 +17,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import configuracionGral.ConfiguracionGral;
 import partidos.Partido;
 import campeonato.Torneo;
 import users.Manager;
@@ -126,13 +127,15 @@ public class EquipoControlador implements IEquipoControlador{
 	}
 	
 	@Override
-	public Set<DatosJugador> obtenerJugadoresEquipo(int codEquipo) {
-		Set<DatosJugador> result = new HashSet<DatosJugador>();
+	public Set<Jugador> obtenerJugadoresEquipo(int codEquipo) {
+//		Set<DatosJugador> result = new HashSet<DatosJugador>();
 		Equipo equipo = this.findEquipo(codEquipo);
-		for (Jugador j : equipo.getPlantel()) {
-			result.add(j.getDatos());
-		}
-		return result;
+//		for (Jugador j : equipo.getPlantel()) {
+//			result.add(j.getDatos());
+//		}
+//		return result;
+		
+		return equipo.getPlantel();
 	}
 	
 	@Override
@@ -166,6 +169,7 @@ public class EquipoControlador implements IEquipoControlador{
 	public Equipo asignarTorneo(Manager manager, DatosEquipo eq) {
 		//TODO asignar el torneo correctamente, o sea, el torneo de mas abajo
 		List<Torneo> torneos = hf.getCampeontaoControlador().obtenerTorneos();
+		ConfiguracionGral config = hf.getConfiguracionControlador().getConfiguracion();
 		for(Torneo t : torneos){
 			for(Equipo e : t.getEquipos()){
 				if(e.isBot()){
@@ -175,6 +179,16 @@ public class EquipoControlador implements IEquipoControlador{
 					e.setNombre(eq.getNombre());
 					Estadio estadio = e.getEstadio();
 					estadio.setNombre(eq.getNombre() + " Arena");
+					estadio.setCapacidad(config.getCapacidadMinimaEstadio());
+					
+					e.setCapital(config.getDineroInicial());
+					e.setPublicidad(config.getPublicidadMinima());
+					
+					e.setSeguidores(config.getSeguidoresEmpieza());
+					e.setSocios(config.getSociosEmpieza());
+					
+					e.setGastoJuveniles(0);
+					
 					em.merge(e);
 					em.merge(manager);
 					return e;
@@ -221,6 +235,34 @@ public class EquipoControlador implements IEquipoControlador{
 		// TODO Auto-generated method stub
 		Equipo e = findEquipo(idCodigoEquipo);
 		return e.getTipoEntrenamiento();
+	}
+
+	@Override
+	public Equipo getEquipo(int codigoEquipo) {
+		return em.find(Equipo.class, codigoEquipo);
+	}
+
+	@Override
+	public Torneo obtenerTorneoActual(int codEquipo) throws NoExisteEquipoExcepcion {
+		Equipo e = findEquipo(codEquipo);
+		if(e==null){
+			throw new NoExisteEquipoExcepcion("No existe el equipo de id: " + codEquipo);
+		}
+		
+		List<Torneo> torneos = e.getTorneos();
+		if(torneos == null){
+			return null;
+		}
+		Torneo torneoMasActual = torneos.get(0);
+		for (Torneo torneo : torneos) {
+			
+			if(torneoMasActual.getFechaDeArranque().compareTo(torneo.getFechaDeArranque())>0  ){
+				torneoMasActual = torneo; 
+			}
+		}
+		
+		return torneoMasActual;
+		
 	}
 	
 
