@@ -8,8 +8,8 @@
 		<h:form id="formLeft" prependId="false">
 			<p:panelGrid columns="1" 
 				rendered="#{sessionBB.datosManager == null }">
-				<p:outputLabel style="min-width:70px;" for="usr">Usuario: </p:outputLabel>
-				<p:inputText id="usr" label="Usuario:" value="#{loginBB.username}"
+				<p:outputLabel style="min-width:70px;" for="usuario">Usuario: </p:outputLabel>
+				<p:inputText id="usuario" label="Usuario:" value="#{loginBB.username}"
 					maxlength="10"></p:inputText>
 				<p:outputLabel for="pass">Contraseña: </p:outputLabel>
 				<p:password id="pass" value="#{loginBB.password}"></p:password>
