@@ -144,7 +144,7 @@ public class PartidoControlador implements IPartidoControlador {
 		else if(partido.getVisitante().getCodigo() == idEquipo)
 			partido.setAlineacionVisitante(alineacion);
 		
-		
+		em.merge(partido);
 	}
 	
 	@Override

@@ -30,7 +30,7 @@
 				<div style="float: left; margin: 20px" align="center">
 					<p:fieldset id="jugadoresArquero">
 					<p:outputPanel id="dropAreaArquero">
-					<p:dataGrid syle="margin: 30px" id="jugadoresArqueroList" var="arqueros" value="#{alineacionBB.datosAlineacion.goleros}">
+					<p:dataGrid syle="margin: 30px" id="jugadoresArqueroList" var="arqueros" value="#{alineacionBB.goleros}">
 						<f:facet name="header">
 							<p:row>
 								<p:column>Arquero</p:column>
@@ -93,7 +93,7 @@
 					</p:outputPanel>
 					</p:fieldset>
 					<label>Guardar como defecto</label>
-					<p:selectBooleanCheckbox value="#{alineacionBB.datosAlineacion.defecto}" />
+					<p:selectBooleanCheckbox value="#{alineacionBB.datosAlineacion.alineacionDefecto}" />
 				</div>
 				<div style="clear: both"></div>
 			</div>
