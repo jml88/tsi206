@@ -45,24 +45,28 @@
 										<h:outputText value="#{tabla.golesEnContra}" />
 									</p:column>
 									<p:column headerText="AVG">
-										<h:outputText value="#{tabla.golesAFavor - tabla.golesEnContra}" />
+										<h:outputText
+											value="#{tabla.golesAFavor - tabla.golesEnContra}" />
 									</p:column>
 								</p:dataTable>
 							</h:panelGrid>
 						</p:tab>
-					
-						<p:tab title="Goleador">
-							<p:dataTable var="car" value="#{dtBasicView.cars}">
+
+						<p:tab title="Goleadores">
+							<p:dataTable var="goleador" value="#{ligaBB.goleadores}" rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
 								<p:column headerText="Pos">
-									<h:outputText value="#{car.id}" />
+									<h:outputText value="#{goleador.nombre} #{goleador.apellido1}" />
 								</p:column>
 
 								<p:column headerText="Equipo">
-									<h:outputText value="#{car.year}" />
+									<h:outputText value="#{goleador.equipo.nombre}" />
 								</p:column>
 
 								<p:column headerText="Goles">
-									<h:outputText value="#{car.brand}" />
+									<h:outputText value="#{goleador.golesLiga}" />
 								</p:column>
 							</p:dataTable>
 						</p:tab>
@@ -85,6 +89,38 @@
 									<h:outputText value="#{car.color}" />
 								</p:column>
 							</p:dataTable>
+						</p:tab>
+
+						<p:tab title="Fixture">
+							<p:dataGrid var="fixture" value="#{ligaBB.fixture}" columns="2"
+								layout="grid" rows="#{ligaBB.fixture.size()}"
+								paginator="false" id="fix">
+
+								<f:facet name="header">
+           							 Fechas
+       							</f:facet>
+
+								<p:panel header="Fecha #{fixture.fecha}" style="text-align:center">
+									<p:dataTable var="fecha" value="#{fixture.partidos}">
+										<p:column headerText="Local">
+											<h:outputText value="#{fecha.local}" />
+										</p:column>
+
+										<p:column headerText="GL">
+											<h:outputText value="#{fecha.golesLocal}" />
+										</p:column>
+
+										<p:column headerText="GV">
+											<h:outputText value="#{fecha.golesVisitante}" />
+										</p:column>
+
+										<p:column headerText="Visitante">
+											<h:outputText value="#{fecha.visitante}" />
+										</p:column>
+									</p:dataTable>
+								</p:panel>
+
+							</p:dataGrid>
 						</p:tab>
 
 					</p:tabView>

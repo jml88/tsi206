@@ -10,6 +10,8 @@ import javax.inject.Named;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.MapModel;
 
 import comunicacion.Comunicacion;
 import datatypes.DatosManager;
@@ -28,12 +30,19 @@ public class RegistroBB implements Serializable {
 	private String passwordConfirm;
 	private String nombreEquipo;
 	
+	private Double lat;
+	private Double lng;
+	private MapModel modelo;
+	
+	private String nombreEstadio;
+	
 	public RegistroBB(){
 		
 	}
 	
     @PostConstruct
     public void init() {
+    	modelo = new DefaultMapModel();
     	datosmanager = new DatosManager();
     }
     
@@ -67,6 +76,38 @@ public class RegistroBB implements Serializable {
 
 	public void setNombreEquipo(String nombreEquipo) {
 		this.nombreEquipo = nombreEquipo;
+	}
+	
+	public Double getLat() {
+		return lat;
+	}
+
+	public void setLat(Double lat) {
+		this.lat = lat;
+	}
+
+	public Double getLng() {
+		return lng;
+	}
+
+	public void setLng(Double lng) {
+		this.lng = lng;
+	}
+	
+	public String getNombreEstadio() {
+		return nombreEstadio;
+	}
+
+	public void setNombreEstadio(String nombreEstadio) {
+		this.nombreEstadio = nombreEstadio;
+	}
+	
+	public MapModel getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(MapModel modelo) {
+		this.modelo = modelo;
 	}
 
 	public String registro() {

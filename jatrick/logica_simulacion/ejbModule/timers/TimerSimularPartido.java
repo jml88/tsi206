@@ -18,6 +18,7 @@ import javax.persistence.PersistenceContext;
 
 import partido.LogicaSimulacion;
 import partido.PartidoControlador;
+import partido.SimulacionControlador;
 import partidos.Partido;
 import partidos.PartidoTorneo;
 import campeonato.Posicion;
@@ -40,7 +41,7 @@ public class TimerSimularPartido {
 	private LogicaSimulacion lsim;
 
 	@Inject
-	private PartidoControlador cp;
+	private SimulacionControlador sc;
 	
 	@Inject
 	private FinanzasControlador fc;
@@ -78,16 +79,16 @@ public class TimerSimularPartido {
 	}
 
 	private void actualizarDatosPartido(Partido p) {
-		cp.partidoFinalizado(p);
-		PartidoTorneo pt = cp.findPartidoTorneo(p.getCodigo());	
+		sc.partidoFinalizado(p);
+		PartidoTorneo pt = sc.findPartidoTorneo(p.getCodigo());	
 		if (pt != null) {
 			Posicion posLocal = ((PartidoTorneo) pt).getTorneo()
 					.obtenerPosicionEquipo(pt.getLocal());
 			Posicion posVisitante = ((PartidoTorneo) pt).getTorneo()
 					.obtenerPosicionEquipo(pt.getVisitante());
-			cp.actualizarPosicionFechaTorneo(posLocal, posVisitante, pt);
-			fc.actualizarDespuesPartido(pt);
-			fc.actualizarPorMes(pt);
+			sc.actualizarPosicionFechaTorneo(posLocal, posVisitante, pt);
+//			fc.actualizarDespuesPartido(pt);
+//			fc.actualizarPorMes(pt);
 		} else {
 		
 		}
@@ -96,7 +97,7 @@ public class TimerSimularPartido {
 	@Timeout
 	public void simularPartido(Timer t) throws NoExisteEquipoExcepcion {
 		DatosMinutoPartido minutoDto = (DatosMinutoPartido) t.getInfo();
-		Partido p = cp.find(minutoDto.getIdPartido());
+		Partido p = sc.find(minutoDto.getIdPartido());
 		if (p == null) {
 			throw new NoExisteEquipoExcepcion("No existe equipo de id "
 					+ minutoDto.getIdPartido());
@@ -105,17 +106,17 @@ public class TimerSimularPartido {
 		if (minutos.size() > 0) {
 			if (p.getLocal().getAlineacionDefecto() == null) {
 				if (p.getAlineacionLocal() == null) {
-					DatosAlineacion datosAlineacion = cp.crearAlineacion(p
+					DatosAlineacion datosAlineacion = sc.crearAlineacion(p
 							.getLocal());
-					cp.setAlineacioPartido(datosAlineacion, p.getCodigo(), p
+					sc.setAlineacioPartido(datosAlineacion, p.getCodigo(), p
 							.getLocal().getCodigo());
 				}
 			}
 			if (p.getVisitante().getAlineacionDefecto() == null) {
 				if (p.getAlineacionVisitante() == null) {
-					DatosAlineacion datosAlineacion = cp.crearAlineacion(p
+					DatosAlineacion datosAlineacion = sc.crearAlineacion(p
 							.getVisitante());
-					cp.setAlineacioPartido(datosAlineacion, p.getCodigo(), p
+					sc.setAlineacioPartido(datosAlineacion, p.getCodigo(), p
 							.getVisitante().getCodigo());
 				}
 			}

@@ -39,7 +39,7 @@ public interface IEquipoControlador {
 	
 	public Set<DatosEquipo> obtenerEquiposTorneo(int codTorneo);
 	
-	public Set<DatosJugador> obtenerJugadoresEquipo(int codEquipo);
+	public Set<Jugador> obtenerJugadoresEquipo(int codEquipo);
 
 	public int crearAlineacion(List<Jugador> delanteros, List<Jugador> mediocampistas,
 			List<Jugador> defensas, Jugador golero, Jugador lesionDelantero,

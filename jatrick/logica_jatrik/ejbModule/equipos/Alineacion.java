@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,7 +38,7 @@ public class Alineacion implements Serializable {
 	private boolean alineacionDefecto;
 
 	//TODO averiguar si se puede limitar la cantidad de 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
             name="ALINEACION_DELANTEROS",
             joinColumns = {@JoinColumn( name="CODALINEACION")},
@@ -45,7 +46,7 @@ public class Alineacion implements Serializable {
     )
 	private List<Jugador> delanteros;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
             name="ALINEACION_MEDIOCAMPISTAS",
                     joinColumns = {@JoinColumn( name="CODALINEACION")},
@@ -53,7 +54,7 @@ public class Alineacion implements Serializable {
     )
 	private List<Jugador> mediocampistas;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
             name="ALINEACION_DEFENSAS",
                     joinColumns = {@JoinColumn( name="CODALINEACION")},
@@ -78,7 +79,7 @@ public class Alineacion implements Serializable {
 	private Jugador lesionGolero;
 
 	/* suplentes en general */
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
             name="ALINEACION_SUPLENTES",
                     joinColumns = {@JoinColumn( name="CODALINEACION")},

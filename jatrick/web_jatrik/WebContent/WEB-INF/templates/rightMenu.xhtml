@@ -7,18 +7,18 @@
 	
 	<h:outputScript library="js" name="chat.js" />
 	
-	<div>
+	<div style="width: 100%">
 		<h:form id="chatForm" rendered="#{sessionBB.datosManager != null}">
 			<h:inputHidden id="hiddenUsername" value="#{sessionBB.datosManager.username}" />
-			<table style="background-color: #FFFFFF">
+			<table style="background-color: #FFFFFF; width: 100%;">
 				<tr>
 					<td>
-						<p:tabView id="tabChat" orientation="top" style="none">
+						<p:tabView id="tabChat" orientation="top" style="width: 100%">
 							<p:tab id="general" title="General">
 								<div style="overflow-y:auto;height:150px;">
 									<table id="response" />
 								</div>
-								<p:inputTextarea id="enviarGral" style="width: 97%; height: 50px" onkeyup="enterGral(event)"/>
+								<p:inputTextarea id="enviarGral" style="width: 100%; height: 50px" onkeyup="enterGral(event)"/>
 							</p:tab>
 						</p:tabView>
 					</td>
