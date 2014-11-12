@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import jugadores.Jugador;
 import partidos.ConfiguracionPartido;
 import partidos.Partido;
+import partidos.PartidoTorneo;
 import datatypes.EnumPartido;
 import equipos.Alineacion;
 
@@ -22,6 +23,9 @@ public class LogicaSimulacion{
 	
 	@Inject
 	PartidoControlador pc;
+	
+	@Inject
+	SimulacionControlador sc;
 	
 	private List<Integer> minutosJugada(){
 		List<Integer> minutos = new LinkedList<Integer>();
@@ -134,7 +138,7 @@ public class LogicaSimulacion{
 	
 	private void simularJugada(Partido p, int minuto){
 		//TODO Hace la logica de simular una jugada
-
+		PartidoTorneo pt = sc.findPartidoTorneo(p.getCodigo());
 		Alineacion alineacionLocal = p.getAlineacionLocal();
 		Alineacion alineacionVisitante = p.getAlineacionVisitante();
 		double probJGL = probabilidadJugadaGol(alineacionLocal,alineacionVisitante);
@@ -148,6 +152,9 @@ public class LogicaSimulacion{
 			if ( probG > 0.7){
 				pc.crearComentario("Pared al borde del área para " + p.getLocal().getNombre() + "  Chuta y... GOOOOOLLLLL!!	", p, minuto);	
 				pc.sumarGolLocal(p.getResultado(), jL);
+				if (pt != null){
+					jL.setGolesLiga(jL.getGolesLiga()+1);
+				}
 			}
 			else{
 				pc.crearComentario("se escapa por la punta y levanta el centro\n directo a las gradas, se ve que es de las escuela del futbol uruguayo ", p, minuto);
@@ -160,6 +167,9 @@ public class LogicaSimulacion{
 			if (probG > 0.7){
 				pc.crearComentario("Despiste en el area aprovechado por el ataque, GO GO GO GOOOLLLL!!", p, minuto);	
 				pc.sumarGolVisitante(p.getResultado(), jV);
+				if (pt != null){
+					jV.setGolesLiga(jV.getGolesLiga()+1);
+				}
 			}
 			else{
 				pc.crearComentario("se escapa por la punta y levanta el centro\n directo a las gradas, se ve que es de las escuela del futbol uruguayo ", p, minuto);		

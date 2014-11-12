@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
 	version="2.2">
-	
+
 	<navigation-rule>
 		<display-name>/login</display-name>
 		<from-view-id>/webPages/login/login.xhtml</from-view-id>
@@ -16,11 +16,11 @@
 			<to-view-id>/admin.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
-		    <from-outcome>toRegister</from-outcome>
-		    <to-view-id>/webPages/registro/registro.xhtml</to-view-id>
+			<from-outcome>toRegister</from-outcome>
+			<to-view-id>/webPages/registro/registro.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<display-name>/registro</display-name>
 		<from-view-id>/webPages/registro/registro.xhtml</from-view-id>
@@ -29,7 +29,7 @@
 			<to-view-id>/webPages/home/home.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<display-name>/home</display-name>
 		<from-view-id>/webPages/home/home.xhtml</from-view-id>
@@ -38,7 +38,7 @@
 			<to-view-id>/webPages/partidos/jugarAmistoso.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<display-name>/jugarAmistoso</display-name>
 		<from-view-id>/webPages/partidos/jugarAmistoso.xhtml</from-view-id>
@@ -47,7 +47,7 @@
 			<to-view-id>/webPages/home/home.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<display-name>/admin</display-name>
 		<from-view-id>/admin.xhtml</from-view-id>
@@ -56,7 +56,16 @@
 			<to-view-id>/admin.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
+
+	<navigation-rule>
+		<display-name>/admin</display-name>
+		<from-view-id>/webPages/competiciones/ligasActuales.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>liga</from-outcome>
+			<to-view-id>/webPages/competiciones/liga.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
 	<navigation-rule>
 		<display-name>/onRowSelect</display-name>
 		<from-view-id>/webPages/jugadores/jugadores.xhtml</from-view-id>
@@ -65,22 +74,22 @@
 			<to-view-id>/webPages/jugadores/detallesJugador</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
-	
+
+
 	<converter>
 		<display-name>DateConverter</display-name>
 		<converter-id>DateConverter</converter-id>
-		<converter-class>utiles.DateConverter</converter-class>     
+		<converter-class>utiles.DateConverter</converter-class>
 	</converter>
 	<converter>
 		<display-name>DateConverterDate</display-name>
 		<converter-id>DateConverterDate</converter-id>
-		<converter-class>utiles.DateConverterDate</converter-class>     
+		<converter-class>utiles.DateConverterDate</converter-class>
 	</converter>
 	<converter>
 		<display-name>entrenamientoConverter</display-name>
 		<converter-id>entrenamientoConverter</converter-id>
-		<converter-class>utiles.EntrenamientoConverter</converter-class>     
+		<converter-class>utiles.EntrenamientoConverter</converter-class>
 	</converter>
-		
+
 </faces-config>
