@@ -3,10 +3,12 @@ package partidos;
 import java.io.Serializable;
 import java.util.Calendar;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +28,11 @@ import equipos.Equipo;
 @Inheritance(strategy=InheritanceType.JOINED)
 @Table(name=Partido.nombreTabla)
 public class Partido implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public static final String nombreTabla = "PARTIDOS";
 	
@@ -63,10 +70,10 @@ public class Partido implements Serializable{
 	@OneToOne
 	private Equipo visitante;
 	
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
 	private Alineacion alineacionLocal;
 	
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
 	private Alineacion alineacionVisitante;
 
 	public int getCodigo() {
