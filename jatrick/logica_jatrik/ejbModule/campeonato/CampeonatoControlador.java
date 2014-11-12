@@ -1,5 +1,7 @@
 package campeonato;
 
+import datatypes.DatosFixture;
+import datatypes.DatosPartido;
 import datatypes.DatosTorneo;
 import equipos.Equipo;
 import excepciones.NoExisteConfiguracionException;
@@ -10,6 +12,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -18,6 +21,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import jugadores.Jugador;
 import partidos.PartidoTorneo;
 import partidos.ResultadoPartido;
 import configuracionGral.ConfiguracionGral;
@@ -58,9 +62,9 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(cg.getFechaArranqueCampeonato());
 				t.setFechaDeArranque(cal);
-//				em.persist(t);
+				// em.persist(t);
 				crearPartidosTorneo(t);
-				if (vertical != 0){
+				if (vertical != 0) {
 					asignarTorneoAsciende(t);
 				}
 			}
@@ -68,9 +72,11 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 	}
 
 	private void asignarTorneoAsciende(Torneo t) {
-		Query q = em.createQuery("SELECT t FROM Torneo t where t.nivelVertical = :nivel and :cantidad > (select count(*) from Torneo t1 where t1.asciende.codigo = t.codigo)");
-		q.setParameter("nivel", t.getNivelVertical()-1);
-		q.setParameter("cantidad", (long)(Math.pow(2, t.getNivelVertical())/2));
+		Query q = em
+				.createQuery("SELECT t FROM Torneo t where t.nivelVertical = :nivel and :cantidad > (select count(*) from Torneo t1 where t1.asciende.codigo = t.codigo)");
+		q.setParameter("nivel", t.getNivelVertical() - 1);
+		q.setParameter("cantidad",
+				(long) (Math.pow(2, t.getNivelVertical()) / 2));
 		t.setAsciende((Torneo) q.getResultList().get(0));
 	}
 
@@ -98,7 +104,7 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 			equipos.add(e);
 		}
 		t.setEquipos(equipos);
-		
+
 		return t;
 	}
 
@@ -138,13 +144,13 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 			visitante = conversion[arrayFixture[fila][0][1]];
 
 			PeriodicoPartido fechaPartido = conf.getPeriodicoPartido();
-			Date c = t.getFechaDeArranque().getTime();//conf.getFechaArranqueCampeonato();
+			Date c = t.getFechaDeArranque().getTime();// conf.getFechaArranqueCampeonato();
 			Date fechaP = fechaPartido.diaPartido(c, fila + 1);
 
 			Calendar ca = Calendar.getInstance();
 			ca.setTime(fechaP);
-			PartidoTorneo p = new PartidoTorneo(local, visitante,
-					ca, fila + 1, t);
+			PartidoTorneo p = new PartidoTorneo(local, visitante, ca, fila + 1,
+					t);
 			ResultadoPartido rp = new ResultadoPartido();
 			em.persist(rp);
 			p.setResultado(rp);
@@ -166,8 +172,8 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 				Date fechaP = fechaPartido.diaPartido(c, fila + 1);
 				Calendar ca = Calendar.getInstance();
 				ca.setTime(fechaP);
-				PartidoTorneo p = new PartidoTorneo(local, visitante,
-						ca, fila + 1, t);
+				PartidoTorneo p = new PartidoTorneo(local, visitante, ca,
+						fila + 1, t);
 				ResultadoPartido rp = new ResultadoPartido();
 				em.persist(rp);
 				p.setResultado(rp);
@@ -210,7 +216,7 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 		return q.getResultList();
 
 	}
-	
+
 	@Override
 	public List<Torneo> obtenerTorneosActuales() {
 		return em
@@ -231,13 +237,17 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 				.getConfiguracion();
 		int cantidadEquiposPorTorneo = cg.getCantEquipoTorneo(); // Idem
 		int nivelVertical = this.nivelTorneoMenor() + 1;
-		List<Torneo> torneos = em.createQuery("Select t from Torneo t where t.actual = true and (t.nivelVertical = (select max(t2.nivelVertical) from Torneo t2))").getResultList();
+		List<Torneo> torneos = em
+				.createQuery(
+						"Select t from Torneo t where t.actual = true and (t.nivelVertical = (select max(t2.nivelVertical) from Torneo t2))")
+				.getResultList();
 		Calendar fechaArranque = torneos.get(0).getFechaDeArranque();
 		int cantDesc = cg.getCantidadDescensos();
 		int horizontal = 1;
 		for (Torneo torneo : torneos) {
-			for(int i= 0; i < cantDesc; i++ ){
-				Torneo t = this.crearTorneoDeCampeonato(cantidadEquiposPorTorneo);
+			for (int i = 0; i < cantDesc; i++) {
+				Torneo t = this
+						.crearTorneoDeCampeonato(cantidadEquiposPorTorneo);
 				t.setCantEquipos(cantidadEquiposPorTorneo);
 				t.setNivelVertical(nivelVertical);
 				t.setNivelHorizontal(horizontal++);
@@ -252,27 +262,59 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 				crearPartidosTorneo(t);
 			}
 		}
-		
-		
-//		int cantDesc = cg.getCantidadDescensos();
-//		int nivelHorizontal = (int) Math.pow(cantDesc, nivelVertical);
-//		for (int horizontal = 0; horizontal < nivelHorizontal; horizontal++) {
-//			Torneo t = this.crearTorneoDeCampeonato(cantidadEquiposPorTorneo);
-//			t.setCantEquipos(cantidadEquiposPorTorneo);
-//			t.setNivelVertical(nivelVertical);
-//			t.setNivelHorizontal(horizontal + 1);
-//			t.setActual(true);
-//			PeriodicoPartido fechaPartido = cg.getPeriodicoPartido();
-//			Date c = t.getFechaDeArranque().getTime();
-//			Date fechaP = fechaPartido.diaPartido(c, t.getCantEquipos());
-//			Calendar ca = Calendar.getInstance();
-//			ca.setTime(fechaP);
-//			t.setFechaDeArranque(ca);
-////			em.persist(t);
-//			crearPartidosTorneo(t);
 
-//		}
-		//TODO nuevo codigo, obtener los torneos de nivel mas bajo, obtener la ultima fecha de algun torno, pimbi
+		// int cantDesc = cg.getCantidadDescensos();
+		// int nivelHorizontal = (int) Math.pow(cantDesc, nivelVertical);
+		// for (int horizontal = 0; horizontal < nivelHorizontal; horizontal++)
+		// {
+		// Torneo t = this.crearTorneoDeCampeonato(cantidadEquiposPorTorneo);
+		// t.setCantEquipos(cantidadEquiposPorTorneo);
+		// t.setNivelVertical(nivelVertical);
+		// t.setNivelHorizontal(horizontal + 1);
+		// t.setActual(true);
+		// PeriodicoPartido fechaPartido = cg.getPeriodicoPartido();
+		// Date c = t.getFechaDeArranque().getTime();
+		// Date fechaP = fechaPartido.diaPartido(c, t.getCantEquipos());
+		// Calendar ca = Calendar.getInstance();
+		// ca.setTime(fechaP);
+		// t.setFechaDeArranque(ca);
+		// // em.persist(t);
+		// crearPartidosTorneo(t);
+
+		// }
+		// TODO nuevo codigo, obtener los torneos de nivel mas bajo, obtener la
+		// ultima fecha de algun torno, pimbi
 	}
 
+	@Override
+	public List<Jugador> obtenerGoleadoresTorneo(int codTorneo) {
+		Torneo t = em.find(Torneo.class, codTorneo);
+		Query q = em
+				.createQuery("select j from Torneo  t join t.equipos e join e.plantel j  where t.codigo = :codTorneo order by j.golesLiga DESC");
+		q.setParameter("codTorneo", codTorneo);
+		return q.getResultList();
+	}
+
+	@Override
+	public List<DatosFixture> obtenerFixtureTorneo(int codTorneo) {
+		Torneo t = em.find(Torneo.class, codTorneo);
+		Query q = em.createQuery("select p from PartidoTorneo p where p.torneo.codigo = :codTorneo order by p.fechaNro ASC");
+		q.setParameter("codTorneo", codTorneo);
+		List<PartidoTorneo> partidos = q.getResultList();
+		List<DatosFixture> fixture = new LinkedList<DatosFixture>();
+		DatosFixture d = new DatosFixture(1);
+		int fecha = 1;
+		for (PartidoTorneo partidoTorneo : partidos) {
+			if (fecha != partidoTorneo.getFechaNro()){
+				fecha = partidoTorneo.getFechaNro();
+				fixture.add(d);
+				 d = new DatosFixture(partidoTorneo.getFechaNro());
+			}
+			d.getPartidos().add(new DatosPartido(partidoTorneo.getCodigo(), partidoTorneo.getLocal().getNombre(), 
+					partidoTorneo.getVisitante().getNombre(), partidoTorneo.getResultado().getGolesLocal(),
+					partidoTorneo.getResultado().getGolesVisitante()));
+		}
+		fixture.add(d);
+		return fixture;
+	}
 }

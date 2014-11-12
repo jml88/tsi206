@@ -24,7 +24,7 @@
 		<class>users.Manager</class>
 		<class>finanzas.Finanzas</class>
 		<properties>
-			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="false" />
 		</properties>
 	</persistence-unit>

@@ -1,12 +1,16 @@
 package interfaces;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Local;
 
+import jugadores.Jugador;
 import campeonato.Posicion;
 import campeonato.Torneo;
+import datatypes.DatosFixture;
 import datatypes.DatosTorneo;
+import partidos.PartidoTorneo;
 import excepciones.NoExisteConfiguracionException;
 
 @Local
@@ -42,6 +46,10 @@ public interface ICampeonatoControlador {
 	public void crearPartidosTorneo(Torneo t);
 
 	public List<Torneo> obtenerTorneosActuales();
+
+	public List<Jugador> obtenerGoleadoresTorneo(int codTorneo);
+
+	public List<DatosFixture> obtenerFixtureTorneo(int codTorneo);
 	
 
 }

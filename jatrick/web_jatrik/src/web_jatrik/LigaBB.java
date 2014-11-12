@@ -4,14 +4,17 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.naming.NamingException;
 
+import jugadores.Jugador;
 import campeonato.Posicion;
-
 import comunicacion.Comunicacion;
+import datatypes.DatosFixture;
+import datatypes.DatosManager;
 
 @Named("ligaBB")
 @ViewScoped
@@ -23,6 +26,10 @@ public class LigaBB implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private List<Posicion> posiciones;
+	
+	private List<Jugador> goleadores;
+	
+	private List<DatosFixture> fixture;
 
 	@Inject
 	SessionBB sesion;
@@ -30,9 +37,22 @@ public class LigaBB implements Serializable{
 	@PostConstruct
 	public void init() {
 		try {
-			this.posiciones = Comunicacion.getInstance().getCampeonatoControlador().obtenerPosiciones(sesion.getDatosManager().getCodTorneo());
+//			int codTorneo = sesion.getDatosManager().getCodTorneo();
+			int managerId = Comunicacion.getInstance().getIUserControlador().findUserByUserName(sesion.getDatosManager().getUsername());
+			DatosManager datosManager = Comunicacion.getInstance().getIUserControlador().obtenerManager(managerId);
+			int codTorneo = datosManager.getCodTorneo();
+			FacesContext faces = FacesContext.getCurrentInstance();
+			if (faces.getExternalContext().getApplicationMap().get("codTorneo") != null){
+				codTorneo = (int)faces.getExternalContext().getApplicationMap().get("codTorneo");
+				faces.getExternalContext().getApplicationMap().remove("codTorneo");
+			}
+			
+			
+			this.posiciones = Comunicacion.getInstance().getCampeonatoControlador().obtenerPosiciones(codTorneo);
+			this.goleadores = Comunicacion.getInstance().getCampeonatoControlador().obtenerGoleadoresTorneo(codTorneo);
+			this.fixture = Comunicacion.getInstance().getCampeonatoControlador().obtenerFixtureTorneo(codTorneo);
+			
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -43,6 +63,22 @@ public class LigaBB implements Serializable{
 
 	public void setPosiciones(List<Posicion> posiciones) {
 		this.posiciones = posiciones;
+	}
+
+	public List<Jugador> getGoleadores() {
+		return goleadores;
+	}
+
+	public void setGoleadores(List<Jugador> goleadores) {
+		this.goleadores = goleadores;
+	}
+
+	public List<DatosFixture> getFixture() {
+		return fixture;
+	}
+
+	public void setFixture(List<DatosFixture> fixture) {
+		this.fixture = fixture;
 	}
 
 }
