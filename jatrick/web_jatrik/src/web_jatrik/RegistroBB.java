@@ -1,5 +1,6 @@
 package web_jatrik;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,11 +8,12 @@ import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import javax.naming.NamingException;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.primefaces.model.map.DefaultMapModel;
-import org.primefaces.model.map.MapModel;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 import comunicacion.Comunicacion;
 import datatypes.DatosManager;
@@ -32,7 +34,8 @@ public class RegistroBB implements Serializable {
 	
 	private Double lat;
 	private Double lng;
-	private MapModel modelo;
+	private UploadedFile escudo;
+	private boolean escudoCargado;
 	
 	private String nombreEstadio;
 	
@@ -42,8 +45,9 @@ public class RegistroBB implements Serializable {
 	
     @PostConstruct
     public void init() {
-    	modelo = new DefaultMapModel();
     	datosmanager = new DatosManager();
+    	this.escudo = null;
+    	this.escudoCargado = false;
     }
     
 	public DatosManager getDatosmanager() {
@@ -102,12 +106,31 @@ public class RegistroBB implements Serializable {
 		this.nombreEstadio = nombreEstadio;
 	}
 	
-	public MapModel getModelo() {
-		return modelo;
+	public UploadedFile getEscudo() {
+		return escudo;
 	}
 
-	public void setModelo(MapModel modelo) {
-		this.modelo = modelo;
+	public void setEscudo(UploadedFile escudo) {
+		this.escudo = escudo;
+	}
+	
+	public boolean isEscudoCargado() {
+		return escudoCargado;
+	}
+
+	public void setEscudoCargado(boolean escudoCargado) {
+		this.escudoCargado = escudoCargado;
+	}
+
+	public void subirEscudo(FileUploadEvent event) {
+		try {
+			Comunicacion.getInstance().getIUserControlador().guardarEscudoEquipo(event.getFile().getInputstream());
+			this.escudoCargado = true;
+		} catch (NamingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public String registro() {
@@ -116,14 +139,14 @@ public class RegistroBB implements Serializable {
         	Set<String> r = new HashSet<String>();
         	r.add("MANAGER");
         	this.datosmanager.setRoles(r);
-        	int codManager = Comunicacion.getInstance().getIUserControlador().createManager(this.datosmanager, this.password, this.nombreEquipo);
-        	
-        	//obtenego los datosManager actualizados luego de crearlo
+        	this.datosmanager.setLat(this.lat);
+        	this.datosmanager.setLng(this.lng);
+        	int codManager = Comunicacion.getInstance().getIUserControlador().createManager(this.datosmanager, this.password, this.nombreEquipo, this.escudoCargado);
+
         	this.datosmanager = Comunicacion.getInstance().getIUserControlador().obtenerManager(codManager);
         	Comunicacion.getInstance().getSesion().setDatosManager(datosmanager);
-            SecurityUtils.getSubject().login(new UsernamePasswordToken(datosmanager.getUsername(), password, false)); //en el false va remember
-            //Messages.addGlobalInfo("Registration suceed, new user ID is: {0}", user.getId());
-            result = "registerOK"; 
+            SecurityUtils.getSubject().login(new UsernamePasswordToken(datosmanager.getUsername(), password, false));
+            result = "/webPages/home/home.xhtml?faces-redirect=true"; 
         } catch (RuntimeException e) {
             //Messages.addGlobalError("Registration failed: {0}", e.getMessage());
             e.printStackTrace(); // TODO: logger.

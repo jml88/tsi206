@@ -83,7 +83,7 @@
 		</p:dataTable>
 
 		<f:view contentType="text/html">
-			<p:gmap center="41.381542, 2.122893" zoom="15" type="HYBRID" style="width:600px;height:400px" />
+			<p:gmap center="#{sessionBB.datosManager.lat}, #{sessionBB.datosManager.lng}" zoom="15" type="HYBRID" style="width:600px;height:400px" />
 		</f:view>
 		<p:link outcome="/webPages/partidos/enviarOrdenesPartido.xhtml?faces-redirect=true" value="Alineaciones" />
 

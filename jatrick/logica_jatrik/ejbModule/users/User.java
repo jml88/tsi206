@@ -21,8 +21,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import equipos.Alineacion;
-
 
 @NamedQueries({
 	@NamedQuery(
@@ -73,6 +71,12 @@ public class User implements Serializable{
     @CollectionTable(name = "USERROLES", joinColumns = { @JoinColumn(name = "userId") })
     @Column(name = "role")
     protected Set<Role> roles;
+    
+    @NotNull
+    protected Double lat;
+    
+    @NotNull
+    protected Double lng;
 	
 	public User(){
 		
@@ -126,5 +130,20 @@ public class User implements Serializable{
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-		
+
+	public Double getLat() {
+		return lat;
+	}
+
+	public void setLat(Double lat) {
+		this.lat = lat;
+	}
+
+	public Double getLng() {
+		return lng;
+	}
+
+	public void setLng(Double lng) {
+		this.lng = lng;
+	}
 }

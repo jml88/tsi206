@@ -17,6 +17,11 @@ import equipos.Equipo;
 @Table(name = Manager.nombreTabla)
 public class Manager extends User {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public static final String nombreTabla = "MANAGER";
 	
 	@OneToOne
@@ -35,6 +40,8 @@ public class Manager extends User {
 		this.name = datosManager.getName();
 		this.email = datosManager.getEmail();
 		this.roles = new HashSet<Role>();
+		this.lat = datosManager.getLat();
+		this.lng = datosManager.getLng();
 		
 		Set<String> roles = datosManager.getRoles();
 		for (String role : roles) {

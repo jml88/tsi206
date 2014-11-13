@@ -1,5 +1,6 @@
 package interfaces;
 
+import java.io.InputStream;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -15,7 +16,8 @@ public interface IUserControlador {
 	public User login(String usr, String pass);
 	public List<User> list();
 	public int findUserByUserName(String username);
-	public int createManager(DatosManager datosManager, String password, String nombreEquipo);
+	public int createManager(DatosManager datosManager, String password, String nombreEquipo, boolean escudo);
 	public void update(User user);
     public void delete(User user);
+    public void guardarEscudoEquipo(InputStream in);
 }
