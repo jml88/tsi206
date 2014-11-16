@@ -32,7 +32,11 @@ public class Partido implements Serializable{
 	public static final String nombreTabla = "PARTIDOS";
 	
 	public Partido(){
-		
+		this.estado = EnumPartido.POR_JUGAR;
+		this.local = null;
+		this.visitante = null;
+		this.fechaHora = null;
+		this.resultado = null;
 	}
 	
 	Partido(Equipo local, Equipo visitante, Calendar fecha){

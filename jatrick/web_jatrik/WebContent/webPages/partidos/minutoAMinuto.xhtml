@@ -15,25 +15,27 @@
 	<ui:define name="Principal">
 		<h:form id="form" prependId="false">
 			<table style="width: 100%; text-align: center;">
+			<p:panel id="tabla">
 				<tr>
-					<td><h3>#{minutoAMinutoBB.datosPartido.local.nombre} vs
-							#{minutoAMinutoBB.datosPartido.visitante.nombre}</h3></td>
+					<td><h3>#{minutoAMinutoBB.datosPartido.local.nombre} #{minutoAMinutoBB.resultadoPartido.golesLocal} vs
+							#{minutoAMinutoBB.datosPartido.visitante.nombre} #{minutoAMinutoBB.resultadoPartido.golesVisitante}</h3></td>
 				</tr>
+			</p:panel>
 				<tr style="text-align: left;">
 					<td>
 						<div id="comentariosListDiv" style="text-align: left;">
 							<p:dataTable id="comentariosList" var="com"
 								value="#{minutoAMinutoBB.comentariosPartido}">
-									<p:column>
-										<h:outputText value="#{com.minuto}" />
-									</p:column>
-									<p:column>
-										<h:outputText value="#{com.mensaje}" />
-									</p:column>
+								<p:column>
+									<h:outputText value="#{com.minuto}" />
+								</p:column>
+								<p:column>
+									<h:outputText value="#{com.mensaje}" />
+								</p:column>
 							</p:dataTable>
 							<p:poll interval="15"
 								listener="#{minutoAMinutoBB.getComentariosDePartido}"
-								update="comentariosList" />
+								update="comentariosList,tabla" />
 						</div>
 					</td>
 				</tr>

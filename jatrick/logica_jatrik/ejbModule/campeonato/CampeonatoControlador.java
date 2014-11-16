@@ -1,7 +1,9 @@
 package campeonato;
 
+import datatypes.DatosCopa;
 import datatypes.DatosFixture;
 import datatypes.DatosPartido;
+import datatypes.DatosPartidoCopa;
 import datatypes.DatosTorneo;
 import equipos.Equipo;
 import excepciones.NoExisteConfiguracionException;
@@ -9,7 +11,10 @@ import fabricas.HomeFactory;
 import interfaces.ICampeonatoControlador;
 
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +27,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import jugadores.Jugador;
+import partidos.PartidoCopa;
 import partidos.PartidoTorneo;
 import partidos.ResultadoPartido;
 import configuracionGral.ConfiguracionGral;
@@ -298,23 +304,142 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 	@Override
 	public List<DatosFixture> obtenerFixtureTorneo(int codTorneo) {
 		Torneo t = em.find(Torneo.class, codTorneo);
-		Query q = em.createQuery("select p from PartidoTorneo p where p.torneo.codigo = :codTorneo order by p.fechaNro ASC");
+		Query q = em
+				.createQuery("select p from PartidoTorneo p where p.torneo.codigo = :codTorneo order by p.fechaNro ASC");
 		q.setParameter("codTorneo", codTorneo);
 		List<PartidoTorneo> partidos = q.getResultList();
 		List<DatosFixture> fixture = new LinkedList<DatosFixture>();
 		DatosFixture d = new DatosFixture(1);
 		int fecha = 1;
 		for (PartidoTorneo partidoTorneo : partidos) {
-			if (fecha != partidoTorneo.getFechaNro()){
+			if (fecha != partidoTorneo.getFechaNro()) {
 				fecha = partidoTorneo.getFechaNro();
 				fixture.add(d);
-				 d = new DatosFixture(partidoTorneo.getFechaNro());
+				d = new DatosFixture(partidoTorneo.getFechaNro());
 			}
-			d.getPartidos().add(new DatosPartido(partidoTorneo.getCodigo(), partidoTorneo.getLocal().getNombre(), 
-					partidoTorneo.getVisitante().getNombre(), partidoTorneo.getResultado().getGolesLocal(),
-					partidoTorneo.getResultado().getGolesVisitante()));
+			d.getPartidos().add(
+					new DatosPartido(partidoTorneo.getCodigo(), partidoTorneo
+							.getLocal().getNombre(), partidoTorneo
+							.getVisitante().getNombre(), partidoTorneo
+							.getResultado().getGolesLocal(), partidoTorneo
+							.getResultado().getGolesVisitante()));
 		}
 		fixture.add(d);
 		return fixture;
+	}
+
+	@Override
+	public void crearCopa(int cantidadEquipos, Calendar fecha, int ingreso,
+			String nombre) {
+		int hasta = cantidadEquipos / 2;
+		Copa c = new Copa();
+		c.setFechaInicio(fecha);
+		c.setIngreso(ingreso);
+		c.setCantidadEquipos(cantidadEquipos);
+		c.setNombre(nombre);
+		ConfiguracionGral cg = hf.getConfiguracionControlador()
+				.getConfiguracion();
+		List<PartidoCopa> proximaRonda = null;
+		List<PartidoCopa> proximaRondaC = new LinkedList<PartidoCopa>();
+		int z = 0;
+		int f = 1;
+		for (int i = 1; i < cantidadEquipos; i = i * 2) {
+			for (int j = 0; j < hasta; j++) {
+				PartidoCopa pc = new PartidoCopa();
+				pc.setFechaHora(fecha);
+				pc.setFase(i);
+				c.getPartidos().add(pc);
+				proximaRondaC.add(pc);
+				if (i != 1) {
+					for (int g = z; g < z + 2; g++) {
+						proximaRonda.get(g).setSiguienteFase(pc);
+					}
+					z += 2;
+				}
+				ResultadoPartido rp = new ResultadoPartido();
+				em.persist(rp);
+				pc.setResultado(rp);
+				em.persist(pc);
+			}
+			PeriodicoPartido fechaPartido = cg.getPeriodicoPartido();
+			Date fd = fecha.getTime();// conf.getFechaArranqueCampeonato();
+			Date fechaP = fechaPartido.diaPartido(fd, f++);
+			Calendar ca = Calendar.getInstance();
+			ca.setTime(fechaP);
+			z = 0;
+			proximaRonda = proximaRondaC;
+			proximaRondaC = new LinkedList<PartidoCopa>();
+			hasta = hasta / 2;
+		}
+		em.persist(c);
+	}
+
+	@Override
+	public void agregarEquipoACopa(int codEquipo, int codCopa) {
+		Copa c = em.find(Copa.class, codCopa);
+		Equipo e = em.find(Equipo.class, codEquipo);
+		c.getEquipos().add(e);
+		// c.getPartidos().
+		Query q = em
+				.createQuery("select pc from Copa c join c.partidos pc where pc.fase = 1 and c.codigo = :codigo and (pc.local = null or pc.visitante = null)");
+		q.setParameter("codigo", c.getCodigo());
+		List<PartidoCopa> partidos = q.getResultList();
+		for (PartidoCopa partidoCopa : partidos) {
+			if (partidoCopa.getLocal() == null) {
+				partidoCopa.setLocal(e);
+				break;
+			} else if (partidoCopa.getVisitante() == null) {
+				partidoCopa.setVisitante(e);
+				break;
+			}
+		}
+	}
+
+	@Override
+	public List<Copa> obtenerCopasFuturas() {
+		Calendar c = Calendar.getInstance();
+		Query q = em
+				.createQuery("select c from Copa c where c.fechaInicio > :fechaActual");
+		q.setParameter("fechaActual", c);
+		return q.getResultList();
+	}
+
+	@Override
+	public DatosCopa obtenerFixtureCopa(int codCopa) {
+		Copa c = em.find(Copa.class, codCopa);
+		DatosCopa dc = c.obtenerDatos();
+		Collections.sort(c.getPartidos(), new Comparator<PartidoCopa>() {
+			@Override
+			public int compare(PartidoCopa o1, PartidoCopa o2) {
+				int retorno = 0;
+				if (o1.getFase() > o2.getFase()) {
+					retorno = 1;
+				} else if (o2.getFase() > o1.getFase()){
+					retorno = 1;
+				}
+				return retorno;
+			}
+		});
+		List<DatosPartidoCopa> ldpc = new LinkedList<DatosPartidoCopa>();
+		DatosPartidoCopa dpc = new DatosPartidoCopa();
+		int fase = 1;
+		dpc.setFase(fase);
+		dpc.setPartidosFase(new LinkedList<DatosPartido>());
+		
+		for (PartidoCopa pc : c.getPartidos()) {
+			if (fase != pc.getFase()){
+				ldpc.add(dpc);
+				dpc = new DatosPartidoCopa();
+				dpc.setPartidosFase(new LinkedList<DatosPartido>());
+				dpc.setFase(++fase);
+			}
+			String nombreLocal = pc.getLocal() != null ? pc.getLocal().getNombre() : "--";
+			String nombreVisitante = pc.getVisitante() != null ? pc.getVisitante().getNombre() : "--";
+			DatosPartido dp = new DatosPartido(pc.getCodigo(), nombreLocal, nombreVisitante, pc.getResultado().getGolesLocal(), pc.getResultado().getGolesVisitante());
+			dpc.getPartidosFase().add(dp);
+		}
+		ldpc.add(dpc);
+		dc.setPartidos(ldpc);
+		return dc;
 	}
 }

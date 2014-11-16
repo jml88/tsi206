@@ -178,5 +178,4 @@ public class PartidoControlador implements IPartidoControlador {
 		Partido p = em.find(Partido.class, idPartido);
 		return p.getResultado();
 	}
-	
 }
