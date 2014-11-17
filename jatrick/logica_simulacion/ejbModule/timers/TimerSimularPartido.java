@@ -135,18 +135,18 @@ public class TimerSimularPartido {
 			crearPartido(minutos, p);
 		} else {
 			if (minutoDto.isUltimaJugada()) {
-//				if (p.getResultado().getGolesLocal() == 0 && p.getResultado().getGolesVisitante() == 0){
-//					double r =Math.random();
-//					if (r > 0.5){
-//						pc.crearComentario("Por Suerte finaliza este martirio de partido, ambos equipos deben mejorar mucho para proximas actuaciones", p, 90);
-//					}
-//					else{
-//						pc.crearComentario("Fin del partido, amargo 0 a 0", p, 90);
-//					}
-//				}
-//				else{
-//					pc.crearComentario("Fin del partido!!!", p, 90);
-//				}
+				if (p.getResultado().getGolesLocal() == 0 && p.getResultado().getGolesVisitante() == 0){
+					double r =Math.random();
+					if (r > 0.5){
+						pc.crearComentario("Por Suerte finaliza este martirio de partido, ambos equipos deben mejorar mucho para proximas actuaciones", p, 90);
+					}
+					else{
+						pc.crearComentario("Fin del partido, amargo 0 a 0", p, 90);
+					}
+				}
+				else{
+					pc.crearComentario("FIN del tiempo reglamentario", p, 90);
+				}
 				this.actualizarDatosPartido(p);
 				
 				

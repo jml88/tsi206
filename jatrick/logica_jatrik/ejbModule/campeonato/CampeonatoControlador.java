@@ -157,6 +157,7 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 			ca.setTime(fechaP);
 			PartidoTorneo p = new PartidoTorneo(local, visitante, ca, fila + 1,
 					t);
+			p.setTipoPartido("Liga");
 			ResultadoPartido rp = new ResultadoPartido();
 			em.persist(rp);
 			p.setResultado(rp);
@@ -180,6 +181,7 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 				ca.setTime(fechaP);
 				PartidoTorneo p = new PartidoTorneo(local, visitante, ca,
 						fila + 1, t);
+				p.setTipoPartido("Liga");
 				ResultadoPartido rp = new ResultadoPartido();
 				em.persist(rp);
 				p.setResultado(rp);
@@ -346,6 +348,7 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 		for (int i = 1; i < cantidadEquipos; i = i * 2) {
 			for (int j = 0; j < hasta; j++) {
 				PartidoCopa pc = new PartidoCopa();
+				pc.setTipoPartido("Copa");
 				pc.setFechaHora(fecha);
 				pc.setFase(i);
 				c.getPartidos().add(pc);

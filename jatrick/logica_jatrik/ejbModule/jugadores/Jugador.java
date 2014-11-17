@@ -80,6 +80,12 @@ public class Jugador implements Serializable{
 	@Column(name="JATRIKS")
 	private int jatTriks;
 	
+	private Integer lesion;
+	
+	private Integer tarjetasPartido;
+	
+	private Integer sancionLiga;
+	
 	@Embedded
 	@Column(nullable=true)
 	private EntrenamientoJugador entrenamiento;
@@ -97,6 +103,9 @@ public class Jugador implements Serializable{
 	public Jugador() {
 		super(); 
 		this.partidosJugados = new HashSet<Partido>();
+		this.lesion = null;
+		this.tarjetasPartido = null;
+		this.sancionLiga = null;
 	}
 	
 	/**
@@ -141,6 +150,9 @@ public class Jugador implements Serializable{
 		this.jatTriks = jatTriks;
 		this.equipo = equipo;
 		this.partidosJugados = partidosJugados;
+		this.lesion = null;
+		this.tarjetasPartido = null;
+		this.sancionLiga = null;
 		salario = calcularSueldoJugador();
 	}
 
@@ -306,7 +318,34 @@ public class Jugador implements Serializable{
 	}
 	
 	
-	
+	public Integer getLesion() {
+		return lesion;
+	}
+
+	public void setLesion(Integer lesion) {
+		this.lesion = lesion;
+	}
+
+	public Integer getTarjetasPartido() {
+		return tarjetasPartido;
+	}
+
+	public void setTarjetasPartido(Integer tarjetasPartido) {
+		this.tarjetasPartido = tarjetasPartido;
+	}
+
+	public Integer getSancionLiga() {
+		return sancionLiga;
+	}
+
+	public void setSancionLiga(Integer sancionLiga) {
+		this.sancionLiga = sancionLiga;
+	}
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
+
 	public EntrenamientoJugador getEntrenamiento() {
 		return entrenamiento;
 	}

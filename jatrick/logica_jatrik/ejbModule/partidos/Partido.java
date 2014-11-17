@@ -60,6 +60,8 @@ public class Partido implements Serializable{
     @Column
 	private EnumPartido estado;
     
+    private String tipoPartido;
+    
     @OneToOne
     private ResultadoPartido resultado;
 
@@ -140,9 +142,12 @@ public class Partido implements Serializable{
 		this.resultado = resultado;
 	}
 
+	public String getTipoPartido() {
+		return tipoPartido;
+	}
 
-//	public Partido getDatos() {
-//		return this;
-//	}
+	public void setTipoPartido(String tipoPartido) {
+		this.tipoPartido = tipoPartido;
+	}
 
 }

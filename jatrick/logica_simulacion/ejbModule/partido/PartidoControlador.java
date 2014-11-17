@@ -133,7 +133,14 @@ public class PartidoControlador {
 	}
 
 
-
+	public void lesionJugador(Jugador j){
+		//TODO hacerlo bien
+		j.setLesion(2);
+	}
+	
+	public void tarjetaJugador(Jugador j){
+		
+	}
 
 
 	// public Partido crearPartidoPrueba(){

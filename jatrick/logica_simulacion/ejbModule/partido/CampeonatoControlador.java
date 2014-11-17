@@ -285,6 +285,7 @@ public class CampeonatoControlador {
 			ca.setTime(fechaP);
 			PartidoTorneo p = new PartidoTorneo(local, visitante, ca, fila + 1,
 					t);
+			p.setTipoPartido("Liga");
 			ResultadoPartido rp = new ResultadoPartido();
 			em.persist(rp);
 			p.setResultado(rp);
@@ -308,6 +309,7 @@ public class CampeonatoControlador {
 				ca.setTime(fechaP);
 				PartidoTorneo p = new PartidoTorneo(local, visitante, ca,
 						fila + 1, t);
+				p.setTipoPartido("Liga");
 				ResultadoPartido rp = new ResultadoPartido();
 				em.persist(rp);
 				p.setResultado(rp);
