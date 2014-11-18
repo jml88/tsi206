@@ -339,6 +339,7 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 		c.setIngreso(ingreso);
 		c.setCantidadEquipos(cantidadEquipos);
 		c.setNombre(nombre);
+		em.persist(c);
 		ConfiguracionGral cg = hf.getConfiguracionControlador()
 				.getConfiguracion();
 		List<PartidoCopa> proximaRonda = null;
@@ -348,6 +349,7 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 		for (int i = 1; i < cantidadEquipos; i = i * 2) {
 			for (int j = 0; j < hasta; j++) {
 				PartidoCopa pc = new PartidoCopa();
+				pc.setCopa(c);
 				pc.setTipoPartido("Copa");
 				pc.setFechaHora(fecha);
 				pc.setFase(i);
@@ -374,7 +376,7 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 			proximaRondaC = new LinkedList<PartidoCopa>();
 			hasta = hasta / 2;
 		}
-		em.persist(c);
+		
 	}
 
 	@Override
@@ -445,4 +447,9 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 		dc.setPartidos(ldpc);
 		return dc;
 	}
+	
+//	@Override
+//	public List<Equipo> obtenerUltimosCampeones(){
+//		
+//	}
 }

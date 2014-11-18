@@ -21,10 +21,12 @@ import partido.PartidoControlador;
 import partido.SimulacionControlador;
 import partidos.ConfiguracionPartido;
 import partidos.Partido;
+import partidos.PartidoCopa;
 import partidos.PartidoTorneo;
 import campeonato.Posicion;
 import datatypes.DatosAlineacion;
 import datatypes.DatosMinutoPartido;
+import equipos.Equipo;
 import excepciones.NoExisteEquipoExcepcion;
 import finanzas.FinanzasControladorSimulacion;
 
@@ -89,10 +91,48 @@ public class TimerSimularPartido {
 		}
 		em.merge(p);
 	}
+	
+	private Equipo obtenerGanador(PartidoTorneo pc){
+		Equipo e = null;
+		if (pc.getResultado().getGolesLocal() > pc.getResultado().getGolesVisitante()){
+			e = pc.getLocal();
+		}
+		else if ((pc.getResultado().getGolesLocal() < pc.getResultado().getGolesVisitante())){
+			e = pc.getVisitante();
+		}
+		return e;
+	}
+	
+	private Equipo obtenerGanador(PartidoCopa pcc){
+		Equipo e = null;
+		if (pcc.getResultado().getGolesLocal() > pcc.getResultado().getGolesVisitante()){
+			e = pcc.getLocal();
+		}
+		else if (pcc.getResultado().getGolesLocal() < pcc.getResultado().getGolesVisitante()){
+			e = pcc.getVisitante();
+		}
+		else{
+			double pL = Math.random()*5 +1;
+			int penalesL = (int)pL;
+			double pV = Math.random()*5 +1;
+			int penalesV = (int)pV;
+			sc.setPenalesPartido(pcc.getResultado(),penalesL,penalesV);
+			if (penalesL > penalesV){
+				pc.crearComentario("Pasa el "+pcc.getLocal().getNombre()+" tras vencer  en la ronda de penales por "+penalesL+" a "+penalesV, pcc, 90);
+				e = pcc.getLocal();
+			}
+			else{
+				pc.crearComentario("Pasa el "+pcc.getVisitante().getNombre()+" tras vencer  en la ronda de penales por "+penalesV+" a "+penalesL, pcc, 90);
+				e = pcc.getVisitante();
+			}
+		}
+		return e;
+	}
 
 	private void actualizarDatosPartido(Partido p) {
 		sc.partidoFinalizado(p);
 		PartidoTorneo pt = sc.findPartidoTorneo(p.getCodigo());	
+		PartidoCopa pc = sc.findPartidoCopa(p.getCodigo());
 		if (pt != null) {
 			Posicion posLocal = ((PartidoTorneo) pt).getTorneo()
 					.obtenerPosicionEquipo(pt.getLocal());
@@ -101,8 +141,14 @@ public class TimerSimularPartido {
 			sc.actualizarPosicionFechaTorneo(posLocal, posVisitante, pt);
 			fc.actualizarDespuesPartido(pt);
 			fc.actualizarPorMes(pt);
-		} else {
-		
+			Equipo e = obtenerGanador(pt);
+			if (e != null){
+				e.setRanking(e.getRanking()+1);
+			}
+		} else if (pc != null){
+			Equipo e = obtenerGanador(pc);
+			e.setRanking(e.getRanking()+1);
+			sc.actualizarCopa(pc,e);
 		}
 	}
 

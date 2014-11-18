@@ -31,6 +31,10 @@ public class ResultadoPartido implements Serializable{
 	
 	private int golesVisitante;
 	
+	private int penalesLocal;
+	
+	private int penalesVisitante;
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
             name="RESULTADO_LOCALES",
@@ -105,4 +109,26 @@ public class ResultadoPartido implements Serializable{
 	public void agregarGolVisitante(){
 		golesVisitante++;
 	}
+
+
+	public int getPenalesLocal() {
+		return penalesLocal;
+	}
+
+
+	public void setPenalesLocal(int penalesLocal) {
+		this.penalesLocal = penalesLocal;
+	}
+
+
+	public int getPenalesVisitante() {
+		return penalesVisitante;
+	}
+
+
+	public void setPenalesVisitante(int penalesVisitante) {
+		this.penalesVisitante = penalesVisitante;
+	}
+	
+	
 }

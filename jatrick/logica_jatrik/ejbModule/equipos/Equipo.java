@@ -83,6 +83,9 @@ public class Equipo implements Serializable{
 	@Column
 	private int gastoJuveniles;
 	
+	@Column
+	private int ranking;
+	
 	@OneToOne(mappedBy= "equipo")
 	private Manager usuario;
 	
@@ -90,6 +93,7 @@ public class Equipo implements Serializable{
 		this.plantel = new HashSet<Jugador>();
 		this.tipoEntrenamiento = EnumEntrenamiento.ATAQUE;
 		this.torneos = new LinkedList<Torneo>();
+		this.ranking = 0;
 	}
 	
 	public Equipo(DatosEquipo de, Alineacion alineacionDefecto) {
@@ -100,6 +104,7 @@ public class Equipo implements Serializable{
 		this.codPais = de.getCodPais();
 		this.tipoEntrenamiento = EnumEntrenamiento.ATAQUE;
 		this.torneos = new LinkedList<Torneo>();
+		this.ranking = 0;
 	}
 
 	public Equipo(String nombre, Set<Jugador> plantel, Alineacion alineacionDefecto) {
@@ -109,6 +114,7 @@ public class Equipo implements Serializable{
 		this.alineacionDefecto = alineacionDefecto;
 		this.tipoEntrenamiento = EnumEntrenamiento.ATAQUE;
 		this.torneos = new LinkedList<Torneo>();
+		this.ranking = 0;
 	}
 	
 	public int getCodigo() {
@@ -239,6 +245,12 @@ public class Equipo implements Serializable{
 		this.gastoJuveniles = gastoJuveniles;
 	}
 
-	
-	
+	public int getRanking() {
+		return ranking;
+	}
+
+	public void setRanking(int ranking) {
+		this.ranking = ranking;
+	}
+
 }

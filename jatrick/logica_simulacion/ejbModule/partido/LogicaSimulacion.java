@@ -195,7 +195,7 @@ public class LogicaSimulacion {
 		double probDefV = Math.random() * 1;
 		Jugador jugadorV = null;
 		if (probDelV >= probMedV && probDelV >= probDefV) {
-			jugadorL = eligoJugadorGol(alineacionVisitante.getDelanteros());
+			jugadorV = eligoJugadorGol(alineacionVisitante.getDelanteros());
 		} else if (probMedV > probDelV && probMedV >= probDefV) {
 			jugadorV = eligoJugadorGol(alineacionVisitante.getMediocampistas());
 		} else {
@@ -206,9 +206,9 @@ public class LogicaSimulacion {
 			pc.crearComentario("Entrada a destiempo de " + jugadorV.getNombre()
 					+ " a " + jugadorL.getNombre() + " y... ¡Falta!", p, minuto);
 			pc.crearComentario(
-					"El árbitro consulta con su auxiliar y... Tarjeta amarilla para Matjaz Collado",
+					"El árbitro consulta con su auxiliar y... Tarjeta amarilla para "+jugadorV.getNombre(),
 					p, minuto);
-			if (Math.random() > 0.7){
+			if (Math.random() > 0.8){
 				pc.crearComentario(jugadorL.getNombre() + " "+jugadorL.getApellido1()+" se duele y sale cojeando del terreno de juego",p, minuto);
 			}
 

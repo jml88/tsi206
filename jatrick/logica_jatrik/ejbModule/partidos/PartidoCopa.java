@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
+import campeonato.Copa;
+
 @Entity
 @PrimaryKeyJoinColumn(name="partidoId")
 public class PartidoCopa extends Partido{
@@ -14,6 +16,9 @@ public class PartidoCopa extends Partido{
 	private PartidoCopa siguienteFase;
 	
 	private int fase;
+	
+	@OneToOne
+	private Copa copa;
 
 	public PartidoCopa getSiguienteFase() {
 		return siguienteFase;
@@ -29,6 +34,14 @@ public class PartidoCopa extends Partido{
 
 	public void setFase(int fase) {
 		this.fase = fase;
+	}
+
+	public Copa getCopa() {
+		return copa;
+	}
+
+	public void setCopa(Copa copa) {
+		this.copa = copa;
 	}
 
 	public PartidoCopa(){
