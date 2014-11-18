@@ -4,8 +4,10 @@ import datatypes.EnumTipoTransaccion;
 import equipos.Equipo;
 import excepciones.CapitalNegativo;
 import excepciones.NoExisteEquipoExcepcion;
+import excepciones.NoExisteJugador;
 import excepciones.NoExisteJugadorALaVenta;
 import excepciones.NoExisteJugadorExcepcion;
+import excepciones.NoPuedeVenderJugador;
 import excepciones.NoSePuedeComprarException;
 import excepciones.YaExisteJugadorALaVenta;
 import fabricas.HomeFactory;
@@ -164,6 +166,61 @@ public class MercadoDePasesControlador implements IMercadoDePasesControlador {
 		
 		CompraVentaJugadores cv = l.get(0);
 		em.remove(cv);
+	}
+
+	@Override
+	public boolean puedePonerEnVentaJugador(int codigoEquipo, int codigoJugador) throws NoExisteJugador, NoExisteEquipoExcepcion, NoExisteJugadorALaVenta {
+		Jugador j = hf.getJugadorControlador().findJugador(codigoJugador);
+		if(j==null){
+			throw new NoExisteJugador("No existe jugador de id: " + codigoJugador);
+		}
+		Equipo e = hf.getEquipoControlador().findEquipo(codigoEquipo);
+		if(e==null){
+			throw new NoExisteEquipoExcepcion("No existe equipo de id " + codigoEquipo);
+		}
+		
+		if(j.getEquipo().getCodigo() != codigoEquipo){
+			return false;
+		}
+		@SuppressWarnings("unchecked")
+		List<CompraVentaJugadores> l = em.createQuery("SELECT cv FROM CompraVentaJugadores cv WHERE "
+				+ "cv.jugadorVenta.codigo = :jugador AND cv.activo = :booleano")
+				.setParameter("jugador",j.getCodigo())
+				.setParameter("booleano", true)
+				.getResultList();
+		if(l == null || l.size() == 0 || l.get(0) == null){
+			return true;
+		}
+		
+		
+		
+		return false;
+	}
+
+	@Override
+	public boolean puedeComprarJugador(int codigoEquipoCompra, int codigoJugador) throws NoExisteEquipoExcepcion, NoExisteJugador {
+		Jugador j = hf.getJugadorControlador().findJugador(codigoJugador);
+		if(j==null){
+			throw new NoExisteJugador("No existe jugador de id: " + codigoJugador);
+		}
+		Equipo e = hf.getEquipoControlador().findEquipo(codigoEquipoCompra);
+		if(e==null){
+			throw new NoExisteEquipoExcepcion("No existe equipo de id " + codigoEquipoCompra);
+		}
+		
+		if(j.getEquipo().getCodigo() == codigoEquipoCompra){
+			return false;
+		}
+		@SuppressWarnings("unchecked")
+		List<CompraVentaJugadores> l = em.createQuery("SELECT cv FROM CompraVentaJugadores cv WHERE "
+				+ "cv.jugadorVenta.codigo = :jugador AND cv.activo = :booleano")
+				.setParameter("jugador",j.getCodigo())
+				.setParameter("booleano", true)
+				.getResultList();
+		if(l == null || l.size() == 0 || l.get(0) == null){
+			return false;
+		}
+		return true;
 	}
 
 }

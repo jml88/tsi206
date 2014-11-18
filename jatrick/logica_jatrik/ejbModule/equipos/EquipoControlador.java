@@ -192,8 +192,10 @@ public class EquipoControlador implements IEquipoControlador{
 					
 					e.setGastoJuveniles(0);
 					
+					
 					em.merge(e);
 					em.merge(manager);
+					em.persist(estadio);
 					return e;
 				}
 			}

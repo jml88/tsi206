@@ -6,8 +6,10 @@ import javax.ejb.Local;
 
 import excepciones.CapitalNegativo;
 import excepciones.NoExisteEquipoExcepcion;
+import excepciones.NoExisteJugador;
 import excepciones.NoExisteJugadorALaVenta;
 import excepciones.NoExisteJugadorExcepcion;
+import excepciones.NoPuedeVenderJugador;
 import excepciones.NoSePuedeComprarException;
 import excepciones.YaExisteJugadorALaVenta;
 import mercadoDePases.CompraVentaJugadores;
@@ -22,4 +24,8 @@ public interface IMercadoDePasesControlador {
 	public void cancelarJugadorPuestoEnVenta(int codigoEquipo,int codigoJugador) throws NoExisteEquipoExcepcion, NoExisteJugadorExcepcion, NoExisteJugadorALaVenta;
 	
 	public void comprarJugador(int codigoEquipoCompra, int codigoJugador) throws NoExisteEquipoExcepcion, NoExisteJugadorExcepcion, NoExisteJugadorALaVenta, CapitalNegativo, NoSePuedeComprarException;
+	
+	public boolean puedePonerEnVentaJugador(int codigoEquipo, int codigoJugador) throws NoExisteJugador, NoExisteEquipoExcepcion, NoExisteJugadorALaVenta;
+	
+	public boolean puedeComprarJugador(int codigoEquipoCompra, int codigoJugador) throws NoExisteEquipoExcepcion, NoExisteJugador;
 }

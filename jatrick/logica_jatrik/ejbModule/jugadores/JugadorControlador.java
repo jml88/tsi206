@@ -68,6 +68,8 @@ public class JugadorControlador implements IJugadorControlador {
 			
 			j.setEquipo(equipo);
 			
+			j.setSalario(j.calcularSueldoJugador());
+			
 			jugadores.add(j);
 		
 		}

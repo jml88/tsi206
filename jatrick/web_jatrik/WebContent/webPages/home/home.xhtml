@@ -18,9 +18,9 @@
 			</div>
 			<p:growl id="growl" life="2000" />
 		</h:form>
-		
-		
-		<p:dataTable id="radioDT" var="partido"
+
+
+		<p:dataTable id="radioDT" var="partido" emptyMessage="Todavia no ha jugado partidos"
 			value="#{homeBB.partidosAnteriores}"
 			selection="#{homeBB.partidoSeleccionadoAnterior}"
 			rowKey="#{partido.codigo}">
@@ -31,14 +31,20 @@
 				<h:outputText value="#{partido.fechaHora}" converter="DateConverter" />
 			</p:column>
 			<p:column headerText="Local">
-				<h:outputText
-					value="#{partido.local.nombre}" />
+				<h:outputText value="#{partido.local.nombre}" />
+			</p:column>
+			<p:column headerText="GL" width="20">
+				<h:outputText value="#{partido.resultado.golesLocal}" />
 			</p:column>
 			<p:column headerText="Visitante">
-				<h:outputText
-					value="#{partido.visitante.nombre}" />
+				<h:outputText value="#{partido.visitante.nombre}" />
 			</p:column>
-			
+			<p:column headerText="GV" width="20">
+				<h:outputText value="#{partido.resultado.golesVisitante}" />
+			</p:column>
+			<p:column headerText="Tipo"  width="60">
+				<h:outputText value="#{partido.tipoPartido}" />
+			</p:column>
 			<p:column>
 				<p:commandButton value="Ver resumen"
 					action="#{homeBB.verPartidoEnVivo}">
@@ -48,10 +54,9 @@
 			</p:column>
 		</p:dataTable>
 
-		<p:dataTable id="radioDTT" var="partido"
+		<p:dataTable id="radioDTT" var="partido" emptyMessage="No tiene partidos siguientes"
 			value="#{homeBB.partidosProximos}"
-			selection="#{homeBB.partidoSeleccionado}"
-			rowKey="#{partido.codigo}">
+			selection="#{homeBB.partidoSeleccionado}" rowKey="#{partido.codigo}">
 			<f:facet name="header">
 				<p:outputLabel value="Partidos proximos" />
 			</f:facet>
@@ -59,16 +64,16 @@
 				<h:outputText value="#{partido.fechaHora}" converter="DateConverter" />
 			</p:column>
 			<p:column headerText="Local">
-				<h:outputText
-					value="#{partido.local.nombre}" />
+				<h:outputText value="#{partido.local.nombre}" />
 			</p:column>
 			<p:column headerText="Visitante">
-				<h:outputText
-					value="#{partido.visitante.nombre}" />
+				<h:outputText value="#{partido.visitante.nombre}" />
+			</p:column>
+			<p:column headerText="Tipo" width="60">
+				<h:outputText value="#{partido.tipoPartido}" />
 			</p:column>
 			<p:column headerText="Editar alineacion">
-				<p:commandButton value="Editar"
-					action="#{homeBB.agregarAlineacion}">
+				<p:commandButton value="Editar" action="#{homeBB.agregarAlineacion}">
 					<f:setPropertyActionListener value="#{partido}"
 						target="#{homeBB.partidoSeleccionado}" />
 				</p:commandButton>
@@ -83,9 +88,13 @@
 		</p:dataTable>
 
 		<f:view contentType="text/html">
-			<p:gmap center="#{sessionBB.datosManager.lat}, #{sessionBB.datosManager.lng}" zoom="15" type="HYBRID" style="width:600px;height:400px" />
+			<p:gmap
+				center="#{sessionBB.datosManager.lat}, #{sessionBB.datosManager.lng}"
+				zoom="15" type="HYBRID" style="width:600px;height:400px" />
 		</f:view>
-		<p:link outcome="/webPages/partidos/enviarOrdenesPartido.xhtml?faces-redirect=true" value="Alineaciones" />
+		<p:link
+			outcome="/webPages/partidos/enviarOrdenesPartido.xhtml?faces-redirect=true"
+			value="Alineaciones" />
 
 
 	</ui:define>

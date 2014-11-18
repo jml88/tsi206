@@ -8,7 +8,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -21,6 +23,8 @@ import campeonato.Torneo;
 import configuracionGral.ConfiguracionGral;
 import configuracionGral.PeriodicoPartido;
 import equipos.Equipo;
+import excepciones.NoExisteEquipoExcepcion;
+import finanzas.FinanzasControladorSimulacion;
 
 @Stateless
 @Named
@@ -28,6 +32,11 @@ public class CampeonatoControlador {
 
 	@PersistenceContext(unitName = "jatrik")
 	private EntityManager em;
+	
+	@Inject
+	private FinanzasControladorSimulacion fc;
+	
+	
 
 	private List<Posicion> ordenarPosiciones(Torneo t) {
 		extracted(t);
@@ -78,15 +87,15 @@ public class CampeonatoControlador {
 				"SELECT 1 FROM PartidoTorneo p where p.estado <> 'FINALIZADO'")
 				.getResultList().size() == 0) {
 			List<Torneo> torneos = this.obtenerTorneosActuales();
-			// try {
-			// fc.actualizarFinTorneos();
-			// } catch (NoExisteEquipoExcepcion e) {
-			// // TODO Auto-generated catch block
-			// e.printStackTrace();
-			// } catch (NamingException e) {
-			// // TODO Auto-generated catch block
-			// e.printStackTrace();
-			// }
+			 try {
+			 fc.actualizarFinTorneos();
+			 } catch (NoExisteEquipoExcepcion e) {
+			 // TODO Auto-generated catch block
+			 e.printStackTrace();
+			 } catch (NamingException e) {
+			 // TODO Auto-generated catch block
+			 e.printStackTrace();
+			 }
 			for (Torneo torneo : torneos) {
 				this.actualizarDatosTorneo(torneo);
 			}

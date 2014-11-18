@@ -29,6 +29,11 @@ import equipos.Equipo;
 @Table(name=Partido.nombreTabla)
 public class Partido implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public static final String nombreTabla = "PARTIDOS";
 	
 	public Partido(){

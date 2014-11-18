@@ -1,13 +1,19 @@
-body, html {
-    height: 100%;
-    font-size: 12px;
+.ui-layout-unit .ui-layout-unit-content {
+	padding: 0.2em 0em;
+	border: 0px none;
+	overflow: hidden !important;
 }
 
-body{
+body, html {
+	height: 100%;
+	font-size: 12px;
+}
+
+body {
 	background-image: url("images/soccer_balls_on_dark_blue.jpg");
 }
 
-#content{
+#content {
 	margin: auto;
 	width: 90%;
 	height: 1000px;
@@ -15,7 +21,7 @@ body{
 	box-shadow: 0px 5px 5px 10px #1C1C1C;
 }
 
-#left{
+#left {
 	float: left;
 	height: 100%;
 	/*background-color: #5882FA;*/
@@ -24,16 +30,16 @@ body{
 	border-bottom-left-radius: 20px;
 }
 
-#center{
+#center {
 	float: left;
 	width: 62%;
 	height: 100%;
 	background-color: white;
-	overflow: auto; 
+	overflow: visible;
 }
 
-#right{
-	float:left;
+#right {
+	float: left;
 	width: 19%;
 	height: 100%;
 	background-image: url("images/blue.jpg");

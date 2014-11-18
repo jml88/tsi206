@@ -2,7 +2,9 @@ package web_jatrik;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -16,7 +18,9 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 
 import comunicacion.Comunicacion;
+
 import datatypes.DatosManager;
+import equipos.Equipo;
 
 @Named("loginBB")
 @ViewScoped
@@ -30,8 +34,20 @@ public class LoginBB implements Serializable {
 	private String username;
 
 	private String password;
+	
+	private List<Equipo> equipos;
 
 	public LoginBB() {
+	}
+	
+	@PostConstruct
+	public void init() {
+//		try {
+//			this.torneos = Comunicacion.getInstance().getCampeonatoControlador().obtenerTorneosActuales();
+//		} catch (NamingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 	public String registrarse() {

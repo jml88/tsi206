@@ -11,7 +11,9 @@ import javax.persistence.PersistenceContext;
 import jugadores.Jugador;
 import campeonato.Posicion;
 import partidos.Partido;
+import partidos.PartidoCopa;
 import partidos.PartidoTorneo;
+import partidos.ResultadoPartido;
 import datatypes.DatosAlineacion;
 import datatypes.DatosJugador;
 import datatypes.EnumPartido;
@@ -51,6 +53,11 @@ public class SimulacionControlador {
 	
 	public PartidoTorneo findPartidoTorneo(int codigo) {
 		return em.find(PartidoTorneo.class, codigo);
+
+	}
+	
+	public PartidoCopa findPartidoCopa(int codigo) {
+		return em.find(PartidoCopa.class, codigo);
 
 	}
 	
@@ -143,6 +150,29 @@ public class SimulacionControlador {
 			partido.setAlineacionVisitante(alineacion);
 
 		em.merge(partido);
+	}
+
+	public void actualizarCopa(PartidoCopa pc, Equipo ganador) {
+		if (pc.getSiguienteFase()!= null){
+			if (pc.getSiguienteFase().getLocal()!= null){
+				pc.getSiguienteFase().setLocal(ganador);
+			}
+			else{
+				pc.getSiguienteFase().setVisitante(ganador);
+			}
+		}
+		else{
+			ganador.setCapital(ganador.getCapital()+(pc.getCopa().getIngreso()*pc.getCopa().getCantidadEquipos())); 
+		}
+		
+	}
+
+	public void setPenalesPartido(ResultadoPartido resultado, int penalesL,
+			int penalesV) {
+		resultado.setPenalesLocal(penalesL);
+		resultado.setPenalesVisitante(penalesV);
+		em.merge(resultado);
+		
 	}
 
 }

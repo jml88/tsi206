@@ -141,6 +141,7 @@ public class TimerSimularPartido {
 			sc.actualizarPosicionFechaTorneo(posLocal, posVisitante, pt);
 			fc.actualizarDespuesPartido(pt);
 			fc.actualizarPorMes(pt);
+<<<<<<< HEAD
 			Equipo e = obtenerGanador(pt);
 			if (e != null){
 				e.setRanking(e.getRanking()+1);
@@ -149,6 +150,10 @@ public class TimerSimularPartido {
 			Equipo e = obtenerGanador(pc);
 			e.setRanking(e.getRanking()+1);
 			sc.actualizarCopa(pc,e);
+=======
+		} else {
+		
+>>>>>>> a397029e366c975e88529af56cd32e7d20acf4e9
 		}
 	}
 

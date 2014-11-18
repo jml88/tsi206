@@ -153,6 +153,9 @@ public class ConfiguracionGral {
 	
 
 
+	
+
+
 	public ConfiguracionGral(int premio, int dineroInicial,
 			int cantJugadoresArranque, int cantEquipoTorneo, int numeroFecha,
 			int numeroTorneo, int cantidadTorneos, int cantidadDescensos,
@@ -161,8 +164,11 @@ public class ConfiguracionGral {
 			int mejoraEntrenaJuvenil, int mejoraEntrenaAdulto,
 			int mejoraEntrenaVeterano, int desmejoraNoEntrenaVeterano,
 			int desmejoraNoEntrenaAdulto, int desmejoraNoEntrenaJuvenil,
-			PeriodicoPartido periodicoPartido, int capacidadMaximaEstadio,
-			int capacidadMinimaEstadio, int agrandarEstadio, int cuestaAgrandar) {
+			boolean modificado, int publicidadMinima, int publicidadMedia,
+			int publicidadMaxima, PeriodicoPartido periodicoPartido,
+			int capacidadMaximaEstadio, int capacidadMinimaEstadio,
+			int capacidadAgrandarEstadio, int cuestaAgrandarEstadio,
+			int sociosEmpieza, int seguidoresEmpieza) {
 		super();
 		this.premio = premio;
 		this.dineroInicial = dineroInicial;
@@ -183,13 +189,23 @@ public class ConfiguracionGral {
 		this.desmejoraNoEntrenaVeterano = desmejoraNoEntrenaVeterano;
 		this.desmejoraNoEntrenaAdulto = desmejoraNoEntrenaAdulto;
 		this.desmejoraNoEntrenaJuvenil = desmejoraNoEntrenaJuvenil;
+		this.modificado = modificado;
+		this.publicidadMinima = publicidadMinima;
+		this.publicidadMedia = publicidadMedia;
+		this.publicidadMaxima = publicidadMaxima;
 		this.periodicoPartido = periodicoPartido;
 		this.capacidadMaximaEstadio = capacidadMaximaEstadio;
 		this.capacidadMinimaEstadio = capacidadMinimaEstadio;
-		this.capacidadAgrandarEstadio = agrandarEstadio;
-		this.cuestaAgrandarEstadio = cuestaAgrandar;
-		this.modificado= false;
+		this.capacidadAgrandarEstadio = capacidadAgrandarEstadio;
+		this.cuestaAgrandarEstadio = cuestaAgrandarEstadio;
+		this.sociosEmpieza = sociosEmpieza;
+		this.seguidoresEmpieza = seguidoresEmpieza;
 	}
+
+
+
+
+
 
 
 	public ConfiguracionGral() {

@@ -68,9 +68,9 @@ public class FinanzasBB implements Serializable {
 			ventasJugadores = comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerGastos(codigoEquipo, fechaMinima, EnumTipoTransaccion.VENTA_JUGADORES);
 			socios = comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerGastos(codigoEquipo, fechaMinima, EnumTipoTransaccion.SOCIOS);
 			entradaPartidos = comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerGastos(codigoEquipo, fechaMinima, EnumTipoTransaccion.ENTRADA_PARTIDO);
-			sueldos = comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerGastos(codigoEquipo, fechaMinima, EnumTipoTransaccion.SUELDOS_JUGADORES);
-			pagoJuveniles = comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerGastos(codigoEquipo, fechaMinima, EnumTipoTransaccion.PAGO_JUVENILES);
-			compraJugadores = comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerGastos(codigoEquipo, fechaMinima, EnumTipoTransaccion.COMPRA_JUGADORES);
+			sueldos = -comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerGastos(codigoEquipo, fechaMinima, EnumTipoTransaccion.SUELDOS_JUGADORES);
+			pagoJuveniles = -comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerGastos(codigoEquipo, fechaMinima, EnumTipoTransaccion.PAGO_JUVENILES);
+			compraJugadores = -comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerGastos(codigoEquipo, fechaMinima, EnumTipoTransaccion.COMPRA_JUGADORES);
 			premio = comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerGastos(codigoEquipo, fechaMinima, EnumTipoTransaccion.PREMIO);
 			finanzas = comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerTransaccionesDesde(codigoEquipo, fechaMinima);
 			capitalCalculado = comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerCapitalEquipo(codigoEquipo, getFechaMinima());
@@ -86,14 +86,13 @@ public class FinanzasBB implements Serializable {
 	public void modificarFecha(){
 		codigoEquipo = session.getDatosManager().getCodEquipo();
 		try {
-			fechaMinima = comunicacion.Comunicacion.getInstance().getConfiguracionControlador().getConfiguracion().getFechaArranqueCampeonato();
 			publicidad = comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerGastos(codigoEquipo, fechaMinima, EnumTipoTransaccion.PUBLICIDAD);
 			ventasJugadores = comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerGastos(codigoEquipo, fechaMinima, EnumTipoTransaccion.VENTA_JUGADORES);
 			socios = comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerGastos(codigoEquipo, fechaMinima, EnumTipoTransaccion.SOCIOS);
 			entradaPartidos = comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerGastos(codigoEquipo, fechaMinima, EnumTipoTransaccion.ENTRADA_PARTIDO);
-			sueldos = comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerGastos(codigoEquipo, fechaMinima, EnumTipoTransaccion.SUELDOS_JUGADORES);
-			pagoJuveniles = comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerGastos(codigoEquipo, fechaMinima, EnumTipoTransaccion.PAGO_JUVENILES);
-			compraJugadores = comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerGastos(codigoEquipo, fechaMinima, EnumTipoTransaccion.COMPRA_JUGADORES);
+			sueldos = -comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerGastos(codigoEquipo, fechaMinima, EnumTipoTransaccion.SUELDOS_JUGADORES);
+			pagoJuveniles = -comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerGastos(codigoEquipo, fechaMinima, EnumTipoTransaccion.PAGO_JUVENILES);
+			compraJugadores = -comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerGastos(codigoEquipo, fechaMinima, EnumTipoTransaccion.COMPRA_JUGADORES);
 			premio = comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerGastos(codigoEquipo, fechaMinima, EnumTipoTransaccion.PREMIO);
 			finanzas = comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerTransaccionesDesde(codigoEquipo, fechaMinima);
 			capitalCalculado = comunicacion.Comunicacion.getInstance().getIFinanzasControlador().obtenerCapitalEquipo(codigoEquipo, getFechaMinima());
