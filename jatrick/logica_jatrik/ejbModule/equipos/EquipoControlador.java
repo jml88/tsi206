@@ -7,6 +7,7 @@ import interfaces.IJugadorControlador;
 
 import java.util.GregorianCalendar;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -19,6 +20,8 @@ import javax.persistence.Query;
 
 import configuracionGral.ConfiguracionGral;
 import partidos.Partido;
+import partidos.PartidoTorneo;
+import campeonato.Copa;
 import campeonato.Torneo;
 import users.Manager;
 import jugadores.Jugador;
@@ -210,7 +213,17 @@ public class EquipoControlador implements IEquipoControlador{
 	public List<Partido> obtenerProximosPartidos(int codEquipo, int cantidad){
 		Query q = em.createQuery("select p from Partido p where (p.local.codigo = :codEquipo or p.visitante.codigo = :codEquipo) and (p.estado = 'POR_JUGAR' or p.estado = 'POR_SIMULAR' or p.estado = 'JUGANDO') order by p.fechaHora");
 		q.setParameter("codEquipo", codEquipo);
-		return q.setMaxResults(cantidad).getResultList();
+		List<Partido> partidosAux = q.setMaxResults(cantidad).getResultList();
+		List<Partido> partidos = new LinkedList<Partido>(partidosAux);
+		for (Partido partido : partidosAux) {
+			PartidoTorneo pt = em.find(PartidoTorneo.class, partido.getCodigo());
+			if (pt != null){
+				if(!pt.getTorneo().isActual()){
+					partidos.remove(partido);
+				}
+			}
+		}
+		return partidos;
 	}
 	
 	@Override
@@ -267,5 +280,11 @@ public class EquipoControlador implements IEquipoControlador{
 		
 	}
 	
-
+	@Override
+	public List<Copa> obtenerCopasEquipo(int codEquipo){
+		em.find(Equipo.class, codEquipo);
+		Query q = em.createQuery("select c from Copa c where :codEquipo in (select e.codigo from c.equipos e)");
+		q.setParameter("codEquipo", codEquipo);
+		return q.getResultList();
+	}
 }

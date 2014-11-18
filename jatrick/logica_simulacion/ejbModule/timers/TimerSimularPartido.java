@@ -19,13 +19,14 @@ import javax.persistence.PersistenceContext;
 import partido.LogicaSimulacion;
 import partido.PartidoControlador;
 import partido.SimulacionControlador;
+import partidos.ConfiguracionPartido;
 import partidos.Partido;
 import partidos.PartidoTorneo;
 import campeonato.Posicion;
 import datatypes.DatosAlineacion;
 import datatypes.DatosMinutoPartido;
 import excepciones.NoExisteEquipoExcepcion;
-import finanzas.FinanzasControlador;
+import finanzas.FinanzasControladorSimulacion;
 
 @Stateless
 @LocalBean
@@ -44,29 +45,40 @@ public class TimerSimularPartido {
 	private SimulacionControlador sc;
 	
 	@Inject
-	private FinanzasControlador fc;
+	private FinanzasControladorSimulacion fc;
+	
+	@Inject
+	PartidoControlador pc;
 
 	// @Inject
 	// ConfiguracionControlador cc;
 
 	public void crearTimerSimularPartido(DatosMinutoPartido mp, Calendar c,
-			int hora, int minuto) {
+			int hora, int minuto, int segundo) {
 		Date d = c.getTime();
 		d.setHours(hora);
 		d.setMinutes(minuto);
+		d.setSeconds(segundo);
 		ts.createTimer(d, mp);
 	}
 
 	private void crearPartido(List<Integer> minutos, Partido p) {
+		ConfiguracionPartido cp = pc.findConfiguracionPartido();
 		Calendar fecha = new GregorianCalendar();
 		Collections.sort(minutos);
 		int ultimoMinuto = minutos.get(minutos.size() - 1);
 		for (Integer min : minutos) {
+			
+			Double minutoysegundos = ((double)(min*cp.getDuracion())/90);
+			int minuto = (int)minutoysegundos.intValue();
+			Double seg = ((double)(minutoysegundos-minuto))*60;
+			int segundo = (int)seg.intValue();
 			fecha = (Calendar) p.getFechaHora().clone();
-			fecha.add(Calendar.MINUTE, min);
+			fecha.add(Calendar.MINUTE, minuto);
+			fecha.add(Calendar.SECOND, segundo);
 			crearTimerSimularPartido(new DatosMinutoPartido(min, p.getCodigo(),
 					min == ultimoMinuto), fecha,
-					fecha.get(Calendar.HOUR_OF_DAY), fecha.get(Calendar.MINUTE));
+					fecha.get(Calendar.HOUR_OF_DAY), fecha.get(Calendar.MINUTE),fecha.get(Calendar.SECOND));
 		}
 		//TODO copiar la alineacion defecto
 		if (p.getAlineacionLocal() == null) {
@@ -87,8 +99,8 @@ public class TimerSimularPartido {
 			Posicion posVisitante = ((PartidoTorneo) pt).getTorneo()
 					.obtenerPosicionEquipo(pt.getVisitante());
 			sc.actualizarPosicionFechaTorneo(posLocal, posVisitante, pt);
-//			fc.actualizarDespuesPartido(pt);
-//			fc.actualizarPorMes(pt);
+			fc.actualizarDespuesPartido(pt);
+			fc.actualizarPorMes(pt);
 		} else {
 		
 		}
@@ -123,7 +135,21 @@ public class TimerSimularPartido {
 			crearPartido(minutos, p);
 		} else {
 			if (minutoDto.isUltimaJugada()) {
+				if (p.getResultado().getGolesLocal() == 0 && p.getResultado().getGolesVisitante() == 0){
+					double r =Math.random();
+					if (r > 0.5){
+						pc.crearComentario("Por Suerte finaliza este martirio de partido, ambos equipos deben mejorar mucho para proximas actuaciones", p, 90);
+					}
+					else{
+						pc.crearComentario("Fin del partido, amargo 0 a 0", p, 90);
+					}
+				}
+				else{
+					pc.crearComentario("FIN del tiempo reglamentario", p, 90);
+				}
 				this.actualizarDatosPartido(p);
+				
+				
 			}
 		}
 	}

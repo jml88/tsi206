@@ -27,7 +27,7 @@ import datatypes.DatosJugador;
 import datatypes.EnumPartido;
 import equipos.Alineacion;
 import equipos.Equipo;
-import finanzas.FinanzasControlador;
+import finanzas.FinanzasControladorSimulacion;
 
 @Stateless
 @LocalBean
@@ -37,7 +37,7 @@ public class PartidoControlador {
 	private EntityManager em;
 	
 	@Inject
-	private FinanzasControlador fc;
+	private FinanzasControladorSimulacion fc;
 	
 	public PartidoControlador() {
 
@@ -133,7 +133,14 @@ public class PartidoControlador {
 	}
 
 
-
+	public void lesionJugador(Jugador j){
+		//TODO hacerlo bien
+		j.setLesion(2);
+	}
+	
+	public void tarjetaJugador(Jugador j){
+		
+	}
 
 
 	// public Partido crearPartidoPrueba(){

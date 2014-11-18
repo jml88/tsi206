@@ -37,7 +37,11 @@ public class Partido implements Serializable{
 	public static final String nombreTabla = "PARTIDOS";
 	
 	public Partido(){
-		
+		this.estado = EnumPartido.POR_JUGAR;
+		this.local = null;
+		this.visitante = null;
+		this.fechaHora = null;
+		this.resultado = null;
 	}
 	
 	Partido(Equipo local, Equipo visitante, Calendar fecha){
@@ -60,6 +64,8 @@ public class Partido implements Serializable{
     @Enumerated(EnumType.STRING)
     @Column
 	private EnumPartido estado;
+    
+    private String tipoPartido;
     
     @OneToOne
     private ResultadoPartido resultado;
@@ -141,9 +147,12 @@ public class Partido implements Serializable{
 		this.resultado = resultado;
 	}
 
+	public String getTipoPartido() {
+		return tipoPartido;
+	}
 
-//	public Partido getDatos() {
-//		return this;
-//	}
+	public void setTipoPartido(String tipoPartido) {
+		this.tipoPartido = tipoPartido;
+	}
 
 }

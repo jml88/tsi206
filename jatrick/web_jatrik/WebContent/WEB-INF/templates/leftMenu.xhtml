@@ -8,8 +8,8 @@
 		<h:form id="formLeft" prependId="false">
 			<p:panelGrid columns="1" 
 				rendered="#{sessionBB.datosManager == null }">
-				<p:outputLabel style="min-width:70px;" for="usr">Usuario: </p:outputLabel>
-				<p:inputText id="usr" label="Usuario:" value="#{loginBB.username}"
+				<p:outputLabel style="min-width:70px;" for="usuarior">Usuario: </p:outputLabel>
+				<p:inputText id="usuarior" label="Usuario:" value="#{loginBB.username}"
 					maxlength="10"></p:inputText>
 				<p:outputLabel for="pass">Contraseña: </p:outputLabel>
 				<p:password id="pass" value="#{loginBB.password}"></p:password>
@@ -32,8 +32,8 @@
 				</p:submenu>
 				<p:submenu label="Competiciones">
 					<p:menuitem value="Liga" outcome="/webPages/competiciones/liga.xhtml?faces-redirect=true" icon="ui-icon-star"/>
-					<p:menuitem value="Copa" 
-						ajax="false" icon="ui-icon-close" />
+					<p:menuitem value="Copa" outcome="/webPages/competiciones/copas.xhtml?faces-redirect=true"
+						icon="ui-icon-close" />
 					<p:menuitem value="Amistosos" outcome="/webPages/partidos/verPartidos.xhtml?faces-redirect=true"
 						ajax="false" icon="ui-icon-close" />
 				</p:submenu>
@@ -42,6 +42,8 @@
 						icon="ui-icon-home" />
 					<p:menuitem value="Inferiores" icon="ui-icon-star" />
 					<p:menuitem value="Entrenar" icon="ui-icon-star" outcome="/webPages/entrenamiento/entrenamiento.xhtml?faces-redirect=true"/>
+					<p:menuitem value="Finanzas" outcome="/webPages/finanzas/finanzas.xhtml?faces-redirect=true"
+						icon="ui-icon-star" />
 				</p:submenu>
 				<p:submenu label="Busqueda">
 					<p:menuitem value="Jugadores" url="http://www.primefaces.org"
