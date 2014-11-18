@@ -8,33 +8,44 @@
 
 	<ui:define name="Principal">
 		<h:outputScript name="js/mapa.js" target="body"/>
+		<h:outputScript name="js/escudo.js" target="body"/>
 		
-		<h:form id="form" prependId="false">
+		<h:form id="form" prependId="false" enctype="multipart/form-data">
 			<h:inputHidden id="lat" value="#{registroBB.lat}"/>
 			<h:inputHidden id="lng" value="#{registroBB.lng}"/>
 			<div id="formDatos">
-				<p:panelGrid id="gridRegistro" columns="2">
-					<p:outputLabel for="usuario" value="Usuario: "/>
-					<p:inputText id="usuario" label="Usuario:" required="true" value="#{registroBB.datosmanager.username}"/>
-
-					<h:outputLabel for="pwd1" value="Contraseña: "/>
-					<p:password id="pwd1" value="#{registroBB.password}" match="pwd2" label="Contraseña:" required="true" />
-
-					<h:outputLabel for="pwd2" value="Confirmar contraseña: "/>
-					<p:password id="pwd2" value="#{registroBB.password}" label="Confirmar contraseña:" required="true" />
-
-					<p:outputLabel for="name" value="Nombre: "/>
-					<p:inputText id="name" value="#{registroBB.datosmanager.name}"/>
-
-					<p:outputLabel for="email" value="Email: "/>
-					<p:inputText id="email" value="#{registroBB.datosmanager.email}"/>
-
-					<p:outputLabel for="nombreEquipo" value="Nombre equipo: "/>
-					<p:inputText id="nombreEquipo" value="#{registroBB.nombreEquipo}"/>
-					
-					<p:outputLabel for="nombreEstadio" value="Nombre estadio: "/>
-					<p:inputText id="nombreEstadio" value="#{registroBB.nombreEstadio}"/>
+				<p:panelGrid columns="2">
+					<p:panelGrid id="gridRegistro" columns="2">
+						<p:outputLabel for="usr" value="Usuario: "/>
+						<p:inputText id="usr" label="Usuario:" required="true" value="#{registroBB.datosmanager.username}"/>
+	
+						<h:outputLabel for="pwd1" value="Contraseña: "/>
+						<p:password id="pwd1" value="#{registroBB.password}" match="pwd2" label="Contraseña:" required="true" />
+	
+						<h:outputLabel for="pwd2" value="Confirmar contraseña: "/>
+						<p:password id="pwd2" value="#{registroBB.password}" label="Confirmar contraseña:" required="true" />
+	
+						<p:outputLabel for="name" value="Nombre: "/>
+						<p:inputText id="name" value="#{registroBB.datosmanager.name}"/>
+	
+						<p:outputLabel for="email" value="Email: "/>
+						<p:inputText id="email" value="#{registroBB.datosmanager.email}"/>
+	
+						<p:outputLabel for="nombreEquipo" value="Nombre equipo: "/>
+						<p:inputText id="nombreEquipo" value="#{registroBB.nombreEquipo}"/>
+						
+						<p:outputLabel for="nombreEstadio" value="Nombre estadio: "/>
+						<p:inputText id="nombreEstadio" value="#{registroBB.nombreEstadio}"/>
+					</p:panelGrid>
 				</p:panelGrid>
+			</div>
+			<div id="formEscudo">
+				<p:panel id="cargaExitosa">
+					<p:outputLabel value="El escudo se ha subido correctamente." rendered="#{registroBB.escudoCargado}" style="font-size:1.5em"/>
+				</p:panel>
+				<p:fileUpload fileUploadListener="#{registroBB.subirEscudo}" mode="advanced"
+					dragDropSupport="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+					label="Buscar" uploadLabel="Subir" cancelLabel="Cancelar" update="cargaExitosa"/>
 			</div>
 			<div id="formMapa">
 				<p:outputLabel value="Ubicacion del estadio" for="mapaRegistro"/>

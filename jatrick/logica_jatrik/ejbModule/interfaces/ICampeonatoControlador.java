@@ -1,16 +1,20 @@
 package interfaces;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
 import javax.ejb.Local;
 
 import jugadores.Jugador;
+import campeonato.Copa;
 import campeonato.Posicion;
 import campeonato.Torneo;
+import datatypes.DatosCopa;
 import datatypes.DatosFixture;
 import datatypes.DatosTorneo;
 import partidos.PartidoTorneo;
+import equipos.Equipo;
 import excepciones.NoExisteConfiguracionException;
 
 @Local
@@ -50,6 +54,15 @@ public interface ICampeonatoControlador {
 	public List<Jugador> obtenerGoleadoresTorneo(int codTorneo);
 
 	public List<DatosFixture> obtenerFixtureTorneo(int codTorneo);
+
+	public List<Copa> obtenerCopasFuturas();
+
+	public void agregarEquipoACopa(int codEquipo, int codCopa);
+
+	public void crearCopa(int cantidadEquipos, Calendar fecha, int ingreso,
+			String nombre);
+
+	public DatosCopa obtenerFixtureCopa(int codCopa);
 	
 
 }

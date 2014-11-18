@@ -43,7 +43,6 @@ public class TimerPartido {
 	///Crea timer periodico TimerPartido
 	public void crearTimerPeriodico(int tiempo){
 		TimerConfig tc = new TimerConfig();
-		tc.setPersistent(false);
 		ts.createIntervalTimer(new Date(), tiempo, tc);
 	}
 	
@@ -56,7 +55,7 @@ public class TimerPartido {
 		{
 			pc.partidoPorSimular(p);
 			DatosMinutoPartido dmp = new DatosMinutoPartido(0, p.getCodigo(), false);
-			tsm.crearTimerSimularPartido(dmp, p.getFechaHora(), p.getFechaHora().get(Calendar.HOUR_OF_DAY),p.getFechaHora().get(Calendar.MINUTE));
+			tsm.crearTimerSimularPartido(dmp, p.getFechaHora(), p.getFechaHora().get(Calendar.HOUR_OF_DAY),p.getFechaHora().get(Calendar.MINUTE),p.getFechaHora().get(Calendar.SECOND));
 		}
 		
 	}

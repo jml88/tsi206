@@ -18,11 +18,14 @@ public class DatosManager implements Serializable {
 	private int codTorneo;
 	private Set<String> roles;
 	
+	private Double lat;
+	private Double lng;
+	
 	public DatosManager() {
 		
 	}
 	
-	public DatosManager(String username, String name, String email, int codEquipo, int codTorneo, Set<String> roles) {
+	public DatosManager(String username, String name, String email, int codEquipo, int codTorneo, Set<String> roles, Double lat, Double lng) {
 		super();
 		this.username = username;
 		this.name = name;
@@ -30,6 +33,8 @@ public class DatosManager implements Serializable {
 		this.codEquipo = codEquipo;
 		this.codTorneo = codTorneo;
 		this.roles = roles;
+		this.lat = lat;
+		this.lng = lng;
 	}
 
 	public String getUsername() {
@@ -79,5 +84,20 @@ public class DatosManager implements Serializable {
 	public void setCodTorneo(int codTorneo) {
 		this.codTorneo = codTorneo;
 	}
-	
+
+	public Double getLat() {
+		return lat;
+	}
+
+	public void setLat(Double lat) {
+		this.lat = lat;
+	}
+
+	public Double getLng() {
+		return lng;
+	}
+
+	public void setLng(Double lng) {
+		this.lng = lng;
+	}
 }

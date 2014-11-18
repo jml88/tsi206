@@ -5,6 +5,11 @@ import fabricas.HomeFactory;
 import interfaces.IEquipoControlador;
 import interfaces.IUserControlador;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -53,7 +58,7 @@ public class UserControlador implements IUserControlador {
 			else if (r== Role.ADMIN)
 				roles.add("ADMIN");
 		}
-    	DatosManager datosManager = new DatosManager(username, name, email, codEquipo,codTorneo, roles);
+    	DatosManager datosManager = new DatosManager(username, name, email, codEquipo,codTorneo, roles,m.getLat(), m.getLng());
     	
     	return datosManager;
     }
@@ -79,8 +84,9 @@ public class UserControlador implements IUserControlador {
 				.getSingleResult()).intValue();
 	}
 	
-	public int createManager(DatosManager datosManager, String password, String nombreEquipo) {
+	public int createManager(DatosManager datosManager, String password, String nombreEquipo, boolean escudo) {
 		Manager manager = new Manager(datosManager, password);
+		
 		em.persist(manager);
         
         IEquipoControlador iec = hf.getEquipoControlador();
@@ -89,7 +95,9 @@ public class UserControlador implements IUserControlador {
 //        	manager.setTorneo(torneo);
         	iec.asignarTorneo(manager,new DatosEquipo(0, nombreEquipo, 0, false));
         }
-        
+        if (escudo) {
+        	this.asociarEscudo(nombreEquipo);
+        }
         return manager.getId();
     }
 
@@ -99,5 +107,28 @@ public class UserControlador implements IUserControlador {
 
     public void delete(User user) {
         em.remove(em.contains(user) ? user : em.merge(user));
+    }
+    
+    public void guardarEscudoEquipo(InputStream in) {
+    	try {
+            // write the inputStream to a FileOutputStream
+    		OutputStream out = new FileOutputStream(new File("imagenesJatrik/nombreTemporal"));
+            int read = 0;
+            byte[] bytes = new byte[1024];
+            while ((read = in.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+            in.close();
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void asociarEscudo(String nombreEquipo) {
+    	File escudo = new File("imagenesJatrik/nombreTemporal");
+    	File file = new File("imagenesJatrik/" + nombreEquipo);
+    	escudo.renameTo(file);
     }
 }

@@ -17,7 +17,6 @@ body{
 
 #left{
 	float: left;
-	width: 19%;
 	height: 100%;
 	/*background-color: #5882FA;*/
 	background-image: url("images/blue.jpg");

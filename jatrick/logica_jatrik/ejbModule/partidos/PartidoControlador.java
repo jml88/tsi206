@@ -34,6 +34,10 @@ public class PartidoControlador implements IPartidoControlador {
 		Equipo el = hf.getEquipoControlador().findEquipo(codEquipoLocal);
 		Equipo ev = hf.getEquipoControlador().findEquipo(codEquipoVisitante);
 		Partido p = new Amistoso(el,ev,fecha);
+		ResultadoPartido rp = new ResultadoPartido();
+		em.persist(rp);
+		p.setResultado(rp);
+		p.setTipoPartido("Amistoso");
 		em.persist(p);
 		return 0;
 	}
@@ -178,5 +182,4 @@ public class PartidoControlador implements IPartidoControlador {
 		Partido p = em.find(Partido.class, idPartido);
 		return p.getResultado();
 	}
-	
 }

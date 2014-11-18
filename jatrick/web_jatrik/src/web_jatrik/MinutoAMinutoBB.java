@@ -13,6 +13,7 @@ import javax.naming.NamingException;
 
 import partidos.Comentario;
 import partidos.Partido;
+import partidos.ResultadoPartido;
 import comunicacion.Comunicacion;
 import datatypes.DatosComentario;
 import datatypes.DatosEquipo;
@@ -35,6 +36,8 @@ public class MinutoAMinutoBB implements Serializable{
 	
 	private int numeroComentario;
 	
+	private ResultadoPartido resultadoPartido;
+	
 	@Inject
 	SessionBB sesion;
 	
@@ -48,6 +51,11 @@ public class MinutoAMinutoBB implements Serializable{
 			numeroComentario = 0;
 			comentariosPartido = new LinkedList<Comentario>();
 			comentariosPartido.add(new Comentario(-1, "El partido va a comenzar",null,0));
+			List<Comentario> comentarios = Comunicacion.getInstance().getIPartidoControlador().obtenerComentariosPartido(datosPartido.getCodigo(), numeroComentario);
+			for (Comentario comentario : comentarios) {
+				this.comentariosPartido.add(comentario);
+			}
+			this.resultadoPartido = Comunicacion.getInstance().getIPartidoControlador().obtenerResultadoPartido(datosPartido.getCodigo());
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -64,6 +72,7 @@ public class MinutoAMinutoBB implements Serializable{
 					numeroComentario = c.getId();
 				}
 				comentariosPartido.add(c);
+				this.resultadoPartido = Comunicacion.getInstance().getIPartidoControlador().obtenerResultadoPartido(datosPartido.getCodigo());
 			}
 		} catch (NoExistePartidoExepcion e) {
 			// TODO Auto-generated catch block
@@ -113,10 +122,13 @@ public class MinutoAMinutoBB implements Serializable{
 	public void setNumeroComentario(int numeroComentario) {
 		this.numeroComentario = numeroComentario;
 	}
-	
-	
-	
-	
-	
 
+	public ResultadoPartido getResultadoPartido() {
+		return resultadoPartido;
+	}
+
+	public void setResultadoPartido(ResultadoPartido resultadoPartido) {
+		this.resultadoPartido = resultadoPartido;
+	}
+	
 }

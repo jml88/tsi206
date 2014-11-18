@@ -149,6 +149,16 @@ public class AdminBB implements Serializable{
 	public int getSelection() {
 		return selection;
 	}
+	
+	public String agregarCopa(){
+//		try {
+//			Comunicacion.getInstance().getCampeonatoControlador().crearCopa(8, );
+//		} catch (NamingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		return "";
+	}
 
 
 

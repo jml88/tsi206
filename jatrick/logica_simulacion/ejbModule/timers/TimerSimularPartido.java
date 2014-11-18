@@ -45,7 +45,11 @@ public class TimerSimularPartido {
 	private SimulacionControlador sc;
 	
 	@Inject
+<<<<<<< HEAD
 	private FinanzasControladorSimulacion fc;
+=======
+	private FinanzasControlador fc;
+>>>>>>> 2d9c229db69a033c9dd4cb1aef8e0af27f0f5b38
 	
 	@Inject
 	PartidoControlador pc;
