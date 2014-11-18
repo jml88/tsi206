@@ -15,7 +15,7 @@
 	<ui:define name="Principal">
 		<h:form id="form" prependId="false">
 			<div align="center">
-				<p:panelGrid columns="1" >
+				<p:panelGrid columns="2" >
 					<p:outputLabel value = "Nombre: "/>
 					<h:outputText  value = "#{jugadorBB.jugador.fullName}"/>
 					
@@ -45,9 +45,11 @@
 					
 				</p:panelGrid>
 				
-				<p:commandButton value="Retirar de venta" action="#{jugadorBB.cancelarVentaJugador}"/>
-				<p:commandButton value="Comprar jugador" action="#{jugadorBB.comprarJugador()}"/>
-				<p:commandButton value="Poner jugador en venta" action="#{jugadorBB.ponerEnVentaJugador()}"/>
+				<p:commandButton value="Retirar de venta" action="#{jugadorBB.cancelarVentaJugador}" />
+				<p:commandButton value="Comprar jugador" action="#{jugadorBB.comprarJugador}" rendered="#{jugadorBB.puedeComprar}"/>
+				<p:commandButton value="Poner jugador en venta" actionListener="#{jugadorBB.ponerEnVentaJugador}" rendered="#{jugadorBB.ponerEnVenta}"/>
+
+				
 			</div>
 		</h:form>
 	</ui:define>

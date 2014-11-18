@@ -25,7 +25,8 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 		@SuppressWarnings("unchecked")
 		List<ConfiguracionGral> cg = (List<ConfiguracionGral>)em.createQuery("Select cg from ConfiguracionGral cg").getResultList();
 		if(cg.isEmpty()){
-			ConfiguracionGral conf = new ConfiguracionGral(10000,1000 ,20,8, 0, 0, 2,1, 10, new Date(),21,30,33, 4, 1, 0,1, 0,-1, null,90000,10000,10000, 10000);
+			PeriodicoPartido periodico = new PeriodicoPartido(1, 1, 3, EnumPeriodicoPartido.MINUTO);
+			ConfiguracionGral conf = new ConfiguracionGral(10000, 1000, 20, 8, 0, 0, 2,1, 10, new Date(), 21,30,33,3,1,0,1,0,-1,false,150,170,200, periodico,90000,5000, 5000,100000,150,500);
 			em.persist(conf);
 			return conf;
 		}
@@ -39,8 +40,8 @@ public class ConfiguracionControlador implements IConfiguracionControlador{
 		@SuppressWarnings("unchecked")
 		List<ConfiguracionGral> cg = (List<ConfiguracionGral>)em.createQuery("Select cg from ConfiguracionGral cg").getResultList();
 		if(cg.isEmpty()){
-			PeriodicoPartido p = new PeriodicoPartido(0, 5, 0, EnumPeriodicoPartido.MINUTO);
-			ConfiguracionGral conf = new ConfiguracionGral(10000,1000 ,20,8, 0, 0, 2,1, 10, new Date(),21,30,33, 4, 1, 0,1, 0,-1, p,90000,10000,10000, 10000);
+			PeriodicoPartido periodico = new PeriodicoPartido(1, 1, 3, EnumPeriodicoPartido.MINUTO);
+			ConfiguracionGral conf = new ConfiguracionGral(10000, 1000, 20, 8, 0, 0, 2,1, 10, new Date(), 21,30,33,3,1,0,1,0,-1,false,150,170,200, periodico,90000,5000, 5000,100000,150,500);
 			em.persist(conf);
 			return conf;
 

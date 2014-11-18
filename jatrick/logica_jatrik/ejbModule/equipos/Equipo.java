@@ -181,10 +181,12 @@ public class Equipo implements Serializable{
 
 	public int getCapital() {
 		return capital;
+		
 	}
 
 	public void setCapital(int capital) {
 		this.capital = capital;
+		
 	}
 
 	public Manager getUsuario() {

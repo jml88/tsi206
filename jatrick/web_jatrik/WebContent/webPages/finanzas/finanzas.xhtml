@@ -16,10 +16,25 @@
 	<ui:define name="Principal">
 		<h:form id="form" prependId="false">
 			<div align="center">
-				<p:panelGrid columns="3" >
+
+				<h:form>
+					<p:panelGrid columns = "2">
+						<h:outputText value="Desde fecha: " style="font-weight:bold"/>
+						<p:calendar id="datetime"
+							value="#{finanzasBB.fechaMinima}"
+							pattern="MM/dd/yyyy" >
+							<p:ajax event="dateSelect" update=":form:panel" listener="#{finanzasBB.modificarFecha}" />	
+						</p:calendar>
+						
+					</p:panelGrid>
+				</h:form>
+
+
+				<p:panel id="panel">
+				<p:panelGrid id="grid" columns="3" >
 					<p:outputLabel value = "Capital: "/>
 					<h:outputText value = "#{finanzasBB.capitalCalculado}">
-						<f:convertNumber currencySymbol="$" type="currency"/>
+						<f:convertNumber currencySymbol="$" type="currency" pattern="$#,##0.00;-$#,##0.00"/>
 					</h:outputText>
 					<h:outputText  value = "-"/>
 					
@@ -65,12 +80,20 @@
 						<f:convertNumber currencySymbol="$" type="currency"/>
 					</h:outputText>
 					
-					<p:outputLabel value = "Saldo actual: "/>
-					<h:outputText  value = "#{finanzasBB.capitalActual}">
-						<f:convertNumber currencySymbol="$" type="currency"/>
+					<p:outputLabel value = "Premios pagados: "/>
+					<h:outputText value = "#{finanzasBB.premio}">
+						<f:convertNumber currencySymbol="$" type="currency" pattern="$#,##0.00;-$#,##0.00"/>
 					</h:outputText>
+					<h:outputText  value = "-"/>
+					
+					<p:outputLabel value = "Saldo actual: "/>
+					
+					<h:outputText  value = "#{finanzasBB.capitalActual}" >
+						<f:convertNumber currencySymbol="$" type="currency" pattern="$#,##0.00;-$#,##0.00" />
+					</h:outputText>
+					
 				</p:panelGrid>
-			</div>
+			
 			<div>
 				<p:dataTable var="trans" value="#{finanzasBB.finanzas}">
 		    		<p:column headerText="fechaTransaccion">
@@ -86,6 +109,9 @@
 		    		</p:column>
 				</p:dataTable>
 			</div>
+			</p:panel>
+			</div>
 		</h:form>
+		
 	</ui:define>
 </ui:composition>

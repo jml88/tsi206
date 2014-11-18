@@ -62,6 +62,7 @@ public class Alineacion implements Serializable {
     )
 	private List<Jugador> defensas;
 	
+	
 	@OneToOne
 	private Jugador golero;
 

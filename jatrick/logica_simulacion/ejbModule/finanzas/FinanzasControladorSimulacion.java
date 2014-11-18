@@ -25,8 +25,8 @@ import equipos.Equipo;
 import excepciones.NoExisteEquipoExcepcion;
 
 @Stateless
-@Named
-public class FinanzasControlador {
+@Named("finanzasSimulacion")
+public class FinanzasControladorSimulacion {
 	
 	@PersistenceContext( unitName = "jatrik" ) 
 	private EntityManager em;
@@ -41,8 +41,11 @@ public class FinanzasControlador {
 	}
 	
 	public void ingresarTransaccion(Equipo e, int monto, EnumTipoTransaccion tipoTransaccion){
-		Finanzas finanzas = new Finanzas(monto, Calendar.getInstance().getTime(), e, tipoTransaccion);
-		em.persist(finanzas);
+		if(monto!=0)
+		{
+			Finanzas finanzas = new Finanzas(monto, Calendar.getInstance().getTime(), e, tipoTransaccion);
+			em.persist(finanzas);
+		}
 	}
 	
 	public void pagarSueldosAEquipo(Equipo e){
@@ -54,7 +57,7 @@ public class FinanzasControlador {
 		int dineroTransaccion = 0;
 		for (Jugador jugador : jugadores){
 			capital -= jugador.getSalario();
-			dineroTransaccion = jugador.getSalario();
+			dineroTransaccion += jugador.getSalario();
 		}
 		
 		ingresarTransaccion(e,-dineroTransaccion, EnumTipoTransaccion.SUELDOS_JUGADORES);
@@ -86,7 +89,7 @@ public class FinanzasControlador {
 	
 	
 	public void generarPublicidad(Equipo e) throws NoExisteEquipoExcepcion, NamingException{
-Torneo t = obtenerTorneoActual(e.getCodigo());
+		Torneo t = obtenerTorneoActual(e.getCodigo());
 		
 		Posicion p = (Posicion)em.createQuery("Select p from Posicion p where p.equipo.codigo = :equipo AND p.torneo.codigo = :torneo")
 				.setParameter("equipo", e.getCodigo())
@@ -96,13 +99,13 @@ Torneo t = obtenerTorneoActual(e.getCodigo());
 		int cantidadCuadros = conf.getConfiguracion().getCantEquipoTorneo();
 		
 		if(pos/(cantidadCuadros/3) == 0){
-			e.setPublicidad(100);
+			e.setPublicidad(conf.getConfiguracion().getPublicidadMaxima());
 		}
 		else if (pos/(cantidadCuadros/3) == 1){
-			e.setPublicidad(50);
+			e.setPublicidad(conf.getConfiguracion().getPublicidadMedia());
 		}
 		else{
-			e.setPublicidad(30);
+			e.setPublicidad(conf.getConfiguracion().getPublicidadMinima());
 		}
 		em.merge(e);
 	}
@@ -238,7 +241,7 @@ Torneo t = obtenerTorneoActual(e.getCodigo());
 		
 		List<Posicion> posiciones = ordenarPosiciones(torneo);
 		Equipo equipo = posiciones.get(0).getEquipo();
-		equipo.setCapital(premio);
+		equipo.setCapital(equipo.getCapital() + premio);
 		em.merge(equipo);
 		ingresarTransaccion(equipo, premio, EnumTipoTransaccion.PREMIO);
 		
@@ -278,6 +281,8 @@ Torneo t = obtenerTorneoActual(e.getCodigo());
 			cobrarPublicidad(p.getVisitante());
 			pagoDeJuveniles(p.getLocal());
 			pagoDeJuveniles(p.getVisitante());
+			cobrarCuotaDeSocios(p.getLocal());
+			cobrarCuotaDeSocios(p.getVisitante());
 	}
 	
 	public void actualizarDespuesPartido(Partido p){
