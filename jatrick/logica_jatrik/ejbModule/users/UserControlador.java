@@ -131,4 +131,10 @@ public class UserControlador implements IUserControlador {
     	File file = new File("imagenesJatrik/" + nombreEquipo);
     	escudo.renameTo(file);
     }
+    
+    public File obtenerEscudo(int codEquipo) {
+    	Equipo e = em.find(Equipo.class, codEquipo);
+    	File escudo = new File("imagenesJatrik/" + e.getNombre());
+    	return escudo;
+    }
 }
