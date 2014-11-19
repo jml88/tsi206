@@ -1,5 +1,6 @@
 package interfaces;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 
@@ -20,4 +21,5 @@ public interface IUserControlador {
 	public void update(User user);
     public void delete(User user);
     public void guardarEscudoEquipo(InputStream in);
+    public File obtenerEscudo(int codEquipo);
 }

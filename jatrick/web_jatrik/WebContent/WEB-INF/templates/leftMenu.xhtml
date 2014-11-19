@@ -25,6 +25,9 @@
 					</p:column>
 				</p:row>
 			</p:panelGrid>
+			<p:panel id="escudo" rendered="false">
+				<p:graphicImage value="#{sessionBB.escudo}"/>
+			</p:panel>
 			<p:menu rendered="#{sessionBB.datosManager != null}">
 				<p:submenu label="Principal">
 					<p:menuitem value="Inicio" outcome="/webPages/home/home.xhtml?faces-redirect=true"

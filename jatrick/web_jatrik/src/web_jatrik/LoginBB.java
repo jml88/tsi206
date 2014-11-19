@@ -1,8 +1,12 @@
 package web_jatrik;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -14,9 +18,12 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 import comunicacion.Comunicacion;
 import datatypes.DatosManager;
+import equipos.Equipo;
 
 @Named("loginBB")
 @ViewScoped
@@ -30,8 +37,20 @@ public class LoginBB implements Serializable {
 	private String username;
 
 	private String password;
+	
+	private List<Equipo> equipos;
 
 	public LoginBB() {
+	}
+	
+	@PostConstruct
+	public void init() {
+//		try {
+//			this.torneos = Comunicacion.getInstance().getCampeonatoControlador().obtenerTorneosActuales();
+//		} catch (NamingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 	public String registrarse() {
@@ -62,6 +81,9 @@ public class LoginBB implements Serializable {
 			int managerId = Comunicacion.getInstance().getIUserControlador().findUserByUserName(username);
 			DatosManager datosManager = Comunicacion.getInstance().getIUserControlador().obtenerManager(managerId);
 			Comunicacion.getInstance().getSesion().setDatosManager(datosManager);
+			File escudo = Comunicacion.getInstance().getIUserControlador().obtenerEscudo(datosManager.getCodEquipo());
+        	StreamedContent escudoStream = new DefaultStreamedContent(new FileInputStream(escudo));
+        	Comunicacion.getInstance().getSesion().setEscudo(escudoStream);
 			result = "/webPages/home/home.xhtml?faces-redirect=true";
 
 			// SavedRequest savedRequest =

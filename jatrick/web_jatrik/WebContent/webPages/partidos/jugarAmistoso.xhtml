@@ -16,17 +16,21 @@
 		<h:form id="form" prependId="false">
 			<div id="equipos">
 				<p:dataTable id="radioDT" var="team"
-					value="#{jugarAmistosoBB.equipos}"
-					selection="#{jugarAmistosoBB.equipoSeleccionado}" rowKey="#{team.codigo}">
+					value="#{jugarAmistosoBB.equipos}" paginator="true"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15"
+					selection="#{jugarAmistosoBB.equipoSeleccionado}"
+					rowKey="#{team.codigo}">
 					<f:facet name="header">
 						<p:outputLabel value="Equipos" />
 					</f:facet>
-					<p:column selectionMode="single"/>
+					<p:column selectionMode="single" />
 					<p:column headerText="Codigo">
 						<h:outputText value="#{team.codigo}" />
 					</p:column>
-					<p:column headerText="Nombre">
-						<h:outputText value="#{team.nombre}" />
+					<p:column filterBy="#{team.nombre}" headerText="Nombre"
+						footerText="contains" filterMatchMode="contains">
+							<h:outputText value="#{team.nombre}" />
 					</p:column>
 					<p:column headerText="Pais">
 						<h:outputText value="#{team.codPais}" />
