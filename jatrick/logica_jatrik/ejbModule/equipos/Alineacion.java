@@ -95,6 +95,18 @@ public class Alineacion implements Serializable {
 		this.mediocampistas = new ArrayList<Jugador>();
 		this.suplentes = new ArrayList<Jugador>();
 	}
+	
+	public Alineacion(Alineacion a) {
+		this.alineacionDefecto = a.isAlineacionDefecto();
+		this.delanteros = new ArrayList<Jugador>();
+		this.defensas= new ArrayList<Jugador>();
+		this.mediocampistas = new ArrayList<Jugador>();
+		this.suplentes = new ArrayList<Jugador>();
+//		this.lesionDefensas = 
+//		this.lesionDelantero = 
+//		this.lesionGolero = 
+//		this.lesionMediocampistas = 
+	}
 
 	/**
 	 * @param delanteros

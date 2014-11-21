@@ -192,6 +192,7 @@ public class CampeonatoControlador {
 					posi.setGolesAFavor(pos.getGolesAFavor());
 					posi.setGolesEnContra(pos.getGolesEnContra());
 					posi.setTorneo(nuevoTorneoD);
+					posi.resetearPosicion();
 					em.persist(posi);
 					poscionesD.add(posi);
 				}
@@ -199,7 +200,7 @@ public class CampeonatoControlador {
 				ordenarPosiciones(nuevoTorneoD);
 				equipoDesciende(p, nuevoTorneoD, nuevoTorneo);
 				p.resetearPosicion();
-
+				em.merge(p);
 				nuevoTorneoD.setAsciende(nuevoTorneo);
 				em.merge(nuevoTorneo);
 
@@ -250,7 +251,6 @@ public class CampeonatoControlador {
 	}
 
 	private void resetearDatos(Torneo t) {
-
 	}
 
 	public void crearPartidosTorneo(Torneo t) {
@@ -299,6 +299,14 @@ public class CampeonatoControlador {
 			em.persist(rp);
 			p.setResultado(rp);
 			em.persist(p);
+			
+			PartidoTorneo segVuelta = new PartidoTorneo(visitante,local , ca,
+					fila + cantidadEquipos, t);
+			segVuelta.setTipoPartido("Liga");
+			ResultadoPartido rpSG = new ResultadoPartido();
+			em.persist(rpSG);
+			segVuelta.setResultado(rpSG);
+			em.persist(segVuelta);
 		}
 		em.flush();
 		nroEquipo = cantidadEquipos - 1;
@@ -323,13 +331,14 @@ public class CampeonatoControlador {
 				em.persist(rp);
 				p.setResultado(rp);
 				em.persist(p);
-				// fecha = fechaPartido.diaPartido(c.getTime(),
-				// visitante+cantidadEquipos-1);
-				// c.setTime(fecha);
-				// PartidoTorneo segVuelta = new
-				// PartidoTorneo(equipos.get(visitante),e, c,
-				// visitante+cantidadEquipos-1);
-				// em.persist(segVuelta);
+				
+				PartidoTorneo segVuelta = new PartidoTorneo(visitante,local , ca,
+						fila + cantidadEquipos, t);
+				segVuelta.setTipoPartido("Liga");
+				ResultadoPartido rpSG = new ResultadoPartido();
+				em.persist(rpSG);
+				segVuelta.setResultado(rpSG);
+				em.persist(segVuelta);
 			}
 		}
 		em.flush();

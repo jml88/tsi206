@@ -42,6 +42,7 @@ public class Partido implements Serializable{
 		this.visitante = null;
 		this.fechaHora = null;
 		this.resultado = null;
+		this.suscriptoMinutoAmintuto = true;
 	}
 	
 	Partido(Equipo local, Equipo visitante, Calendar fecha){
@@ -50,6 +51,7 @@ public class Partido implements Serializable{
 		this.fechaHora = fecha;
 		this.estado = EnumPartido.POR_JUGAR;
 		this.resultado = null;
+		this.suscriptoMinutoAmintuto = true;
 	}
 
 	@Id
@@ -67,6 +69,8 @@ public class Partido implements Serializable{
     
     private String tipoPartido;
     
+    private boolean suscriptoMinutoAmintuto;
+    
     @OneToOne
     private ResultadoPartido resultado;
 
@@ -76,10 +80,10 @@ public class Partido implements Serializable{
 	@OneToOne
 	private Equipo visitante;
 	
-	@OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
+	@OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
 	private Alineacion alineacionLocal;
 	
-	@OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
+	@OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
 	private Alineacion alineacionVisitante;
 
 	public int getCodigo() {
@@ -153,6 +157,14 @@ public class Partido implements Serializable{
 
 	public void setTipoPartido(String tipoPartido) {
 		this.tipoPartido = tipoPartido;
+	}
+
+	public boolean isSuscriptoMinutoAmintuto() {
+		return suscriptoMinutoAmintuto;
+	}
+
+	public void setSuscriptoMinutoAmintuto(boolean suscriptoMinutoAmintuto) {
+		this.suscriptoMinutoAmintuto = suscriptoMinutoAmintuto;
 	}
 
 }

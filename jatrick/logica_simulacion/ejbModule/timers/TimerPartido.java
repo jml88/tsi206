@@ -19,9 +19,11 @@ import javax.inject.Inject;
 import org.jboss.ejb3.annotation.TransactionTimeout;
 
 import partido.FinalizadoControlador;
+import partido.LogicaSimulacion;
 import partido.PartidoControlador;
 import partidos.Partido;
 import datatypes.DatosMinutoPartido;
+import excepciones.NoExisteEquipoExcepcion;
 
 @Stateless
 @LocalBean
@@ -38,6 +40,9 @@ public class TimerPartido {
 	PartidoControlador pc;
 	
 	@Inject
+	LogicaSimulacion ls;
+	
+	@Inject
 	TimerSimularPartido tsm;
 	
 	///Crea timer periodico TimerPartido
@@ -48,14 +53,22 @@ public class TimerPartido {
 	
 	@Timeout
 	public void crearTimers(Timer t){
-		List<Partido> partidos = fc.listPartidosFecha(new GregorianCalendar());
-
-		
-		for(Partido p : partidos)
+		List<Partido> partidosMaM = fc.listPartidosFecha(new GregorianCalendar());
+		List<Partido> partidosDirectos = fc.obtenerPartidosNoSuscriptosParaSimular(Calendar.getInstance());
+		for(Partido p : partidosMaM)
 		{
 			pc.partidoPorSimular(p);
-			DatosMinutoPartido dmp = new DatosMinutoPartido(0, p.getCodigo(), false);
+			DatosMinutoPartido dmp = new DatosMinutoPartido(-1, p.getCodigo(), false);
 			tsm.crearTimerSimularPartido(dmp, p.getFechaHora(), p.getFechaHora().get(Calendar.HOUR_OF_DAY),p.getFechaHora().get(Calendar.MINUTE),p.getFechaHora().get(Calendar.SECOND));
+		}
+		for (Partido partido : partidosDirectos) {
+			pc.partidoPorSimular(partido);
+			try {
+				ls.simularPartidoCompleto(partido);
+			} catch (NoExisteEquipoExcepcion e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 	}

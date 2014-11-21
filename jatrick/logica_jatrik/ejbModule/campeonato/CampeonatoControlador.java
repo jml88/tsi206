@@ -162,6 +162,18 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 			em.persist(rp);
 			p.setResultado(rp);
 			em.persist(p);
+			
+			fechaP = fechaPartido.diaPartido(c, fila + cantidadEquipos);
+			ca = Calendar.getInstance();
+			ca.setTime(fechaP);
+			
+			PartidoTorneo segVuelta = new PartidoTorneo(visitante,local , ca,
+					fila + cantidadEquipos, t);
+			segVuelta.setTipoPartido("Liga");
+			ResultadoPartido rpSG = new ResultadoPartido();
+			em.persist(rpSG);
+			segVuelta.setResultado(rpSG);
+			em.persist(segVuelta);
 		}
 		em.flush();
 		nroEquipo = cantidadEquipos - 1;
@@ -186,13 +198,18 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 				em.persist(rp);
 				p.setResultado(rp);
 				em.persist(p);
-				// fecha = fechaPartido.diaPartido(c.getTime(),
-				// visitante+cantidadEquipos-1);
-				// c.setTime(fecha);
-				// PartidoTorneo segVuelta = new
-				// PartidoTorneo(equipos.get(visitante),e, c,
-				// visitante+cantidadEquipos-1);
-				// em.persist(segVuelta);
+				
+				fechaP = fechaPartido.diaPartido(c, fila + cantidadEquipos);
+				ca = Calendar.getInstance();
+				ca.setTime(fechaP);
+				
+				PartidoTorneo segVuelta = new PartidoTorneo(visitante,local , ca,
+						fila + cantidadEquipos, t);
+				segVuelta.setTipoPartido("Liga");
+				ResultadoPartido rpSG = new ResultadoPartido();
+				em.persist(rpSG);
+				segVuelta.setResultado(rpSG);
+				em.persist(segVuelta);
 			}
 		}
 		em.flush();
