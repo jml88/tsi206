@@ -12,6 +12,8 @@ import javax.ejb.Stateless;
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
 import javax.ejb.TimerService;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -84,10 +86,10 @@ public class TimerSimularPartido {
 		}
 		//TODO copiar la alineacion defecto
 		if (p.getAlineacionLocal() == null) {
-			p.setAlineacionLocal(p.getLocal().getAlineacionDefecto());
+			p.setAlineacionLocal(sc.copiarAlineacion(p.getLocal().getAlineacionDefecto()));
 		}
 		if (p.getAlineacionVisitante() == null) {
-			p.setAlineacionVisitante(p.getVisitante().getAlineacionDefecto());
+			p.setAlineacionVisitante(sc.copiarAlineacion(p.getVisitante().getAlineacionDefecto()));
 		}
 		em.merge(p);
 	}
@@ -152,16 +154,26 @@ public class TimerSimularPartido {
 		}
 	}
 
+	//@TransactionAttribute(TransactionAttributeType.NEVER)
 	@Timeout
 	public void simularPartido(Timer t) throws NoExisteEquipoExcepcion {
+		System.out.println("CANTIDAD TIMERS ACTIVOS "+ts.getTimers().size());
 		DatosMinutoPartido minutoDto = (DatosMinutoPartido) t.getInfo();
 		Partido p = sc.find(minutoDto.getIdPartido());
 		if (p == null) {
 			throw new NoExisteEquipoExcepcion("No existe equipo de id "
 					+ minutoDto.getIdPartido());
 		}
+		if (minutoDto.getMinuto() == -1){
+			System.out.println("INICIO SIMULAR PARTIDO "+p.getCodigo()+" !!!!!!!");
+		}
+		else{
+			System.out.println("INICIO SIMULACION DE MINUTO "+ minutoDto.getMinuto()+" DE PARTIDO "+p.getCodigo()+" !!!!!!!");
+		}
+		
 		List<Integer> minutos = lsim.simular(p, minutoDto.getMinuto());
 		if (minutos.size() > 0) {
+			
 			if (p.getLocal().getAlineacionDefecto() == null) {
 				if (p.getAlineacionLocal() == null) {
 					DatosAlineacion datosAlineacion = sc.crearAlineacion(p
@@ -179,6 +191,7 @@ public class TimerSimularPartido {
 				}
 			}
 			crearPartido(minutos, p);
+			System.out.println("FIN SIMULAR PARTIDO "+p.getCodigo()+" !!!!!!!");
 		} else {
 			if (minutoDto.isUltimaJugada()) {
 				if (p.getResultado().getGolesLocal() == 0 && p.getResultado().getGolesVisitante() == 0){
@@ -194,9 +207,8 @@ public class TimerSimularPartido {
 					pc.crearComentario("FIN del tiempo reglamentario", p, 90);
 				}
 				this.actualizarDatosPartido(p);
-				
-				
 			}
+			System.out.println("FIN SIMULACION DE MINUTO "+ minutoDto.getMinuto()+" DE PARTIDO "+p.getCodigo()+" !!!!!!!");
 		}
 	}
 
