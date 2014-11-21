@@ -99,6 +99,14 @@ public class AlineacionBB implements Serializable {
 		this.datosAlineacion = datosAlineacion;
 	}
 	
+	public List<Jugador> getGoleros() {
+		return goleros;
+	}
+
+	public void setGoleros(List<Jugador> goleros) {
+		this.goleros = goleros;
+	}
+
 	public void onArqueroDroped(DragDropEvent ddEvent) {
         Jugador golero = ((Jugador) ddEvent.getData());
         //List<Jugador> goleros = this.goleros;
@@ -177,7 +185,7 @@ public class AlineacionBB implements Serializable {
 			e.printStackTrace();
 		}
 		
-		return "/webPages/partidos/verPartidos.xhtml?faces-redirect=true";
+		return "/webPages/home/home.xhtml?faces-redirect=true";
 	}
 
 }
