@@ -25,6 +25,9 @@
 					</p:column>
 				</p:row>
 			</p:panelGrid>
+			<p:panel id="escudo" rendered="false">
+				<p:graphicImage value="#{sessionBB.escudo}"/>
+			</p:panel>
 			<p:menu rendered="#{sessionBB.datosManager != null}">
 				<p:submenu label="Principal">
 					<p:menuitem value="Inicio" outcome="/webPages/home/home.xhtml?faces-redirect=true"
@@ -43,6 +46,8 @@
 					<p:menuitem value="Inferiores" icon="ui-icon-star" />
 					<p:menuitem value="Entrenar" icon="ui-icon-star" outcome="/webPages/entrenamiento/entrenamiento.xhtml?faces-redirect=true"/>
 					<p:menuitem value="Finanzas" outcome="/webPages/finanzas/finanzas.xhtml?faces-redirect=true"
+						icon="ui-icon-star" />
+					<p:menuitem value="Mensajes" outcome="/webPages/finanzas/finanzas.xhtml?faces-redirect=true"
 						icon="ui-icon-star" />
 				</p:submenu>
 				<p:submenu label="Busqueda">

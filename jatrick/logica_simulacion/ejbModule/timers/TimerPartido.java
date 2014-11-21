@@ -42,6 +42,9 @@ public class TimerPartido {
 	PartidoControlador pc;
 	
 	@Inject
+	LogicaSimulacion ls;
+	
+	@Inject
 	TimerSimularPartido tsm;
 	
 	///Crea timer periodico TimerPartido

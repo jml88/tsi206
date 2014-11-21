@@ -175,4 +175,11 @@ public class SimulacionControlador {
 		
 	}
 
+	public Alineacion copiarAlineacion(Alineacion alineacionDefecto) {
+		Alineacion a = new Alineacion();
+		a = alineacionDefecto;
+		em.persist(a);
+		return a;
+	}
+
 }

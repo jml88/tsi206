@@ -1,5 +1,7 @@
 package web_jatrik;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -13,6 +15,8 @@ import javax.naming.NamingException;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import comunicacion.Comunicacion;
@@ -146,7 +150,15 @@ public class RegistroBB implements Serializable {
         	this.datosmanager = Comunicacion.getInstance().getIUserControlador().obtenerManager(codManager);
         	Comunicacion.getInstance().getSesion().setDatosManager(datosmanager);
             SecurityUtils.getSubject().login(new UsernamePasswordToken(datosmanager.getUsername(), password, false));
-            result = "/webPages/home/home.xhtml?faces-redirect=true"; 
+        	if (!datosmanager.getName().equals("admin")) {
+//        		File escudo = Comunicacion.getInstance().getIUserControlador().obtenerEscudo(this.datosmanager.getCodEquipo());
+//            	StreamedContent escudoStream = new DefaultStreamedContent(new FileInputStream(escudo));
+//            	Comunicacion.getInstance().getSesion().setEscudo(escudoStream);
+                result = "/webPages/home/home.xhtml?faces-redirect=true";
+        	} else {
+        		result = "/webPages/admin/admin.xhtml?faces-redirect=true";
+        	}
+        	 
         } catch (RuntimeException e) {
             //Messages.addGlobalError("Registration failed: {0}", e.getMessage());
             e.printStackTrace(); // TODO: logger.
