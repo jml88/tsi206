@@ -12,6 +12,8 @@ import javax.ejb.Stateless;
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
 import javax.ejb.TimerService;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -152,6 +154,7 @@ public class TimerSimularPartido {
 		}
 	}
 
+	//@TransactionAttribute(TransactionAttributeType.NEVER)
 	@Timeout
 	public void simularPartido(Timer t) throws NoExisteEquipoExcepcion {
 		System.out.println("CANTIDAD TIMERS ACTIVOS "+ts.getTimers().size());
