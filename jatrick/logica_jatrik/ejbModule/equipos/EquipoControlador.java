@@ -287,4 +287,14 @@ public class EquipoControlador implements IEquipoControlador{
 		q.setParameter("codEquipo", codEquipo);
 		return q.getResultList();
 	}
+
+	@Override
+	public List<Equipo> listarEquiposNoBots() {
+		
+		String consulta = "SELECT e FROM Equipo e Where e.bot = :false";
+		Query query = em.createQuery(consulta)
+				.setParameter("false", false);
+		
+		return query.getResultList();
+	}
 }
