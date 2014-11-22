@@ -18,6 +18,7 @@ import javax.naming.NamingException;
 import comunicacion.Comunicacion;
 import equipos.Equipo;
 import mercadoDePases.CompraVentaJugadores;
+import mercadoDePases.Oferta;
 
 @Named("mercadoDePasesBB")
 @ViewScoped
@@ -46,6 +47,7 @@ public class MercadoDePasesBB implements Serializable {
 	@PostConstruct
 	public void init(){
 		codigoEquipo = sesion.getDatosManager().getCodEquipo();
+		//FIXME porque esto?
 		CompraVentaJugadores c = new CompraVentaJugadores(200, null, null, null, null, null, true);
 		try {
 			compraVentaLista = Comunicacion.getInstance().getIMercadoDePasesControlador().listarJugadoresEnVenta();

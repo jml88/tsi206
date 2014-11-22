@@ -82,8 +82,8 @@ public class LoginBB implements Serializable {
 			DatosManager datosManager = Comunicacion.getInstance().getIUserControlador().obtenerManager(managerId);
 			Comunicacion.getInstance().getSesion().setDatosManager(datosManager);
 			File escudo = Comunicacion.getInstance().getIUserControlador().obtenerEscudo(datosManager.getCodEquipo());
-        	StreamedContent escudoStream = new DefaultStreamedContent(new FileInputStream(escudo));
-        	Comunicacion.getInstance().getSesion().setEscudo(escudoStream);
+//        	StreamedContent escudoStream = new DefaultStreamedContent(new FileInputStream(escudo));
+//        	Comunicacion.getInstance().getSesion().setEscudo(escudoStream);
 			result = "/webPages/home/home.xhtml?faces-redirect=true";
 
 			// SavedRequest savedRequest =

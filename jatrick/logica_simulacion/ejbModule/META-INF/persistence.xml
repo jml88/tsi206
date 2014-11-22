@@ -22,6 +22,7 @@
 		<class>campeonato.Copa</class>
 		<class>mensajes.Mensaje</class>
 		<class>mercadoDePases.CompraVentaJugadores</class>
+		<class>mercadoDePases.Oferta</class>
 		<class>users.Manager</class>
 		<class>configuracionGral.ConfiguracionGral</class>
 		<class>finanzas.Finanzas</class>

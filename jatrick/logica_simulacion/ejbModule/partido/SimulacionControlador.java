@@ -75,6 +75,23 @@ public class SimulacionControlador {
 		em.merge(posLocal);
 		posVisitante.actualizarFecha(pt.getResultado().getGolesVisitante(), pt
 				.getResultado().getGolesLocal());
+		for (Jugador jL : pt.getLocal().getPlantel()) {
+			if (jL.getLesion() != null){
+				
+			}
+			if (jL.getSancionLiga() != null){
+				
+			}
+		}
+		for (Jugador jV : pt.getVisitante().getPlantel()) {
+			if (jV.getLesion() != null){
+				jV.setLesion((jV.getLesion()-1)== 0? null : jV.getLesion()-1);
+			}
+			if (jV.getSancionLiga() != null){
+				jV.setLesion((jV.getSancionLiga()-1)== 0? null : jV.getSancionLiga()-1);
+			}
+			jV.setTarjetasPartido(null);
+		}
 		em.merge(posVisitante);
 
 	}

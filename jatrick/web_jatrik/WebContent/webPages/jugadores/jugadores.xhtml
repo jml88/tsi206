@@ -21,27 +21,28 @@
                          
                          	<p:ajax event="rowSelect" listener="#{jugadoresBB.verDetallesJugador}" />  
                          	
-							<p:column headerText="Jugador">
+							<p:column headerText="Jugador" width="60">
 									<h:outputText
-										value="#{jug.nombre} #{jug.apellido1}" />
+										value="#{jug.nombre} #{jug.apellido1} " />
+									<h:outputText rendered="#{jug.enVenta}" class="badge" value="V"></h:outputText>
 							</p:column>
 							
-							<p:column headerText="Edad">
+							<p:column headerText="Edad" width="7">
 								<h:outputText value="#{jug.edad}" />
 							</p:column>
-							<p:column headerText="Velocidad">
+							<p:column headerText="Velocidad" width="7">
 								<h:outputText value="#{jug.velocidad}" />
 							</p:column>
-							<p:column headerText="Tecnica">
+							<p:column headerText="Tecnica" width="7">
 								<h:outputText value="#{jug.tecnica}" />
 							</p:column>
-							<p:column headerText="Ataque">
+							<p:column headerText="Ataque" width="7">
 								<h:outputText value="#{jug.ataque}" />
 							</p:column>
-							<p:column headerText="Defensa">
+							<p:column headerText="Defensa" width="7">
 								<h:outputText value="#{jug.defensa}" />
 							</p:column>
-							<p:column headerText="Porteria">
+							<p:column headerText="Porteria" width="7">
 								<h:outputText value="#{jug.porteria}" />
 							</p:column>
 					
