@@ -3,9 +3,11 @@ package comunicacion;
 import interfaces.ICampeonatoControlador;
 import interfaces.IConfiguracionControlador;
 import interfaces.IEquipoControlador;
+import interfaces.IIntegracionLogica;
 import interfaces.IJugadorControlador;
 import interfaces.IPartidoControlador;
 import interfaces.IUserControlador;
+import interfazIntegracion.InterfazIntegracionSimulacion;
 
 import javax.faces.context.FacesContext;
 import javax.naming.Context;
@@ -61,6 +63,14 @@ public class Comunicacion {
 	
 	public ICampeonatoControlador getCampeonatoControlador() throws NamingException {
 		return (ICampeonatoControlador)this.ctx.lookup("java:app/logica_jatrik/CampeonatoControlador!interfaces.ICampeonatoControlador");
+	}
+	
+	public InterfazIntegracionSimulacion getIntegracionSimulacion() throws NamingException {
+		return (InterfazIntegracionSimulacion)this.ctx.lookup("java:app/logica_simulacion/Integracion!interfazIntegracion.InterfazIntegracionSimulacion");
+	}
+	
+	public IIntegracionLogica getIntegracionLogica() throws NamingException {
+		return (IIntegracionLogica)this.ctx.lookup("java:app/logica_jatrik/IntegracionLogica!interfaces.IIntegracionLogica");
 	}
 
 }

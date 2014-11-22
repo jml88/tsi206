@@ -9,6 +9,8 @@ import javax.ejb.Timeout;
 import javax.ejb.Timer;
 import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
 import partido.CampeonatoControlador;
@@ -30,7 +32,9 @@ public class TimerActualizarTorneo {
 	}
 
 	
+	
 	@Timeout
+	//@TransactionAttribute(TransactionAttributeType.NEVER)
 	public void finalizarTorneo(Timer t) {
 		cc.torneosFinalizados();
 	}

@@ -14,6 +14,8 @@ import javax.ejb.Timeout;
 import javax.ejb.Timer;
 import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
 import org.jboss.ejb3.annotation.TransactionTimeout;
@@ -51,6 +53,7 @@ public class TimerPartido {
 		ts.createIntervalTimer(new Date(), tiempo, tc);
 	}
 	
+	//@TransactionAttribute(TransactionAttributeType.NEVER)
 	@Timeout
 	public void crearTimers(Timer t){
 		List<Partido> partidosMaM = fc.listPartidosFecha(new GregorianCalendar());

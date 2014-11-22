@@ -44,6 +44,9 @@ public class Equipo implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int codigo;
 	
+	@Column
+	private int codigoIntegracion;
+	
 	@Column(name = "NOMBRE")
 	private String nombre;
 	
@@ -85,6 +88,9 @@ public class Equipo implements Serializable{
 	
 	@Column
 	private int ranking;
+	
+	@Column
+	private boolean equipoIntegracion;
 	
 	@OneToOne(mappedBy= "equipo")
 	private Manager usuario;
@@ -252,5 +258,25 @@ public class Equipo implements Serializable{
 	public void setRanking(int ranking) {
 		this.ranking = ranking;
 	}
+
+	public boolean isEquipoIntegracion() {
+		return equipoIntegracion;
+	}
+
+	public void setEquipoIntegracion(boolean equipoIntegracion) {
+		this.equipoIntegracion = equipoIntegracion;
+	}
+
+	public int getCodigoIntegracion() {
+		return codigoIntegracion;
+	}
+
+	public void setCodigoIntegracion(int codigoIntegracion) {
+		this.codigoIntegracion = codigoIntegracion;
+	}
+	
+	
+	
+	
 
 }

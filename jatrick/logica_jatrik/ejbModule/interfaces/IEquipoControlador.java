@@ -66,4 +66,6 @@ public interface IEquipoControlador {
 	public Torneo obtenerTorneoActual(int codEquipo) throws NoExisteEquipoExcepcion;
 
 	public List<Copa> obtenerCopasEquipo(int codEquipo);
+	
+	public List<Equipo> listarEquiposNoBots();
 }
