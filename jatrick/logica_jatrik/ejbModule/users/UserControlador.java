@@ -133,8 +133,11 @@ public class UserControlador implements IUserControlador {
     }
     
     public File obtenerEscudo(int codEquipo) {
+    	File escudo = null;
     	Equipo e = em.find(Equipo.class, codEquipo);
-    	File escudo = new File("imagenesJatrik/" + e.getNombre());
+    	if (e != null) {
+    		escudo = new File("imagenesJatrik/" + e.getNombre());
+    	}
     	return escudo;
     }
 }

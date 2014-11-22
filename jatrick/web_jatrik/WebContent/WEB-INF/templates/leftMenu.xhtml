@@ -26,10 +26,11 @@
 					</p:column>
 				</p:row>
 			</p:panelGrid>
-			<p:panel id="escudo" rendered="false">
-				<p:graphicImage value="#{sessionBB.escudo}" />
+			<p:panel rendered="#{sessionBB.datosManager != null and sessionBB.escudo != null}" 
+				style="width:100%; background-color:transparent; border-style:none">
+				<p:graphicImage value="#{sessionBB.escudoStream}" style="width:97%;" />
 			</p:panel>
-			<p:menu rendered="#{sessionBB.datosManager != null}">
+			<p:menu rendered="#{sessionBB.datosManager != null}" style="width:97%;">
 				<p:submenu label="Principal">
 					<p:menuitem value="Inicio"
 						outcome="/webPages/home/home.xhtml?faces-redirect=true"
