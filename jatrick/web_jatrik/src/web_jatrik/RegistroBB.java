@@ -38,6 +38,7 @@ public class RegistroBB implements Serializable {
 	
 	private Double lat;
 	private Double lng;
+	private Double altura;
 	private UploadedFile escudo;
 	private boolean escudoCargado;
 	
@@ -102,6 +103,14 @@ public class RegistroBB implements Serializable {
 		this.lng = lng;
 	}
 	
+	public Double getAltura() {
+		return altura;
+	}
+
+	public void setAltura(Double altura) {
+		this.altura = altura;
+	}
+
 	public String getNombreEstadio() {
 		return nombreEstadio;
 	}
