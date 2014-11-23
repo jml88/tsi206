@@ -2,10 +2,13 @@ package web_jatrik;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.Remove;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -17,8 +20,8 @@ import jugadores.Jugador;
 
 import org.primefaces.event.DragDropEvent;
 
+import partidos.Partido;
 import comunicacion.Comunicacion;
-
 import datatypes.DatosEquipo;
 import equipos.Alineacion;
 
@@ -37,6 +40,8 @@ public class AlineacionBB implements Serializable {
 	private Set<Jugador> jugadores;
 	private Alineacion datosAlineacion;
 	private List<Jugador> goleros;
+	private Alineacion alineacion;
+	private String retorno;
 	
 	public AlineacionBB() {
 		// TODO Auto-generated constructor stub
@@ -49,14 +54,53 @@ public class AlineacionBB implements Serializable {
 			this.codEquipo = this.sesion.getDatosManager().getCodEquipo();
 			this.jugadores = Comunicacion.getInstance().getIEquipoControlador().obtenerJugadoresEquipo(this.codEquipo);
 			this.equipo = Comunicacion.getInstance().getIEquipoControlador().obtenerEquipo(this.codEquipo);
+			
+			ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+			this.idPartido = (int)context.getApplicationMap().get("idPartido");
+			this.retorno = (String)context.getApplicationMap().get("retorno");
+			Partido partido = Comunicacion.getInstance().getIPartidoControlador().findPartido(idPartido);
+			
+			this.goleros = new ArrayList<Jugador>();
+			
+			if (codEquipo == partido.getLocal().getCodigo()){
+				alineacion = Comunicacion.getInstance().getIPartidoControlador().findAlineacionLocal(idPartido);
+			}else{
+				alineacion = Comunicacion.getInstance().getIPartidoControlador().findAlineacionVisitante(idPartido);
+			}
+			
+			//alineacion = this.codEquipo == partido.getLocal().getCodigo() ? partido.getAlineacionLocal() : partido.getAlineacionVisitante();
+			
+			if (alineacion != null){
+				goleros.add(alineacion.getGolero());
+				eliminarRepetidos(alineacion.getDefensas());
+				eliminarRepetidos(alineacion.getDelanteros());
+				eliminarRepetidos(alineacion.getMediocampistas());
+				eliminarRepetidos(alineacion.getSuplentes());
+				filtrarJugadores(jugadores, goleros);
+				filtrarJugadores(jugadores, alineacion.getDefensas());
+				filtrarJugadores(jugadores, alineacion.getDelanteros());
+				filtrarJugadores(jugadores, alineacion.getMediocampistas());
+				filtrarJugadores(jugadores, alineacion.getSuplentes());
+				datosAlineacion = alineacion;
+				
+//				datosAlineacion.setGolero(alineacion.getGolero());
+//				datosAlineacion.setDefensas(alineacion.getDefensas());
+//				datosAlineacion.setDelanteros(alineacion.getDelanteros());
+//				datosAlineacion.setMediocampistas(alineacion.getMediocampistas());
+//				datosAlineacion.setLesionGolero(alineacion.getLesionGolero());
+//				datosAlineacion.setLesionDefensas(alineacion.getLesionDefensas());
+//				datosAlineacion.setLesionMediocampistas(alineacion.getLesionMediocampistas());
+//				datosAlineacion.setLesionDelantero(alineacion.getLesionDelantero());
+			}
+			else{
+				this.datosAlineacion = new Alineacion();
+			}
+			
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		
-		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-		this.idPartido = (int)context.getApplicationMap().get("idPartido");
-		this.datosAlineacion = new Alineacion();
-		this.goleros = new ArrayList<Jugador>();
+			
     }
 	 
     public int getCodEquipo() {
@@ -179,13 +223,41 @@ public class AlineacionBB implements Serializable {
 	public String enviarAlineacion(){
 		
 		try {
+			if (!goleros.isEmpty())
+				datosAlineacion.setGolero(goleros.get(0));
 			Comunicacion.getInstance().getIPartidoControlador().setAlineacioPartido(datosAlineacion, idPartido, codEquipo);
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return "/webPages/home/home.xhtml?faces-redirect=true";
+		if (this.retorno.equals("home"))
+			return "/webPages/home/home.xhtml?faces-redirect=true";
+		else{
+			ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+			context.getApplicationMap().put("idPartido", this.idPartido);
+			return "/webPages/partidos/minutoAMinuto.xhtml?faces-redirect=true";
+		}
+			
+	}
+	
+	private void eliminarRepetidos(List<Jugador> lista){
+		HashSet<Jugador> hs = new HashSet<Jugador>();
+		hs.addAll(lista);
+		lista.clear();
+		lista.addAll(hs);
+	}
+	
+	private void filtrarJugadores(Set<Jugador> jug, List<Jugador> filter){
+		Jugador j = null;
+		Iterator<Jugador> iter = jug.iterator();
+		while (iter.hasNext()){
+			j = (Jugador) iter.next();
+			for (Jugador jugador : filter) {
+				if(j.getCodigo() == jugador.getCodigo())
+					iter.remove();
+			}
+		}
 	}
 
 }

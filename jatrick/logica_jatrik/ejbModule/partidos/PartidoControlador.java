@@ -7,6 +7,8 @@ import excepciones.NoExistePartidoExepcion;
 import fabricas.HomeFactory;
 import interfaces.IPartidoControlador;
 
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
@@ -16,8 +18,13 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import org.hibernate.validator.constraintvalidation.HibernateConstraintValidatorContext;
+
 
 @Stateless
 @LocalBean
@@ -54,6 +61,52 @@ public class PartidoControlador implements IPartidoControlador {
 	@Override
 	public Partido findPartido(int codPartido) {
 		return em.find(Partido.class, codPartido);
+	}
+	
+	@Override
+	public Partido obtenerPartido(int codPartido) {
+		Partido p = findEager(em, Partido.class, codPartido);
+		return p;
+	}
+	
+	@Override
+	public Alineacion findAlineacionLocal(int codPartido) {
+		int codAlineacion = -1;
+		Partido p = em.find(Partido.class, codPartido);
+		if (p.getAlineacionLocal() != null){
+			codAlineacion = p.getAlineacionLocal().getCodigo();
+			Alineacion a = findEager(em, Alineacion.class, codAlineacion);
+			return a;
+		}else
+			return null;
+
+	}
+	
+	@Override
+	public Alineacion findAlineacionVisitante(int codPartido) {
+		int codAlineacion = -1;
+		Partido p = em.find(Partido.class, codPartido);
+		if (p.getAlineacionVisitante() != null){
+			codAlineacion = p.getAlineacionVisitante().getCodigo();
+			Alineacion a = findEager(em, Alineacion.class, codAlineacion);
+			return a;
+		}else
+			return null;
+	}
+	
+	public static <T> T findEager(EntityManager em, Class<T> type, Object id) {
+	    T entity = em.find(type, id);
+	    for (Field field: type.getDeclaredFields()) {
+	        OneToMany annotation = field.getAnnotation(OneToMany.class);
+	        if (annotation != null) {	            
+                try {
+                    new PropertyDescriptor(field.getName(), type).getReadMethod().invoke(entity);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+	        }
+	    }
+	    return entity;
 	}
 	
 	public List<Comentario> obtenerComentariosPartido(int codPartido, int nroComentario) throws NoExistePartidoExepcion{
@@ -143,10 +196,40 @@ public class PartidoControlador implements IPartidoControlador {
 		
 		Partido partido = this.findPartido(idPartido);
 		
-		if (partido.getLocal().getCodigo() == idEquipo)
-			partido.setAlineacionLocal(alineacion);
-		else if(partido.getVisitante().getCodigo() == idEquipo)
-			partido.setAlineacionVisitante(alineacion);
+		if (partido.getLocal().getCodigo() == idEquipo){
+			if (partido.getAlineacionLocal() == null){
+				partido.setAlineacionLocal(alineacion);
+			}
+			else{
+				Alineacion a = partido.getAlineacionLocal();
+				a.setAlineacionDefecto(alineacion.isAlineacionDefecto());
+				a.setGolero(alineacion.getGolero());
+				a.setDefensas(alineacion.getDefensas());
+				a.setDelanteros(alineacion.getDelanteros());
+				a.setMediocampistas(alineacion.getMediocampistas());
+				a.setLesionGolero(alineacion.getLesionGolero());
+				a.setLesionDefensas(alineacion.getLesionDefensas());
+				a.setLesionMediocampistas(alineacion.getLesionMediocampistas());
+				a.setLesionDelantero(alineacion.getLesionDelantero());
+			}
+		}
+		else if(partido.getVisitante().getCodigo() == idEquipo){
+			if (partido.getAlineacionVisitante() == null){
+				partido.setAlineacionVisitante(alineacion);
+			}
+			else{
+				Alineacion a = partido.getAlineacionVisitante();
+				a.setAlineacionDefecto(alineacion.isAlineacionDefecto());
+				a.setGolero(alineacion.getGolero());
+				a.setDefensas(alineacion.getDefensas());
+				a.setDelanteros(alineacion.getDelanteros());
+				a.setMediocampistas(alineacion.getMediocampistas());
+				a.setLesionGolero(alineacion.getLesionGolero());
+				a.setLesionDefensas(alineacion.getLesionDefensas());
+				a.setLesionMediocampistas(alineacion.getLesionMediocampistas());
+				a.setLesionDelantero(alineacion.getLesionDelantero());
+			}
+		}
 		
 		em.merge(partido);
 	}

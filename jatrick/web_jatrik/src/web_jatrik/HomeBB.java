@@ -76,6 +76,7 @@ public class HomeBB implements Serializable {
 		String result = "";
 		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
 		context.getApplicationMap().put("idPartido", this.partidoSeleccionado.getCodigo());
+		context.getApplicationMap().put("retorno", "home");
 		result = "/webPages/partidos/enviarOrdenesPartido.xhtml?faces-redirect=true";
 		return result;
 	}
