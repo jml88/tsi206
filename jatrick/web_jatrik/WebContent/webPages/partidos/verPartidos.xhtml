@@ -15,7 +15,7 @@
 	<ui:define name="Principal">
 		<h:form id="form" prependId="false">
 			<div id="partidos">
-				<p:dataTable id="radioDT" var="partido"
+				<p:dataTable id="radioDT" var="partido" emptyMessage="No hay partidos amistosos"
 					value="#{verPartidosBB.partidos}"
 					selection="#{verPartidosBB.partidoSeleccionado}" rowKey="#{partido.codigo}">
 					<f:facet name="header">
