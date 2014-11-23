@@ -95,6 +95,9 @@ public class Equipo implements Serializable{
 	@OneToOne(mappedBy= "equipo")
 	private Manager usuario;
 	
+	@Column
+	private Double altura;
+	
 	public Equipo() {
 		this.plantel = new HashSet<Jugador>();
 		this.tipoEntrenamiento = EnumEntrenamiento.ATAQUE;
@@ -111,6 +114,7 @@ public class Equipo implements Serializable{
 		this.tipoEntrenamiento = EnumEntrenamiento.ATAQUE;
 		this.torneos = new LinkedList<Torneo>();
 		this.ranking = 0;
+		this.altura = de.getAltura();
 	}
 
 	public Equipo(String nombre, Set<Jugador> plantel, Alineacion alineacionDefecto) {
@@ -172,7 +176,7 @@ public class Equipo implements Serializable{
 	}
 
 	public DatosEquipo getDatos() {
-		return new DatosEquipo(this.codigo, this.nombre, this.codPais, this.bot);
+		return new DatosEquipo(this.codigo, this.nombre, this.codPais, this.bot, this.altura);
 	}
 
 	public EnumEntrenamiento getTipoEntrenamiento() {
@@ -193,12 +197,10 @@ public class Equipo implements Serializable{
 
 	public int getCapital() {
 		return capital;
-		
 	}
 
 	public void setCapital(int capital) {
 		this.capital = capital;
-		
 	}
 
 	public Manager getUsuario() {
@@ -208,8 +210,6 @@ public class Equipo implements Serializable{
 	public void setUsuario(Manager usuario) {
 		this.usuario = usuario;
 	}
-
-	
 
 	public List<Torneo> getTorneos() {
 		return torneos;
@@ -274,9 +274,12 @@ public class Equipo implements Serializable{
 	public void setCodigoIntegracion(int codigoIntegracion) {
 		this.codigoIntegracion = codigoIntegracion;
 	}
-	
-	
-	
-	
 
+	public Double getAltura() {
+		return altura;
+	}
+
+	public void setAltura(Double altura) {
+		this.altura = altura;
+	}
 }

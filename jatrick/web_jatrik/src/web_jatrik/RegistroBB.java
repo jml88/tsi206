@@ -1,7 +1,6 @@
 package web_jatrik;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -15,10 +14,7 @@ import javax.naming.NamingException;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
-
 import comunicacion.Comunicacion;
 import datatypes.DatosManager;
 
@@ -154,7 +150,7 @@ public class RegistroBB implements Serializable {
         	this.datosmanager.setRoles(r);
         	this.datosmanager.setLat(this.lat);
         	this.datosmanager.setLng(this.lng);
-        	int codManager = Comunicacion.getInstance().getIUserControlador().createManager(this.datosmanager, this.password, this.nombreEquipo, this.escudoCargado);
+        	int codManager = Comunicacion.getInstance().getIUserControlador().createManager(this.datosmanager, this.password, this.nombreEquipo, this.escudoCargado, this.altura);
         	this.datosmanager = Comunicacion.getInstance().getIUserControlador().obtenerManager(codManager);
         	Comunicacion.getInstance().getSesion().setDatosManager(datosmanager);
             SecurityUtils.getSubject().login(new UsernamePasswordToken(datosmanager.getUsername(), password, false));
