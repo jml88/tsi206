@@ -8,14 +8,13 @@ import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import partidos.Partido;
-
 import comunicacion.Comunicacion;
-
 import datatypes.DatosEquipo;
 import datatypes.DatosJugador;
 
@@ -86,6 +85,12 @@ public class HomeBB implements Serializable {
 		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
 		context.getApplicationMap().put("DatosPartido", this.partidoSeleccionado);
 		result = "/webPages/partidos/minutoAMinuto.xhtml?faces-redirect=true";
+		return result;
+	}
+	
+	public String verEquipo(ActionEvent actionEvent) {
+		String result = "";
+		
 		return result;
 	}
 
