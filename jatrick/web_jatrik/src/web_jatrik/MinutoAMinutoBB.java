@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -129,6 +130,15 @@ public class MinutoAMinutoBB implements Serializable{
 
 	public void setResultadoPartido(ResultadoPartido resultadoPartido) {
 		this.resultadoPartido = resultadoPartido;
+	}
+	
+	public String editarAlineacion() {
+		String result = "";
+		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+		context.getApplicationMap().put("idPartido", this.datosPartido.getCodigo());
+		context.getApplicationMap().put("retorno", "minutoAminuto");
+		result = "/webPages/partidos/enviarOrdenesPartido.xhtml?faces-redirect=true";
+		return result;
 	}
 	
 }

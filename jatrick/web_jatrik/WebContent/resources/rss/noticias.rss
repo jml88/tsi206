@@ -5,9 +5,10 @@
 	<link>https://localhost:8443/web_jatrik/faces/</link>
 	<description>Noticias sobre los ultimos resultados.</description>
 	<item>
-		<title>Titulos de mas noticias.</title>
+		<title>Esta por comenzar un nuevo campeonato.</title>
 		<link>Links de mas noticias</link>
-		<description>Descripcions de mas noticias.</description>
+		<description>En la edicion apertura-2014 de la liga Jatrik tendremos a Priest FC participando de este campoenato. 
+			Un cuadro recien ascendido que promete mucho.</description>
 	</item>
 	<item>
 		<title>Titulo de otra noticia.</title>

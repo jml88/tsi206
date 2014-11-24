@@ -4,29 +4,24 @@ import excepciones.NoExisteEquipoExcepcion;
 import fabricas.HomeFactory;
 import interfaces.IEquipoControlador;
 import interfaces.IJugadorControlador;
-
-import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
-import configuracionGral.ConfiguracionGral;
+import jugadores.Jugador;
 import partidos.Partido;
 import partidos.PartidoTorneo;
+import users.Manager;
 import campeonato.Copa;
 import campeonato.Torneo;
-import users.Manager;
-import jugadores.Jugador;
+import configuracionGral.ConfiguracionGral;
 import datatypes.DatosEquipo;
-import datatypes.DatosJugador;
 import datatypes.EnumEntrenamiento;
 
 @Stateless
@@ -183,16 +178,12 @@ public class EquipoControlador implements IEquipoControlador{
 					Estadio estadio = e.getEstadio();
 					estadio.setNombre(eq.getNombre() + " Arena");
 					estadio.setCapacidad(config.getCapacidadMinimaEstadio());
-					
 					e.setCapital(config.getDineroInicial());
 					e.setPublicidad(config.getPublicidadMinima());
-					
 					e.setSeguidores(config.getSeguidoresEmpieza());
 					e.setSocios(config.getSociosEmpieza());
-					
 					e.setGastoJuveniles(0);
-					
-					
+					e.setAltura(eq.getAltura());
 					em.merge(e);
 					em.merge(manager);
 					em.persist(estadio);

@@ -1,7 +1,6 @@
 package web_jatrik;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -15,10 +14,7 @@ import javax.naming.NamingException;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
-
 import comunicacion.Comunicacion;
 import datatypes.DatosManager;
 
@@ -38,6 +34,7 @@ public class RegistroBB implements Serializable {
 	
 	private Double lat;
 	private Double lng;
+	private Double altura;
 	private UploadedFile escudo;
 	private boolean escudoCargado;
 	
@@ -102,6 +99,14 @@ public class RegistroBB implements Serializable {
 		this.lng = lng;
 	}
 	
+	public Double getAltura() {
+		return altura;
+	}
+
+	public void setAltura(Double altura) {
+		this.altura = altura;
+	}
+
 	public String getNombreEstadio() {
 		return nombreEstadio;
 	}
@@ -145,15 +150,13 @@ public class RegistroBB implements Serializable {
         	this.datosmanager.setRoles(r);
         	this.datosmanager.setLat(this.lat);
         	this.datosmanager.setLng(this.lng);
-        	int codManager = Comunicacion.getInstance().getIUserControlador().createManager(this.datosmanager, this.password, this.nombreEquipo, this.escudoCargado);
-
+        	int codManager = Comunicacion.getInstance().getIUserControlador().createManager(this.datosmanager, this.password, this.nombreEquipo, this.escudoCargado, this.altura);
         	this.datosmanager = Comunicacion.getInstance().getIUserControlador().obtenerManager(codManager);
         	Comunicacion.getInstance().getSesion().setDatosManager(datosmanager);
             SecurityUtils.getSubject().login(new UsernamePasswordToken(datosmanager.getUsername(), password, false));
+    		File escudo = Comunicacion.getInstance().getIUserControlador().obtenerEscudo(this.datosmanager.getCodEquipo());
+        	Comunicacion.getInstance().getSesion().setEscudo(escudo);
         	if (!datosmanager.getName().equals("admin")) {
-//        		File escudo = Comunicacion.getInstance().getIUserControlador().obtenerEscudo(this.datosmanager.getCodEquipo());
-//            	StreamedContent escudoStream = new DefaultStreamedContent(new FileInputStream(escudo));
-//            	Comunicacion.getInstance().getSesion().setEscudo(escudoStream);
                 result = "/webPages/home/home.xhtml?faces-redirect=true";
         	} else {
         		result = "/webPages/admin/admin.xhtml?faces-redirect=true";
