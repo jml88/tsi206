@@ -92,6 +92,22 @@
 					</p:dataGrid>
 					</p:outputPanel>
 					</p:fieldset>
+					<p:fieldset id="jugadoresLesionGolero">
+					<p:outputPanel id="dropAreaLesioGolero">
+					<p:dataGrid syle="margin: 30px" id="lesionGoleroList" var="lesionGolero" value="#{alineacionBB.lesionGolero}">
+						<f:facet name="header">
+							<p:row>
+								<p:column>Lesión Golero</p:column>
+							</p:row>
+						</f:facet>
+						<p:row>
+							<p:column>
+								<p:panel id="lesioG">#{lesionGolero.nombre}</p:panel>
+							</p:column>
+						</p:row>
+					</p:dataGrid>
+					</p:outputPanel>
+					</p:fieldset>
 					<label>Guardar como defecto</label>
 					<p:selectBooleanCheckbox value="#{alineacionBB.datosAlineacion.alineacionDefecto}" />
 				</div>
@@ -108,6 +124,9 @@
     		</p:droppable>
     		<p:droppable for="jugadoresDelantera" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="jugadoresDisponiblesList" onDrop="handleDrop">
         		<p:ajax listener="#{alineacionBB.onDelanteroDroped}" update="dropAreaDelantera jugadoresDelanteraList jugadoresDisponiblesList" />
+    		</p:droppable>
+    		<p:droppable for="jugadoresLesionGolero" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="jugadoresDisponiblesList" onDrop="handleDrop">
+        		<p:ajax listener="#{alineacionBB.onLesionGoleroDroped}" update="dropAreaLesioGolero lesionGoleroList jugadoresDisponiblesList" />
     		</p:droppable>
     		<p:commandButton value="Enviar Alineación" action="#{alineacionBB.enviarAlineacion}"></p:commandButton>
 		</h:form>

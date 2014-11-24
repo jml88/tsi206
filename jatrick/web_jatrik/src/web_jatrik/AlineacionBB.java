@@ -40,6 +40,10 @@ public class AlineacionBB implements Serializable {
 	private Set<Jugador> jugadores;
 	private Alineacion datosAlineacion;
 	private List<Jugador> goleros;
+	private List<Jugador> lesionGolero;
+	private List<Jugador> lesionDefensa;
+	private List<Jugador> lesionMediocampista;
+	private List<Jugador> lesionDelantero;
 	private Alineacion alineacion;
 	private String retorno;
 	
@@ -60,6 +64,10 @@ public class AlineacionBB implements Serializable {
 			this.retorno = (String)context.getApplicationMap().get("retorno");
 			Partido partido = Comunicacion.getInstance().getIPartidoControlador().findPartido(idPartido);
 			
+			this.goleros = new ArrayList<Jugador>();
+			this.lesionGolero = new ArrayList<Jugador>();
+			this.lesionDefensa = new ArrayList<Jugador>();
+			this.lesionMediocampista = new ArrayList<Jugador>();
 			this.goleros = new ArrayList<Jugador>();
 			
 			if (codEquipo == partido.getLocal().getCodigo()){
@@ -151,6 +159,38 @@ public class AlineacionBB implements Serializable {
 		this.goleros = goleros;
 	}
 
+	public List<Jugador> getLesionGolero() {
+		return lesionGolero;
+	}
+
+	public void setLesionGolero(List<Jugador> lesionGolero) {
+		this.lesionGolero = lesionGolero;
+	}
+
+	public List<Jugador> getLesionDefensa() {
+		return lesionDefensa;
+	}
+
+	public void setLesionDefensa(List<Jugador> lesionDefensa) {
+		this.lesionDefensa = lesionDefensa;
+	}
+
+	public List<Jugador> getLesionMediocampista() {
+		return lesionMediocampista;
+	}
+
+	public void setLesionMediocampista(List<Jugador> lesionMediocampista) {
+		this.lesionMediocampista = lesionMediocampista;
+	}
+
+	public List<Jugador> getLesionDelantero() {
+		return lesionDelantero;
+	}
+
+	public void setLesionDelantero(List<Jugador> lesionDelantero) {
+		this.lesionDelantero = lesionDelantero;
+	}
+
 	public void onArqueroDroped(DragDropEvent ddEvent) {
         Jugador golero = ((Jugador) ddEvent.getData());
         //List<Jugador> goleros = this.goleros;
@@ -218,6 +258,24 @@ public class AlineacionBB implements Serializable {
 			jugadores.add(exDelantero);
 			delanteros.add(delantero);
 		}
+    }
+	
+	public void onLesionGoleroDroped(DragDropEvent ddEvent) {
+        Jugador lesion = ((Jugador) ddEvent.getData());
+        //List<Jugador> goleros = this.goleros;
+        
+        if(lesionGolero.isEmpty()){
+        	lesionGolero.add(lesion);
+            jugadores.remove(lesion);
+        }
+        else{
+        	Jugador exGolero = lesionGolero.get(0);
+        	lesionGolero.remove(exGolero);
+        	jugadores.remove(lesion);
+        	jugadores.add(exGolero);
+        	lesionGolero.add(lesion);
+        }
+        
     }
 	
 	public String enviarAlineacion(){
