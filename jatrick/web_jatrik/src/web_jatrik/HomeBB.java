@@ -44,6 +44,10 @@ public class HomeBB implements Serializable {
 	public HomeBB() {
 		super();
 	}
+	
+	public String verEquipo(int codigo){
+		return "/webPages/competiciones/liga.xhtml?faces-redirect=true";
+	}
 
 	@PostConstruct
 	public void init() {
@@ -76,6 +80,7 @@ public class HomeBB implements Serializable {
 		String result = "";
 		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
 		context.getApplicationMap().put("idPartido", this.partidoSeleccionado.getCodigo());
+		context.getApplicationMap().put("retorno", "home");
 		result = "/webPages/partidos/enviarOrdenesPartido.xhtml?faces-redirect=true";
 		return result;
 	}
