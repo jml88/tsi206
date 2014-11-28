@@ -183,18 +183,18 @@ public class PartidoControlador {
 		em.persist(c);
 	}
 
-	public void crearComentarioLesion(Jugador j, Partido partido, int minuto) {
-
-		Query q = em.createQuery("select max(c.Id) from Comentario c");
-		Comentario c = new Comentario();
-		c.setMensaje(j.getNombre()
-				+ " "
-				+ j.getApellido1()
-				+ " se duele y sale cojeando del terreno de juego en una jugada");
-		c.setPartido(partido);
-		c.setMinuto(minuto);
-		em.persist(c);
-	}
+//	public void crearComentarioLesion(Jugador j, Partido partido, int minuto) {
+//
+//
+//		Comentario c = new Comentario();
+//		c.setMensaje(j.getNombre()
+//				+ " "
+//				+ j.getApellido1()
+//				+ " se duele y sale cojeando del terreno de juego en una jugada");
+//		c.setPartido(partido);
+//		c.setMinuto(minuto);
+//		em.persist(c);
+//	}
 
 	public ConfiguracionPartido findConfiguracionPartido() {
 		return (ConfiguracionPartido) em.createQuery(
@@ -249,13 +249,78 @@ public class PartidoControlador {
 		em.merge(rp);
 	}
 
-	public void lesionJugador(Jugador j) {
-		// TODO hacerlo bien
-		j.setLesion(2);
-	}
+//	public void lesionJugador(Jugador j) {
+//		// TODO hacerlo bien
+//		j.setLesion(2);
+//	}
 
 	public void tarjetaJugador(Jugador j) {
 
+	}
+
+	public Jugador cambioPorLesion(int linea, Jugador ju, Alineacion a) {
+		Jugador retorno = null;
+		if (linea == 3){
+			if (a.getLesionDelantero() != null){
+				for (Jugador j : a.getDelanteros()) {
+					if (j.getCodigo() == ju.getCodigo()){
+						a.getDelanteros().remove(ju);
+						a.getDelanteros().add(a.getLesionDelantero());
+						retorno = a.getLesionDelantero();
+						a.setLesionDelantero(null);
+						break;
+					}
+				}
+			}
+			
+		}
+		else if (linea == 2){
+			if (a.getLesionMediocampistas() != null){
+				for (Jugador j : a.getMediocampistas()) {
+					if (j.getCodigo() == ju.getCodigo()){
+						a.getMediocampistas().remove(ju);
+						a.getMediocampistas().add(a.getLesionMediocampistas());
+						retorno = a.getLesionMediocampistas();
+						a.setLesionMediocampistas(null);
+						break;
+					}
+				}
+			}
+		}
+		else{
+			if (a.getLesionDefensas() != null){
+				for (Jugador j : a.getDefensas()) {
+					if (j.getCodigo() == ju.getCodigo()){
+						a.getDefensas().remove(ju);
+						a.getDefensas().add(a.getLesionDefensas());
+						retorno = a.getLesionDefensas();
+						a.setLesionDefensas(null);
+						break;
+					}
+				}
+			}
+		}
+		return retorno;
+	}
+
+	public void crearComentarioCambioLesion(Jugador juLesionado, Jugador jEntra, Partido p, int minuto) {
+		Comentario c = new Comentario();
+		if (jEntra == null){
+		c.setMensaje(juLesionado.getNombre()
+				+ " "
+				+ juLesionado.getApellido1()
+				+ " se duele y sale cojeando del terreno de juego en una jugada");
+		}
+		else{
+			c.setMensaje(juLesionado.getNombre()
+					+ " "
+					+ juLesionado.getApellido1()
+					+ " se duele y sale cojeando del terreno de juego en una jugada\n El tecnico envia a "+jEntra.getNombre()+" "+jEntra.getApellido1()+" en su lugar");
+		}
+		c.setPartido(p);
+		c.setMinuto(minuto);
+		em.persist(c);
+		
 	}
 
 	// public Partido crearPartidoPrueba(){
@@ -263,5 +328,7 @@ public class PartidoControlador {
 	// em.persist(p);
 	// return p;
 	// }
+	
+	
 
 }
