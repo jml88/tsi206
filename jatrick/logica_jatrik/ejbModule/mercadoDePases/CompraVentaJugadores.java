@@ -2,12 +2,15 @@ package mercadoDePases;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -54,18 +57,15 @@ public class CompraVentaJugadores implements Serializable {
 	
 	@Column
 	private boolean activo;
+	
+	@OneToMany
+	private List<Oferta> ofertas;
 
 	public CompraVentaJugadores() {
 		super();
 		// TODO Auto-generated constructor stub
+		this.ofertas = new LinkedList<Oferta>();
 	}
-
-	
-
-	
-	
-
-
 
 	public CompraVentaJugadores(int precio, Jugador jugadorVenta,
 			Date fechaPuestoEnVenta, Date fechaDeTransaccion,
@@ -78,44 +78,25 @@ public class CompraVentaJugadores implements Serializable {
 		this.equipoVenta = equipoVenta;
 		this.equipoCompra = equipoCompra;
 		this.activo = activo;
+		this.ofertas = new LinkedList<Oferta>();
 	}
 
-
-	
 
 	public int getCodigo() {
 		return codigo;
 	}
 
-
-
-
-
-
-
-
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
-
-
-
-
-
-
-
 
 	public boolean isActivo() {
 		return activo;
 	}
 
-
-
 	public void setActivo(boolean activo) {
 		this.activo = activo;
 	}
-
-
 
 	public int getPrecio() {
 		return precio;
@@ -165,11 +146,14 @@ public class CompraVentaJugadores implements Serializable {
 	public void setEquipoCompra(Equipo equipoCompra) {
 		this.equipoCompra = equipoCompra;
 	}
-	
-	
-	
-	
-	
+
+	public List<Oferta> getOfertas() {
+		return ofertas;
+	}
+
+	public void setOfertas(List<Oferta> ofertas) {
+		this.ofertas = ofertas;
+	}
 	
 	
 }

@@ -13,13 +13,15 @@ public class DatosEquipo implements Serializable{
 	private String nombre;
 	private int codPais;
 	private boolean bot;
+	private Double altura;
 	
-	public DatosEquipo(int codigo, String nombre, int codPais, boolean bot) {
+	public DatosEquipo(int codigo, String nombre, int codPais, boolean bot, Double altura) {
 		super();
 		this.codigo = codigo;
 		this.nombre = nombre;
 		this.codPais = codPais;
 		this.bot = bot;
+		this.altura = altura;
 	}
 	
 	public int getCodigo() {
@@ -53,6 +55,13 @@ public class DatosEquipo implements Serializable{
 	public void setBot(boolean bot) {
 		this.bot = bot;
 	}
-	
+
+	public Double getAltura() {
+		return altura;
+	}
+
+	public void setAltura(Double altura) {
+		this.altura = altura;
+	}
 }
 

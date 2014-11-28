@@ -5,8 +5,12 @@ import excepciones.NoExisteEquipoExcepcion;
 import fabricas.HomeFactory;
 import interfaces.IJugadorControlador;
 
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
 
@@ -41,14 +45,38 @@ public class JugadorControlador implements IJugadorControlador {
 	public Set<Jugador> generarJugadores(int cant, Equipo equipo){
 		Set<Jugador> jugadores = new HashSet<Jugador>();
 		
+		
+		List<String> nombres = null;
+        List<String> apellidos = null;
+		
+		try {
+			nombres = Files.readAllLines(FileSystems.getDefault().getPath("../standalone/deployments/jatrikEAR.ear/logica_jatrik.jar/META-INF/archivos/", "nombres"));
+			apellidos = Files.readAllLines(FileSystems.getDefault().getPath("../standalone/deployments/jatrikEAR.ear/logica_jatrik.jar/META-INF/archivos/", "apellidos"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		Random random = new Random();
 		for (int i = 0; i < cant; i++){
 
 			//TODO: Hacer bien despues!!
-			Jugador j = new Jugador();
-			j.setNombre("Fulano" + String.valueOf(i));
-			j.setApellido1("Detal" + String.valueOf(i));
-			j.setApellido2("Paracual" + String.valueOf(i));
+			Jugador j = new Jugador();			
+			
+			int max_nombres = nombres.size();
+			int max_apellidos = apellidos.size();
+			
+			String nombre = nombres.get(random.nextInt(max_nombres -1));
+			String apellido1 = apellidos.get(random.nextInt(max_apellidos -1));
+			String apellido2 = apellidos.get(random.nextInt(max_apellidos -1));
+			
+//			j.setNombre("Fulano" + String.valueOf(i));
+//			j.setApellido1("Detal" + String.valueOf(i));
+//			j.setApellido2("Paracual" + String.valueOf(i));
+			
+			j.setNombre(nombre.substring(0,1).toUpperCase(Locale.US) + nombre.substring(1).toLowerCase(Locale.US));
+			j.setApellido1(apellido1.substring(0,1).toUpperCase(Locale.US) + apellido1.substring(1).toLowerCase(Locale.US));
+			j.setApellido2(apellido2.substring(0,1).toUpperCase(Locale.US) + apellido2.substring(1).toLowerCase(Locale.US));
 			
 			int edad = random.nextInt(3) + 17;
 			j.setEdad(edad);

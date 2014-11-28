@@ -84,16 +84,16 @@ public class UserControlador implements IUserControlador {
 				.getSingleResult()).intValue();
 	}
 	
-	public int createManager(DatosManager datosManager, String password, String nombreEquipo, boolean escudo) {
+	public int createManager(DatosManager datosManager, String password, String nombreEquipo, boolean escudo, Double altura) {
 		Manager manager = new Manager(datosManager, password);
 		
 		em.persist(manager);
         
         IEquipoControlador iec = hf.getEquipoControlador();
-        if (!datosManager.getName().equals("admin")){
+        if (!datosManager.getName().equals("admin")) {
 //        	manager.setEquipo();
 //        	manager.setTorneo(torneo);
-        	iec.asignarTorneo(manager,new DatosEquipo(0, nombreEquipo, 0, false));
+        	iec.asignarTorneo(manager, new DatosEquipo(0, nombreEquipo, 0, false, altura));
         }
         if (escudo) {
         	this.asociarEscudo(nombreEquipo);
@@ -133,8 +133,11 @@ public class UserControlador implements IUserControlador {
     }
     
     public File obtenerEscudo(int codEquipo) {
+    	File escudo = null;
     	Equipo e = em.find(Equipo.class, codEquipo);
-    	File escudo = new File("imagenesJatrik/" + e.getNombre());
+    	if (e != null) {
+    		escudo = new File("imagenesJatrik/" + e.getNombre());
+    	}
     	return escudo;
     }
 }

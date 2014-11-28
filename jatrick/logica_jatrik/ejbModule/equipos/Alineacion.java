@@ -63,20 +63,20 @@ public class Alineacion implements Serializable {
 	private List<Jugador> defensas;
 	
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	private Jugador golero;
 
 	/* suplentes por lesion */
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	private Jugador lesionDelantero;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	private Jugador lesionMediocampistas;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	private Jugador lesionDefensas;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	private Jugador lesionGolero;
 
 	/* suplentes en general */

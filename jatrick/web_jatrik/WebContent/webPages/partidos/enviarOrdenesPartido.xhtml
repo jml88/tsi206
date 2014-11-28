@@ -9,9 +9,12 @@
 	<ui:define name="scripts">
 		<script type="text/javascript">
 			function handleDrop(event, ui) {
-		        var droppedCar = ui.draggable;
+		        var droppedElem = ui.draggable;
+		        //$(this).css("width", "50px");
+		        //droppedElem.style.width = "50px";
+		        //droppedElem.find("div").attr("width", "5px");
 					 
-		        droppedCar.fadeOut('fast');
+		        droppedElem.fadeOut('fast');
 		    }
 		</script>
 	</ui:define>
@@ -19,95 +22,218 @@
 	<ui:define name="Principal">
 		<h:form id="alineacionForm">
 			<div>
+			<p:fieldset id="alineacionDropable">
 				<div style="float: left;" align="center">
+					<p:fieldset id="jugadoresDisponibles">
 					<p:dataGrid id="jugadoresDisponiblesList" var="jug"	value="#{alineacionBB.jugadores}" columns="1">
-						<p:panel id="pnl" style="text-align:center">
+						<p:panel id="pnl" style="text-align:center; width: 60px;">
 							#{jug.nombre} #{jug.apellido1} #{jug.apellido2}
 						</p:panel>
 						<p:draggable for="pnl" revert="true" stack=".ui-panel"/>
 					</p:dataGrid>
+					</p:fieldset>
 				</div>
 				<div style="float: left; margin: 20px" align="center">
-					<p:fieldset id="jugadoresArquero">
-					<p:outputPanel id="dropAreaArquero">
-					<p:dataGrid syle="margin: 30px" id="jugadoresArqueroList" var="arqueros" value="#{alineacionBB.goleros}">
-						<f:facet name="header">
-							<p:row>
-								<p:column>Arquero</p:column>
-							</p:row>
-						</f:facet>
+					<p:panelGrid>
 						<p:row>
-							<p:column>
-								<p:panel id="arquero">#{arqueros.nombre}</p:panel>
+							<p:column colspan="4">
+								<p:fieldset id="jugadoresArquero">
+								<p:outputPanel id="dropAreaArquero">
+								<p:dataGrid syle="margin: 30px" id="jugadoresArqueroList" var="arqueros" value="#{alineacionBB.goleros}" emptyMessage="Arrastre un jugador">
+									<f:facet name="header">
+										<p:row>
+											<p:column>Arquero</p:column>
+										</p:row>
+									</f:facet>
+									<p:row>
+										<p:column>
+											<p:panel id="arquero">#{arqueros.nombre}</p:panel>
+											<p:draggable for="arquero" revert="true" stack=".ui-panel"/>
+										</p:column>
+									</p:row>
+								</p:dataGrid>
+								</p:outputPanel>
+								</p:fieldset>
 							</p:column>
 						</p:row>
-					</p:dataGrid>
-					</p:outputPanel>
-					</p:fieldset>
-					<p:fieldset id="jugadoresDefensa">
-					<p:outputPanel id="dropAreaDefensa">
-					<p:dataGrid syle="margin: 30px" id="jugadoresDefensaList" var="defensas" value="#{alineacionBB.datosAlineacion.defensas}">
-						<f:facet name="header">
-							<p:row>
-								<p:column>Defensas</p:column>
-							</p:row>
-						</f:facet>
 						<p:row>
-							<p:column>
-								<p:panel id="defensa">#{defensas.nombre}</p:panel>
+							<p:column colspan="4">
+							<p:fieldset id="jugadoresDefensa">
+							<p:outputPanel id="dropAreaDefensa">
+							<p:dataGrid syle="margin: 30px;" id="jugadoresDefensaList" var="defensas" value="#{alineacionBB.datosAlineacion.defensas}" emptyMessage="Arrastre un jugador">
+								<f:facet name="header">
+									<p:row>
+										<p:column>Defensas</p:column>
+									</p:row>
+								</f:facet>
+								<p:row>
+									<p:column>
+										<p:panel id="defensa">#{defensas.nombre}</p:panel>
+										<p:draggable for="defensa" revert="true" stack=".ui-panel"/>
+									</p:column>
+								</p:row>
+							</p:dataGrid>
+							</p:outputPanel>
+							</p:fieldset>
 							</p:column>
 						</p:row>
-					</p:dataGrid>
-					</p:outputPanel>
-					</p:fieldset>
-					<p:fieldset id="jugadoresMedio">
-					<p:outputPanel id="dropAreaMedio">
-					<p:dataGrid syle="margin: 30px" id="jugadoresMedioList" var="medios" value="#{alineacionBB.datosAlineacion.mediocampistas}">
-						<f:facet name="header">
-							<p:row>
-								<p:column>Medios</p:column>
-							</p:row>
-						</f:facet>
 						<p:row>
-							<p:column>
-								<p:panel id="medio">#{medios.nombre}</p:panel>
+							<p:column colspan="4">	
+								<p:fieldset id="jugadoresMedio">
+								<p:outputPanel id="dropAreaMedio">
+								<p:dataGrid syle="margin: 30px" id="jugadoresMedioList" var="medios" value="#{alineacionBB.datosAlineacion.mediocampistas}" emptyMessage="Arrastre un jugador">
+									<f:facet name="header">
+										<p:row>
+											<p:column>Medios</p:column>
+										</p:row>
+									</f:facet>
+									<p:row>
+										<p:column>
+											<p:panel id="medio">#{medios.nombre}</p:panel>
+											<p:draggable for="medio" revert="true" stack=".ui-panel"/>
+										</p:column>
+									</p:row>
+								</p:dataGrid>
+								</p:outputPanel>
+								</p:fieldset>
 							</p:column>
 						</p:row>
-					</p:dataGrid>
-					</p:outputPanel>
-					</p:fieldset>
-					<p:fieldset id="jugadoresDelantera">
-					<p:outputPanel id="dropAreaDelantera">
-					<p:dataGrid syle="margin: 30px" id="jugadoresDelanteraList" var="delanteros" value="#{alineacionBB.datosAlineacion.delanteros}">
-						<f:facet name="header">
-							<p:row>
-								<p:column>Delanteros</p:column>
-							</p:row>
-						</f:facet>
 						<p:row>
-							<p:column>
-								<p:panel id="delatero">#{delanteros.nombre}</p:panel>
+							<p:column colspan="4">
+								<p:fieldset id="jugadoresDelantera">
+								<p:outputPanel id="dropAreaDelantera">
+								<p:dataGrid syle="margin: 30px" id="jugadoresDelanteraList" var="delanteros" value="#{alineacionBB.datosAlineacion.delanteros}" emptyMessage="Arrastre un jugador">
+									<f:facet name="header">
+										<p:row>
+											<p:column>Delanteros</p:column>
+										</p:row>
+									</f:facet>
+									<p:row>
+										<p:column>
+											<p:panel id="delantero">#{delanteros.nombre}</p:panel>
+											<p:draggable for="delantero" revert="true" stack=".ui-panel"/>
+										</p:column>
+									</p:row>
+								</p:dataGrid>
+								</p:outputPanel>
+								</p:fieldset>
 							</p:column>
 						</p:row>
-					</p:dataGrid>
-					</p:outputPanel>
-					</p:fieldset>
-					<label>Guardar como defecto</label>
-					<p:selectBooleanCheckbox value="#{alineacionBB.datosAlineacion.alineacionDefecto}" />
+						<p:row>
+							<p:column>
+								<p:fieldset id="jugadoresLesionGolero">
+								<p:outputPanel id="dropAreaLesioGolero">
+								<p:dataGrid syle="margin: 30px" id="lesionGoleroList" var="lesionGolero" value="#{alineacionBB.lesionGolero}" emptyMessage="Arrastre un jugador">
+									<f:facet name="header">
+										<p:row>
+											<p:column>Lesión Golero</p:column>
+										</p:row>
+									</f:facet>
+									<p:row>
+										<p:column>
+											<p:panel id="lesionG">#{lesionGolero.nombre}</p:panel>
+											<p:draggable for="lesionG" revert="true" stack=".ui-panel"/>
+										</p:column>
+									</p:row>
+								</p:dataGrid>
+								</p:outputPanel>
+								</p:fieldset>
+							</p:column>
+							<p:column>
+								<p:fieldset id="jugadoresLesionDefensa">
+								<p:outputPanel id="dropAreaLesioDefensa">
+								<p:dataGrid syle="margin: 30px" id="lesionDefensaList" var="lesionDefensa" value="#{alineacionBB.lesionDefensa}" emptyMessage="Arrastre un jugador">
+									<f:facet name="header">
+										<p:row>
+											<p:column>Lesión Defensa</p:column>
+										</p:row>
+									</f:facet>
+									<p:row>
+										<p:column>
+											<p:panel id="lesionDef">#{lesionDefensa.nombre}</p:panel>
+											<p:draggable for="lesionDef" revert="true" stack=".ui-panel"/>
+										</p:column>
+									</p:row>
+								</p:dataGrid>
+								</p:outputPanel>
+								</p:fieldset>
+							</p:column>
+							<p:column>
+								<p:fieldset id="jugadoresLesionMediocampista">
+								<p:outputPanel id="dropAreaLesioMediocampista">
+								<p:dataGrid syle="margin: 30px" id="lesionMediocampistaList" var="lesionMediocampista" value="#{alineacionBB.lesionMediocampista}" emptyMessage="Arrastre un jugador">
+									<f:facet name="header">
+										<p:row>
+											<p:column>Lesión Mediocampista</p:column>
+										</p:row>
+									</f:facet>
+									<p:row>
+										<p:column>
+											<p:panel id="lesionM">#{lesionMediocampista.nombre}</p:panel>
+											<p:draggable for="lesionM" revert="true" stack=".ui-panel"/>
+										</p:column>
+									</p:row>
+								</p:dataGrid>
+								</p:outputPanel>
+								</p:fieldset>
+							</p:column>
+							<p:column>
+								<p:fieldset id="jugadoresLesionDelantero">
+								<p:outputPanel id="dropAreaLesioDelantero">
+								<p:dataGrid syle="margin: 30px" id="lesionDelanteroList" var="lesionDelantero" value="#{alineacionBB.lesionDelantero}" emptyMessage="Arrastre un jugador">
+									<f:facet name="header">
+										<p:row>
+											<p:column>Lesión Delantero</p:column>
+										</p:row>
+									</f:facet>
+									<p:row>
+										<p:column>
+											<p:panel id="lesionDel">#{lesionDelantero.nombre}</p:panel>
+											<p:draggable for="lesionDel" revert="true" stack=".ui-panel"/>
+										</p:column>
+									</p:row>
+								</p:dataGrid>
+								</p:outputPanel>
+								</p:fieldset>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="4">
+								<label>Guardar como defecto</label>
+								<p:selectBooleanCheckbox value="#{alineacionBB.datosAlineacion.alineacionDefecto}" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
 				</div>
 				<div style="clear: both"></div>
+				</p:fieldset>
 			</div>
 		    <p:droppable for="jugadoresArquero" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="jugadoresDisponiblesList" onDrop="handleDrop">
-        		<p:ajax listener="#{alineacionBB.onArqueroDroped}" update="dropAreaArquero jugadoresArqueroList jugadoresDisponiblesList" />
+        		<p:ajax listener="#{alineacionBB.onArqueroDroped}" update="jugadoresDisponiblesList dropAreaArquero jugadoresArqueroList dropAreaDefensa jugadoresDefensaList dropAreaMedio jugadoresMedioList dropAreaDelantera jugadoresDelanteraList dropAreaLesioGolero lesionGoleroList dropAreaLesioDefensa lesionDefensaList dropAreaLesioMediocampista lesionMediocampistaList dropAreaLesioDelantero lesionDelanteroList" />
     		</p:droppable>
     		<p:droppable for="jugadoresDefensa" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="jugadoresDisponiblesList" onDrop="handleDrop">
-        		<p:ajax listener="#{alineacionBB.onDefensaDroped}" update="dropAreaDefensa jugadoresDefensaList jugadoresDisponiblesList" />
+        		<p:ajax listener="#{alineacionBB.onDefensaDroped}" update="jugadoresDisponiblesList dropAreaArquero jugadoresArqueroList dropAreaDefensa jugadoresDefensaList dropAreaMedio jugadoresMedioList dropAreaDelantera jugadoresDelanteraList dropAreaLesioGolero lesionGoleroList dropAreaLesioDefensa lesionDefensaList dropAreaLesioMediocampista lesionMediocampistaList dropAreaLesioDelantero lesionDelanteroList" />
     		</p:droppable>
     		<p:droppable for="jugadoresMedio" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="jugadoresDisponiblesList" onDrop="handleDrop">
-        		<p:ajax listener="#{alineacionBB.onMedioDroped}" update="dropAreaMedio jugadoresMedioList jugadoresDisponiblesList" />
+        		<p:ajax listener="#{alineacionBB.onMedioDroped}" update="jugadoresDisponiblesList dropAreaArquero jugadoresArqueroList dropAreaDefensa jugadoresDefensaList dropAreaMedio jugadoresMedioList dropAreaDelantera jugadoresDelanteraList dropAreaLesioGolero lesionGoleroList dropAreaLesioDefensa lesionDefensaList dropAreaLesioMediocampista lesionMediocampistaList dropAreaLesioDelantero lesionDelanteroList" />
     		</p:droppable>
     		<p:droppable for="jugadoresDelantera" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="jugadoresDisponiblesList" onDrop="handleDrop">
-        		<p:ajax listener="#{alineacionBB.onDelanteroDroped}" update="dropAreaDelantera jugadoresDelanteraList jugadoresDisponiblesList" />
+        		<p:ajax listener="#{alineacionBB.onDelanteroDroped}" update="jugadoresDisponiblesList dropAreaArquero jugadoresArqueroList dropAreaDefensa jugadoresDefensaList dropAreaMedio jugadoresMedioList dropAreaDelantera jugadoresDelanteraList dropAreaLesioGolero lesionGoleroList dropAreaLesioDefensa lesionDefensaList dropAreaLesioMediocampista lesionMediocampistaList dropAreaLesioDelantero lesionDelanteroList" />
+    		</p:droppable>
+    		<p:droppable for="jugadoresLesionGolero" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="jugadoresDisponiblesList" onDrop="handleDrop">
+        		<p:ajax listener="#{alineacionBB.onLesionGoleroDroped}" update="jugadoresDisponiblesList dropAreaArquero jugadoresArqueroList dropAreaDefensa jugadoresDefensaList dropAreaMedio jugadoresMedioList dropAreaDelantera jugadoresDelanteraList dropAreaLesioGolero lesionGoleroList dropAreaLesioDefensa lesionDefensaList dropAreaLesioMediocampista lesionMediocampistaList dropAreaLesioDelantero lesionDelanteroList" />
+    		</p:droppable>
+    		<p:droppable for="jugadoresLesionDefensa" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="jugadoresDisponiblesList" onDrop="handleDrop">
+        		<p:ajax listener="#{alineacionBB.onLesionDefensaDroped}" update="jugadoresDisponiblesList dropAreaArquero jugadoresArqueroList dropAreaDefensa jugadoresDefensaList dropAreaMedio jugadoresMedioList dropAreaDelantera jugadoresDelanteraList dropAreaLesioGolero lesionGoleroList dropAreaLesioDefensa lesionDefensaList dropAreaLesioMediocampista lesionMediocampistaList dropAreaLesioDelantero lesionDelanteroList" />
+    		</p:droppable>
+    		<p:droppable for="jugadoresLesionMediocampista" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="jugadoresDisponiblesList" onDrop="handleDrop">
+        		<p:ajax listener="#{alineacionBB.onLesionMediocampistaDroped}" update="jugadoresDisponiblesList dropAreaArquero jugadoresArqueroList dropAreaDefensa jugadoresDefensaList dropAreaMedio jugadoresMedioList dropAreaDelantera jugadoresDelanteraList dropAreaLesioGolero lesionGoleroList dropAreaLesioDefensa lesionDefensaList dropAreaLesioMediocampista lesionMediocampistaList dropAreaLesioDelantero lesionDelanteroList" />
+    		</p:droppable>
+    		<p:droppable for="jugadoresLesionDelantero" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="jugadoresDisponiblesList" onDrop="handleDrop">
+        		<p:ajax listener="#{alineacionBB.onLesionDelanteroDroped}" update="jugadoresDisponiblesList dropAreaArquero jugadoresArqueroList dropAreaDefensa jugadoresDefensaList dropAreaMedio jugadoresMedioList dropAreaDelantera jugadoresDelanteraList dropAreaLesioGolero lesionGoleroList dropAreaLesioDefensa lesionDefensaList dropAreaLesioMediocampista lesionMediocampistaList dropAreaLesioDelantero lesionDelanteroList" />
+    		</p:droppable>
+    		<p:droppable for="jugadoresDisponibles" tolerance="touch" activeStyleClass="ui-state-highlight" onDrop="handleDrop">
+        		<p:ajax listener="#{alineacionBB.onJugadoresDroped}" update="jugadoresDisponiblesList dropAreaArquero jugadoresArqueroList dropAreaDefensa jugadoresDefensaList dropAreaMedio jugadoresMedioList dropAreaDelantera jugadoresDelanteraList dropAreaLesioGolero lesionGoleroList dropAreaLesioDefensa lesionDefensaList dropAreaLesioMediocampista lesionMediocampistaList dropAreaLesioDelantero lesionDelanteroList" />
     		</p:droppable>
     		<p:commandButton value="Enviar Alineación" action="#{alineacionBB.enviarAlineacion}"></p:commandButton>
 		</h:form>

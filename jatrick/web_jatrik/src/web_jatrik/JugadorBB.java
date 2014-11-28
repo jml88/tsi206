@@ -60,10 +60,16 @@ public class JugadorBB implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
 	}
+	
+    public void destroyWorld() {
+        addMessage("System Error", "Please try again later.");
+    }
+     
+    public void addMessage(String summary, String detail) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
 	
 	public String comprarJugador(){
 		try {
@@ -94,10 +100,11 @@ public class JugadorBB implements Serializable {
 		int codigoEquipo = session.getDatosManager().getCodEquipo();
 		try {
 			Comunicacion.getInstance().getIMercadoDePasesControlador().ponerJugadorEnVenta(codigoEquipo, jugador.getCodigo(), precio);
+			jugador.setEnVenta(true);
 			//RequestContext.getCurrentInstance().addCallbackParam("doneChangeParam", true);
 			FacesContext context = FacesContext.getCurrentInstance();
 	        context.addMessage(null, new FacesMessage("Agregado!!!") );
-	        //RequestContext.getCurrentInstance().closeDialog("confirmarVenta");
+//	        RequestContext.getCurrentInstance().closeDialog("confirmarVenta");
 		} catch (NoExisteEquipoExcepcion | NoExisteJugadorExcepcion
 				| YaExisteJugadorALaVenta | NamingException e) {
 			// TODO Auto-generated catch block

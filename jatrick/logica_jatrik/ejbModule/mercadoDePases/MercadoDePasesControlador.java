@@ -66,19 +66,21 @@ public class MercadoDePasesControlador implements IMercadoDePasesControlador {
 			throw new NoExisteJugadorExcepcion("No existe Juagador de id: " + codigoJugador);
 		}
 		
-		List<CompraVentaJugadores> res = em.createQuery("SELECT cv FROM CompraVentaJugadores cv WHERE "
-				+ "cv.jugadorVenta.codigo = :jugador AND cv.activo = :booleano")
-				.setParameter("jugador",j.getCodigo())
-				.setParameter("booleano", true)
-				.setMaxResults(1).getResultList();
+//		List<CompraVentaJugadores> res = em.createQuery("SELECT cv FROM CompraVentaJugadores cv WHERE "
+//				+ "cv.jugadorVenta.codigo = :jugador AND cv.activo = :booleano")
+//				.setParameter("jugador",j.getCodigo())
+//				.setParameter("booleano", true)
+//				.setMaxResults(1).getResultList();
 		
-		if(!res.isEmpty()){
+		if(j.isEnVenta()){
 			
 			throw new YaExisteJugadorALaVenta("El jugador de id "+ j.getCodigo() +" está a la venta");
 		}
 		
+//		Oferta oferta = new Oferta(Calendar.getInstance(),precio,e);
 		CompraVentaJugadores cv = new CompraVentaJugadores(precio, j, Calendar.getInstance().getTime(),null, e,null,true);
 		em.persist(cv);
+		j.setEnVenta(true);
 			
 	}
 

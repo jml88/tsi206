@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="scripts">
+		<script type="text/javascript">
+			
+		</script>
+	</ui:define>
+
+	<ui:define name="Principal">
+		<h:form id="form" prependId="false">
+
+			<p:dataTable id="radioDT" var="partido"
+				emptyMessage="No hay ofertas pendientes"
+				value="#{homeBB.partidosAnteriores}"
+				selection="#{homeBB.partidoSeleccionadoAnterior}"
+				rowKey="#{partido.codigo}">
+				<f:facet name="header">
+					<p:outputLabel value="Tus Ofertas a Jugadores de Otros Equipos" />
+				</f:facet>
+				<p:column headerText="Fecha">
+					<h:outputText value="#{partido.fechaHora}"
+						converter="DateConverter" />
+				</p:column>
+				<p:column headerText="Jugador">
+					<h:outputText value="#{partido.local.nombre}" />
+				</p:column>
+				<p:column headerText="Equipo">
+					<h:outputText value="#{partido.resultado.golesLocal}" />
+				</p:column>
+				<p:column headerText="Cantidad">
+					<h:outputText value="#{partido.visitante.nombre}" />
+				</p:column>
+			</p:dataTable>
+
+			<p:dataTable id="radioDT2" var="partido"
+				emptyMessage="No hay ofertas pendientes"
+				value="#{homeBB.partidosAnteriores}"
+				selection="#{homeBB.partidoSeleccionadoAnterior}"
+				rowKey="#{partido.codigo}">
+				<f:facet name="header">
+					<p:outputLabel value="Ofertas a Jugadores de Tu Equipo" />
+				</f:facet>
+				<p:column headerText="Fecha">
+					<h:outputText value="#{partido.fechaHora}"
+						converter="DateConverter" />
+				</p:column>
+				<p:column headerText="Jugador">
+					<h:outputText value="#{partido.local.nombre}" />
+				</p:column>
+				<p:column headerText="Equipo">
+					<h:outputText value="#{partido.resultado.golesLocal}" />
+				</p:column>
+				<p:column headerText="Cantidad">
+					<h:outputText value="#{partido.visitante.nombre}" />
+				</p:column>
+			</p:dataTable>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

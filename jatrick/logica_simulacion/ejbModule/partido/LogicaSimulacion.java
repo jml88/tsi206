@@ -33,7 +33,7 @@ public class LogicaSimulacion {
 
 	@Inject
 	SimulacionControlador sc;
-	
+
 	@Inject
 	private FinanzasControladorSimulacion fc;
 
@@ -144,11 +144,14 @@ public class LogicaSimulacion {
 				.getDefensas());
 
 		if (probDel >= probMed && probDel >= probDef) {
-			jugador = eligoJugadorGol(delanterosL);
+			jugador = eligoJugador(delanterosL);
 		} else if (probMed > probDel && probMed >= probDef) {
-			jugador = eligoJugadorGol(mediosL);
+			jugador = eligoJugador(mediosL);
 		} else {
-			jugador = eligoJugadorGol(defensasL);
+			jugador = eligoJugador(defensasL);
+		}
+		if (jugador == null){
+			int a = 1;
 		}
 		double probablidadGol = ((probJugadaGol) * (jugador.getAtaque()
 				* Math.random() - golero.getPorteria() * Math.random())) / 100;
@@ -167,20 +170,33 @@ public class LogicaSimulacion {
 				.getMediocampistas());
 		List<Jugador> defensasL = quitarSancionadosYLesionados(alineacionLocal
 				.getDefensas());
+		
+		List<Jugador> delanterosV = quitarSancionadosYLesionados(alineacionVisitante
+				.getDelanteros());
+		List<Jugador> mediosV = quitarSancionadosYLesionados(alineacionVisitante
+				.getMediocampistas());
+		List<Jugador> defensasV = quitarSancionadosYLesionados(alineacionVisitante
+				.getDefensas());
 
 		Jugador ju = null;
-
-		ju = alineacionLocal.getMediocampistas().get(0);
-
+		
+		int linea = 0;
+		boolean ultimoLinea = false;
 		if (Math.random() > 0.5) {
 			double d = Math.random() * 3;
 			int j = (int) d;
 			if (j == 1) {
-				ju = eligoJugadorGol(defensasL);
+				ju = eligoJugador(defensasL);
+				ultimoLinea = defensasL.size() == 1;
+				linea = 1;
 			} else if (j == 2) {
-				ju = eligoJugadorGol(mediosL);
+				ju = eligoJugador(mediosL);
+				ultimoLinea = mediosL.size() == 1;
+				linea = 2;
 			} else {
-				ju = eligoJugadorGol(delanterosL);
+				ju = eligoJugador(delanterosL);
+				ultimoLinea = delanterosL.size() == 1;
+				linea = 3;
 			}
 
 		} else {
@@ -188,21 +204,32 @@ public class LogicaSimulacion {
 			double d = Math.random() * 3;
 			int j = (int) d;
 			if (j == 1) {
-				ju = eligoJugadorGol(defensasL);
+				ju = eligoJugador(defensasV);
+				ultimoLinea = defensasV.size() == 1;
+				linea = 4;
 			} else if (j == 2) {
-				ju = eligoJugadorGol(mediosL);
+				ju = eligoJugador(mediosV);
+				ultimoLinea = delanterosV.size() == 1;
+				linea = 5;
 			} else {
-				ju = eligoJugadorGol(delanterosL);
+				ju = eligoJugador(delanterosV);
+				ultimoLinea = delanterosV.size() == 1;
+				linea = 6;
 			}
 
 		}
 		if (Math.random() > 0.96) {
-			pc.crearComentarioLesion(ju, p, minuto);
+			Alineacion a = (linea > 3) ? alineacionVisitante : alineacionLocal;
+			int posicicon = (linea > 3) ? linea -3 : linea;
+//			pc.crearComentarioLesion(ju, p, minuto);
 			ju.setLesion(3);
+			Jugador j = pc.cambioPorLesion(posicicon,ju,a);
+			pc.crearComentarioCambioLesion(ju,j, p, minuto);
+			
 		}
 	}
 
-	private Jugador eligoJugadorGol(List<Jugador> jugadores) {
+	private Jugador eligoJugador(List<Jugador> jugadores) {
 		if (jugadores.size() == 0) {
 			return null;
 		}
@@ -261,52 +288,78 @@ public class LogicaSimulacion {
 		double probMedL = Math.random() * 3;
 		double probDefL = Math.random() * 6;
 		Jugador jugadorL = null;
-
+		boolean ultimaLinea = false;
+		int lineaL = 0;
 		if (probDelL >= probMedL && probDelL >= probDefL) {
-			jugadorL = eligoJugadorGol(delanterosL);
+			jugadorL = eligoJugador(delanterosL);
+			// ultimaLinea = delanterosL.size() == 1;
+			lineaL = 3;
 		} else if (probMedL > probDelL && probMedL >= probDefL) {
-			jugadorL = eligoJugadorGol(mediosL);
+			jugadorL = eligoJugador(mediosL);
+			// ultimaLinea = mediosL.size() == 1;
+			lineaL = 2;
 		} else {
-			jugadorL = eligoJugadorGol(defensasL);
+			jugadorL = eligoJugador(defensasL);
+			// ultimaLinea = defensasL.size() == 1;
+			lineaL = 1;
 		}
-		if (jugadorL == null){
-			jugadorL = defensasL.get(0);
-		}
-		double probDelV = Math.random() * 1;
+
+		double probDelV = Math.random() * 6;
 		double probMedV = Math.random() * 3;
-		double probDefV = Math.random() * 6;
+		double probDefV = Math.random() * 1;
 		Jugador jugadorV = null;
-		if (probDelV >= probMedV && probDelV >= probDefV) {
-			jugadorV = eligoJugadorGol(delanterosV);
-		} else if (probMedV > probDelV && probMedV >= probDefV) {
-			jugadorV = eligoJugadorGol(mediosV);
+		int lineaV = 0;
+		if ((probDelV >= probMedV) && (probDelV >= probDefV)) {
+			jugadorV = eligoJugador(delanterosV);
+			ultimaLinea = delanterosV.size() == 1;
+			lineaV = 3;
+		} else if ((probMedV > probDelV) && (probMedV >= probDefV)) {
+			jugadorV = eligoJugador(mediosV);
+			ultimaLinea = mediosV.size() == 1;
+			lineaV = 2;
 		} else {
-			jugadorV = eligoJugadorGol(defensasV);
+			jugadorV = eligoJugador(defensasV);
+			ultimaLinea = defensasV.size() == 1;
+			lineaV = 1;
 		}
-
+		if (jugadorV == null || jugadorL == null) {
+			int a = 0;
+		}
 		double pT = Math.random();
-		if (((pT > 0.3) && (pT < 0.7) && !jugadaGol)
-				|| (jugadaGol && pT > 0.75 && pT <= 0.9)) {
-			pc.crearComentarioAmarilla(jugadorV, jugadorL, p, minuto);
-			if (jugadorV.getTarjetasPartido() == null) {
-				jugadorV.setTarjetasPartido(2);
+		if (((pT > 0.35) && (pT <= 0.73) && !jugadaGol)
+				|| (jugadaGol && pT > 0.78 && pT <= 0.9)) {
+			if (ultimaLinea) {
+				pc.crearComentarioFalta(jugadorV, jugadorL, p, minuto);
+			} else {
+				pc.crearComentarioAmarilla(jugadorV, jugadorL, p, minuto);
+				if (jugadorV.getTarjetasPartido() == null) {
+					jugadorV.setTarjetasPartido(2);
 
-			} else if (jugadorV.getTarjetasPartido() == 1) {
-				jugadorV.setTarjetasPartido(2);
-				jugadorV.setSancionLiga(1);
-			}
-			if (Math.random() > 0.9) {
-				pc.crearComentarioLesion(jugadorL, p, minuto);
-				jugadorL.setLesion(1);
+				} else if (jugadorV.getTarjetasPartido() == 1) {
+					jugadorV.setTarjetasPartido(2);
+					jugadorV.setSancionLiga(1);
+				}
+				if (Math.random() > 0.92) {
+					int posicicon = (lineaL > 3) ? lineaL -3 : lineaL;
+					Jugador j = pc.cambioPorLesion(posicicon,jugadorL,alineacionLocal);
+					pc.crearComentarioCambioLesion(jugadorL,j, p, minuto);
+					jugadorL.setLesion(1);
+				}
 			}
 			retorno = 1;
 
-		} else if ((!jugadaGol && (pT > 0.7)) || (jugadaGol && (pT > 0.93))) {
-			pc.crearComentarioRoja(jugadorV, jugadorL, p, minuto);
-			jugadorV.setSancionLiga(2);
-			if (Math.random() > 0.9) {
-				pc.crearComentarioLesion(jugadorL, p, minuto);
-				jugadorL.setLesion(1);
+		} else if ((!jugadaGol && (pT > 0.73)) || (jugadaGol && (pT > 0.93))) {
+			if (ultimaLinea) {
+				pc.crearComentarioFalta(jugadorV, jugadorL, p, minuto);
+			} else {
+				pc.crearComentarioRoja(jugadorV, jugadorL, p, minuto);
+				jugadorV.setSancionLiga(2);
+				if (Math.random() > 0.92) {
+					int posicion = (lineaV > 3) ? lineaV -3 : lineaV;
+					Jugador j = pc.cambioPorLesion(posicion,jugadorV,alineacionVisitante);
+					pc.crearComentarioCambioLesion(jugadorV,j, p, minuto);
+					jugadorL.setLesion(1);
+				}
 			}
 			retorno = 2;
 		} else if ((!jugadaGol) || (jugadaGol && pT > 0.6)) {
@@ -355,8 +408,7 @@ public class LogicaSimulacion {
 					pc.sumarGolLocal(p.getResultado(), jL);
 					if (pt != null) {
 						jL.setGolesLiga(jL.getGolesLiga() + 1);
-					}
-					else if (pCopa != null){
+					} else if (pCopa != null) {
 						jL.setGolesCopa(jL.getGolesCopa() + 1);
 					}
 				} else {
@@ -378,9 +430,9 @@ public class LogicaSimulacion {
 					pc.sumarGolVisitante(p.getResultado(), jV);
 					if (pt != null) {
 						jV.setGolesLiga(jV.getGolesLiga() + 1);
-					}else if (pCopa != null){
-							jV.setGolesCopa(jV.getGolesCopa() + 1);
-						}
+					} else if (pCopa != null) {
+						jV.setGolesCopa(jV.getGolesCopa() + 1);
+					}
 				} else {
 					pc.crearComentarioJugadaGol((int) probT, jV, p
 							.getAlineacionLocal().getGolero(),
@@ -401,7 +453,8 @@ public class LogicaSimulacion {
 		return minutos;
 	}
 
-	public void simularPartidoCompleto(Partido p) throws NoExisteEquipoExcepcion {
+	public void simularPartidoCompleto(Partido p)
+			throws NoExisteEquipoExcepcion {
 		if (p == null) {
 			throw new NoExisteEquipoExcepcion("No existe partido de id ");
 		}
@@ -434,18 +487,17 @@ public class LogicaSimulacion {
 						"Por Suerte finaliza este martirio de partido, ambos equipos deben mejorar mucho para proximas actuaciones",
 						p, 90);
 			} else {
-				pc.crearComentario("Fin del partido, amargo 0 a 0", p,
-						90);
+				pc.crearComentario("Fin del partido, amargo 0 a 0", p, 90);
 			}
 		} else {
 			pc.crearComentario("FIN del tiempo reglamentario", p, 90);
 		}
 		this.actualizarDatosPartido(p);
 	}
-	
+
 	private void actualizarDatosPartido(Partido p) {
 		sc.partidoFinalizado(p);
-		PartidoTorneo pt = sc.findPartidoTorneo(p.getCodigo());	
+		PartidoTorneo pt = sc.findPartidoTorneo(p.getCodigo());
 		PartidoCopa pc = sc.findPartidoCopa(p.getCodigo());
 		if (pt != null) {
 			Posicion posLocal = ((PartidoTorneo) pt).getTorneo()
@@ -456,47 +508,51 @@ public class LogicaSimulacion {
 			fc.actualizarDespuesPartido(pt);
 			fc.actualizarPorMes(pt);
 			Equipo e = obtenerGanador(pt);
-			if (e != null){
-				e.setRanking(e.getRanking()+1);
+			if (e != null) {
+				e.setRanking(e.getRanking() + 1);
 			}
-		} else if (pc != null){
+		} else if (pc != null) {
 			Equipo e = obtenerGanador(pc);
-			e.setRanking(e.getRanking()+1);
-			sc.actualizarCopa(pc,e);
+			e.setRanking(e.getRanking() + 1);
+			sc.actualizarCopa(pc, e);
 		}
 	}
-	
-	private Equipo obtenerGanador(PartidoTorneo pc){
+
+	private Equipo obtenerGanador(PartidoTorneo pc) {
 		Equipo e = null;
-		if (pc.getResultado().getGolesLocal() > pc.getResultado().getGolesVisitante()){
+		if (pc.getResultado().getGolesLocal() > pc.getResultado()
+				.getGolesVisitante()) {
 			e = pc.getLocal();
-		}
-		else if ((pc.getResultado().getGolesLocal() < pc.getResultado().getGolesVisitante())){
+		} else if ((pc.getResultado().getGolesLocal() < pc.getResultado()
+				.getGolesVisitante())) {
 			e = pc.getVisitante();
 		}
 		return e;
 	}
-	
-	private Equipo obtenerGanador(PartidoCopa pcc){
+
+	private Equipo obtenerGanador(PartidoCopa pcc) {
 		Equipo e = null;
-		if (pcc.getResultado().getGolesLocal() > pcc.getResultado().getGolesVisitante()){
+		if (pcc.getResultado().getGolesLocal() > pcc.getResultado()
+				.getGolesVisitante()) {
 			e = pcc.getLocal();
-		}
-		else if (pcc.getResultado().getGolesLocal() < pcc.getResultado().getGolesVisitante()){
+		} else if (pcc.getResultado().getGolesLocal() < pcc.getResultado()
+				.getGolesVisitante()) {
 			e = pcc.getVisitante();
-		}
-		else{
-			double pL = Math.random()*5 +1;
-			int penalesL = (int)pL;
-			double pV = Math.random()*5 +1;
-			int penalesV = (int)pV;
-			sc.setPenalesPartido(pcc.getResultado(),penalesL,penalesV);
-			if (penalesL > penalesV){
-				pc.crearComentario("Pasa el "+pcc.getLocal().getNombre()+" tras vencer  en la ronda de penales por "+penalesL+" a "+penalesV, pcc, 90);
+		} else {
+			double pL = Math.random() * 5 + 1;
+			int penalesL = (int) pL;
+			double pV = Math.random() * 5 + 1;
+			int penalesV = (int) pV;
+			sc.setPenalesPartido(pcc.getResultado(), penalesL, penalesV);
+			if (penalesL > penalesV) {
+				pc.crearComentario("Pasa el " + pcc.getLocal().getNombre()
+						+ " tras vencer  en la ronda de penales por "
+						+ penalesL + " a " + penalesV, pcc, 90);
 				e = pcc.getLocal();
-			}
-			else{
-				pc.crearComentario("Pasa el "+pcc.getVisitante().getNombre()+" tras vencer  en la ronda de penales por "+penalesV+" a "+penalesL, pcc, 90);
+			} else {
+				pc.crearComentario("Pasa el " + pcc.getVisitante().getNombre()
+						+ " tras vencer  en la ronda de penales por "
+						+ penalesV + " a " + penalesL, pcc, 90);
 				e = pcc.getVisitante();
 			}
 		}

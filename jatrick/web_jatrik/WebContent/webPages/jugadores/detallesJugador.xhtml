@@ -5,52 +5,75 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-	
+
 	<ui:define name="scripts">
 		<script type="text/javascript">
-
+			
 		</script>
 	</ui:define>
-	
+
 	<ui:define name="Principal">
 		<h:form id="form" prependId="false">
 			<div align="center">
-				<p:panelGrid columns="2" >
-					<p:outputLabel value = "Nombre: "/>
-					<h:outputText  value = "#{jugadorBB.jugador.fullName}"/>
-					
-					<p:outputLabel value = "Salario: "/>
-					<h:outputText  value = "#{jugadorBB.jugador.salario}"/>
-					
-					<p:outputLabel value = "Goles en liga: "/>
-					<h:outputText  value = "#{jugadorBB.jugador.golesLiga}"/>
-					
-					<p:outputLabel value = "Goles en copa: "/>
-					<h:outputText  value = "#{jugadorBB.jugador.golesCopa}"/>
-					
-					<p:outputLabel value = "Edad: "/>
-					<h:outputText  value = "#{jugadorBB.jugador.edad}"/>
-					
-					<p:outputLabel value = "Puntos porteria: "/>
-					<h:outputText  value = "#{jugadorBB.jugador.porteria}"/>
-					
-					<p:outputLabel value = "Puntos de tecnica: "/>
-					<h:outputText  value = "#{jugadorBB.jugador.tecnica}"/>
-					
-					<p:outputLabel value = "Ataque: "/>
-					<h:outputText  value = "#{jugadorBB.jugador.ataque}"/>
-					
-					<p:outputLabel value = "Defensa: "/>
-					<h:outputText  value = "#{jugadorBB.jugador.defensa}"/>
-					
-				</p:panelGrid>
-				
-				<p:commandButton value="Retirar de venta" action="#{jugadorBB.cancelarVentaJugador}" />
-				<p:commandButton value="Comprar jugador" action="#{jugadorBB.comprarJugador}" rendered="#{jugadorBB.puedeComprar}"/>
-				<p:commandButton value="Poner jugador en venta" actionListener="#{jugadorBB.ponerEnVentaJugador}" rendered="#{jugadorBB.ponerEnVenta}"/>
+				<p:panelGrid columns="2" id="divjugador">
+					<p:outputLabel value="Nombre: " />
+					<h:outputText value="#{jugadorBB.jugador.fullName}" />
 
-				
+					<p:outputLabel value="Salario: " />
+					<h:outputText value="#{jugadorBB.jugador.salario}" />
+
+					<p:outputLabel value="Goles en liga: " />
+					<h:outputText value="#{jugadorBB.jugador.golesLiga}" />
+
+					<p:outputLabel value="Goles en copa: " />
+					<h:outputText value="#{jugadorBB.jugador.golesCopa}" />
+
+					<p:outputLabel value="Edad: " />
+					<h:outputText value="#{jugadorBB.jugador.edad}" />
+
+					<p:outputLabel value="Puntos porteria: " />
+					<h:outputText value="#{jugadorBB.jugador.porteria}" />
+
+					<p:outputLabel value="Puntos de tecnica: " />
+					<h:outputText value="#{jugadorBB.jugador.tecnica}" />
+
+					<p:outputLabel value="Ataque: " />
+					<h:outputText value="#{jugadorBB.jugador.ataque}" />
+
+					<p:outputLabel value="Defensa: " />
+					<h:outputText value="#{jugadorBB.jugador.defensa}" />
+
+				</p:panelGrid>
+
+				<p:commandButton value="Retirar de venta"
+					action="#{jugadorBB.cancelarVentaJugador}"
+					rendered="#{jugadorBB.jugador.enVenta}" />
+				<p:commandButton value="Comprar jugador"
+					action="#{jugadorBB.comprarJugador}"
+					rendered="#{jugadorBB.puedeComprar}" />
+				<p:commandButton value="Poner jugador en venta"
+					actionListener="#{jugadorBB.ponerEnVentaJugador}"
+					rendered="#{jugadorBB.ponerEnVenta}" update=":form:divjugador"
+					oncomplete="" />
+
+
 			</div>
+			<p:growl id="message" showDetail="true" />
+
+			<p:commandButton value="Destroy the World"
+				actionListener="#{jugadorBB.confirmarVenta}" update="message">
+				<p:confirm header="Poner en venta" message=""
+					icon="ui-icon-alert" />
+			</p:commandButton>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+					<p:outputLabel value="Precio de venta: " />
+					<h:inputText value="#{jugadorBB.precio}" />
+				<p:commandButton value="Poner en venta" type="button" update=":form:divjugador"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
 		</h:form>
 	</ui:define>
 </ui:composition>

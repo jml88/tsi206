@@ -20,6 +20,8 @@ public interface IPartidoControlador {
 	
 	public Partido findPartido(int codPartido);
 	
+	public Partido obtenerPartido(int codPartido);
+	
 	public List<Comentario> obtenerComentariosPartido(int codPartido, int nroComentario) throws NoExistePartidoExepcion;
 
 	//void setAlineacioPartido(DatosAlineacion alineacion, int idPartido, int idEquipo);
@@ -33,5 +35,11 @@ public interface IPartidoControlador {
 	Set<Partido> obtenerPartidosAmistososUsuario(int codEquipo);
 
 	void setAlineacioPartido(Alineacion alineacion, int idPartido, int idEquipo);
+
+	//Alineacion findAlineacion(int codAlineacion);
+
+	Alineacion findAlineacionLocal(int codPartido);
+
+	Alineacion findAlineacionVisitante(int codPartido);
 
 }

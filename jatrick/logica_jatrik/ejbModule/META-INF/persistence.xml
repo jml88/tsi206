@@ -22,11 +22,13 @@
 		<class>campeonato.Copa</class>
 		<class>mensajes.Mensaje</class>
 		<class>mercadoDePases.CompraVentaJugadores</class>
+		<class>mercadoDePases.Oferta</class>
 		<class>configuracionGral.ConfiguracionGral</class>
 		<class>users.Manager</class>
 		<class>finanzas.Finanzas</class>
 		<properties>
 		    <property name="hibernate.hbm2ddl.auto" value="update" />
+<!-- 		    <property name="hibernate.hbm2ddl.auto" value="create-drop" /> -->
 			<property name="hibernate.show_sql" value="false" />
 		</properties>
 	</persistence-unit>

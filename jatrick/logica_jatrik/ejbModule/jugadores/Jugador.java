@@ -86,6 +86,8 @@ public class Jugador implements Serializable{
 	
 	private Integer sancionLiga;
 	
+	private boolean enVenta;
+	
 	@Embedded
 	@Column(nullable=true)
 	private EntrenamientoJugador entrenamiento;
@@ -106,6 +108,7 @@ public class Jugador implements Serializable{
 		this.lesion = null;
 		this.tarjetasPartido = null;
 		this.sancionLiga = null;
+		this.enVenta = false;
 	}
 	
 	/**
@@ -153,6 +156,7 @@ public class Jugador implements Serializable{
 		this.lesion = null;
 		this.tarjetasPartido = null;
 		this.sancionLiga = null;
+		this.enVenta = false;
 		salario = calcularSueldoJugador();
 	}
 
@@ -175,6 +179,7 @@ public class Jugador implements Serializable{
 		this.golesLiga = dj.getGolesLiga();
 		this.golesCopa = dj.getGolesCopa();
 		this.jatTriks = dj.getJatTriks();
+		this.enVenta = false;
 	}
 
 	public String getNombre() {
@@ -352,6 +357,14 @@ public class Jugador implements Serializable{
 
 	public void setEntrenamiento(EntrenamientoJugador entrenamiento) {
 		this.entrenamiento = entrenamiento;
+	}
+
+	public boolean isEnVenta() {
+		return enVenta;
+	}
+
+	public void setEnVenta(boolean enVenta) {
+		this.enVenta = enVenta;
 	}
 
 	public DatosJugador getDatos() {

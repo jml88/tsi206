@@ -24,6 +24,7 @@ body {
 #left {
 	float: left;
 	height: 100%;
+	width: 19%;
 	/*background-color: #5882FA;*/
 	background-image: url("images/blue.jpg");
 	border-top-left-radius: 20px;
