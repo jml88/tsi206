@@ -32,7 +32,7 @@
 			</p:column>
 			<p:column headerText="Local">
 				<p:link value="#{partido.local.nombre}" outcome="/webPages/verEquipos/verOtroEquipo">
-					<f:param name="codEquipo" value="#{partido.local}"/>
+					<f:param name="codEquipo" value="#{partido.local.codigo}"/>
 				</p:link>
 			</p:column>
 			<p:column headerText="GL" width="20">
@@ -40,7 +40,7 @@
 			</p:column>
 			<p:column headerText="Visitante">
 				<p:link value="#{partido.visitante.nombre}" outcome="/webPages/verEquipos/verOtroEquipo">
-					<f:param name="codEquipo" value="#{partido.visitante}"/>
+					<f:param name="codEquipo" value="#{partido.visitante.codigo}"/>
 				</p:link>
 			</p:column>
 			<p:column headerText="GV" width="20">
@@ -69,12 +69,12 @@
 			</p:column>
 			<p:column headerText="Local">
 				<p:link value="#{partido.local.nombre}" outcome="/webPages/verEquipos/verOtroEquipo">
-					<f:param name="codEquipo" value="#{partido.local}"/>
+					<f:param name="codEquipo" value="#{partido.local.codigo}"/>
 				</p:link>
 			</p:column>
 			<p:column headerText="Visitante">
 				<p:link value="#{partido.visitante.nombre}" outcome="/webPages/verEquipos/verOtroEquipo">
-					<f:param name="codEquipo" value="#{partido.visitante}"/>
+					<f:param name="codEquipo" value="#{partido.visitante.codigo}"/>
 				</p:link>
 			</p:column>
 			<p:column headerText="Tipo" width="60">
@@ -98,7 +98,7 @@
 		<f:view contentType="text/html">
 			<p:gmap
 				center="#{sessionBB.datosManager.lat}, #{sessionBB.datosManager.lng}"
-				zoom="10" type="HYBRID" style="width:600px;height:400px" />
+				zoom="15" type="HYBRID" style="width:600px;height:400px" />
 		</f:view>
 		<p:link
 			outcome="/webPages/partidos/enviarOrdenesPartido.xhtml?faces-redirect=true"
