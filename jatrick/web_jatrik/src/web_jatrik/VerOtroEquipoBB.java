@@ -23,13 +23,13 @@ public class VerOtroEquipoBB implements Serializable {
 	@Inject
 	SessionBB sesion;
 	
-	private Equipo codEquipo;
+	private int codEquipo;
 	private Equipo equipo;
 
 	
 	@PostConstruct
 	public void init() {
-		
+		System.out.println("llegue al BB");
 	}
 
 	public Equipo getEquipo() {
@@ -40,11 +40,18 @@ public class VerOtroEquipoBB implements Serializable {
 		this.equipo = equipo;
 	}
 
-	public Equipo getCodEquipo() {
+	public int getCodEquipo() {
 		return codEquipo;
 	}
 
-	public void setCodEquipo(Equipo codEquipo) {
-		this.codEquipo = codEquipo;
+	public void setCodEquipo(int codEquipo) {
+		try {
+			if (codEquipo >= 0) {
+				this.codEquipo = codEquipo;
+				this.equipo = Comunicacion.getInstance().getIEquipoControlador().findEquipo(this.codEquipo);
+			}
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
 	}
 }
