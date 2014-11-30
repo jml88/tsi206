@@ -80,12 +80,16 @@ public class Jugador implements Serializable{
 	@Column(name="JATRIKS")
 	private int jatTriks;
 	
+	@Column
 	private Integer lesion;
 	
+	@Column
 	private Integer tarjetasPartido;
 	
+	@Column
 	private Integer sancionLiga;
 	
+	@Column
 	private boolean enVenta;
 	
 	@Embedded
@@ -377,7 +381,7 @@ public class Jugador implements Serializable{
 	}
 	
 	public String getFullName(){
-		return this.nombre + " " + this.apellido1 + " " + this.apellido2;
+		return this.nombre + " " + this.apellido1;
 	}
 	
 	public void entrenar(EnumEntrenamiento tipo,int valor,int valorNoEntrena){

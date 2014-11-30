@@ -138,7 +138,7 @@ public class MercadoDePasesControlador implements IMercadoDePasesControlador {
 		Finanzas credito = new Finanzas(-cv.getPrecio(), Calendar.getInstance().getTime(), e, EnumTipoTransaccion.COMPRA_JUGADORES);
 		em.persist(credito);
 		
-		Mensaje m = new Mensaje("Compra y venta", "El jugador " + j.getFullName() + " se ha vendido", null, e.getUsuario(), Calendar.getInstance().getTime(),false);
+		Mensaje m = new Mensaje("Compra y venta", "El jugador " + j.getFullName() + ""+" se ha vendido", null, e, Calendar.getInstance().getTime(),false);
 		em.persist(m);
 		
 		
@@ -223,6 +223,48 @@ public class MercadoDePasesControlador implements IMercadoDePasesControlador {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public void ofertarJugador(int codigoEquipo, int codigoJugador, int cantidad) {
+		CompraVentaJugadores cvj = (CompraVentaJugadores) em.createQuery("SELECT cv FROM CompraVentaJugadores cv WHERE "
+				+ "cv.jugadorVenta.codigo = :jugador AND cv.activo = true").setParameter("jugador", codigoJugador).getSingleResult();
+		Equipo e = em.find(Equipo.class, codigoEquipo);
+		Oferta of = new Oferta(Calendar.getInstance(), cantidad, e);
+		of.setCompraVenta(cvj);
+		em.persist(of);
+		cvj.getOfertas().add(of);
+		
+	}
+
+	@Override
+	public List<Oferta> obtenerOfertasRealizadas(int codigoEquipo) {
+		return em.createQuery("select o from Oferta o where o.equipoOferta.codigo = :codEquipo and o.compraVenta.activo = true").setParameter("codEquipo", codigoEquipo).getResultList();
+		
+	}
+
+	@Override
+	public void cancelarOfertasRealizadas(List<Oferta> ofertasRealizadasCancelar) {
+		
+		for (Oferta oferta : ofertasRealizadasCancelar) {
+			Oferta of =em.find(Oferta.class, oferta.getCodigo());
+			em.remove(of);
+		}
+		
+	}
+
+	@Override
+	public List<Oferta> obtenerOfertasRecibidas(int codigoEquipo) {
+		return em.createQuery("select o from Oferta o where o.compraVenta.equipoVenta.codigo = :codEquipo and o.compraVenta.activo = true").setParameter("codEquipo", codigoEquipo).getResultList();
+	}
+
+	@Override
+	public void cancelarOfertasRecibidas(List<Oferta> ofertasRecibidasCancelar) {
+		for (Oferta oferta : ofertasRecibidasCancelar) {
+			Oferta of = em.find(Oferta.class, oferta.getCodigo());
+			em.remove(of);
+		}
+		
 	}
 
 }

@@ -18,6 +18,8 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.hibernate.exception.LockAcquisitionException;
+
 import partido.LogicaSimulacion;
 import partido.PartidoControlador;
 import partido.SimulacionControlador;
@@ -157,6 +159,7 @@ public class TimerSimularPartido {
 	//@TransactionAttribute(TransactionAttributeType.NEVER)
 	@Timeout
 	public void simularPartido(Timer t) throws NoExisteEquipoExcepcion {
+		try{
 		System.out.println("CANTIDAD TIMERS ACTIVOS "+ts.getTimers().size());
 		DatosMinutoPartido minutoDto = (DatosMinutoPartido) t.getInfo();
 		Partido p = sc.find(minutoDto.getIdPartido());
@@ -194,6 +197,7 @@ public class TimerSimularPartido {
 			System.out.println("FIN SIMULAR PARTIDO "+p.getCodigo()+" !!!!!!!");
 		} else {
 			if (minutoDto.isUltimaJugada()) {
+				this.actualizarDatosPartido(p);
 				if (p.getResultado().getGolesLocal() == 0 && p.getResultado().getGolesVisitante() == 0){
 					double r =Math.random();
 					if (r > 0.5){
@@ -206,9 +210,13 @@ public class TimerSimularPartido {
 				else{
 					pc.crearComentario("FIN del tiempo reglamentario", p, 90);
 				}
-				this.actualizarDatosPartido(p);
+				
 			}
 			System.out.println("FIN SIMULACION DE MINUTO "+ minutoDto.getMinuto()+" DE PARTIDO "+p.getCodigo()+" !!!!!!!");
+		}
+		}
+		catch(LockAcquisitionException e){
+			e.printStackTrace();
 		}
 	}
 

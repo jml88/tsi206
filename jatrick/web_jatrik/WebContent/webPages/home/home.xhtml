@@ -20,8 +20,7 @@
 		</h:form>
 
 
-		<p:dataTable id="radioDT" var="partido"
-			emptyMessage="Todavia no ha jugado partidos"
+		<p:dataTable id="radioDT" var="partido" emptyMessage="Todavia no ha jugado partidos"
 			value="#{homeBB.partidosAnteriores}"
 			selection="#{homeBB.partidoSeleccionadoAnterior}"
 			rowKey="#{partido.codigo}">
@@ -47,7 +46,7 @@
 			<p:column headerText="GV" width="20">
 				<h:outputText value="#{partido.resultado.golesVisitante}" />
 			</p:column>
-			<p:column headerText="Tipo" width="60">
+			<p:column headerText="Tipo"  width="60">
 				<h:outputText value="#{partido.tipoPartido}" />
 			</p:column>
 			<p:column>
@@ -59,8 +58,7 @@
 			</p:column>
 		</p:dataTable>
 
-		<p:dataTable id="radioDTT" var="partido"
-			emptyMessage="No tiene partidos siguientes"
+		<p:dataTable id="radioDTT" var="partido" emptyMessage="No tiene partidos siguientes"
 			value="#{homeBB.partidosProximos}"
 			selection="#{homeBB.partidoSeleccionado}" rowKey="#{partido.codigo}">
 			<f:facet name="header">

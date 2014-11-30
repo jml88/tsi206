@@ -1,6 +1,7 @@
 package partido;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -79,17 +80,17 @@ public class LogicaSimulacion {
 		int PotenciaMEDs = 1;
 
 		List<Jugador> delanterosL = quitarSancionadosYLesionados(alineacionLocal
-				.getDelanteros());
+				.getDelanterosSet());
 		List<Jugador> mediosL = quitarSancionadosYLesionados(alineacionLocal
-				.getMediocampistas());
+				.getMediocampistasSet());
 		List<Jugador> defensasL = quitarSancionadosYLesionados(alineacionLocal
-				.getDefensas());
+				.getDefensasSet());
 
 		List<Jugador> defensasV = quitarSancionadosYLesionados(alineacionVisitante
-				.getDefensas());
+				.getDefensasSet());
 
 		List<Jugador> mediosV = quitarSancionadosYLesionados(alineacionVisitante
-				.getMediocampistas());
+				.getMediocampistasSet());
 
 		for (Jugador j : delanterosL) {
 			RegateATs += j.getTecnica();
@@ -134,14 +135,14 @@ public class LogicaSimulacion {
 		double probDef = Math.random() * 1;
 		Jugador jugador = null;
 
-		jugador = alineacionAtaca.getMediocampistas().get(0);
+		jugador = alineacionAtaca.getMediocampistas().iterator().next();
 
 		List<Jugador> delanterosL = quitarSancionadosYLesionados(alineacionAtaca
-				.getDelanteros());
+				.getDelanterosSet());
 		List<Jugador> mediosL = quitarSancionadosYLesionados(alineacionAtaca
-				.getMediocampistas());
+				.getMediocampistasSet());
 		List<Jugador> defensasL = quitarSancionadosYLesionados(alineacionAtaca
-				.getDefensas());
+				.getDefensasSet());
 
 		if (probDel >= probMed && probDel >= probDef) {
 			jugador = eligoJugador(delanterosL);
@@ -165,18 +166,18 @@ public class LogicaSimulacion {
 	private void probabilidadLesion(Alineacion alineacionLocal,
 			Alineacion alineacionVisitante, Partido p, int minuto) {
 		List<Jugador> delanterosL = quitarSancionadosYLesionados(alineacionLocal
-				.getDelanteros());
+				.getDelanterosSet());
 		List<Jugador> mediosL = quitarSancionadosYLesionados(alineacionLocal
-				.getMediocampistas());
+				.getMediocampistasSet());
 		List<Jugador> defensasL = quitarSancionadosYLesionados(alineacionLocal
-				.getDefensas());
+				.getDefensasSet());
 		
 		List<Jugador> delanterosV = quitarSancionadosYLesionados(alineacionVisitante
-				.getDelanteros());
+				.getDelanterosSet());
 		List<Jugador> mediosV = quitarSancionadosYLesionados(alineacionVisitante
-				.getMediocampistas());
+				.getMediocampistasSet());
 		List<Jugador> defensasV = quitarSancionadosYLesionados(alineacionVisitante
-				.getDefensas());
+				.getDefensasSet());
 
 		Jugador ju = null;
 		
@@ -273,16 +274,16 @@ public class LogicaSimulacion {
 		List<Jugador> defensasV = new LinkedList<Jugador>();
 
 		delanterosL = quitarSancionadosYLesionados(alineacionLocal
-				.getDelanteros());
+				.getDelanterosSet());
 		delanterosV = quitarSancionadosYLesionados(alineacionVisitante
-				.getDelanteros());
+				.getDelanterosSet());
 		mediosL = quitarSancionadosYLesionados(alineacionLocal
-				.getMediocampistas());
+				.getMediocampistasSet());
 		mediosV = quitarSancionadosYLesionados(alineacionVisitante
-				.getMediocampistas());
-		defensasL = quitarSancionadosYLesionados(alineacionLocal.getDefensas());
+				.getMediocampistasSet());
+		defensasL = quitarSancionadosYLesionados(alineacionLocal.getDefensasSet());
 		defensasV = quitarSancionadosYLesionados(alineacionVisitante
-				.getDefensas());
+				.getDefensasSet());
 
 		double probDelL = Math.random() * 1;
 		double probMedL = Math.random() * 3;
@@ -367,13 +368,26 @@ public class LogicaSimulacion {
 		}
 		return retorno;
 	}
+	
+	private void eliminarRepetidos(List<Jugador> lista){
+		HashSet<Jugador> hs = new HashSet<Jugador>();
+		hs.addAll(lista);
+		lista.clear();
+		lista.addAll(hs);
+	}
 
 	private void simularJugada(Partido p, int minuto) {
 		// TODO Hace la logica de simular una jugada
 		PartidoTorneo pt = sc.findPartidoTorneo(p.getCodigo());
 		PartidoCopa pCopa = sc.findPartidoCopa(p.getCodigo());
 		Alineacion alineacionLocal = p.getAlineacionLocal();
+//		eliminarRepetidos(alineacionLocal.getDefensas());
+//		eliminarRepetidos(alineacionLocal.getMediocampistas());
+//		eliminarRepetidos(alineacionLocal.getDelanteros());
 		Alineacion alineacionVisitante = p.getAlineacionVisitante();
+//		eliminarRepetidos(alineacionVisitante.getDefensas());
+//		eliminarRepetidos(alineacionVisitante.getMediocampistas());
+//		eliminarRepetidos(alineacionVisitante.getDelanteros());
 		double probJGL = probabilidadJugadaGol(alineacionLocal,
 				alineacionVisitante);
 		double probJGV = probabilidadJugadaGol(alineacionVisitante,

@@ -12,15 +12,13 @@
 	<ui:define name="Principal">
 		<h:form id="form" prependId="false" style="overflow: visible;">
 
-			<p:layout rendered="#{sessionBB.datosManager == null}"
-				style="min-width:100px;min-height:200px;">
-				<p:layoutUnit position="center" styleClass="overflow: visible;">
+			<p:layout rendered="#{sessionBB.datosManager == null}">
+				<p:layoutUnit position="center" >
 
 					<p:carousel numVisible="1" itemStyle="height:200px;width:600px;"
 						effect="easeInStrong" headerText="" style="margin-bottom:0">
-						<p:tab title="Godfather Part I">
+						<p:tab title="Godfather Part I" style="width:600px;height:400px;">
 							<h:panelGrid columns="2" cellpadding="10">
-								<p:graphicImage name="demo/images/godfather/godfather1.jpg" />
 								<h3>¡¡¡ Bienvenido a Jatrik !!!</h3>
 								<h4>Jatrik es el juego online y gratuito que te permite
 									convertirte en el manager general de un equipo de fútbol</h4>
@@ -28,16 +26,14 @@
 Compite diariamente con otros amigos en una liga y con todo tu grupo en la copa. Controla el aspecto económico de tu club y toma todas las decisiones deportivas que llevarán a tu club a la gloria.
 							</h:panelGrid>
 						</p:tab>
-						<p:tab title="Godfather Part II">
+						<p:tab title="Godfather Part II" style="width:600px;height:400px;">
 							<h:panelGrid columns="2" cellpadding="10">
-								<p:graphicImage name="demo/images/godfather/godfather2.jpg" />
 								<h3>Jornada</h3>
 Decide qué jugadores convocas, la alineación inicial... Cambia el rumbo del partido programando cambios de jugadores y disfruta después de una completa crónica del partido jugado.
 							</h:panelGrid>
 						</p:tab>
-						<p:tab title="Godfather Part III">
+						<p:tab title="Godfather Part III" style="width:600px;height:400px;">
 							<h:panelGrid columns="2" cellpadding="10">
-								<p:graphicImage name="demo/images/godfather/godfather3.jpg" />
 								<h4>Mi Club</h4>
 Toma las riendas de tu club y decide todos los aspectos deportivos y de gestión
 

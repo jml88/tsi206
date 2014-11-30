@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="Principal">
+		<h:form id="form" prependId="false">
+			<div id="equipos">
+			<p:commandButton action="#{mensajesBB.contestarMensaje}"></p:commandButton>
+			<h:outputText value = "#{mensajesBB.mensajeSeleccionado.mensaje}"></h:outputText>
+			<h:inputTextarea value ="#{mensajesBB.mensaje}" ></h:inputTextarea>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

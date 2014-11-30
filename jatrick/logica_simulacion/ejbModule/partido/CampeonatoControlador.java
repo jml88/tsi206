@@ -84,7 +84,7 @@ public class CampeonatoControlador {
 
 	public void torneosFinalizados() {
 		if (em.createQuery(
-				"SELECT 1 FROM PartidoTorneo p where p.estado <> 'FINALIZADO'")
+				"SELECT 1 FROM PartidoTorneo p where p.estado <> 'FINALIZADO' and p.estado <> 'POR_CONCRETAR'")
 				.getResultList().size() == 0) {
 			List<Torneo> torneos = this.obtenerTorneosActuales();
 			 try {
@@ -109,6 +109,9 @@ public class CampeonatoControlador {
 
 		List<Torneo> torneosDescenso = obtenerTorneosDescenso(t);
 		t.setActual(false);
+		Equipo ec = t.getPosiciones().get(0).getEquipo();
+		ec.setCapital(ec.getCapital() + obtenerConfiguracionGral().getPremio());
+		ec.agregarCampeonatoGanado(t.getNivelVertical());
 		Torneo nuevoTorneo = t;
 		if (t.getAsciende() == null) {
 			PeriodicoPartido fechaPartido = obtenerConfiguracionGral()
@@ -192,7 +195,7 @@ public class CampeonatoControlador {
 					posi.setGolesAFavor(pos.getGolesAFavor());
 					posi.setGolesEnContra(pos.getGolesEnContra());
 					posi.setTorneo(nuevoTorneoD);
-					posi.resetearPosicion();
+//					posi.resetearPosicion();
 					em.persist(posi);
 					poscionesD.add(posi);
 				}
@@ -210,7 +213,7 @@ public class CampeonatoControlador {
 			}
 		}
 		em.flush();
-		// equipoAsciende(t.getPosiciones().get(0).getEquipo(),t);
+//		equipoAsciende(t.getPosiciones().get(0).getEquipo(),t);
 
 		if (t.getAsciende() == null) {
 
@@ -251,6 +254,10 @@ public class CampeonatoControlador {
 	}
 
 	private void resetearDatos(Torneo t) {
+		for(Posicion pos :t.getPosiciones()){
+			pos.resetearPosicion();
+			em.merge(pos);
+		}
 	}
 
 	public void crearPartidosTorneo(Torneo t) {

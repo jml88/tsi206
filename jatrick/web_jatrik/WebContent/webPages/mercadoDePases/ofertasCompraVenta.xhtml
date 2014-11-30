@@ -15,50 +15,63 @@
 	<ui:define name="Principal">
 		<h:form id="form" prependId="false">
 
-			<p:dataTable id="radioDT" var="partido"
-				emptyMessage="No hay ofertas pendientes"
-				value="#{homeBB.partidosAnteriores}"
-				selection="#{homeBB.partidoSeleccionadoAnterior}"
-				rowKey="#{partido.codigo}">
+
+			<p:dataTable id="checkboxDT" var="oferta"
+				value="#{mercadoDePasesBB.ofertasRealizadas}"
+				selection="#{mercadoDePasesBB.ofertasRealizadasCancelar}"
+				rowKey="#{oferta.codigo}" style="margin-bottom:0">
 				<f:facet name="header">
-					<p:outputLabel value="Tus Ofertas a Jugadores de Otros Equipos" />
-				</f:facet>
+            		Tus Ofertas a Jugadores de Otros Equipos
+        		</f:facet>
+				<p:column selectionMode="multiple"
+					style="width:16px;text-align:center" />
 				<p:column headerText="Fecha">
-					<h:outputText value="#{partido.fechaHora}"
-						converter="DateConverter" />
+					<h:outputText value="#{oferta.fecha}" converter="DateConverter" />
 				</p:column>
 				<p:column headerText="Jugador">
-					<h:outputText value="#{partido.local.nombre}" />
+					<h:outputText
+						value="#{oferta.compraVenta.jugadorVenta.nombre} #{oferta.compraVenta.jugadorVenta.apellido1}" />
 				</p:column>
 				<p:column headerText="Equipo">
-					<h:outputText value="#{partido.resultado.golesLocal}" />
+					<h:outputText value="#{oferta.compraVenta.equipoVenta.nombre}" />
 				</p:column>
 				<p:column headerText="Cantidad">
-					<h:outputText value="#{partido.visitante.nombre}" />
+					<h:outputText value="#{oferta.cantidad}" />
 				</p:column>
+				<f:facet name="footer">
+					<p:commandButton process="checkboxDT" update=":form"
+						icon="ui-icon-search" value="Cancelar ofertas"
+						action="#{mercadoDePasesBB.cancelarOfertasRealizadas}" />
+				</f:facet>
 			</p:dataTable>
 
-			<p:dataTable id="radioDT2" var="partido"
-				emptyMessage="No hay ofertas pendientes"
-				value="#{homeBB.partidosAnteriores}"
-				selection="#{homeBB.partidoSeleccionadoAnterior}"
-				rowKey="#{partido.codigo}">
+			<p:dataTable id="checkboxDT2" var="oferta"
+				value="#{mercadoDePasesBB.ofertasRecibidas}"
+				selection="#{mercadoDePasesBB.ofertasRecibidasCancelar}"
+				rowKey="#{oferta.codigo}" style="margin-bottom:0">
 				<f:facet name="header">
-					<p:outputLabel value="Ofertas a Jugadores de Tu Equipo" />
-				</f:facet>
+            		Ofertas a Jugadores de Tu Equipo
+        		</f:facet>
+				<p:column selectionMode="multiple"
+					style="width:16px;text-align:center" />
 				<p:column headerText="Fecha">
-					<h:outputText value="#{partido.fechaHora}"
-						converter="DateConverter" />
+					<h:outputText value="#{oferta.fecha}" converter="DateConverter" />
 				</p:column>
 				<p:column headerText="Jugador">
-					<h:outputText value="#{partido.local.nombre}" />
+					<h:outputText
+						value="#{oferta.compraVenta.jugadorVenta.nombre} #{oferta.compraVenta.jugadorVenta.apellido1}" />
 				</p:column>
 				<p:column headerText="Equipo">
-					<h:outputText value="#{partido.resultado.golesLocal}" />
+					<h:outputText value="#{oferta.equipoOferta.nombre}" />
 				</p:column>
 				<p:column headerText="Cantidad">
-					<h:outputText value="#{partido.visitante.nombre}" />
+					<h:outputText value="#{oferta.cantidad}" />
 				</p:column>
+				<f:facet name="footer">
+					<p:commandButton process="checkboxDT2" update=":form"
+						icon="ui-icon-search" value="Cancelar ofertas"
+						action="#{mercadoDePasesBB.cancelarOfertasRecibidas}" />
+				</f:facet>
 			</p:dataTable>
 
 		</h:form>

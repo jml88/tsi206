@@ -82,15 +82,15 @@ public class AlineacionBB implements Serializable {
 			
 			if (alineacion != null){
 				goleros.add(alineacion.getGolero());
-				eliminarRepetidos(alineacion.getDefensas());
-				eliminarRepetidos(alineacion.getDelanteros());
-				eliminarRepetidos(alineacion.getMediocampistas());
-				eliminarRepetidos(alineacion.getSuplentes());
+//				eliminarRepetidos(alineacion.getDefensas());
+//				eliminarRepetidos(alineacion.getDelanteros());
+//				eliminarRepetidos(alineacion.getMediocampistas());
+//				eliminarRepetidos(alineacion.getSuplentes());
 				filtrarJugadores(jugadores, goleros);
-				filtrarJugadores(jugadores, alineacion.getDefensas());
-				filtrarJugadores(jugadores, alineacion.getDelanteros());
-				filtrarJugadores(jugadores, alineacion.getMediocampistas());
-				filtrarJugadores(jugadores, alineacion.getSuplentes());
+				filtrarJugadores(jugadores, alineacion.getDefensasSet());
+				filtrarJugadores(jugadores, alineacion.getDelanterosSet());
+				filtrarJugadores(jugadores, alineacion.getMediocampistasSet());
+				filtrarJugadores(jugadores, alineacion.getSuplentesSet());
 				datosAlineacion = alineacion;
 				
 //				datosAlineacion.setGolero(alineacion.getGolero());
@@ -194,9 +194,9 @@ public class AlineacionBB implements Serializable {
 	}
 
 	public void onArqueroDroped(DragDropEvent ddEvent) {
-		List<Jugador> defensas = datosAlineacion.getDefensas();
-	    List<Jugador> mediocampistas = datosAlineacion.getMediocampistas();
-	    List<Jugador> delanteros = datosAlineacion.getDelanteros();
+		List<Jugador> defensas = datosAlineacion.getDefensasSet();
+	    List<Jugador> mediocampistas = datosAlineacion.getMediocampistasSet();
+	    List<Jugador> delanteros = datosAlineacion.getDelanterosSet();
 	    
 	    String[] idTokens = ddEvent.getDragId().split(String.valueOf(UINamingContainer.getSeparatorChar(FacesContext.getCurrentInstance())));
 	    int rowIndex = Integer.parseInt(idTokens[idTokens.length - 2]);
@@ -320,9 +320,9 @@ public class AlineacionBB implements Serializable {
     }
 	
 	public void onDefensaDroped(DragDropEvent ddEvent) {
-		List<Jugador> defensas = datosAlineacion.getDefensas();
-	    List<Jugador> mediocampistas = datosAlineacion.getMediocampistas();
-	    List<Jugador> delanteros = datosAlineacion.getDelanteros();
+		List<Jugador> defensas = datosAlineacion.getDefensasSet();
+	    List<Jugador> mediocampistas = datosAlineacion.getMediocampistasSet();
+	    List<Jugador> delanteros = datosAlineacion.getDelanterosSet();
 	    
 	    String[] idTokens = ddEvent.getDragId().split(String.valueOf(UINamingContainer.getSeparatorChar(FacesContext.getCurrentInstance())));
 	    int rowIndex = Integer.parseInt(idTokens[idTokens.length - 2]);
@@ -475,9 +475,9 @@ public class AlineacionBB implements Serializable {
     }
 	
 	public void onMedioDroped(DragDropEvent ddEvent) {
-		List<Jugador> defensas = datosAlineacion.getDefensas();
-	    List<Jugador> mediocampistas = datosAlineacion.getMediocampistas();
-	    List<Jugador> delanteros = datosAlineacion.getDelanteros();
+		List<Jugador> defensas = datosAlineacion.getDefensasSet();
+	    List<Jugador> mediocampistas = datosAlineacion.getMediocampistasSet();
+	    List<Jugador> delanteros = datosAlineacion.getDelanterosSet();
 	    
 	    String[] idTokens = ddEvent.getDragId().split(String.valueOf(UINamingContainer.getSeparatorChar(FacesContext.getCurrentInstance())));
 	    int rowIndex = Integer.parseInt(idTokens[idTokens.length - 2]);
@@ -630,9 +630,9 @@ public class AlineacionBB implements Serializable {
     }
 	
 	public void onDelanteroDroped(DragDropEvent ddEvent) {
-		List<Jugador> defensas = datosAlineacion.getDefensas();
-	    List<Jugador> mediocampistas = datosAlineacion.getMediocampistas();
-	    List<Jugador> delanteros = datosAlineacion.getDelanteros();
+		List<Jugador> defensas = datosAlineacion.getDefensasSet();
+	    List<Jugador> mediocampistas = datosAlineacion.getMediocampistasSet();
+	    List<Jugador> delanteros = datosAlineacion.getDelanterosSet();
 	    
 	    String[] idTokens = ddEvent.getDragId().split(String.valueOf(UINamingContainer.getSeparatorChar(FacesContext.getCurrentInstance())));
 	    int rowIndex = Integer.parseInt(idTokens[idTokens.length - 2]);
@@ -785,9 +785,9 @@ public class AlineacionBB implements Serializable {
     }
 	
 	public void onLesionGoleroDroped(DragDropEvent ddEvent) {
-		List<Jugador> defensas = datosAlineacion.getDefensas();
-	    List<Jugador> mediocampistas = datosAlineacion.getMediocampistas();
-	    List<Jugador> delanteros = datosAlineacion.getDelanteros();
+		List<Jugador> defensas = datosAlineacion.getDefensasSet();
+	    List<Jugador> mediocampistas = datosAlineacion.getMediocampistasSet();
+	    List<Jugador> delanteros = datosAlineacion.getDelanterosSet();
 	    
 	    String[] idTokens = ddEvent.getDragId().split(String.valueOf(UINamingContainer.getSeparatorChar(FacesContext.getCurrentInstance())));
 	    int rowIndex = Integer.parseInt(idTokens[idTokens.length - 2]);
@@ -911,9 +911,9 @@ public class AlineacionBB implements Serializable {
     }
 	
 	public void onLesionDefensaDroped(DragDropEvent ddEvent) {
-		List<Jugador> defensas = datosAlineacion.getDefensas();
-	    List<Jugador> mediocampistas = datosAlineacion.getMediocampistas();
-	    List<Jugador> delanteros = datosAlineacion.getDelanteros();
+		List<Jugador> defensas = datosAlineacion.getDefensasSet();
+	    List<Jugador> mediocampistas = datosAlineacion.getMediocampistasSet();
+	    List<Jugador> delanteros = datosAlineacion.getDelanterosSet();
 	    
 	    String[] idTokens = ddEvent.getDragId().split(String.valueOf(UINamingContainer.getSeparatorChar(FacesContext.getCurrentInstance())));
 	    int rowIndex = Integer.parseInt(idTokens[idTokens.length - 2]);
@@ -1037,9 +1037,9 @@ public class AlineacionBB implements Serializable {
     }
 	
 	public void onLesionMediocampistaDroped(DragDropEvent ddEvent) {
-		List<Jugador> defensas = datosAlineacion.getDefensas();
-	    List<Jugador> mediocampistas = datosAlineacion.getMediocampistas();
-	    List<Jugador> delanteros = datosAlineacion.getDelanteros();
+		List<Jugador> defensas = datosAlineacion.getDefensasSet();
+	    List<Jugador> mediocampistas = datosAlineacion.getMediocampistasSet();
+	    List<Jugador> delanteros = datosAlineacion.getDelanterosSet();
 	    
 	    String[] idTokens = ddEvent.getDragId().split(String.valueOf(UINamingContainer.getSeparatorChar(FacesContext.getCurrentInstance())));
 	    int rowIndex = Integer.parseInt(idTokens[idTokens.length - 2]);
@@ -1164,9 +1164,9 @@ public class AlineacionBB implements Serializable {
 	
 	public void onLesionDelanteroDroped(DragDropEvent ddEvent) {
         
-        List<Jugador> defensas = datosAlineacion.getDefensas();
-	    List<Jugador> mediocampistas = datosAlineacion.getMediocampistas();
-	    List<Jugador> delanteros = datosAlineacion.getDelanteros();
+        List<Jugador> defensas = datosAlineacion.getDefensasSet();
+	    List<Jugador> mediocampistas = datosAlineacion.getMediocampistasSet();
+	    List<Jugador> delanteros = datosAlineacion.getDelanterosSet();
 	    
 	    String[] idTokens = ddEvent.getDragId().split(String.valueOf(UINamingContainer.getSeparatorChar(FacesContext.getCurrentInstance())));
 	    int rowIndex = Integer.parseInt(idTokens[idTokens.length - 2]);
@@ -1290,9 +1290,9 @@ public class AlineacionBB implements Serializable {
     }
 	
 	public void onJugadoresDroped(DragDropEvent ddEvent) {
-	    List<Jugador> defensas = datosAlineacion.getDefensas();
-	    List<Jugador> mediocampistas = datosAlineacion.getMediocampistas();
-	    List<Jugador> delanteros = datosAlineacion.getDelanteros();
+	    List<Jugador> defensas = datosAlineacion.getDefensasSet();
+	    List<Jugador> mediocampistas = datosAlineacion.getMediocampistasSet();
+	    List<Jugador> delanteros = datosAlineacion.getDelanterosSet();
 	    
 	    String[] idTokens = ddEvent.getDragId().split(String.valueOf(UINamingContainer.getSeparatorChar(FacesContext.getCurrentInstance())));
 	    int rowIndex = Integer.parseInt(idTokens[idTokens.length - 2]);

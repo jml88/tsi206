@@ -15,12 +15,35 @@
 	<ui:define name="Principal">
 		<h:form id="form" prependId="false">
 			<table style="width: 100%; text-align: center;">
-			<p:panel id="tabla">
-				<tr>
-					<td><h3>#{minutoAMinutoBB.datosPartido.local.nombre} #{minutoAMinutoBB.resultadoPartido.golesLocal} vs
-							#{minutoAMinutoBB.datosPartido.visitante.nombre} #{minutoAMinutoBB.resultadoPartido.golesVisitante}</h3></td>
-				</tr>
-			</p:panel>
+				<p:panel id="tabla">
+					<tr>
+						<td><h3>#{minutoAMinutoBB.datosPartido.local.nombre}
+								#{minutoAMinutoBB.resultadoPartido.golesLocal} vs
+								#{minutoAMinutoBB.datosPartido.visitante.nombre}
+								#{minutoAMinutoBB.resultadoPartido.golesVisitante}</h3></td>
+					</tr>
+				</p:panel>
+				<p:panelGrid columns="2">
+					<p:dataTable id="jl" value="#{minutoAMinutoBB.jugadoresLocal}"
+						styleClass="alineacion" var="al">
+						<p:column width="20">
+							#{al.nombre} #{al.apellido1} 
+						</p:column>
+						<p:column style="width:1px">
+							<p:graphicImage name="/images/pelota_futbol.png" />
+						</p:column>
+					</p:dataTable>
+					<p:dataTable id="jv" value="#{minutoAMinutoBB.jugadoresVisitante}"
+						styleClass="alineacion" var="av">
+						<p:column width="20">
+							#{av.nombre} #{av.apellido1} 
+						</p:column>
+						<p:column style="width:1px">
+							<p:graphicImage name="/images/pelota_futbol.png" />
+						</p:column>
+					</p:dataTable>
+				</p:panelGrid>
+
 				<tr style="text-align: left;">
 					<td>
 						<div id="comentariosListDiv" style="text-align: left;">
@@ -40,7 +63,8 @@
 					</td>
 				</tr>
 			</table>
-			<p:commandButton value="Realizar cambios" action="#{minutoAMinutoBB.editarAlineacion}"/>
+			<p:commandButton value="Realizar cambios"
+				action="#{minutoAMinutoBB.editarAlineacion}" />
 		</h:form>
 	</ui:define>
 </ui:composition>

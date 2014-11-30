@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="Principal">
+		<h:form id="form" prependId="false">
+			<p:panel id="pmens">
+				<div id="equipos">
+
+					<p:dataTable id="checkboxDT" var="mensaje" rendered="#{mensajesBB.mensaje eq null}"
+						rowKey="#{mensaje.codigo}" value="#{mensajesBB.mensajes}"
+						rowStyleClass="#{mensaje.leido ? 'old' : null}"
+						selection="#{mensajesBB.mensajesSeleccionados}">
+						<p:column selectionMode="multiple"
+							style="width:16px;text-align:center" />
+						<p:column headerText="Fecha">
+							<h:outputText value="#{mensaje.fechaCreacion}" />
+						</p:column>
+
+						<p:column headerText="Asunto">
+							<h:outputText value="#{mensaje.titulo}"
+								styleClass="font-weight: bold" />
+						</p:column>
+
+						<p:column headerText="Mensaje">
+							<h:outputText
+								value="#{mensaje.mensaje.length() gt 50 ? mensaje.mensaje.substring(0,47).concat('...') : mensaje.mensaje}"
+								styleClass="font-weight: bold" />
+						</p:column>
+
+						<p:column headerText="De">
+							<h:outputText value="#{mensaje.remitente.nombre}"
+								styleClass="font-weight: bold" />
+						</p:column>
+
+						<p:column style="width:32px;text-align: center">
+							<p:commandButton icon="ui-icon-search" update=":form:pmens"
+								actionListener="#{mensajesBB.seleccionoMensaje(mensaje)}"
+								title="View">
+							</p:commandButton>
+						</p:column>
+						<f:facet name="footer">
+							<p:commandButton process="checkboxDT" icon="ui-icon-search"
+								value="View" action="#{mensajesBB.seleccionoMensajeBorrar}" />
+						</f:facet>
+					</p:dataTable>
+					<p:panel rendered="#{mensajesBB.mensaje ne null}">
+						<p:commandButton value="responder" action="#{mensajesBB.contestarMensaje}"></p:commandButton>
+						<h:outputText value="#{mensajesBB.mensajeSeleccionado.mensaje}"></h:outputText>
+						<h:inputTextarea value="#{mensajesBB.mensaje}"></h:inputTextarea>
+					</p:panel>
+				</div>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

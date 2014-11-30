@@ -1,7 +1,18 @@
-.ui-layout-unit .ui-layout-unit-content {
-	padding: 0.2em 0em;
-	border: 0px none;
-	overflow: hidden !important;
+.ui-menu2 {
+	background-image: url("images/header_soccer.jpg")
+	!important
+}
+
+.red{
+	background : red;
+}
+
+.green{
+	background : green;
+}
+
+.yellow{
+	background : yellow;
 }
 
 body, html {
@@ -46,4 +57,9 @@ body {
 	background-image: url("images/blue.jpg");
 	border-top-right-radius: 20px;
 	border-bottom-right-radius: 20px;
+}
+
+.alineacion{
+	width: 330px;
+	height: 500px;
 }

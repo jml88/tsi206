@@ -50,8 +50,8 @@ public class JugadorControlador implements IJugadorControlador {
         List<String> apellidos = null;
 		
 		try {
-			nombres = Files.readAllLines(FileSystems.getDefault().getPath("../standalone/deployments/jatrikEAR.ear/logica_jatrik.jar/META-INF/archivos/", "nombres"));
-			apellidos = Files.readAllLines(FileSystems.getDefault().getPath("../standalone/deployments/jatrikEAR.ear/logica_jatrik.jar/META-INF/archivos/", "apellidos"));
+			nombres = Files.readAllLines(FileSystems.getDefault().getPath("/home/juan/git/tsi206/jatrick/logica_jatrik/ejbModule/META-INF/archivos/", "nombres"));
+			apellidos = Files.readAllLines(FileSystems.getDefault().getPath("/home/juan/git/tsi206/jatrick/logica_jatrik/ejbModule/META-INF/archivos/", "apellidos"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

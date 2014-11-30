@@ -8,48 +8,109 @@
 
 	<ui:define name="Principal">
 		<h:form id="form" prependId="false">
-
+			<f:metadata>
+				<f:viewParam name="codEquipo" value="#{jugadoresBB.codEquipoRetado}" />
+				<f:event type="preRenderComponent"
+					listener="#{jugadoresBB.parametros}" />
+			</f:metadata>
+			<p:panel header="#{jugadoresBB.nombreEquipo}">
 			<p:layout>
-				<p:layoutUnit position="center">
-					<div id="jugadores">
-						<p:dataTable var="jug" value="#{jugadoresBB.jugadoresLista}"
-						rows="20"
-                         paginator="true"
-                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         rowsPerPageTemplate="10,20,30"
-                         selectionMode="single" selection="#{jugadoresBB.jugador}" rowKey="#{jug.codigo}">
-                         
-                         	<p:ajax event="rowSelect" listener="#{jugadoresBB.verDetallesJugador}" />  
-                         	
-							<p:column headerText="Jugador" width="60">
-									<h:outputText
-										value="#{jug.nombre} #{jug.apellido1} " />
-									<h:outputText rendered="#{jug.enVenta}" class="badge" value="V"></h:outputText>
-							</p:column>
+				
+					<p:layoutUnit position="center">
+						<p:tabView style="width:600px;height:730px;">
+							<p:tab title="Plantilla">
+								<div id="jugadores">
+									<p:dataTable var="jug" value="#{jugadoresBB.jugadoresLista}"
+										rows="20" paginator="true"
+										paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+										rowsPerPageTemplate="10,20,30" selectionMode="single"
+										selection="#{jugadoresBB.jugador}" rowKey="#{jug.codigo}">
+
+										<p:ajax event="rowSelect"
+											listener="#{jugadoresBB.verDetallesJugador}" />
+
+										<p:column headerText="Jugador" width="60">
+											<h:outputText value="#{jug.nombre} #{jug.apellido1} " />
+											<h:outputText rendered="#{jug.enVenta}" class="badge"
+												value="V"></h:outputText>
+										</p:column>
+
+										<p:column headerText="Edad" width="7">
+											<h:outputText value="#{jug.edad}" />
+										</p:column>
+										<p:column headerText="Velocidad" width="16">
+											<h:outputText value="#{jug.velocidad}" />
+										</p:column>
+										<p:column headerText="Tecnica" width="9">
+											<h:outputText value="#{jug.tecnica}" />
+										</p:column>
+										<p:column headerText="Ataque" width="7">
+											<h:outputText value="#{jug.ataque}" />
+										</p:column>
+										<p:column headerText="Defensa" width="11">
+											<h:outputText value="#{jug.defensa}" />
+										</p:column>
+										<p:column headerText="Porteria" width="10">
+											<h:outputText value="#{jug.porteria}" />
+										</p:column>
+
+									</p:dataTable>
+								</div>
+							</p:tab>
+							<p:tab title="Palmares"
+								rendered="#{jugadoresBB.codEquipoRetado ne null}">
+								<p:dataList value="#{jugadoresBB.ligasGanadas}" var="liga"
+									emptyMessage="El equipo no ha ganado ligas" type="definition">
+									<f:facet name="header">
+						            Ligas
+						        </f:facet>
+						        Liga: #{liga[0]}, Ganadas: #{liga[1]}
+						        <f:facet name="description">
+										<p:graphicImage name="/images/copaliga.png" />
+									</f:facet>
+								</p:dataList>
 							
-							<p:column headerText="Edad" width="7">
-								<h:outputText value="#{jug.edad}" />
-							</p:column>
-							<p:column headerText="Velocidad" width="7">
-								<h:outputText value="#{jug.velocidad}" />
-							</p:column>
-							<p:column headerText="Tecnica" width="7">
-								<h:outputText value="#{jug.tecnica}" />
-							</p:column>
-							<p:column headerText="Ataque" width="7">
-								<h:outputText value="#{jug.ataque}" />
-							</p:column>
-							<p:column headerText="Defensa" width="7">
-								<h:outputText value="#{jug.defensa}" />
-							</p:column>
-							<p:column headerText="Porteria" width="7">
-								<h:outputText value="#{jug.porteria}" />
-							</p:column>
-					
-						</p:dataTable>
-					</div>
-				</p:layoutUnit>
+						            Copas
+						            <h:outputText value="#{jugadoresBB.copasGanadas}"></h:outputText>
+								<p:graphicImage name="/images/copacopa.png" />
+
+							</p:tab>
+							<p:tab title="Enviar mensaje"
+								rendered="#{jugadoresBB.codEquipoRetado ne null}">
+								<p:panel header="Mensaje">
+									<p:panelGrid columns="2">
+										<p:outputLabel for="asunto" value="Asunto">
+										</p:outputLabel>
+										<p:inputText id="asunto" value="#{jugadoresBB.asunto}">
+										</p:inputText>
+										<p:outputLabel for="mensaje" value="Mensaje">
+										</p:outputLabel>
+										<p:inputTextarea id="mensaje" value="#{jugadoresBB.mensaje}"></p:inputTextarea>
+										<p:commandButton value="Enviar"
+											action="#{jugadoresBB.enviarMensaje}"></p:commandButton>
+									</p:panelGrid>
+								</p:panel>
+							</p:tab>
+							<p:tab title="Jugar amistoso"
+								rendered="#{jugadoresBB.codEquipoRetado ne null}">
+								<p:panel header="Amistoso">
+									<p:panelGrid columns="2">
+										<p:outputLabel for="cantidad" value="Cantidad apuesta" />
+										<p:inputText id="cantidad"
+											value="#{jugadoresBB.cantidadAmisto}"></p:inputText>
+										<p:outputLabel for="cantidad" value="Fecha" />
+										<p:calendar id="datetime" value="#{jugadoresBB.fechaAmistoso}"
+											pattern="MM/dd/yyyy HH:mm:ss" />
+										<p:commandButton value="Retar"
+											action="#{jugadoresBB.retarAmisto}"></p:commandButton>
+									</p:panelGrid>
+								</p:panel>
+							</p:tab>
+						</p:tabView>
+					</p:layoutUnit>
+			
 			</p:layout>
+				</p:panel>
 		</h:form>
 	</ui:define>
 </ui:composition>

@@ -54,7 +54,7 @@ public class JugadorBB implements Serializable {
 		codigoEquipo = session.getDatosManager().getCodEquipo();
 		try {
 			ponerEnVenta = Comunicacion.getInstance().getIMercadoDePasesControlador().puedePonerEnVentaJugador(idEquipoJugador, jugador.getCodigo());
-			puedeComprar = Comunicacion.getInstance().getIMercadoDePasesControlador().puedeComprarJugador(idEquipoJugador, jugador.getCodigo());
+			puedeComprar = Comunicacion.getInstance().getIMercadoDePasesControlador().puedeComprarJugador(session.getDatosManager().getCodEquipo(), jugador.getCodigo());
 		} catch (NoExisteJugador | NoExisteEquipoExcepcion
 				| NoExisteJugadorALaVenta | NamingException e) {
 			// TODO Auto-generated catch block
@@ -69,6 +69,17 @@ public class JugadorBB implements Serializable {
     public void addMessage(String summary, String detail) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
         FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+    
+    public String ofertarJugador(){
+    	
+    	try {
+			Comunicacion.getInstance().getIMercadoDePasesControlador().ofertarJugador(codigoEquipo, jugador.getCodigo(), this.precio);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+    	return "";
     }
 	
 	public String comprarJugador(){
@@ -95,6 +106,12 @@ public class JugadorBB implements Serializable {
 		return "";
 	}
 	
+//    public void onCarChosen(SelectEvent event) {
+//        Car car = (Car) event.getObject();
+//        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Car Selected", "Id:" + car.getId());
+//         
+//        FacesContext.getCurrentInstance().addMessage(null, message);
+//    }
 	
 	public String confirmarVenta(){
 		int codigoEquipo = session.getDatosManager().getCodEquipo();
@@ -102,8 +119,8 @@ public class JugadorBB implements Serializable {
 			Comunicacion.getInstance().getIMercadoDePasesControlador().ponerJugadorEnVenta(codigoEquipo, jugador.getCodigo(), precio);
 			jugador.setEnVenta(true);
 			//RequestContext.getCurrentInstance().addCallbackParam("doneChangeParam", true);
-			FacesContext context = FacesContext.getCurrentInstance();
-	        context.addMessage(null, new FacesMessage("Agregado!!!") );
+//			FacesContext context = FacesContext.getCurrentInstance();
+//	        context.addMessage(null, new FacesMessage("Agregado!!!") );
 //	        RequestContext.getCurrentInstance().closeDialog("confirmarVenta");
 		} catch (NoExisteEquipoExcepcion | NoExisteJugadorExcepcion
 				| YaExisteJugadorALaVenta | NamingException e) {

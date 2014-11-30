@@ -6,15 +6,19 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
+	<ui:define name="scripts">
+
+	</ui:define>
+
 	<ui:define name="Principal">
 		<h:form id="form" prependId="false">
 			<p:layout>
 				<p:layoutUnit position="center">
-					<p:tabView>
+					<p:tabView style="width:740px;height:540px;">
 						<p:tab title="Clasificación">
 							<h:panelGrid columns="2" cellpadding="10">
 								<p:dataTable var="tabla" value="#{ligaBB.posiciones}">
-									<p:column headerText="Pos">
+									<p:column headerText="Pos" style="width:25px;">
 										<h:outputText value="#{car.id}" />
 									</p:column>
 
@@ -22,29 +26,29 @@
 										<h:outputText value="#{tabla.equipo.nombre}" />
 									</p:column>
 
-									<p:column headerText="Ptos">
+									<p:column headerText="Ptos" style="width:25px;">
 										<h:outputText value="#{tabla.puntos}" />
 									</p:column>
 
-									<p:column headerText="PJ">
+									<p:column headerText="PJ" style="width:25px;">
 										<h:outputText value="#{tabla.partidosJugados}" />
 									</p:column>
-									<p:column headerText="PG">
+									<p:column headerText="PG" style="width:25px;">
 										<h:outputText value="#{tabla.partidosGanados}" />
 									</p:column>
-									<p:column headerText="PE">
+									<p:column headerText="PE" style="width:25px;">
 										<h:outputText value="#{tabla.partidosEmpatados}" />
 									</p:column>
-									<p:column headerText="PP">
+									<p:column headerText="PP" style="width:25px;">
 										<h:outputText value="#{tabla.partidosPerdidos}" />
 									</p:column>
-									<p:column headerText="GF">
+									<p:column headerText="GF" style="width:25px;">
 										<h:outputText value="#{tabla.golesAFavor}" />
 									</p:column>
-									<p:column headerText="GC">
+									<p:column headerText="GC" style="width:25px;">
 										<h:outputText value="#{tabla.golesEnContra}" />
 									</p:column>
-									<p:column headerText="AVG">
+									<p:column headerText="AVG" style="width:25px;">
 										<h:outputText
 											value="#{tabla.golesAFavor - tabla.golesEnContra}" />
 									</p:column>
@@ -53,10 +57,10 @@
 						</p:tab>
 
 						<p:tab title="Goleadores">
-							<p:dataTable var="goleador" value="#{ligaBB.goleadores}" rows="10"
-                         paginator="true"
-                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         rowsPerPageTemplate="5,10,15">
+							<p:dataTable var="goleador" value="#{ligaBB.goleadores}"
+								rows="10" paginator="true"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15">
 								<p:column headerText="Pos">
 									<h:outputText value="#{goleador.nombre} #{goleador.apellido1}" />
 								</p:column>
@@ -65,7 +69,7 @@
 									<h:outputText value="#{goleador.equipo.nombre}" />
 								</p:column>
 
-								<p:column headerText="Goles">
+								<p:column headerText="Goles" style="width:30px;">
 									<h:outputText value="#{goleador.golesLiga}" />
 								</p:column>
 							</p:dataTable>
@@ -93,25 +97,34 @@
 
 						<p:tab title="Fixture">
 							<p:dataGrid var="fixture" value="#{ligaBB.fixture}" columns="2"
-								layout="grid" rows="#{ligaBB.fixture.size()}"
-								paginator="false" id="fix">
+								layout="grid"
+								rows="#{ligaBB.fixture.size()/(ligaBB.fixture.size()/4)}"
+								paginator="true" id="fix">
 
 								<f:facet name="header">
            							 Fechas
        							</f:facet>
 
-								<p:panel header="Fecha #{fixture.fecha}" style="text-align:center">
-									<p:dataTable var="fecha" value="#{fixture.partidos}">
+								<p:panel header="Fecha #{fixture.fecha}"
+									style="text-align:center">
+									<p:dataTable var="fecha" value="#{fixture.partidos}" selectionMode="single" selection="#{ligaBB.datosPartido}" rowKey="#{fecha.codPartido}">
+										<p:ajax event="rowSelect"
+											listener="#{ligaBB.verResultado}"/>
 										<p:column headerText="Local">
 											<h:outputText value="#{fecha.local}" />
 										</p:column>
 
-										<p:column headerText="GL">
-											<h:outputText value="#{fecha.golesLocal}" />
+										<p:column headerText="GL" style="width:25px;">
+											<h:outputText value="#{fecha.golesLocal}"
+												rendered="#{fecha.golesLocal ne -1}" />
+											<h:outputText value="--" rendered="#{fecha.golesLocal eq -1}" />
 										</p:column>
 
-										<p:column headerText="GV">
-											<h:outputText value="#{fecha.golesVisitante}" />
+										<p:column headerText="GV" style="width:25px;">
+											<h:outputText value="#{fecha.golesVisitante}"
+												rendered="#{fecha.golesVisitante ne -1}" />
+											<h:outputText value="--"
+												rendered="#{fecha.golesVisitante eq -1}" />
 										</p:column>
 
 										<p:column headerText="Visitante">

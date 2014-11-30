@@ -1,6 +1,7 @@
 package partidos;
 
 
+import datatypes.EnumPartido;
 import equipos.Alineacion;
 import equipos.Equipo;
 import excepciones.NoExistePartidoExepcion;
@@ -10,6 +11,7 @@ import interfaces.IPartidoControlador;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -37,10 +39,10 @@ public class PartidoControlador implements IPartidoControlador {
 	private HomeFactory hf;
 	
 	@Override
-	public int crearPartidoAmistoso(int codEquipoLocal, int  codEquipoVisitante, Calendar fecha) {
+	public int crearPartidoAmistoso(int codEquipoLocal, int  codEquipoVisitante, Calendar fecha, int cantidadRetp) {
 		Equipo el = hf.getEquipoControlador().findEquipo(codEquipoLocal);
 		Equipo ev = hf.getEquipoControlador().findEquipo(codEquipoVisitante);
-		Partido p = new Amistoso(el,ev,fecha);
+		Partido p = new Amistoso(el,ev,fecha,cantidadRetp);
 		ResultadoPartido rp = new ResultadoPartido();
 		em.persist(rp);
 		p.setResultado(rp);
@@ -264,5 +266,35 @@ public class PartidoControlador implements IPartidoControlador {
 	public ResultadoPartido obtenerResultadoPartido(int idPartido){
 		Partido p = em.find(Partido.class, idPartido);
 		return p.getResultado();
+	}
+
+	@Override
+	public void retarAmistoso(int codEquipo, Integer codEquipoRetado,
+			Date fechaAmistoso, int cantidadAmisto) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(fechaAmistoso);
+		this.crearPartidoAmistoso(codEquipoRetado, codEquipo, c, cantidadAmisto);
+		
+	}
+	
+	@Override
+	public List<Amistoso> obtenerAmistososAConcretar(int codEquipo){
+		return em.createQuery("select a from Amistoso a where a.local.codigo = :codEquipo and a.estado = 'POR_CONCRETAR'").setParameter("codEquipo", codEquipo).getResultList();
+	}
+	
+	@Override
+	public void cancelarAmistoso(int codAmistoso){
+		Amistoso a = em.find(Amistoso.class, codAmistoso);
+		a.setAlineacionLocal(null);
+		a.setAlineacionVisitante(null);
+		a.setLocal(null);
+		a.setVisitante(null);
+		em.remove(a);
+	}
+	
+	@Override
+	public void aceptarAmistoso(int codAmistoso){
+		Amistoso a = em.find(Amistoso.class, codAmistoso);
+		a.setEstado(EnumPartido.POR_JUGAR);
 	}
 }

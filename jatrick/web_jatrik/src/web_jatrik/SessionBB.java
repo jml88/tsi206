@@ -48,7 +48,9 @@ public class SessionBB implements Serializable {
 	public StreamedContent getEscudoStream() {
 		try {
 			if (this.escudo != null) {
-				this.escudoStream = new DefaultStreamedContent(new FileInputStream(this.escudo));
+				if (this.escudo.exists()){
+					this.escudoStream = new DefaultStreamedContent(new FileInputStream(this.escudo));
+				}
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

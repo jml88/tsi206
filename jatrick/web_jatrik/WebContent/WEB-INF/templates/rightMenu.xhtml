@@ -4,36 +4,45 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-	
+
 	<h:outputScript library="js" name="chat.js" />
-	
+
 	<div style="width: 100%">
 		<h:form id="chatForm" rendered="#{sessionBB.datosManager != null}">
-			<h:inputHidden id="hiddenUsername" value="#{sessionBB.datosManager.username}" />
+			<h:inputHidden id="hiddenUsername"
+				value="#{sessionBB.datosManager.username}" />
 			<table style="background-color: #FFFFFF; width: 100%;">
 				<tr>
-					<td>
-						<p:tabView id="tabChat" orientation="top" style="width: 100%">
+					<td><p:tabView id="tabChat" orientation="top"
+							style="width: 100%">
 							<p:tab id="general" title="General">
-								<div style="overflow-y:auto;height:150px;">
+								<div style="overflow-y: auto; height: 150px;">
 									<table id="response" />
 								</div>
-								<p:inputTextarea id="enviarGral" style="width: 100%; height: 50px" onkeyup="enterGral(event)"/>
+								<p:inputTextarea id="enviarGral"
+									style="width: 100%; height: 50px" onkeyup="enterGral(event)" />
 							</p:tab>
-						</p:tabView>
-					</td>
+						</p:tabView></td>
 				</tr>
 			</table>
 			<div>
 				<p:scrollPanel id="feedExterno" style="width:100%;height:711px">
-					<p:feedReader value="http://rss.news.yahoo.com/rss/sports" var="feed">
+					<p:feedReader value="http://rss.news.yahoo.com/rss/sports"
+						var="feed">
 						<p>
-							<h:outputText value="#{feed.title}" style="font-weight: bold;display:block"/>
-						    <h:outputText value="#{feed.description.value}" escape="false"/>
+							<h:outputText value="#{feed.title}"
+								style="font-weight: bold;display:block" />
+							<h:outputText value="#{feed.description.value}" escape="false" />
 						</p>
 					</p:feedReader>
 				</p:scrollPanel>
 			</div>
 		</h:form>
+		<p:dataList value="#{loginBB.equipos}" var="equipo" type="ordered" rendered="#{sessionBB.datosManager == null}">
+			<f:facet name="header">
+            Mejores Equipos
+        </f:facet>
+        #{equipo.nombre}, #{equipo.ranking}
+    </p:dataList>
 	</div>
 </ui:composition>
