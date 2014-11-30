@@ -43,6 +43,10 @@ public class HomeBB implements Serializable {
 	public HomeBB() {
 		super();
 	}
+	
+	public String verEquipo(int codigo){
+		return "/webPages/competiciones/liga.xhtml?faces-redirect=true";
+	}
 
 	@PostConstruct
 	public void init() {
