@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="scripts">
+		<script type="text/javascript">
+			
+		</script>
+	</ui:define>
+
+	<ui:define name="Principal">
+		<h:form id="form" prependId="false">
+			<p:panel  header="Juveniles">
+				<h:outputText rendered="#{!juvenilBB.equipo.juvenilFecha}" value= "Ya obtuvo un juvenil esta fecha, espere a jugar un partido de liga para poder obtener otro"></h:outputText>
+				<p:commandButton value="Obtener juvenil"
+					action="#{juvenilBB.obtenerJuvenil}"
+					rendered="#{juvenilBB.equipo.juvenilFecha}" />
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -323,10 +323,15 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 	@Override
 	public List<DatosFixture> obtenerFixtureTorneo(int codTorneo) {
 		Torneo t = em.find(Torneo.class, codTorneo);
-		Query q = em
-				.createQuery("select p from PartidoTorneo p where p.torneo.codigo = :codTorneo order by p.fechaNro ASC");
-		q.setParameter("codTorneo", codTorneo);
-		List<PartidoTorneo> partidos = q.getResultList();
+//		Query q = em
+//				.createQuery("select p from PartidoTorneo p where p.torneo.codigo = :codTorneo order by p.fechaNro ASC");
+		List<Integer> partidosId = em.createNativeQuery("select p.partidoId from PartidoTorneo p where p.torneo_CODTORNEO = :codTorneo order by p.fechaNro ASC").setParameter("codTorneo", codTorneo).getResultList();
+		List<PartidoTorneo> partidos = new LinkedList<PartidoTorneo>();
+		for (Integer pi : partidosId) {
+			partidos.add(em.find(PartidoTorneo.class, pi));
+		}
+//		q.setParameter("codTorneo", codTorneo);
+//		List<PartidoTorneo> partidos = q.getResultList();
 		List<DatosFixture> fixture = new LinkedList<DatosFixture>();
 		DatosFixture d = new DatosFixture(1);
 		int fecha = 1;

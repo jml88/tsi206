@@ -2,7 +2,10 @@ package equipos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,14 +40,14 @@ public class Alineacion implements Serializable {
 	
 	private boolean alineacionDefecto;
 
-	//TODO averiguar si se puede limitar la cantidad de 
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
             name="ALINEACION_DELANTEROS",
             joinColumns = {@JoinColumn( name="CODALINEACION")},
             inverseJoinColumns = {@JoinColumn( name="CODJUGADOR")}
     )
-	private List<Jugador> delanteros;
+	private Set<Jugador> delanteros;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
@@ -52,7 +55,7 @@ public class Alineacion implements Serializable {
                     joinColumns = {@JoinColumn( name="CODALINEACION")},
                     inverseJoinColumns = {@JoinColumn( name="CODJUGADOR")}
     )
-	private List<Jugador> mediocampistas;
+	private Set<Jugador> mediocampistas;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
@@ -60,7 +63,7 @@ public class Alineacion implements Serializable {
                     joinColumns = {@JoinColumn( name="CODALINEACION")},
                     inverseJoinColumns = {@JoinColumn( name="CODJUGADOR")}
     )
-	private List<Jugador> defensas;
+	private Set<Jugador> defensas;
 	
 	
 	@OneToOne(fetch = FetchType.LAZY)
@@ -86,22 +89,22 @@ public class Alineacion implements Serializable {
                     joinColumns = {@JoinColumn( name="CODALINEACION")},
                     inverseJoinColumns = {@JoinColumn( name="CODJUGADOR")}
     )
-	private List<Jugador> suplentes;
+	private Set<Jugador> suplentes;
 	
 	public Alineacion() {
 		super();
-		this.delanteros = new ArrayList<Jugador>();
-		this.defensas= new ArrayList<Jugador>();
-		this.mediocampistas = new ArrayList<Jugador>();
-		this.suplentes = new ArrayList<Jugador>();
+		this.delanteros = new HashSet<Jugador>();
+		this.defensas=  new HashSet<Jugador>();
+		this.mediocampistas =  new HashSet<Jugador>();
+		this.suplentes =  new HashSet<Jugador>();
 	}
 	
 	public Alineacion(Alineacion a) {
 		this.alineacionDefecto = a.isAlineacionDefecto();
-		this.delanteros = new ArrayList<Jugador>();
-		this.defensas= new ArrayList<Jugador>();
-		this.mediocampistas = new ArrayList<Jugador>();
-		this.suplentes = new ArrayList<Jugador>();
+		this.delanteros =  new HashSet<Jugador>();
+		this.defensas=  new HashSet<Jugador>();
+		this.mediocampistas =  new HashSet<Jugador>();
+		this.suplentes =  new HashSet<Jugador>();
 //		this.lesionDefensas = 
 //		this.lesionDelantero = 
 //		this.lesionGolero = 
@@ -124,15 +127,15 @@ public class Alineacion implements Serializable {
 			Jugador lesionMediocampistas, Jugador lesionDefensas,
 			Jugador lesionGolero, List<Jugador> suplentes, boolean defecto) {
 		super();
-		this.delanteros = delanteros;
-		this.mediocampistas = mediocampistas;
-		this.defensas = defensas;
+		this.delanteros = new HashSet<Jugador>(delanteros);
+		this.mediocampistas = new HashSet<Jugador>(mediocampistas);
+		this.defensas = new HashSet<Jugador>(defensas);
 		this.golero = golero;
 		this.lesionDelantero = lesionDelantero;
 		this.lesionMediocampistas = lesionMediocampistas;
 		this.lesionDefensas = lesionDefensas;
 		this.lesionGolero = lesionGolero;
-		this.suplentes = suplentes;
+		this.suplentes = new HashSet<Jugador>(suplentes);
 		this.alineacionDefecto = defecto;
 	}
 
@@ -144,27 +147,27 @@ public class Alineacion implements Serializable {
 		this.codigo = codigo;
 	}
 
-	public List<Jugador> getDelanteros() {
+	public Set<Jugador> getDelanteros() {
 		return delanteros;
 	}
 
-	public void setDelanteros(List<Jugador> delanteros) {
+	public void setDelanteros(Set<Jugador> delanteros) {
 		this.delanteros = delanteros;
 	}
 
-	public List<Jugador> getMediocampistas() {
+	public Set<Jugador> getMediocampistas() {
 		return mediocampistas;
 	}
 
-	public void setMediocampistas(List<Jugador> mediocampistas) {
+	public void setMediocampistas(Set<Jugador> mediocampistas) {
 		this.mediocampistas = mediocampistas;
 	}
 
-	public List<Jugador> getDefensas() {
+	public Set<Jugador> getDefensas() {
 		return defensas;
 	}
 
-	public void setDefensas(List<Jugador> defensas) {
+	public void setDefensas(Set<Jugador> defensas) {
 		this.defensas = defensas;
 	}
 
@@ -208,11 +211,11 @@ public class Alineacion implements Serializable {
 		this.lesionGolero = lesionGolero;
 	}
 
-	public List<Jugador> getSuplentes() {
+	public Set<Jugador> getSuplentes() {
 		return suplentes;
 	}
 
-	public void setSuplentes(List<Jugador> suplentes) {
+	public void setSuplentes(Set<Jugador> suplentes) {
 		this.suplentes = suplentes;
 	}
 
@@ -222,6 +225,26 @@ public class Alineacion implements Serializable {
 
 	public void setAlineacionDefecto(boolean alineacionDefecto) {
 		this.alineacionDefecto = alineacionDefecto;
+	}
+	
+	public List<Jugador> getSuplentesSet() {
+		List<Jugador> list = new LinkedList<Jugador>(suplentes);
+		return list;
+	}
+	
+	public List<Jugador> getDelanterosSet() {
+		List<Jugador> list = new LinkedList<Jugador>(delanteros);
+		return list;
+	}
+	
+	public List<Jugador> getMediocampistasSet() {
+		List<Jugador> list = new LinkedList<Jugador>(mediocampistas);
+		return list;
+	}
+	
+	public List<Jugador> getDefensasSet() {
+		List<Jugador> list = new LinkedList<Jugador>(defensas);
+		return list;
 	}
 	
 }

@@ -62,8 +62,13 @@ public class SimulacionControlador {
 	}
 	
 	public void partidoFinalizado(Partido p) {
-		PartidoTorneo pt = findPartidoTorneo(p.getCodigo());
 		p.setEstado(EnumPartido.FINALIZADO);
+		if (p.getResultado().getGolesLocal() == -1){
+			p.getResultado().setGolesLocal(0);
+		}
+		if (p.getResultado().getGolesVisitante() == -1){
+			p.getResultado().setGolesVisitante(0);
+		}
 		em.merge(p);
 		em.flush();
 	}
@@ -77,10 +82,10 @@ public class SimulacionControlador {
 				.getResultado().getGolesLocal());
 		for (Jugador jL : pt.getLocal().getPlantel()) {
 			if (jL.getLesion() != null){
-				
+				jL.setLesion((jL.getLesion()-1)== 0? null : jL.getLesion()-1);
 			}
 			if (jL.getSancionLiga() != null){
-				
+				jL.setSancionLiga((jL.getSancionLiga()-1)== 0? null : jL.getSancionLiga()-1);
 			}
 		}
 		for (Jugador jV : pt.getVisitante().getPlantel()) {
@@ -88,10 +93,12 @@ public class SimulacionControlador {
 				jV.setLesion((jV.getLesion()-1)== 0? null : jV.getLesion()-1);
 			}
 			if (jV.getSancionLiga() != null){
-				jV.setLesion((jV.getSancionLiga()-1)== 0? null : jV.getSancionLiga()-1);
+				jV.setSancionLiga((jV.getSancionLiga()-1)== 0? null : jV.getSancionLiga()-1);
 			}
 			jV.setTarjetasPartido(null);
 		}
+		pt.getLocal().setJuvenilFecha(true);
+		pt.getVisitante().setJuvenilFecha(true);
 		em.merge(posVisitante);
 
 	}
@@ -179,7 +186,8 @@ public class SimulacionControlador {
 			}
 		}
 		else{
-			ganador.setCapital(ganador.getCapital()+(pc.getCopa().getIngreso()*pc.getCopa().getCantidadEquipos())); 
+			ganador.setCopasGanadas(ganador.getCopasGanadas());
+			ganador.setCapital(ganador.getCapital()+(pc.getCopa().getIngreso()*pc.getCopa().getCantidadEquipos()));
 		}
 		
 	}

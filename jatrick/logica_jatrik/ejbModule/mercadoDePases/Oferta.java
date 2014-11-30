@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,6 +21,9 @@ public class Oferta {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int codigo;
+	
+	@ManyToOne
+	private CompraVentaJugadores compraVenta;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column
@@ -68,6 +73,14 @@ public class Oferta {
 
 	public void setEquipoOferta(Equipo equipoOferta) {
 		this.equipoOferta = equipoOferta;
+	}
+
+	public CompraVentaJugadores getCompraVenta() {
+		return compraVenta;
+	}
+
+	public void setCompraVenta(CompraVentaJugadores compraVenta) {
+		this.compraVenta = compraVenta;
 	}
 
 }

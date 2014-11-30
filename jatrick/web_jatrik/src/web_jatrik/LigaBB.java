@@ -2,8 +2,11 @@ package web_jatrik;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.ConfigurableNavigationHandler;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -15,6 +18,7 @@ import campeonato.Posicion;
 import comunicacion.Comunicacion;
 import datatypes.DatosFixture;
 import datatypes.DatosManager;
+import datatypes.DatosPartido;
 
 @Named("ligaBB")
 @ViewScoped
@@ -30,6 +34,10 @@ public class LigaBB implements Serializable{
 	private List<Jugador> goleadores;
 	
 	private List<DatosFixture> fixture;
+	
+	private DatosPartido datosPartido;
+	
+	private String nombreEquipo;
 
 	@Inject
 	SessionBB sesion;
@@ -37,6 +45,7 @@ public class LigaBB implements Serializable{
 	@PostConstruct
 	public void init() {
 		try {
+			nombreEquipo = Comunicacion.getInstance().getIEquipoControlador().getEquipo(sesion.getDatosManager().getCodEquipo()).getNombre();
 //			int codTorneo = sesion.getDatosManager().getCodTorneo();
 			int managerId = Comunicacion.getInstance().getIUserControlador().findUserByUserName(sesion.getDatosManager().getUsername());
 			DatosManager datosManager = Comunicacion.getInstance().getIUserControlador().obtenerManager(managerId);
@@ -56,6 +65,14 @@ public class LigaBB implements Serializable{
 			e.printStackTrace();
 		}
 	}
+	
+	public String verResultado() {
+		FacesContext faces = FacesContext.getCurrentInstance();
+		faces.getExternalContext().getApplicationMap().put("codPartido", datosPartido.getCodPartido());
+		ConfigurableNavigationHandler configurableNavigationHandler = (ConfigurableNavigationHandler) FacesContext.getCurrentInstance().getApplication().getNavigationHandler();
+		configurableNavigationHandler.performNavigation("/webPages/partidos/minutoAMinuto.xhtml?faces-redirect=true");
+		return "/webPages/partidos/minutoAMinuto.xhtml?faces-redirect=true";
+    }
 
 	public List<Posicion> getPosiciones() {
 		return posiciones;
@@ -79,6 +96,22 @@ public class LigaBB implements Serializable{
 
 	public void setFixture(List<DatosFixture> fixture) {
 		this.fixture = fixture;
+	}
+
+	public String getNombreEquipo() {
+		return nombreEquipo;
+	}
+
+	public void setNombreEquipo(String nombreEquipo) {
+		this.nombreEquipo = nombreEquipo;
+	}
+
+	public DatosPartido getDatosPartido() {
+		return datosPartido;
+	}
+
+	public void setDatosPartido(DatosPartido datosPartido) {
+		this.datosPartido = datosPartido;
 	}
 
 }

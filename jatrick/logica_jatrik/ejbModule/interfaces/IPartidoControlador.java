@@ -1,11 +1,13 @@
 package interfaces;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 import javax.ejb.Remote;
 
+import partidos.Amistoso;
 import partidos.Comentario;
 import partidos.Partido;
 import partidos.ResultadoPartido;
@@ -16,7 +18,7 @@ import excepciones.NoExistePartidoExepcion;
 @Remote
 public interface IPartidoControlador {
 	
-	public int crearPartidoAmistoso(int codEquipoLocal, int  codEquipoVisitante, Calendar fecha);
+	public int crearPartidoAmistoso(int codEquipoLocal, int  codEquipoVisitante, Calendar fecha, int cantidadRetp);
 	
 	public Partido findPartido(int codPartido);
 	
@@ -41,5 +43,14 @@ public interface IPartidoControlador {
 	Alineacion findAlineacionLocal(int codPartido);
 
 	Alineacion findAlineacionVisitante(int codPartido);
+
+	public void retarAmistoso(int codEquipo, Integer codEquipoRetado,
+			Date fechaAmistoso, int cantidadAmisto);
+
+	public List<Amistoso> obtenerAmistososAConcretar(int codEquipo);
+
+	public void cancelarAmistoso(int codAmistoso);
+
+	public void aceptarAmistoso(int codAmistoso);
 
 }

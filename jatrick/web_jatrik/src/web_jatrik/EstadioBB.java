@@ -1,6 +1,9 @@
 package web_jatrik;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -10,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.naming.NamingException;
 
+import equipos.Equipo;
 import equipos.Estadio;
 import excepciones.CapitalNegativo;
 import excepciones.NoExisteEquipoExcepcion;
@@ -28,7 +32,13 @@ public class EstadioBB implements Serializable {
 	
 	private int codigoEquipo;
 	
-	private int valorAgrandar;
+	private int cuestaAgrandar;
+	
+	private int cantidadAgranda;
+	
+	private List<Integer[]> ligasGanadas;
+	
+	private Equipo equipo;
 	
 	@Inject
 	private SessionBB session;
@@ -38,8 +48,19 @@ public class EstadioBB implements Serializable {
 		codigoEquipo = session.getDatosManager().getCodEquipo();
 		
 		try {
-			estadio = comunicacion.Comunicacion.getInstance().getIEstadioControlador().estadioDeEquipo(codigoEquipo);
-			valorAgrandar = comunicacion.Comunicacion.getInstance().getConfiguracionControlador().getConfiguracion().getCuestaAgrandarEstadio();
+			equipo = comunicacion.Comunicacion.getInstance().getIEquipoControlador().findEquipo(codigoEquipo);
+			estadio = comunicacion.Comunicacion.getInstance().getIEquipoControlador().estadioDeEquipo(codigoEquipo);
+			ligasGanadas = new LinkedList<Integer[]>();
+
+			for (Map.Entry<Integer, Integer> entry : equipo.getLigasGanadas().entrySet())
+			{
+				Integer[] i =new Integer[2];
+				i[0] = entry.getKey();
+				i[1] = entry.getValue();
+				ligasGanadas.add(i);
+			}
+			cuestaAgrandar = comunicacion.Comunicacion.getInstance().getConfiguracionControlador().getConfiguracion().getCuestaAgrandarEstadio();
+			cantidadAgranda = comunicacion.Comunicacion.getInstance().getConfiguracionControlador().getConfiguracion().getCapacidadAgrandarEstadio();
 		} catch (NoExisteEquipoExcepcion | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,8 +70,8 @@ public class EstadioBB implements Serializable {
 	
 	public String agrandarEstadio(){
 		try {
-			comunicacion.Comunicacion.getInstance().getIEstadioControlador().mejorarEstadioEquipo(codigoEquipo);
-			estadio = comunicacion.Comunicacion.getInstance().getIEstadioControlador().estadioDeEquipo(codigoEquipo);
+			comunicacion.Comunicacion.getInstance().getIEquipoControlador().mejorarEstadioEquipo(codigoEquipo);
+			estadio = comunicacion.Comunicacion.getInstance().getIEquipoControlador().estadioDeEquipo(codigoEquipo);
 		} catch (NoExisteEquipoExcepcion | CapitalNegativo
 				| NoSePuedeAgrandarEstadio | NamingException e) {
 			// TODO Auto-generated catch block
@@ -69,11 +90,36 @@ public class EstadioBB implements Serializable {
 		this.estadio = estadio;
 	}
 
-	public int getValorAgrandar() {
-		return valorAgrandar;
+	public int getCuestaAgrandar() {
+		return cuestaAgrandar;
 	}
 
-	public void setValorAgrandar(int valorAgrandar) {
-		this.valorAgrandar = valorAgrandar;
+	public void setCuestaAgrandar(int valorAgrandar) {
+		this.cuestaAgrandar = valorAgrandar;
 	}
+
+	public int getCantidadAgranda() {
+		return cantidadAgranda;
+	}
+
+	public void setCantidadAgranda(int cantidadAgranda) {
+		this.cantidadAgranda = cantidadAgranda;
+	}
+
+	public Equipo getEquipo() {
+		return equipo;
+	}
+
+	public void setEquipo(Equipo equipo) {
+		this.equipo = equipo;
+	}
+
+	public List<Integer[]> getLigasGanadas() {
+		return ligasGanadas;
+	}
+
+	public void setLigasGanadas(List<Integer[]> ligasGanadas) {
+		this.ligasGanadas = ligasGanadas;
+	}
+	
 }

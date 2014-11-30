@@ -89,7 +89,7 @@ public class Comunicacion {
 	public IEstadioControlador getIEstadioControlador() throws NamingException {
 		return (IEstadioControlador) this.ctx.lookup("java:app/logica_jatrik/IEstadioControlador!interfaces.IEstadioControlador");
 	}
-	
+
 	public IIntegracion_cliente getIIntegracion_cliente() throws NamingException {
 		return (IIntegracion_cliente) this.ctx.lookup("java:app/logica_jatrik/Integracion_cliente!interfaces.IIntegracion_cliente");
 	}

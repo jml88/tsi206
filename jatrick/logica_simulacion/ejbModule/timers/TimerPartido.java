@@ -57,22 +57,22 @@ public class TimerPartido {
 	@Timeout
 	public void crearTimers(Timer t){
 		List<Partido> partidosMaM = fc.listPartidosFecha(new GregorianCalendar());
-		List<Partido> partidosDirectos = fc.obtenerPartidosNoSuscriptosParaSimular(Calendar.getInstance());
+//		List<Partido> partidosDirectos = fc.obtenerPartidosNoSuscriptosParaSimular(Calendar.getInstance());
 		for(Partido p : partidosMaM)
 		{
 			pc.partidoPorSimular(p);
 			DatosMinutoPartido dmp = new DatosMinutoPartido(-1, p.getCodigo(), false);
 			tsm.crearTimerSimularPartido(dmp, p.getFechaHora(), p.getFechaHora().get(Calendar.HOUR_OF_DAY),p.getFechaHora().get(Calendar.MINUTE),p.getFechaHora().get(Calendar.SECOND));
 		}
-		for (Partido partido : partidosDirectos) {
-			pc.partidoPorSimular(partido);
-			try {
-				ls.simularPartidoCompleto(partido);
-			} catch (NoExisteEquipoExcepcion e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+//		for (Partido partido : partidosDirectos) {
+//			pc.partidoPorSimular(partido);
+//			try {
+//				ls.simularPartidoCompleto(partido);
+//			} catch (NoExisteEquipoExcepcion e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
 		
 	}
 

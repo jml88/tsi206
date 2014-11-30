@@ -11,8 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import users.Manager;
-import mercadoDePases.CompraVentaJugadores;
+import equipos.Equipo;
 
 @Entity
 @Table(name = Mensaje.nombreTabla)
@@ -37,10 +36,10 @@ public class Mensaje implements Serializable {
 	private String mensaje;
 	
 	@OneToOne
-	private Manager remitente;
+	private Equipo remitente;
 	
 	@OneToOne
-	private Manager receptor;
+	private Equipo receptor;
 	
 	@Column
 	private Date fechaCreacion;
@@ -55,8 +54,8 @@ public class Mensaje implements Serializable {
 
 	
 
-	public Mensaje(String titulo, String mensaje, Manager remitente,
-			Manager receptor, Date fechaCreacion, boolean leido) {
+	public Mensaje(String titulo, String mensaje, Equipo remitente,
+			Equipo receptor, Date fechaCreacion, boolean leido) {
 		super();
 		this.titulo = titulo;
 		this.mensaje = mensaje;
@@ -116,19 +115,19 @@ public class Mensaje implements Serializable {
 		this.mensaje = mensaje;
 	}
 
-	public Manager getRemitente() {
+	public Equipo getRemitente() {
 		return remitente;
 	}
 
-	public void setRemitente(Manager remitente) {
+	public void setRemitente(Equipo remitente) {
 		this.remitente = remitente;
 	}
 
-	public Manager getReceptor() {
+	public Equipo getReceptor() {
 		return receptor;
 	}
 
-	public void setReceptor(Manager receptor) {
+	public void setReceptor(Equipo receptor) {
 		this.receptor = receptor;
 	}
 	

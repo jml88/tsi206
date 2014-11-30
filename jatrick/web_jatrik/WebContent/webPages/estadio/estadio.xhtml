@@ -5,35 +5,68 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-	
+
 	<ui:define name="scripts">
 		<script type="text/javascript">
-
+			
 		</script>
 	</ui:define>
-	
+
 	<ui:define name="Principal">
 		<h:form id="form" prependId="false">
 			<!-- ACA VA EL CONTENIDO LA PAGINA -->
-			<div align="center">
-				<p:panelGrid columns="2" >
-					<p:outputLabel value = "Estadio: "/>
-					<h:outputText  value = "#{estadioBB.estadio.nombre}"/>
-						
-					<p:outputLabel value = "Capacidad: "/>
-					<h:outputText  value = "#{estadioBB.estadio.capacidad}"/>
-					
-				
-					<p:separator></p:separator>
-					<p:row>
-						<p:column colspan="1">
-							<p:h:outputText  value = "Invertir en estadio : #{estadioBB.valorAgrandar}"/>
-								<p:commandButton value="Mejorar estadio" id="ajax" actionListener="#{estadioBB.agrandarEstadio}" styleClass="ui-priority-primary" />
-							</p:column>
-					</p:row>
-				</p:panelGrid>
-			</div>
-			<!---------------------------------->
+
+			<p:tabView>
+				<p:tab title="Estadio">
+					<div align="center">
+						<p:panel header="Datos del equipo">
+							<p:panelGrid columns="2">
+								<p:outputLabel value="Altura: " />
+								<h:outputText value="#{estadioBB.equipo.altura}" />
+								<p:outputLabel value="Gasto Juvenil: " />
+								<h:outputText value="#{estadioBB.equipo.gastoJuveniles}" />
+								<p:outputLabel value="Socios: " />
+								<h:outputText value="#{estadioBB.equipo.socios}" />
+							</p:panelGrid>
+						</p:panel>
+						<p:panel header="Estadio">
+							<p:panelGrid columns="2">
+								<p:outputLabel value="Estadio: " />
+								<h:outputText value="#{estadioBB.estadio.nombre}" />
+
+								<p:outputLabel value="Capacidad: " />
+								<h:outputText value="#{estadioBB.estadio.capacidad}" />
+								<h:outputText value="Invertir en estadio : " />
+								<h:outputText value="#{estadioBB.cuestaAgrandar} " />
+								<h:outputText value="Cantidad ampliacion: " />
+								<h:outputText value="#{estadioBB.cantidadAgranda} " />
+
+								<p:commandButton value="Mejorar estadio" id="ajax"
+									actionListener="#{estadioBB.agrandarEstadio}"
+									styleClass="ui-priority-primary" />
+
+							</p:panelGrid>
+						</p:panel>
+					</div>
+				</p:tab>
+				<p:tab title="Palmares">
+					<p:dataList value="#{jugadoresBB.ligasGanadas}" var="liga"
+						emptyMessage="El equipo no ha ganado ligas" type="definition">
+						<f:facet name="header">
+						            Ligas
+						        </f:facet>
+						        Liga: #{liga[0]}, Ganadas: #{liga[1]}
+						        <f:facet name="description">
+							<p:graphicImage name="/images/copaliga.png" />
+						</f:facet>
+					</p:dataList>
+							
+						            Copas
+						            <h:outputText value="#{estadioBB.equipo.copasGanadas}"></h:outputText>
+					<p:graphicImage name="/images/copacopa.png" />
+
+				</p:tab>
+			</p:tabView>
 		</h:form>
 	</ui:define>
 </ui:composition>

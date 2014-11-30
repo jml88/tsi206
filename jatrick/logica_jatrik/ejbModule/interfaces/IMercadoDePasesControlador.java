@@ -4,15 +4,15 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import mercadoDePases.CompraVentaJugadores;
+import mercadoDePases.Oferta;
 import excepciones.CapitalNegativo;
 import excepciones.NoExisteEquipoExcepcion;
 import excepciones.NoExisteJugador;
 import excepciones.NoExisteJugadorALaVenta;
 import excepciones.NoExisteJugadorExcepcion;
-import excepciones.NoPuedeVenderJugador;
 import excepciones.NoSePuedeComprarException;
 import excepciones.YaExisteJugadorALaVenta;
-import mercadoDePases.CompraVentaJugadores;
 
 @Local
 public interface IMercadoDePasesControlador {
@@ -28,4 +28,14 @@ public interface IMercadoDePasesControlador {
 	public boolean puedePonerEnVentaJugador(int codigoEquipo, int codigoJugador) throws NoExisteJugador, NoExisteEquipoExcepcion, NoExisteJugadorALaVenta;
 	
 	public boolean puedeComprarJugador(int codigoEquipoCompra, int codigoJugador) throws NoExisteEquipoExcepcion, NoExisteJugador;
+
+	public void ofertarJugador(int codigoEquipo, int codigoJugador, int cantidad);
+
+	public List<Oferta> obtenerOfertasRealizadas(int codigoEquipo);
+
+	public void cancelarOfertasRealizadas(List<Oferta> ofertasRealizadasCancelar);
+
+	public List<Oferta> obtenerOfertasRecibidas(int codigoEquipo);
+
+	public void cancelarOfertasRecibidas(List<Oferta> ofertasRecibidasCancelar);
 }

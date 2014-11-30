@@ -47,33 +47,22 @@
 
 				<p:commandButton value="Retirar de venta"
 					action="#{jugadorBB.cancelarVentaJugador}"
-					rendered="#{jugadorBB.jugador.enVenta}" />
-				<p:commandButton value="Comprar jugador"
-					action="#{jugadorBB.comprarJugador}"
-					rendered="#{jugadorBB.puedeComprar}" />
-				<p:commandButton value="Poner jugador en venta"
-					actionListener="#{jugadorBB.ponerEnVentaJugador}"
-					rendered="#{jugadorBB.ponerEnVenta}" update=":form:divjugador"
-					oncomplete="" />
-
-
+					rendered="#{jugadorBB.jugador.enVenta} and #{!jugadorBB.puedeComprar}" />
+				<p:outputLabel value="Precio de venta: " rendered="#{jugadorBB.ponerEnVenta}"/>
+				<h:inputText value="#{jugadorBB.precio}" rendered="#{jugadorBB.ponerEnVenta}"/>
+				<p:commandButton value="Ofertar"
+					action="#{jugadorBB.ofertarJugador}"
+					rendered="#{jugadorBB.puedeComprar}"
+					update=":form">
+				</p:commandButton>
+				<p:outputLabel value="Oferta: " rendered="#{jugadorBB.puedeComprar}"/>
+				<h:inputText value="#{jugadorBB.precio}" rendered="#{jugadorBB.puedeComprar}"/>
+				<p:commandButton value="Poner en venta"
+					rendered="#{jugadorBB.ponerEnVenta}"
+					actionListener="#{jugadorBB.confirmarVenta}" update=":form">
+				</p:commandButton>
+				
 			</div>
-			<p:growl id="message" showDetail="true" />
-
-			<p:commandButton value="Destroy the World"
-				actionListener="#{jugadorBB.confirmarVenta}" update="message">
-				<p:confirm header="Poner en venta" message=""
-					icon="ui-icon-alert" />
-			</p:commandButton>
-
-			<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
-					<p:outputLabel value="Precio de venta: " />
-					<h:inputText value="#{jugadorBB.precio}" />
-				<p:commandButton value="Poner en venta" type="button" update=":form:divjugador"
-					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-				<p:commandButton value="No" type="button"
-					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-			</p:confirmDialog>
 		</h:form>
 	</ui:define>
 </ui:composition>

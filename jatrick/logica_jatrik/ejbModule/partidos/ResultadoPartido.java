@@ -52,8 +52,8 @@ public class ResultadoPartido implements Serializable{
 	private List<Jugador> goleadoresVisitante;
 	
 	public ResultadoPartido(){
-		this.golesLocal = 0;
-		this.golesVisitante = 0;
+		this.golesLocal = -1;
+		this.golesVisitante = -1;
 		this.goleadoresLocal = new LinkedList<Jugador>();
 		this.goleadoresVisitante = new LinkedList<Jugador>();
 		

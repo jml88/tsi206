@@ -1,10 +1,12 @@
 package interfaces;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 import javax.ejb.Local;
 
+import mensajes.Mensaje;
 import campeonato.Copa;
 import campeonato.Torneo;
 import partidos.Partido;
@@ -15,7 +17,11 @@ import datatypes.DatosJugador;
 import datatypes.EnumEntrenamiento;
 import equipos.Alineacion;
 import equipos.Equipo;
+import equipos.Estadio;
+import excepciones.CapitalNegativo;
 import excepciones.NoExisteEquipoExcepcion;
+import excepciones.NoExisteMensajeExepcion;
+import excepciones.NoSePuedeAgrandarEstadio;
 
 @Local
 public interface IEquipoControlador {
@@ -68,4 +74,23 @@ public interface IEquipoControlador {
 	public List<Copa> obtenerCopasEquipo(int codEquipo);
 	
 	public List<Equipo> listarEquiposNoBots();
+
+	public Mensaje findMensaje(int codigoMensaje);
+
+	public void marcarComoLeido(int codigoMensaje) throws NoExisteMensajeExepcion;
+
+	public List<Mensaje> listarMensajes(int codEquipo);
+
+	public int crearMensaje(String titulo, String cuerpo, Date fechaCreacion,
+			int remitente, int receptor);
+
+	public void borrarMensaje(List<Mensaje> mensajes);
+	
+	public List<Equipo> obtenerRanking(int cantidad);
+
+	public Jugador obtenerJuvenil(int codEquipo);
+	
+	public Estadio estadioDeEquipo(int codigoEquipo) throws NoExisteEquipoExcepcion;
+	
+	public void mejorarEstadioEquipo(int codigoEquipo) throws NoExisteEquipoExcepcion, CapitalNegativo, NoSePuedeAgrandarEstadio;
 }

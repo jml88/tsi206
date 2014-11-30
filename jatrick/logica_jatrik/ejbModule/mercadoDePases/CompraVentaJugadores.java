@@ -58,7 +58,7 @@ public class CompraVentaJugadores implements Serializable {
 	@Column
 	private boolean activo;
 	
-	@OneToMany
+	@OneToMany(mappedBy="compraVenta")
 	private List<Oferta> ofertas;
 
 	public CompraVentaJugadores() {

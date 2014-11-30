@@ -15,33 +15,33 @@
 	<ui:define name="Principal">
 		<h:form id="form" prependId="false">
 			<div id="equipos">
-				<p:dataTable id="radioDT" var="team"
-					value="#{jugarAmistosoBB.equipos}" paginator="true"
+				<p:dataTable id="radioDT" var="amistoso" emptyMessage="No hay amistosos por jugar"
+					value="#{jugarAmistosoBB.amistosos}" paginator="true"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					rowsPerPageTemplate="5,10,15"
-					selection="#{jugarAmistosoBB.equipoSeleccionado}"
-					rowKey="#{team.codigo}">
+					selection="#{jugarAmistosoBB.amistosoSeleccionado}"
+					rowKey="#{amistoso.codigo}">
 					<f:facet name="header">
-						<p:outputLabel value="Equipos" />
+						<p:outputLabel value="Amistosos" />
 					</f:facet>
 					<p:column selectionMode="single" />
-					<p:column headerText="Codigo">
-						<h:outputText value="#{team.codigo}" />
+					<p:column headerText="Fecha">
+						<h:outputText value="#{amistoso.fechaHora}" converter="DateConverter"/>
 					</p:column>
-					<p:column filterBy="#{team.nombre}" headerText="Nombre"
+					<p:column filterBy="#{amistoso.visitante.nombre}" headerText="Nombre"
 						footerText="contains" filterMatchMode="contains">
-							<h:outputText value="#{team.nombre}" />
+							<h:outputText value="#{amistoso.visitante.nombre}" />
 					</p:column>
 					<p:column headerText="Pais">
-						<h:outputText value="#{team.codPais}" />
+						<h:outputText value="#{amistoso.cantidadReto}" />
 					</p:column>
 				</p:dataTable>
 			</div>
 			<div id="botones">
-				<p:commandButton id="volver" value="Volver"
-					action="#{jugarAmistosoBB.volver}" update="growl" />
-				<p:commandButton id="seleccionar" value="Seleccionar"
-					action="#{jugarAmistosoBB.seleccionarEquipo}" update="growl" />
+				<p:commandButton id="volver" value="Cancelar"
+					action="#{jugarAmistosoBB.cancelar}" update="growl" />
+				<p:commandButton id="seleccionar" value="Aceptar"
+					action="#{jugarAmistosoBB.aceptar}" update="growl" />
 			</div>
 			<p:growl id="growl" life="2000" />
 		</h:form>

@@ -8,12 +8,13 @@
 
 	<ui:define name="Principal">
 		<h:form id="form" prependId="false">
-			<p:layout>
-				<p:layoutUnit position="center">
-					<p:tabView activeIndex="#{copaBB.nroPestania}">
+			<p:layout >
+				<p:layoutUnit position="center" >
+					<p:tabView activeIndex="#{copaBB.nroPestania}"  style="width:600px;height:400px;" >
 						<p:tab title="Copas Proximas">
 							<h:panelGrid columns="2" cellpadding="10">
-								<p:dataTable var="copaFutura" value="#{copaBB.copasFuturas}" emptyMessage="no hay copas proximas">
+								<p:dataTable var="copaFutura" value="#{copaBB.copasFuturas}"
+									emptyMessage="no hay copas proximas">
 									<p:column headerText="">
 										<h:outputText value="#{car.id}" />
 									</p:column>
@@ -42,29 +43,33 @@
 							</h:panelGrid>
 						</p:tab>
 
-						<p:tab title="Crear Copa" titleStyleClass="width=100%">
-							<h:panelGrid width="100%">
-								<p:outputLabel for="nombre" value="Nombre: " />
-								<p:inputText id="nombre" value="#{copaBB.nombreCopa}" />
-								<p:outputLabel for="datetime" value="Fecha inicio copa: " />
-								<p:calendar id="datetime" value="#{copaBB.fecha}"
-									pattern="MM/dd/yyyy HH:mm:ss" />
-								<p:outputLabel for="cantidad" value="Cantidad equipos: " />
-								<p:selectOneMenu id="cantidad" value="#{copaBB.cantidadEquipos}">
-									<f:selectItem itemLabel="4" itemValue="4" />
-									<f:selectItem itemLabel="8" itemValue="8" />
-									<f:selectItem itemLabel="16" itemValue="16" />
-									<f:selectItem itemLabel="32" itemValue="32" />
-								</p:selectOneMenu>
-								<p:outputLabel for="inscripcion" value="Inscripción: " />
-								<p:inputText id="inscripcion" value="#{copaBB.inscripcion}" />
-								<p:outputLabel for="nombre" value="" />
-								<p:commandButton value="Crear Copa" action="#{copaBB.crearCopa}"></p:commandButton>
+						<p:tab id ="eseEste" title="Crear Copa" >
+							<p:scrollPanel mode="native" id ="esAquel" styleClass="width=100%;">
+								<h:panelGrid  id ="esOtro" width="100%">
+									<p:outputLabel for="nombre" value="Nombre: " />
+									<p:inputText id="nombre" value="#{copaBB.nombreCopa}" />
+									<p:outputLabel for="datetime" value="Fecha inicio copa: " />
+									<p:calendar id="datetime" value="#{copaBB.fecha}"
+										pattern="MM/dd/yyyy HH:mm:ss" />
+									<p:outputLabel for="cantidad" value="Cantidad equipos: " />
+									<p:selectOneMenu id="cantidad"
+										value="#{copaBB.cantidadEquipos}">
+										<f:selectItem itemLabel="4" itemValue="4" />
+										<f:selectItem itemLabel="8" itemValue="8" />
+										<f:selectItem itemLabel="16" itemValue="16" />
+										<f:selectItem itemLabel="32" itemValue="32" />
+									</p:selectOneMenu>
+									<p:outputLabel for="inscripcion" value="Inscripción: " />
+									<p:inputText id="inscripcion" value="#{copaBB.inscripcion}" />
+									<p:outputLabel for="nombre" value="" />
+									<p:commandButton value="Crear Copa"
+										action="#{copaBB.crearCopa}"></p:commandButton>
 
-							</h:panelGrid>
+								</h:panelGrid>
+							</p:scrollPanel>
 						</p:tab>
 
-						<p:tab title="Ranking">
+						<p:tab title="Copas">
 							<div>
 								<p:growl id="growl" life="2000" />
 								<p:panel id="tablaC">
@@ -116,39 +121,6 @@
 									</p:dataTable>
 								</p:panel>
 							</div>
-						</p:tab>
-
-						<p:tab title="Fixture">
-							<p:dataGrid var="fixture" value="#{ligaBB.fixture}" columns="2"
-								layout="grid" rows="#{ligaBB.fixture.size()}" paginator="false"
-								id="fix">
-
-								<f:facet name="header">
-           							 Fechas
-       							</f:facet>
-
-								<p:panel header="Fecha #{fixture.fecha}"
-									style="text-align:center">
-									<p:dataTable var="fecha" value="#{fixture.partidos}">
-										<p:column headerText="Local">
-											<h:outputText value="#{fecha.local}" />
-										</p:column>
-
-										<p:column headerText="GL">
-											<h:outputText value="#{fecha.golesLocal}" />
-										</p:column>
-
-										<p:column headerText="GV">
-											<h:outputText value="#{fecha.golesVisitante}" />
-										</p:column>
-
-										<p:column headerText="Visitante">
-											<h:outputText value="#{fecha.visitante}" />
-										</p:column>
-									</p:dataTable>
-								</p:panel>
-
-							</p:dataGrid>
 						</p:tab>
 
 					</p:tabView>

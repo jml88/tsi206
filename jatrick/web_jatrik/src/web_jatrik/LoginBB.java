@@ -4,17 +4,21 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import javax.naming.NamingException;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+
 import comunicacion.Comunicacion;
 import datatypes.DatosManager;
 import equipos.Equipo;
@@ -39,12 +43,14 @@ public class LoginBB implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-//		try {
+		try {
 //			this.torneos = Comunicacion.getInstance().getCampeonatoControlador().obtenerTorneosActuales();
-//		} catch (NamingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+			
+			this.equipos = Comunicacion.getInstance().getIEquipoControlador().obtenerRanking(10);
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public String registrarse() {
@@ -102,6 +108,14 @@ public class LoginBB implements Serializable {
 			ex.printStackTrace();
 		}
 		return result;
+	}
+
+	public List<Equipo> getEquipos() {
+		return equipos;
+	}
+
+	public void setEquipos(List<Equipo> equipos) {
+		this.equipos = equipos;
 	}
 
 }
