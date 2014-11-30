@@ -5,7 +5,9 @@ import interfaces.IConfiguracionControlador;
 import interfaces.IEquipoControlador;
 import interfaces.IEstadioControlador;
 import interfaces.IFinanzasControlador;
+import interfaces.IIntegracion_cliente;
 import interfaces.IJugadorControlador;
+import interfaces.IMensajeControlador;
 import interfaces.IMercadoDePasesControlador;
 import interfaces.IPartidoControlador;
 import interfaces.IUserControlador;
@@ -86,6 +88,14 @@ public class Comunicacion {
 	
 	public IEstadioControlador getIEstadioControlador() throws NamingException {
 		return (IEstadioControlador) this.ctx.lookup("java:app/logica_jatrik/IEstadioControlador!interfaces.IEstadioControlador");
+	}
+	
+	public IIntegracion_cliente getIIntegracion_cliente() throws NamingException {
+		return (IIntegracion_cliente) this.ctx.lookup("java:app/logica_jatrik/Integracion_cliente!interfaces.IIntegracion_cliente");
+	}
+	
+	public IMensajeControlador getMensajeControlador() throws NamingException {
+		return (IMensajeControlador) this.ctx.lookup("java:app/logica_jatrik/IMensajeControlador!interfaces.IMensajeControlador");
 	}
 
 }
