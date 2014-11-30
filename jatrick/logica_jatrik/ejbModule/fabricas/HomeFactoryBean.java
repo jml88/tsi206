@@ -5,6 +5,7 @@ import interfaces.IConfiguracionControlador;
 import interfaces.IEquipoControlador;
 import interfaces.IEstadioControlador;
 import interfaces.IFinanzasControlador;
+import interfaces.IIntegracion_cliente;
 import interfaces.IJugadorControlador;
 import interfaces.IMensajeControlador;
 import interfaces.IMercadoDePasesControlador;
@@ -75,6 +76,12 @@ public class HomeFactoryBean implements HomeFactory {
 	public IEstadioControlador getEstadioControlador() {
 		
 		return (IEstadioControlador)ctx.lookup("java:module/IEstadioControlador!interfaces.IEstadioControlador");
+	}
+
+	@Override
+	public IIntegracion_cliente getIIntegracionCliente() {
+		// TODO Auto-generated method stub
+		return (IIntegracion_cliente)ctx.lookup("java:module/Integracion_cliente!interfaces.IIntegracion_cliente");
 	}
 
 }

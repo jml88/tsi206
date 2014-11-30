@@ -14,6 +14,8 @@ public class AlineacionIntegracion {
 	
 	private List<JugadorIntegracion> defensas;
 	
+	private JugadorIntegracion golero;
+	
 	private JugadorIntegracion lesionDelantero;
 	
 	private JugadorIntegracion lesionMediocampistas;
@@ -36,6 +38,7 @@ public class AlineacionIntegracion {
 	public AlineacionIntegracion(List<JugadorIntegracion> delanteros,
 			List<JugadorIntegracion> mediocampistas,
 			List<JugadorIntegracion> defensas,
+			JugadorIntegracion golero,
 			JugadorIntegracion lesionDelantero,
 			JugadorIntegracion lesionMediocampistas,
 			JugadorIntegracion lesionDefensas, JugadorIntegracion lesionGolero,
@@ -49,6 +52,7 @@ public class AlineacionIntegracion {
 		this.lesionDefensas = lesionDefensas;
 		this.lesionGolero = lesionGolero;
 		this.suplentes = suplentes;
+		this.golero = golero;
 	}
 
 	public List<JugadorIntegracion> getDelanteros() {
@@ -113,6 +117,14 @@ public class AlineacionIntegracion {
 
 	public void setSuplentes(List<JugadorIntegracion> suplentes) {
 		this.suplentes = suplentes;
+	}
+
+	public JugadorIntegracion getGolero() {
+		return golero;
+	}
+
+	public void setGolero(JugadorIntegracion golero) {
+		this.golero = golero;
 	}
 	
 	

@@ -1,5 +1,6 @@
 package integracion_logica;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import partidos.Comentario;
@@ -15,16 +16,16 @@ public class ResultadoIntegracionDto {
 	
 	private int penalesVisitante;
 	
-	private List<JugadorIntegracion> goleadoresLocal;
+	private LinkedList<JugadorIntegracion> goleadoresLocal;
 	
-	private List<JugadorIntegracion> goleadoresVisitante;
+	private LinkedList<JugadorIntegracion> goleadoresVisitante;
 	
-	private List<ComentarioIntegracion> comentarios;
+	private LinkedList<ComentarioIntegracion> comentarios;
 
 	public ResultadoIntegracionDto(int golesLocal, int golesVisitante,
 			int penalesLocal, int penalesVisitante,
-			List<JugadorIntegracion> goleadoresLocal, List<JugadorIntegracion> goleadoresVisitante,
-			List<ComentarioIntegracion> comentarios) {
+			LinkedList<JugadorIntegracion> goleadoresLocal, LinkedList<JugadorIntegracion> goleadoresVisitante,
+			LinkedList<ComentarioIntegracion> comentarios) {
 		super();
 		this.golesLocal = golesLocal;
 		this.golesVisitante = golesVisitante;
@@ -38,6 +39,9 @@ public class ResultadoIntegracionDto {
 	public ResultadoIntegracionDto() {
 		super();
 		// TODO Auto-generated constructor stub
+		this.goleadoresLocal = new LinkedList<JugadorIntegracion>();
+		this.comentarios = new LinkedList<ComentarioIntegracion>();
+		this.goleadoresVisitante = new LinkedList<JugadorIntegracion>();
 	}
 
 	public int getGolesLocal() {
@@ -72,28 +76,36 @@ public class ResultadoIntegracionDto {
 		this.penalesVisitante = penalesVisitante;
 	}
 
-	public List<JugadorIntegracion> getGoleadoresLocal() {
+	public LinkedList<JugadorIntegracion> getGoleadoresLocal() {
 		return goleadoresLocal;
 	}
 
-	public void setGoleadoresLocal(List<JugadorIntegracion> goleadoresLocal) {
+	public void setGoleadoresLocal(LinkedList<JugadorIntegracion> goleadoresLocal) {
 		this.goleadoresLocal = goleadoresLocal;
 	}
 
-	public List<JugadorIntegracion> getGoleadoresVisitante() {
+	public LinkedList<JugadorIntegracion> getGoleadoresVisitante() {
 		return goleadoresVisitante;
 	}
 
-	public void setGoleadoresVisitante(List<JugadorIntegracion> goleadoresVisitante) {
+	public void setGoleadoresVisitante(LinkedList<JugadorIntegracion> goleadoresVisitante) {
 		this.goleadoresVisitante = goleadoresVisitante;
 	}
 
-	public List<ComentarioIntegracion> getComentarios() {
+	public LinkedList<ComentarioIntegracion> getComentarios() {
 		return comentarios;
 	}
 
-	public void setComentarios(List<ComentarioIntegracion> comentarios) {
+	public void setComentarios(LinkedList<ComentarioIntegracion> comentarios) {
 		this.comentarios = comentarios;
+	}
+	
+	public void agregarGolLocal(){
+		golesLocal++;
+	}
+	
+	public void agregarGolVisitante(){
+		golesVisitante++;
 	}
 	
 	

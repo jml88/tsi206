@@ -1,4 +1,9 @@
-package integracion_logica;
+package integracion;
+
+import integracion_logica.AlineacionIntegracion;
+import integracion_logica.ComentarioIntegracion;
+import integracion_logica.EquipoIntegracion;
+import integracion_logica.JugadorIntegracion;
 
 import javax.ejb.Stateless;
 import javax.inject.Named;
@@ -61,6 +66,9 @@ public class IntegracionConvert {
 	
 	public JugadorIntegracion jugadorToJugadorIntegracion(Jugador j){
 		JugadorIntegracion ji = new JugadorIntegracion();
+		if(j==null){
+			int i = 2;
+		}
 		ji.setApellido1(j.getApellido1());
 		ji.setApellido2(j.getApellido2());
 		ji.setAtaque(j.getAtaque());

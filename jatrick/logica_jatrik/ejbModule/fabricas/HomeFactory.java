@@ -5,6 +5,7 @@ import interfaces.IConfiguracionControlador;
 import interfaces.IEquipoControlador;
 import interfaces.IEstadioControlador;
 import interfaces.IFinanzasControlador;
+import interfaces.IIntegracion_cliente;
 import interfaces.IJugadorControlador;
 import interfaces.IMensajeControlador;
 import interfaces.IMercadoDePasesControlador;
@@ -35,6 +36,8 @@ public interface HomeFactory {
 	public IFinanzasControlador getFinanzasControlador();
 	
 	public IEstadioControlador getEstadioControlador();
+	
+	public IIntegracion_cliente getIIntegracionCliente();
 	
 
 }

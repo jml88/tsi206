@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="scripts">
+		<script type="text/javascript">
+
+		</script>
+	</ui:define>
+	
+	<ui:define name="Principal">
+		<h:form id="form" prependId="false">
+			<p:layout>
+				<p:layoutUnit position="center">
+					<div id="equipos">
+						<p:dataTable var="equipo" value="#{integracionBB.equipos}">
+                         	<p:column headerText="Nombre de equipo" width="60">
+									<h:outputText value="#{equipo.nombre}" />
+							</p:column>
+							<p:column style="width:32px;text-align: center" value="Jugar partido">
+             					<p:commandButton  action="#{integracionBB.jugarPartido}"  value="Jugar partido">
+                					<f:setPropertyActionListener value="#{equipo}" target="#{integracionBB.equipoSeleccionado}" />
+            					</p:commandButton>
+        					</p:column>
+					
+						</p:dataTable>
+					</div>
+				</p:layoutUnit>
+			</p:layout>
+		</h:form>
+	</ui:define>
+</ui:composition>
