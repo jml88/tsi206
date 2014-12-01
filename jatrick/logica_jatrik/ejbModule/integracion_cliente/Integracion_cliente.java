@@ -79,6 +79,7 @@ public class Integracion_cliente implements IIntegracion_cliente{
 		partido.setVisitante(local);
 		partido.setResultado(res);
 		partido.setFechaHora(Calendar.getInstance());
+		partido.setTipoPartido("Integración");
 		em.persist(partido);
 		
 		for (Comentario comentario : comentarios) {
