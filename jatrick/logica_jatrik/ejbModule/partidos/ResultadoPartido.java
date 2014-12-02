@@ -1,8 +1,10 @@
 package partidos;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -41,7 +43,7 @@ public class ResultadoPartido implements Serializable{
             joinColumns = {@JoinColumn( name="CODRESULTADO")},
             inverseJoinColumns = {@JoinColumn( name="CODJUGADOR")}
     )
-	private List<Jugador> goleadoresLocal;
+	private Set<Jugador> goleadoresLocal;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
@@ -49,13 +51,45 @@ public class ResultadoPartido implements Serializable{
             joinColumns = {@JoinColumn( name="CODRESULTADO")},
             inverseJoinColumns = {@JoinColumn( name="CODJUGADOR")}
     )
-	private List<Jugador> goleadoresVisitante;
+	private Set<Jugador> goleadoresVisitante;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+            name="AMONESTADO_LOCALES",
+            joinColumns = {@JoinColumn( name="CODRESULTADO")},
+            inverseJoinColumns = {@JoinColumn( name="CODJUGADOR")}
+    )
+	private Set<Jugador> amonestadosLocal;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+            name="AMONESTADO_VISITANTES",
+            joinColumns = {@JoinColumn( name="CODRESULTADO")},
+            inverseJoinColumns = {@JoinColumn( name="CODJUGADOR")}
+    )
+	private Set<Jugador> amonestadosVisitante;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+            name="EXPULSADO_LOCALES",
+            joinColumns = {@JoinColumn( name="CODRESULTADO")},
+            inverseJoinColumns = {@JoinColumn( name="CODJUGADOR")}
+    )
+	private Set<Jugador> expulsadosLocal;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+            name="EXPULSADO_VISITANTES",
+            joinColumns = {@JoinColumn( name="CODRESULTADO")},
+            inverseJoinColumns = {@JoinColumn( name="CODJUGADOR")}
+    )
+	private Set<Jugador> expulsadosVisitante;
 	
 	public ResultadoPartido(){
 		this.golesLocal = -1;
 		this.golesVisitante = -1;
-		this.goleadoresLocal = new LinkedList<Jugador>();
-		this.goleadoresVisitante = new LinkedList<Jugador>();
+		this.goleadoresLocal = new HashSet<Jugador>();
+		this.goleadoresVisitante = new HashSet<Jugador>();
 		
 	}
 	
@@ -86,19 +120,19 @@ public class ResultadoPartido implements Serializable{
 		this.golesVisitante = golesVisitante;
 	}
 
-	public List<Jugador> getGoleadoresLocal() {
+	public Set<Jugador> getGoleadoresLocal() {
 		return goleadoresLocal;
 	}
 
-	public void setGoleadoresLocal(List<Jugador> goleadoresLocal) {
+	public void setGoleadoresLocal(Set<Jugador> goleadoresLocal) {
 		this.goleadoresLocal = goleadoresLocal;
 	}
 
-	public List<Jugador> getGoleadoresVisitante() {
+	public Set<Jugador> getGoleadoresVisitante() {
 		return goleadoresVisitante;
 	}
 
-	public void setGoleadoresVisitante(List<Jugador> goleadoresVisitante) {
+	public void setGoleadoresVisitante(Set<Jugador> goleadoresVisitante) {
 		this.goleadoresVisitante = goleadoresVisitante;
 	}	
 
@@ -128,6 +162,46 @@ public class ResultadoPartido implements Serializable{
 
 	public void setPenalesVisitante(int penalesVisitante) {
 		this.penalesVisitante = penalesVisitante;
+	}
+
+
+	public Set<Jugador> getAmonestadosLocal() {
+		return amonestadosLocal;
+	}
+
+
+	public void setAmonestadosLocal(Set<Jugador> amonestadosLocal) {
+		this.amonestadosLocal = amonestadosLocal;
+	}
+
+
+	public Set<Jugador> getAmonestadosVisitante() {
+		return amonestadosVisitante;
+	}
+
+
+	public void setAmonestadosVisitante(Set<Jugador> amonestadosVisitante) {
+		this.amonestadosVisitante = amonestadosVisitante;
+	}
+
+
+	public Set<Jugador> getExpulsadosLocal() {
+		return expulsadosLocal;
+	}
+
+
+	public void setExpulsadosLocal(Set<Jugador> expulsadosLocal) {
+		this.expulsadosLocal = expulsadosLocal;
+	}
+
+
+	public Set<Jugador> getExpulsadosVisitante() {
+		return expulsadosVisitante;
+	}
+
+
+	public void setExpulsadosVisitante(Set<Jugador> expulsadosVisitante) {
+		this.expulsadosVisitante = expulsadosVisitante;
 	}
 	
 	

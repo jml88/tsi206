@@ -30,7 +30,7 @@
 							#{al.nombre} #{al.apellido1} 
 						</p:column>
 						<p:column style="width:1px">
-							<p:graphicImage name="/images/pelota_futbol.png" />
+							<p:graphicImage name="/images/pelota_futbol.png"  rendered="#{al.golesMostrar > 0}"/> <p:outputLabel value="x#{al.golesMostrar}" rendered="#{al.golesMostrar > 0}"/>
 						</p:column>
 					</p:dataTable>
 					<p:dataTable id="jv" value="#{minutoAMinutoBB.jugadoresVisitante}"
@@ -39,7 +39,7 @@
 							#{av.nombre} #{av.apellido1} 
 						</p:column>
 						<p:column style="width:1px">
-							<p:graphicImage name="/images/pelota_futbol.png" />
+							<p:graphicImage name="/images/pelota_futbol.png"  rendered="#{av.golesMostrar > 0}"/> <p:outputLabel value="x#{av.golesMostrar}" rendered="#{av.golesMostrar > 0}"/>
 						</p:column>
 					</p:dataTable>
 				</p:panelGrid>

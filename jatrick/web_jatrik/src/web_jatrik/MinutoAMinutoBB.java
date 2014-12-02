@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.ExternalContext;
@@ -93,6 +94,7 @@ public class MinutoAMinutoBB implements Serializable {
 						.getDelanteros());
 				eliminarRepetidos(jugadoresVisitante);
 			}
+			
 			comentariosPartido.add(new Comentario(-1,
 					"El partido va a comenzar", null, 0));
 			List<Comentario> comentarios = Comunicacion
@@ -109,6 +111,8 @@ public class MinutoAMinutoBB implements Serializable {
 			this.resultadoPartido = Comunicacion.getInstance()
 					.getIPartidoControlador()
 					.obtenerResultadoPartido(datosPartido.getCodigo());
+			actualizarJugadores(jugadoresVisitante,resultadoPartido.getGoleadoresVisitante());
+			actualizarJugadores(jugadoresLocal,resultadoPartido.getGoleadoresLocal());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -120,6 +124,16 @@ public class MinutoAMinutoBB implements Serializable {
 		hs.addAll(lista);
 		lista.clear();
 		lista.addAll(hs);
+	}
+	
+	private void actualizarJugadores(List<Jugador> jugadores, Set<Jugador> jugadoresG){
+		for (Jugador jugador : jugadores) {
+			for(Jugador jugadorG : jugadoresG){
+				if(jugadorG.getCodigo() == jugador.getCodigo()){
+					jugador.setGolesMostrar(jugador.getGolesMostrar()+1);
+				}
+			}
+		}
 	}
 
 	public void getComentariosDePartido() {

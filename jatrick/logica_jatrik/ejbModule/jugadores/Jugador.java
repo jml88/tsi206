@@ -103,6 +103,12 @@ public class Jugador implements Serializable{
 	@OneToMany
 	private Set<Partido> partidosJugados;
 	
+	private int golesMostrar;
+	
+	private int amarillasMostrar;
+	
+	private int rojasMostrar;
+	
 	/**
 	 * Constructor defecto
 	 */
@@ -448,4 +454,29 @@ public class Jugador implements Serializable{
 		
 		return (this.getAtaque() + this.getDefensa() + this.getPorteria() + this.getTecnica()) / (this.getEdad())*10;
 	}
+
+	public int getGolesMostrar() {
+		return golesMostrar;
+	}
+
+	public void setGolesMostrar(int golesMostrar) {
+		this.golesMostrar = golesMostrar;
+	}
+
+	public int getAmarillasMostrar() {
+		return amarillasMostrar;
+	}
+
+	public void setAmarillasMostrar(int amarillasMostrar) {
+		this.amarillasMostrar = amarillasMostrar;
+	}
+
+	public int getRojasMostrar() {
+		return rojasMostrar;
+	}
+
+	public void setRojasMostrar(int rojasMostrar) {
+		this.rojasMostrar = rojasMostrar;
+	}
+	
 }

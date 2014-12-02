@@ -38,9 +38,9 @@ public class PartidoControlador {
 	@PersistenceContext(unitName = "jatrik")
 	private EntityManager em;
 
-//	@Inject
-//	private FinanzasControladorSimulacion fc;
-	
+	// @Inject
+	// private FinanzasControladorSimulacion fc;
+
 	@Inject
 	private SimulacionControlador sc;
 
@@ -183,18 +183,19 @@ public class PartidoControlador {
 		em.persist(c);
 	}
 
-//	public void crearComentarioLesion(Jugador j, Partido partido, int minuto) {
-//
-//
-//		Comentario c = new Comentario();
-//		c.setMensaje(j.getNombre()
-//				+ " "
-//				+ j.getApellido1()
-//				+ " se duele y sale cojeando del terreno de juego en una jugada");
-//		c.setPartido(partido);
-//		c.setMinuto(minuto);
-//		em.persist(c);
-//	}
+	// public void crearComentarioLesion(Jugador j, Partido partido, int minuto)
+	// {
+	//
+	//
+	// Comentario c = new Comentario();
+	// c.setMensaje(j.getNombre()
+	// + " "
+	// + j.getApellido1()
+	// + " se duele y sale cojeando del terreno de juego en una jugada");
+	// c.setPartido(partido);
+	// c.setMinuto(minuto);
+	// em.persist(c);
+	// }
 
 	public ConfiguracionPartido findConfiguracionPartido() {
 		return (ConfiguracionPartido) em.createQuery(
@@ -249,10 +250,44 @@ public class PartidoControlador {
 		em.merge(rp);
 	}
 
-//	public void lesionJugador(Jugador j) {
-//		// TODO hacerlo bien
-//		j.setLesion(2);
-//	}
+	public void sumarAmarillaLocal(ResultadoPartido rp, Jugador jL) {
+		rp.agregarGolLocal();
+		jL.setGolesCarrera(jL.getGolesCarrera() + 1);
+		jL.setGolesLiga(jL.getGolesLiga() + 1);
+		if (!rp.getGoleadoresLocal().contains(jL)) {
+			rp.getGoleadoresLocal().add(jL);
+		}
+		em.merge(rp);
+	}
+
+	public void sumarAmarillaVisitante(ResultadoPartido rp, Jugador jV) {
+		rp.agregarGolVisitante();
+		jV.setGolesCarrera(jV.getGolesCarrera() + 1);
+		jV.setGolesLiga(jV.getGolesLiga() + 1);
+		if (!rp.getGoleadoresVisitante().contains(jV)) {
+			rp.getGoleadoresVisitante().add(jV);
+		}
+		em.merge(rp);
+	}
+
+	public void sumarRojaLocal(ResultadoPartido rp, Jugador jL) {
+		rp.getExpulsadosLocal().add(jL);
+		em.merge(rp);
+	}
+
+	public void sumarRojaVisitante(ResultadoPartido rp, Jugador jV) {
+		jV.setGolesCarrera(jV.getGolesCarrera() + 1);
+		jV.setGolesLiga(jV.getGolesLiga() + 1);
+		if (!rp.getGoleadoresVisitante().contains(jV)) {
+			rp.getGoleadoresVisitante().add(jV);
+		}
+		em.merge(rp);
+	}
+
+	// public void lesionJugador(Jugador j) {
+	// // TODO hacerlo bien
+	// j.setLesion(2);
+	// }
 
 	public void tarjetaJugador(Jugador j) {
 
@@ -260,10 +295,10 @@ public class PartidoControlador {
 
 	public Jugador cambioPorLesion(int linea, Jugador ju, Alineacion a) {
 		Jugador retorno = null;
-		if (linea == 3){
-			if (a.getLesionDelantero() != null){
+		if (linea == 3) {
+			if (a.getLesionDelantero() != null) {
 				for (Jugador j : a.getDelanteros()) {
-					if (j.getCodigo() == ju.getCodigo()){
+					if (j.getCodigo() == ju.getCodigo()) {
 						a.getDelanteros().remove(ju);
 						a.getDelanteros().add(a.getLesionDelantero());
 						retorno = a.getLesionDelantero();
@@ -272,12 +307,11 @@ public class PartidoControlador {
 					}
 				}
 			}
-			
-		}
-		else if (linea == 2){
-			if (a.getLesionMediocampistas() != null){
+
+		} else if (linea == 2) {
+			if (a.getLesionMediocampistas() != null) {
 				for (Jugador j : a.getMediocampistas()) {
-					if (j.getCodigo() == ju.getCodigo()){
+					if (j.getCodigo() == ju.getCodigo()) {
 						a.getMediocampistas().remove(ju);
 						a.getMediocampistas().add(a.getLesionMediocampistas());
 						retorno = a.getLesionMediocampistas();
@@ -286,11 +320,10 @@ public class PartidoControlador {
 					}
 				}
 			}
-		}
-		else{
-			if (a.getLesionDefensas() != null){
+		} else {
+			if (a.getLesionDefensas() != null) {
 				for (Jugador j : a.getDefensas()) {
-					if (j.getCodigo() == ju.getCodigo()){
+					if (j.getCodigo() == ju.getCodigo()) {
 						a.getDefensas().remove(ju);
 						a.getDefensas().add(a.getLesionDefensas());
 						retorno = a.getLesionDefensas();
@@ -303,24 +336,26 @@ public class PartidoControlador {
 		return retorno;
 	}
 
-	public void crearComentarioCambioLesion(Jugador juLesionado, Jugador jEntra, Partido p, int minuto) {
+	public void crearComentarioCambioLesion(Jugador juLesionado,
+			Jugador jEntra, Partido p, int minuto) {
 		Comentario c = new Comentario();
-		if (jEntra == null){
-		c.setMensaje(juLesionado.getNombre()
-				+ " "
-				+ juLesionado.getApellido1()
-				+ " se duele y sale cojeando del terreno de juego en una jugada");
-		}
-		else{
+		if (jEntra == null) {
 			c.setMensaje(juLesionado.getNombre()
 					+ " "
 					+ juLesionado.getApellido1()
-					+ " se duele y sale cojeando del terreno de juego en una jugada\n El tecnico envia a "+jEntra.getNombre()+" "+jEntra.getApellido1()+" en su lugar");
+					+ " se duele y sale cojeando del terreno de juego en una jugada");
+		} else {
+			c.setMensaje(juLesionado.getNombre()
+					+ " "
+					+ juLesionado.getApellido1()
+					+ " se duele y sale cojeando del terreno de juego en una jugada\n El tecnico envia a "
+					+ jEntra.getNombre() + " " + jEntra.getApellido1()
+					+ " en su lugar");
 		}
 		c.setPartido(p);
 		c.setMinuto(minuto);
 		em.persist(c);
-		
+
 	}
 
 	// public Partido crearPartidoPrueba(){
@@ -328,7 +363,5 @@ public class PartidoControlador {
 	// em.persist(p);
 	// return p;
 	// }
-	
-	
 
 }
