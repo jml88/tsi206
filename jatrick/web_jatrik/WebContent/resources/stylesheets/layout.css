@@ -63,3 +63,13 @@ body {
 	width: 330px;
 	height: 500px;
 }
+
+#cancha{
+	float: left; 
+	width: 500px; 
+	background-image: url(images/field.gif)" ! important;
+}
+
+.ui-datagrid-data{
+	width: auto ! important;
+}
