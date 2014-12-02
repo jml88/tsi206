@@ -60,7 +60,7 @@
 							<p:column colspan="4">
 							<p:fieldset id="jugadoresDefensa">
 							<p:outputPanel id="dropAreaDefensa">
-							<p:dataGrid syle="margin: 30px;" id="jugadoresDefensaList" var="defensas" value="#{alineacionBB.datosAlineacion.defensas}" emptyMessage="Arrastre un jugador">
+							<p:dataGrid syle="margin: 30px;" id="jugadoresDefensaList" var="defensas" value="#{alineacionBB.defensas}" emptyMessage="Arrastre un jugador">
 								<f:facet name="header">
 									<p:row>
 										<p:column>Defensas</p:column>
@@ -81,7 +81,7 @@
 							<p:column colspan="4">	
 								<p:fieldset id="jugadoresMedio">
 								<p:outputPanel id="dropAreaMedio">
-								<p:dataGrid syle="margin: 30px" id="jugadoresMedioList" var="medios" value="#{alineacionBB.datosAlineacion.mediocampistas}" emptyMessage="Arrastre un jugador">
+								<p:dataGrid syle="margin: 30px" id="jugadoresMedioList" var="medios" value="#{alineacionBB.mediocampistas}" emptyMessage="Arrastre un jugador">
 									<f:facet name="header">
 										<p:row>
 											<p:column>Medios</p:column>
@@ -102,7 +102,7 @@
 							<p:column colspan="4">
 								<p:fieldset id="jugadoresDelantera">
 								<p:outputPanel id="dropAreaDelantera">
-								<p:dataGrid syle="margin: 30px" id="jugadoresDelanteraList" var="delanteros" value="#{alineacionBB.datosAlineacion.delanteros}" emptyMessage="Arrastre un jugador">
+								<p:dataGrid syle="margin: 30px" id="jugadoresDelanteraList" var="delanteros" value="#{alineacionBB.delanteros}" emptyMessage="Arrastre un jugador">
 									<f:facet name="header">
 										<p:row>
 											<p:column>Delanteros</p:column>
