@@ -1,3 +1,8 @@
+
+.ui-column-filter {
+    width: 43px;
+}
+
 .ui-menu2 {
 	background-image: url("images/header_soccer.jpg")
 	!important
@@ -32,6 +37,10 @@ body {
 	box-shadow: 0px 5px 5px 10px #1C1C1C;
 }
 
+#tabla{
+	font-size: 2em;
+}
+
 #left {
 	float: left;
 	height: 100%;
@@ -61,5 +70,25 @@ body {
 
 .alineacion{
 	width: 330px;
-	height: 500px;
+	height: 360px;
+}
+
+#cancha{
+	float: left; 
+	width: 500px; 
+	background-image: url(images/field.gif)" ! important;
+}
+
+.ui-datagrid-data{
+	width: auto ! important;
+}
+
+#cancha{
+	float: left; 
+	width: 500px; 
+	background-image: url(images/field.gif)" ! important;
+}
+
+.ui-datagrid-data{
+	width: auto ! important;
 }
