@@ -256,7 +256,7 @@ public class FinanzasControladorSimulacion {
 			//pagar premio
 			pagarPremio(torneo);
 			
-			List<Equipo> equipos = torneo.getEquipos();
+			List<Equipo> equipos = torneo.getEquiposSet();
 			for (Equipo equipo : equipos) {
 				
 				//actualizar cantidad de socios

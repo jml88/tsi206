@@ -11,7 +11,7 @@
 			<p:panel id="pmens">
 				<div id="equipos">
 
-					<p:dataTable id="checkboxDT" var="mensaje" rendered="#{mensajesBB.mensaje eq null}"
+					<p:dataTable id="checkboxDT" var="mensaje" rendered="#{mensajesBB.mensajeSeleccionado eq null}"
 						rowKey="#{mensaje.codigo}" value="#{mensajesBB.mensajes}"
 						rowStyleClass="#{mensaje.leido ? 'old' : null}"
 						selection="#{mensajesBB.mensajesSeleccionados}">
@@ -40,18 +40,22 @@
 						<p:column style="width:32px;text-align: center">
 							<p:commandButton icon="ui-icon-search" update=":form:pmens"
 								actionListener="#{mensajesBB.seleccionoMensaje(mensaje)}"
-								title="View">
+								title="Borrar">
 							</p:commandButton>
 						</p:column>
 						<f:facet name="footer">
-							<p:commandButton process="checkboxDT" icon="ui-icon-search"
-								value="View" action="#{mensajesBB.seleccionoMensajeBorrar}" />
+							<p:commandButton process="checkboxDT"
+								value="Borrar" action="#{mensajesBB.seleccionoMensajeBorrar}" />
 						</f:facet>
 					</p:dataTable>
-					<p:panel rendered="#{mensajesBB.mensaje ne null}">
-						<p:commandButton value="responder" action="#{mensajesBB.contestarMensaje}"></p:commandButton>
+					<p:panel rendered="#{mensajesBB.mensajeSeleccionado ne null}" header="Mensaje">
+					<p:panelGrid columns="2">
+						<p:outputLabel value="Asunto"></p:outputLabel>
 						<h:outputText value="#{mensajesBB.mensajeSeleccionado.mensaje}"></h:outputText>
+						<p:outputLabel value="Respuesta"></p:outputLabel>
 						<h:inputTextarea value="#{mensajesBB.mensaje}"></h:inputTextarea>
+						<p:commandButton value="responder" action="#{mensajesBB.contestarMensaje}"></p:commandButton>
+					</p:panelGrid>
 					</p:panel>
 				</div>
 			</p:panel>

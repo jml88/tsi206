@@ -18,9 +18,6 @@
 						<p:tab title="Clasificación">
 							<h:panelGrid columns="2" cellpadding="10">
 								<p:dataTable var="tabla" value="#{ligaBB.posiciones}">
-									<p:column headerText="Pos" style="width:25px;">
-										<h:outputText value="#{car.id}" />
-									</p:column>
 
 									<p:column headerText="Equipo">
 										<h:outputText value="#{tabla.equipo.nombre}" />

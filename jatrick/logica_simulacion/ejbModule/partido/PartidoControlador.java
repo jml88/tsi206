@@ -234,9 +234,9 @@ public class PartidoControlador {
 		rp.agregarGolLocal();
 		jL.setGolesCarrera(jL.getGolesCarrera() + 1);
 		jL.setGolesLiga(jL.getGolesLiga() + 1);
-		if (!rp.getGoleadoresLocal().contains(jL)) {
+//		if (!rp.getGoleadoresLocal().contains(jL)) {
 			rp.getGoleadoresLocal().add(jL);
-		}
+//		}
 		em.merge(rp);
 	}
 
@@ -244,29 +244,22 @@ public class PartidoControlador {
 		rp.agregarGolVisitante();
 		jV.setGolesCarrera(jV.getGolesCarrera() + 1);
 		jV.setGolesLiga(jV.getGolesLiga() + 1);
-		if (!rp.getGoleadoresVisitante().contains(jV)) {
+//		if (!rp.getGoleadoresVisitante().contains(jV)) {
 			rp.getGoleadoresVisitante().add(jV);
-		}
+//		}
 		em.merge(rp);
 	}
 
 	public void sumarAmarillaLocal(ResultadoPartido rp, Jugador jL) {
-		rp.agregarGolLocal();
-		jL.setGolesCarrera(jL.getGolesCarrera() + 1);
-		jL.setGolesLiga(jL.getGolesLiga() + 1);
-		if (!rp.getGoleadoresLocal().contains(jL)) {
-			rp.getGoleadoresLocal().add(jL);
-		}
+
+//		if (!rp.getGoleadoresLocal().contains(jL)) {
+			rp.getAmonestadosLocal().add(jL);
+//		}
 		em.merge(rp);
 	}
 
 	public void sumarAmarillaVisitante(ResultadoPartido rp, Jugador jV) {
-		rp.agregarGolVisitante();
-		jV.setGolesCarrera(jV.getGolesCarrera() + 1);
-		jV.setGolesLiga(jV.getGolesLiga() + 1);
-		if (!rp.getGoleadoresVisitante().contains(jV)) {
-			rp.getGoleadoresVisitante().add(jV);
-		}
+		rp.getAmonestadosVisitante().add(jV);
 		em.merge(rp);
 	}
 
@@ -276,11 +269,7 @@ public class PartidoControlador {
 	}
 
 	public void sumarRojaVisitante(ResultadoPartido rp, Jugador jV) {
-		jV.setGolesCarrera(jV.getGolesCarrera() + 1);
-		jV.setGolesLiga(jV.getGolesLiga() + 1);
-		if (!rp.getGoleadoresVisitante().contains(jV)) {
-			rp.getGoleadoresVisitante().add(jV);
-		}
+		rp.getExpulsadosVisitante().add(jV);
 		em.merge(rp);
 	}
 

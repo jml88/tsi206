@@ -306,6 +306,7 @@ public class CampeonatoControlador {
 			em.persist(rp);
 			p.setResultado(rp);
 			em.persist(p);
+			t.getPartidos().add(p);
 			
 			PartidoTorneo segVuelta = new PartidoTorneo(visitante,local , ca,
 					fila + cantidadEquipos, t);
@@ -314,6 +315,7 @@ public class CampeonatoControlador {
 			em.persist(rpSG);
 			segVuelta.setResultado(rpSG);
 			em.persist(segVuelta);
+			t.getPartidos().add(segVuelta);
 		}
 		em.flush();
 		nroEquipo = cantidadEquipos - 1;
@@ -338,6 +340,7 @@ public class CampeonatoControlador {
 				em.persist(rp);
 				p.setResultado(rp);
 				em.persist(p);
+				t.getPartidos().add(p);
 				
 				PartidoTorneo segVuelta = new PartidoTorneo(visitante,local , ca,
 						fila + cantidadEquipos, t);
@@ -346,6 +349,7 @@ public class CampeonatoControlador {
 				em.persist(rpSG);
 				segVuelta.setResultado(rpSG);
 				em.persist(segVuelta);
+				t.getPartidos().add(segVuelta);
 			}
 		}
 		em.flush();

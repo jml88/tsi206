@@ -30,6 +30,7 @@ import partidos.PartidoTorneo;
 import campeonato.Posicion;
 import datatypes.DatosAlineacion;
 import datatypes.DatosMinutoPartido;
+import datatypes.EnumPartido;
 import equipos.Equipo;
 import excepciones.NoExisteEquipoExcepcion;
 import finanzas.FinanzasControladorSimulacion;
@@ -74,7 +75,9 @@ public class TimerSimularPartido {
 		Collections.sort(minutos);
 		int ultimoMinuto = minutos.get(minutos.size() - 1);
 		for (Integer min : minutos) {
-			
+			if (min ==- 1){
+				int a = 1;
+			}
 			Double minutoysegundos = ((double)(min*cp.getDuracion())/90);
 			int minuto = (int)minutoysegundos.intValue();
 			Double seg = ((double)(minutoysegundos-minuto))*60;
@@ -160,20 +163,22 @@ public class TimerSimularPartido {
 	@Timeout
 	public void simularPartido(Timer t) throws NoExisteEquipoExcepcion {
 		try{
-		System.out.println("CANTIDAD TIMERS ACTIVOS "+ts.getTimers().size());
+//		System.out.println("CANTIDAD TIMERS ACTIVOS "+ts.getTimers().size());
 		DatosMinutoPartido minutoDto = (DatosMinutoPartido) t.getInfo();
 		Partido p = sc.find(minutoDto.getIdPartido());
 		if (p == null) {
 			throw new NoExisteEquipoExcepcion("No existe equipo de id "
 					+ minutoDto.getIdPartido());
 		}
-		if (minutoDto.getMinuto() == -1){
-			System.out.println("INICIO SIMULAR PARTIDO "+p.getCodigo()+" !!!!!!!");
+//		if (minutoDto.getMinuto() == -1){
+//			System.out.println("INICIO SIMULAR PARTIDO "+p.getCodigo()+" !!!!!!!");
+//		}
+//		else{
+//			System.out.println("INICIO SIMULACION DE MINUTO "+ minutoDto.getMinuto()+" DE PARTIDO "+p.getCodigo()+" !!!!!!!");
+//		}
+		if (minutoDto.getMinuto() == -1 && !p.getEstado().equals(EnumPartido.POR_SIMULAR)){
+			int a = 1;
 		}
-		else{
-			System.out.println("INICIO SIMULACION DE MINUTO "+ minutoDto.getMinuto()+" DE PARTIDO "+p.getCodigo()+" !!!!!!!");
-		}
-		
 		List<Integer> minutos = lsim.simular(p, minutoDto.getMinuto());
 		if (minutos.size() > 0) {
 			
@@ -194,7 +199,7 @@ public class TimerSimularPartido {
 				}
 			}
 			crearPartido(minutos, p);
-			System.out.println("FIN SIMULAR PARTIDO "+p.getCodigo()+" !!!!!!!");
+//			System.out.println("FIN SIMULAR PARTIDO "+p.getCodigo()+" !!!!!!!");
 		} else {
 			if (minutoDto.isUltimaJugada()) {
 				this.actualizarDatosPartido(p);
@@ -212,7 +217,7 @@ public class TimerSimularPartido {
 				}
 				
 			}
-			System.out.println("FIN SIMULACION DE MINUTO "+ minutoDto.getMinuto()+" DE PARTIDO "+p.getCodigo()+" !!!!!!!");
+//			System.out.println("FIN SIMULACION DE MINUTO "+ minutoDto.getMinuto()+" DE PARTIDO "+p.getCodigo()+" !!!!!!!");
 		}
 		}
 		catch(LockAcquisitionException e){

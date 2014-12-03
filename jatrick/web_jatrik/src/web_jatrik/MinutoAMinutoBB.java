@@ -56,44 +56,9 @@ public class MinutoAMinutoBB implements Serializable {
 					.getApplicationMap().get("DatosPartido");
 			Integer codPartido = (Integer) faces.getExternalContext()
 					.getApplicationMap().get("codPartido");
-			if (codPartido != null){
-				datosPartido = Comunicacion.getInstance().getIPartidoControlador().findPartido(codPartido);
-			}
-			if (datosPartido != null) {
 
-				equipoLocal = Comunicacion.getInstance()
-						.getIEquipoControlador()
-						.obtenerEquipo(datosPartido.getLocal().getCodigo());
-				equipoVisitante = Comunicacion.getInstance()
-						.getIEquipoControlador()
-						.obtenerEquipo(datosPartido.getVisitante().getCodigo());
-				numeroComentario = 0;
-				comentariosPartido = new LinkedList<Comentario>();
-				jugadoresLocal = new LinkedList<Jugador>();
-				jugadoresVisitante = new LinkedList<Jugador>();
-				jugadoresLocal.add(datosPartido.getAlineacionLocal()
-						.getGolero());
-				jugadoresLocal.addAll(datosPartido.getAlineacionLocal()
-						.getDefensas());
-				eliminarRepetidos(jugadoresLocal);
-				jugadoresLocal.addAll(datosPartido.getAlineacionLocal()
-						.getMediocampistas());
-				eliminarRepetidos(jugadoresLocal);
-				jugadoresLocal.addAll(datosPartido.getAlineacionLocal()
-						.getDelanteros());
-				eliminarRepetidos(jugadoresLocal);
-				jugadoresVisitante.add(datosPartido.getAlineacionVisitante()
-						.getGolero());
-				jugadoresVisitante.addAll(datosPartido.getAlineacionVisitante()
-						.getDefensas());
-				eliminarRepetidos(jugadoresVisitante);
-				jugadoresVisitante.addAll(datosPartido.getAlineacionVisitante()
-						.getMediocampistas());
-				eliminarRepetidos(jugadoresVisitante);
-				jugadoresVisitante.addAll(datosPartido.getAlineacionVisitante()
-						.getDelanteros());
-				eliminarRepetidos(jugadoresVisitante);
-			}
+			comentariosPartido = new LinkedList<Comentario>();
+			cargarAlineaciones(codPartido);
 			
 			comentariosPartido.add(new Comentario(-1,
 					"El partido va a comenzar", null, 0));
@@ -111,28 +76,99 @@ public class MinutoAMinutoBB implements Serializable {
 			this.resultadoPartido = Comunicacion.getInstance()
 					.getIPartidoControlador()
 					.obtenerResultadoPartido(datosPartido.getCodigo());
-			actualizarJugadores(jugadoresVisitante,resultadoPartido.getGoleadoresVisitante());
-			actualizarJugadores(jugadoresLocal,resultadoPartido.getGoleadoresLocal());
+			actualizarJugadores(jugadoresVisitante,
+					resultadoPartido.getGoleadoresVisitante(),
+					resultadoPartido.getAmonestadosVisitante(),
+					resultadoPartido.getExpulsadosVisitante());
+			actualizarJugadores(jugadoresLocal,
+					resultadoPartido.getGoleadoresLocal(),
+					resultadoPartido.getAmonestadosLocal(),
+					resultadoPartido.getExpulsadosLocal());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
 
-	private void eliminarRepetidos(List<Jugador> lista) {
-		HashSet<Jugador> hs = new HashSet<Jugador>();
-		hs.addAll(lista);
-		lista.clear();
-		lista.addAll(hs);
+	// private void eliminarRepetidos(List<Jugador> lista) {
+	// HashSet<Jugador> hs = new HashSet<Jugador>();
+	// hs.addAll(lista);
+	// lista.clear();
+	// lista.addAll(hs);
+	// }
+
+	private void cargarAlineaciones(Integer codPartido) {
+		try {
+			if (codPartido != null) {
+				datosPartido = Comunicacion.getInstance()
+						.getIPartidoControlador().findPartido(codPartido);
+			}
+			if (datosPartido != null) {
+
+				equipoLocal = Comunicacion.getInstance()
+						.getIEquipoControlador()
+						.obtenerEquipo(datosPartido.getLocal().getCodigo());
+				equipoVisitante = Comunicacion.getInstance()
+						.getIEquipoControlador()
+						.obtenerEquipo(datosPartido.getVisitante().getCodigo());
+				numeroComentario = 0;
+				
+				jugadoresLocal = new LinkedList<Jugador>();
+				jugadoresVisitante = new LinkedList<Jugador>();
+				if (datosPartido.getAlineacionLocal() != null) {
+
+					jugadoresLocal.add(datosPartido.getAlineacionLocal()
+							.getGolero());
+					jugadoresLocal.addAll(datosPartido.getAlineacionLocal()
+							.getDefensas());
+					// eliminarRepetidos(jugadoresLocal);
+					jugadoresLocal.addAll(datosPartido.getAlineacionLocal()
+							.getMediocampistas());
+					// eliminarRepetidos(jugadoresLocal);
+					jugadoresLocal.addAll(datosPartido.getAlineacionLocal()
+							.getDelanteros());
+				}
+				// eliminarRepetidos(jugadoresLocal);
+				if (datosPartido.getAlineacionVisitante() != null) {
+
+					jugadoresVisitante.add(datosPartido
+							.getAlineacionVisitante().getGolero());
+					jugadoresVisitante.addAll(datosPartido
+							.getAlineacionVisitante().getDefensas());
+					// eliminarRepetidos(jugadoresVisitante);
+					jugadoresVisitante.addAll(datosPartido
+							.getAlineacionVisitante().getMediocampistas());
+					// eliminarRepetidos(jugadoresVisitante);
+					jugadoresVisitante.addAll(datosPartido
+							.getAlineacionVisitante().getDelanteros());
+				}
+				// eliminarRepetidos(jugadoresVisitante);
+			}
+		} catch (Exception e) {
+
+		}
 	}
-	
-	private void actualizarJugadores(List<Jugador> jugadores, Set<Jugador> jugadoresG){
+
+	private void actualizarJugadores(List<Jugador> jugadores,
+			Set<Jugador> jugadoresG, Set<Jugador> jugadoresA,
+			Set<Jugador> jugadoresE) {
 		for (Jugador jugador : jugadores) {
-			for(Jugador jugadorG : jugadoresG){
-				if(jugadorG.getCodigo() == jugador.getCodigo()){
-					jugador.setGolesMostrar(jugador.getGolesMostrar()+1);
+			for (Jugador jugadorG : jugadoresG) {
+				if (jugadorG.getCodigo() == jugador.getCodigo()) {
+					jugador.setGolesMostrar(jugador.getGolesMostrar() + 1);
 				}
 			}
+			for (Jugador jugadorA : jugadoresA) {
+				if (jugadorA.getCodigo() == jugador.getCodigo()) {
+					jugador.setAmarillasMostrar(jugador.getRojasMostrar() + 1);
+				}
+			}
+			for (Jugador jugadorE : jugadoresE) {
+				if (jugadorE.getCodigo() == jugador.getCodigo()) {
+					jugador.setRojasMostrar(jugador.getAmarillasMostrar() + 1);
+				}
+			}
+
 		}
 	}
 
@@ -150,9 +186,22 @@ public class MinutoAMinutoBB implements Serializable {
 					numeroComentario = c.getId();
 				}
 				comentariosPartido.add(c);
-				this.resultadoPartido = Comunicacion.getInstance()
-						.getIPartidoControlador()
-						.obtenerResultadoPartido(datosPartido.getCodigo());
+
+			}
+			this.resultadoPartido = Comunicacion.getInstance()
+					.getIPartidoControlador()
+					.obtenerResultadoPartido(datosPartido.getCodigo());
+			actualizarJugadores(jugadoresVisitante,
+					resultadoPartido.getGoleadoresVisitante(),
+					resultadoPartido.getAmonestadosVisitante(),
+					resultadoPartido.getExpulsadosVisitante());
+			actualizarJugadores(jugadoresLocal,
+					resultadoPartido.getGoleadoresLocal(),
+					resultadoPartido.getAmonestadosLocal(),
+					resultadoPartido.getExpulsadosLocal());
+			if (datosPartido.getAlineacionVisitante() == null
+					|| datosPartido.getAlineacionLocal() == null) {
+				cargarAlineaciones(datosPartido.getCodigo());
 			}
 		} catch (NoExistePartidoExepcion e) {
 			// TODO Auto-generated catch block

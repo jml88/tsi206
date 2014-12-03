@@ -2,8 +2,11 @@ package campeonato;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +19,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import partidos.PartidoTorneo;
 import equipos.Equipo;
 
 @Entity
@@ -59,6 +63,9 @@ public class Torneo implements Serializable{
 	@OneToMany
 	private List<Posicion> posiciones;
 	
+	@OneToMany
+	private Set<PartidoTorneo> partidos;
+	
 	@OneToOne
 	private Torneo asciende;
 
@@ -70,6 +77,7 @@ public class Torneo implements Serializable{
 		this.asciende = null;
 		this.cantCuadrosDesc = 0;
 		this.actual = true;
+		this.partidos = new HashSet<PartidoTorneo>();
 	}
 
 	public Torneo(int nivelVertical,int nivelHorizontal,int premio, int cantEquipos, int cantCuadrosDesc,
@@ -84,6 +92,7 @@ public class Torneo implements Serializable{
 		this.equipos = new LinkedList<Equipo>();
 		this.posiciones = new LinkedList<Posicion>();
 		this.actual = true;
+		this.partidos = new HashSet<PartidoTorneo>();
 	}
 	
 	
@@ -93,7 +102,13 @@ public class Torneo implements Serializable{
 				return posicion;
 			}
 		}
+		Iterator<Posicion> p = this.posiciones.iterator();
+		Posicion p1 = p.next();
+		Posicion p2 = p.next();
+		Posicion p3 = p.next();
+		Posicion p4 = p.next();
 		return null;
+		
 	}
 
 	public int getCodigo() {
@@ -155,18 +170,37 @@ public class Torneo implements Serializable{
 	public List<Equipo> getEquipos() {
 		return equipos;
 	}
+	
+	public List<Equipo> getEquiposSet() {
+		List<Equipo> list = new LinkedList<Equipo>(equipos);
+		return list;
+	}
+
 
 	public void setEquipos(List<Equipo> equipos) {
 		this.equipos = equipos;
 	}
+	
+//	public void setEquiposSet(List<Equipo> equipos) {
+//		this.equipos = new HashSet<Equipo>(equipos);
+//	}
 
 	public List<Posicion> getPosiciones() {
 		return posiciones;
 	}
+	
+//	public List<Posicion> getPosicionesSet() {
+//		List<Posicion> list = new LinkedList<Posicion>(posiciones);
+//		return list;
+//	}
 
 	public void setPosiciones(List<Posicion> posiciones) {
 		this.posiciones = posiciones;
 	}
+	
+//	public void setPosicionesSet(List<Posicion> posiciones) {
+//		this.posiciones = new HashSet<Posicion>(posiciones);
+//	}
 
 	public Torneo getAsciende() {
 		return asciende;
@@ -182,6 +216,14 @@ public class Torneo implements Serializable{
 
 	public void setActual(boolean actual) {
 		this.actual = actual;
+	}
+
+	public Set<PartidoTorneo> getPartidos() {
+		return partidos;
+	}
+
+	public void setPartidos(Set<PartidoTorneo> partidos) {
+		this.partidos = partidos;
 	}
 	
 }

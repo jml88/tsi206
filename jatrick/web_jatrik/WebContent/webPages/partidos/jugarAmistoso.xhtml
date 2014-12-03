@@ -29,10 +29,10 @@
 						<h:outputText value="#{amistoso.fechaHora}" converter="DateConverter"/>
 					</p:column>
 					<p:column filterBy="#{amistoso.visitante.nombre}" headerText="Nombre"
-						footerText="contains" filterMatchMode="contains">
+						filterMatchMode="contains">
 							<h:outputText value="#{amistoso.visitante.nombre}" />
 					</p:column>
-					<p:column headerText="Pais">
+					<p:column headerText="Cantidad">
 						<h:outputText value="#{amistoso.cantidadReto}" />
 					</p:column>
 				</p:dataTable>

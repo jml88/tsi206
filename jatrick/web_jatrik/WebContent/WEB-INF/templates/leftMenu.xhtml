@@ -26,15 +26,17 @@
 					</p:column>
 				</p:row>
 			</p:panelGrid>
-			<p:panel rendered="#{sessionBB.datosManager != null and sessionBB.escudo != null}" 
+			<p:panel
+				rendered="#{sessionBB.datosManager != null and sessionBB.escudo != null}"
 				style="width:100%; background-color:transparent; border-style:none">
 				<p:graphicImage value="#{sessionBB.escudoStream}" style="width:97%;" />
 			</p:panel>
-			<p:menu rendered="#{sessionBB.datosManager != null}" style="width:97%;">
+			<p:menu rendered="#{sessionBB.datosManager != null}"
+				style="width:97%;">
 				<p:submenu label="Principal">
 					<p:menuitem value="Inicio"
 						outcome="/webPages/home/home.xhtml?faces-redirect=true"
-						icon="ui-icon-disk" />
+						icon="ui-icon-home" />
 				</p:submenu>
 				<p:submenu label="Competiciones">
 					<p:menuitem value="Liga"
@@ -42,43 +44,44 @@
 						icon="ui-icon-star" />
 					<p:menuitem value="Copa"
 						outcome="/webPages/competiciones/copas.xhtml?faces-redirect=true"
-						icon="ui-icon-close" />
+						icon="ui-icon-star" />
 					<p:menuitem value="Amistosos"
 						outcome="/webPages/partidos/jugarAmistoso.xhtml?faces-redirect=true"
-						ajax="false" icon="ui-icon-close" />
+						ajax="false" icon="ui-icon-star" />
 					<p:menuitem value="Integración"
 						outcome="/webPages/equipos/equiposIntegracion.xhtml?faces-redirect=true"
-						ajax="false" icon="ui-icon-close" />
+						ajax="false" icon="ui-icon-star" />
 				</p:submenu>
 				<p:submenu label="Mi Club">
+					<p:menuitem value="Mis datos"
+						outcome="/webPages/estadio/estadio.xhtml?faces-redirect=true"
+						icon="ui-icon-star" />
 					<p:menuitem value="Jugadores"
 						outcome="/webPages/jugadores/jugadores.xhtml?faces-redirect=true"
-						icon="ui-icon-home" />
-					<p:menuitem value="Inferiores" icon="ui-icon-star" outcome="/webPages/juveniles/juveniles.xhtml?faces-redirect=true"/>
+						icon="ui-icon-star" />
+					<p:menuitem value="Inferiores" icon="ui-icon-star"
+						outcome="/webPages/juveniles/juveniles.xhtml?faces-redirect=true" />
 					<p:menuitem value="Entrenar" icon="ui-icon-star"
 						outcome="/webPages/entrenamiento/entrenamiento.xhtml?faces-redirect=true" />
 					<p:menuitem value="Finanzas"
 						outcome="/webPages/finanzas/finanzas.xhtml?faces-redirect=true"
-						icon="ui-icon-star" />
+						icon="ui-icon-suitcase" />
 					<p:menuitem value="Mensajes"
 						outcome="/webPages/mensajes/mensajes.xhtml?faces-redirect=true"
-						icon="ui-icon-star" />
+						icon="ui-icon-mail-closed" />
 				</p:submenu>
 				<p:submenu label="Mercado">
-				<p:menuitem value="Jugadores en Venta"
+					<p:menuitem value="Jugadores en Venta"
 						outcome="/webPages/mercadoDePases/mercadoDePases.xhtml?faces-redirect=true"
 						icon="ui-icon-star" />
-				<p:menuitem value="Ofertas"
+					<p:menuitem value="Ofertas"
 						outcome="/webPages/mercadoDePases/ofertasCompraVenta.xhtml?faces-redirect=true"
 						icon="ui-icon-star" />
 				</p:submenu>
 				<p:submenu label="Busqueda">
-					<p:menuitem value="Jugadores" url="http://www.primefaces.org"
-						icon="ui-icon-home" />
 					<p:menuitem value="Ligas"
 						outcome="/webPages/competiciones/ligasActuales.xhtml?faces-redirect=true"
 						icon="ui-icon-star" />
-					<p:menuitem value="Equipos" icon="ui-icon-star" />
 				</p:submenu>
 			</p:menu>
 		</h:form>

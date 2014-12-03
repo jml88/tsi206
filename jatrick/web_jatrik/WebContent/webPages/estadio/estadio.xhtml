@@ -23,8 +23,8 @@
 							<p:panelGrid columns="2">
 								<p:outputLabel value="Altura: " />
 								<h:outputText value="#{estadioBB.equipo.altura}" />
-								<p:outputLabel value="Gasto Juvenil: " />
-								<h:outputText value="#{estadioBB.equipo.gastoJuveniles}" />
+								<p:outputLabel value="Capital: " />
+								<h:outputText value="#{estadioBB.equipo.capital}" />
 								<p:outputLabel value="Socios: " />
 								<h:outputText value="#{estadioBB.equipo.socios}" />
 							</p:panelGrid>
@@ -43,7 +43,7 @@
 
 								<p:commandButton value="Mejorar estadio" id="ajax"
 									actionListener="#{estadioBB.agrandarEstadio}"
-									styleClass="ui-priority-primary" />
+									 />
 
 							</p:panelGrid>
 						</p:panel>

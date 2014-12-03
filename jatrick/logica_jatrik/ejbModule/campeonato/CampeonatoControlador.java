@@ -134,8 +134,9 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 		Equipo[] conversion = new Equipo[cantidadEquipos + 1];
 		Equipo local = null;
 		Equipo visitante = null;
+		List<Equipo> equipos = new LinkedList<Equipo>( t.getEquipos());
 		for (int i = 0; i < cantidadEquipos; i++) {
-			conversion[i + 1] = t.getEquipos().get(i);
+			conversion[i + 1] = equipos.get(i);
 		}
 
 		int localidad = 0;
@@ -162,6 +163,7 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 			em.persist(rp);
 			p.setResultado(rp);
 			em.persist(p);
+			t.getPartidos().add(p);
 			
 			fechaP = fechaPartido.diaPartido(c, fila + cantidadEquipos);
 			ca = Calendar.getInstance();
@@ -174,6 +176,7 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 			em.persist(rpSG);
 			segVuelta.setResultado(rpSG);
 			em.persist(segVuelta);
+			t.getPartidos().add(segVuelta);
 		}
 		em.flush();
 		nroEquipo = cantidadEquipos - 1;
@@ -198,6 +201,7 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 				em.persist(rp);
 				p.setResultado(rp);
 				em.persist(p);
+				t.getPartidos().add(p);
 				
 				fechaP = fechaPartido.diaPartido(c, fila + cantidadEquipos);
 				ca = Calendar.getInstance();
@@ -210,6 +214,7 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 				em.persist(rpSG);
 				segVuelta.setResultado(rpSG);
 				em.persist(segVuelta);
+				t.getPartidos().add(segVuelta);
 			}
 		}
 		em.flush();
@@ -323,15 +328,15 @@ public class CampeonatoControlador implements ICampeonatoControlador {
 	@Override
 	public List<DatosFixture> obtenerFixtureTorneo(int codTorneo) {
 		Torneo t = em.find(Torneo.class, codTorneo);
-//		Query q = em
-//				.createQuery("select p from PartidoTorneo p where p.torneo.codigo = :codTorneo order by p.fechaNro ASC");
-		List<Integer> partidosId = em.createNativeQuery("select p.partidoId from PartidoTorneo p where p.torneo_CODTORNEO = :codTorneo order by p.fechaNro ASC").setParameter("codTorneo", codTorneo).getResultList();
-		List<PartidoTorneo> partidos = new LinkedList<PartidoTorneo>();
-		for (Integer pi : partidosId) {
-			partidos.add(em.find(PartidoTorneo.class, pi));
-		}
-//		q.setParameter("codTorneo", codTorneo);
-//		List<PartidoTorneo> partidos = q.getResultList();
+		Query q = em
+				.createQuery("select p from Torneo t join t.partidos p where t.codigo = :codTorneo order by p.fechaNro ASC");
+//		List<Integer> partidosId = em.createNativeQuery("select p.partidoId from PartidoTorneo p where p.torneo_CODTORNEO = :codTorneo order by p.fechaNro ASC").setParameter("codTorneo", codTorneo).getResultList();
+//		List<PartidoTorneo> partidos = new LinkedList<PartidoTorneo>();
+//		for (Integer pi : partidosId) {
+//			partidos.add(em.find(PartidoTorneo.class, pi));
+//		}
+		q.setParameter("codTorneo", codTorneo);
+		List<PartidoTorneo> partidos = q.getResultList();
 		List<DatosFixture> fixture = new LinkedList<DatosFixture>();
 		DatosFixture d = new DatosFixture(1);
 		int fecha = 1;

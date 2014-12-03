@@ -14,57 +14,75 @@
 
 	<ui:define name="Principal">
 		<h:form id="form" prependId="false">
-			<table style="width: 100%; text-align: center;">
-				<p:panel id="tabla">
-					<tr>
-						<td><h3>#{minutoAMinutoBB.datosPartido.local.nombre}
-								#{minutoAMinutoBB.resultadoPartido.golesLocal} vs
-								#{minutoAMinutoBB.datosPartido.visitante.nombre}
-								#{minutoAMinutoBB.resultadoPartido.golesVisitante}</h3></td>
-					</tr>
-				</p:panel>
-				<p:panelGrid columns="2">
-					<p:dataTable id="jl" value="#{minutoAMinutoBB.jugadoresLocal}"
+			<p:panel id="panel">
+				<p:panelGrid id="tabla" columns="4">
+					<p:outputLabel value="#{minutoAMinutoBB.datosPartido.local.nombre}"></p:outputLabel>
+					<p:outputLabel
+						value="#{minutoAMinutoBB.resultadoPartido.golesLocal}"
+						rendered="#{minutoAMinutoBB.resultadoPartido.golesLocal ne -1}"></p:outputLabel>
+					<p:outputLabel value="--"
+						rendered="#{minutoAMinutoBB.resultadoPartido.golesLocal eq -1}"></p:outputLabel>
+					<p:outputLabel
+						value="#{minutoAMinutoBB.datosPartido.visitante.nombre}"></p:outputLabel>
+					<p:outputLabel
+						value="#{minutoAMinutoBB.resultadoPartido.golesVisitante}"
+						rendered="#{minutoAMinutoBB.resultadoPartido.golesVisitante ne -1}"></p:outputLabel>
+					<p:outputLabel value="--"
+						rendered="#{minutoAMinutoBB.resultadoPartido.golesVisitante eq -1}"></p:outputLabel>
+				</p:panelGrid>
+				<p:panelGrid id="alineaciones" columns="2">
+					<p:dataTable id="jl" value="#{minutoAMinutoBB.jugadoresLocal}" emptyMessage="No hay alineacion definida para el partido"
 						styleClass="alineacion" var="al">
 						<p:column width="20">
 							#{al.nombre} #{al.apellido1} 
 						</p:column>
 						<p:column style="width:1px">
-							<p:graphicImage name="/images/pelota_futbol.png"  rendered="#{al.golesMostrar > 0}"/> <p:outputLabel value="x#{al.golesMostrar}" rendered="#{al.golesMostrar > 0}"/>
+							<p:graphicImage name="/images/pelota_futbol.png"
+								rendered="#{al.golesMostrar > 0}" />
+							<p:graphicImage name="/images/tarjeta_amarilla.png"
+								rendered="#{al.amarillasMostrar > 0}" />
+							<p:graphicImage name="/images/tarjetaRoja.gif"
+								rendered="#{al.rojasMostrar > 0}" />
 						</p:column>
 					</p:dataTable>
-					<p:dataTable id="jv" value="#{minutoAMinutoBB.jugadoresVisitante}"
+					<p:dataTable id="jv" value="#{minutoAMinutoBB.jugadoresVisitante}" emptyMessage="No hay alineacion definida para el partido"
 						styleClass="alineacion" var="av">
 						<p:column width="20">
 							#{av.nombre} #{av.apellido1} 
 						</p:column>
 						<p:column style="width:1px">
-							<p:graphicImage name="/images/pelota_futbol.png"  rendered="#{av.golesMostrar > 0}"/> <p:outputLabel value="x#{av.golesMostrar}" rendered="#{av.golesMostrar > 0}"/>
+							<p:graphicImage name="/images/pelota_futbol.png"
+								rendered="#{av.golesMostrar > 0}" />
+							<p:graphicImage name="/images/tarjeta_amarilla.png"
+								rendered="#{av.amarillasMostrar > 0}" />
+							<p:graphicImage name="/images/tarjetaRoja.gif"
+								rendered="#{av.rojasMostrar > 0}" />
 						</p:column>
 					</p:dataTable>
 				</p:panelGrid>
-
-				<tr style="text-align: left;">
-					<td>
-						<div id="comentariosListDiv" style="text-align: left;">
-							<p:dataTable id="comentariosList" var="com"
-								value="#{minutoAMinutoBB.comentariosPartido}">
-								<p:column width="20">
-									<h:outputText value="#{com.minuto}" />
-								</p:column>
-								<p:column>
-									<h:outputText value="#{com.mensaje}" />
-								</p:column>
-							</p:dataTable>
-							<p:poll interval="15"
-								listener="#{minutoAMinutoBB.getComentariosDePartido}"
-								update="comentariosList,tabla" />
-						</div>
-					</td>
-				</tr>
-			</table>
-			<p:commandButton value="Realizar cambios"
-				action="#{minutoAMinutoBB.editarAlineacion}" />
+				<table style="width: 100%; text-align: center;">
+					<tr style="text-align: left;">
+						<td>
+							<div id="comentariosListDiv" style="text-align: left;">
+								<p:dataTable id="comentariosList" var="com"
+									value="#{minutoAMinutoBB.comentariosPartido}">
+									<p:column width="20">
+										<h:outputText value="#{com.minuto}" />
+									</p:column>
+									<p:column>
+										<h:outputText value="#{com.mensaje}" />
+									</p:column>
+								</p:dataTable>
+								<p:poll interval="15"
+									listener="#{minutoAMinutoBB.getComentariosDePartido}"
+									update="comentariosList,tabla,alineaciones,panel" />
+							</div>
+						</td>
+					</tr>
+				</table>
+				<p:commandButton value="Realizar cambios"
+					action="#{minutoAMinutoBB.editarAlineacion}" />
+			</p:panel>
 		</h:form>
 	</ui:define>
 </ui:composition>

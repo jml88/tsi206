@@ -31,7 +31,7 @@
 				<h:outputText value="#{partido.fechaHora}" converter="DateConverter" />
 			</p:column>
 			<p:column headerText="Local">
-				<p:link value="#{partido.local.nombre}" outcome="/webPages/verEquipos/verOtroEquipo">
+				<p:link value="#{partido.local.nombre}" outcome="/webPages/jugadores/jugadores">
 					<f:param name="codEquipo" value="#{partido.local.codigo}"/>
 				</p:link>
 			</p:column>
@@ -39,7 +39,7 @@
 				<h:outputText value="#{partido.resultado.golesLocal}"/>
 			</p:column>
 			<p:column headerText="Visitante">
-				<p:link value="#{partido.visitante.nombre}" outcome="/webPages/verEquipos/verOtroEquipo">
+				<p:link value="#{partido.visitante.nombre}" outcome="/webPages/jugadores/jugadores">
 					<f:param name="codEquipo" value="#{partido.visitante.codigo}"/>
 				</p:link>
 			</p:column>

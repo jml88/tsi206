@@ -15,7 +15,8 @@
 	<ui:define name="Principal">
 		<h:form id="form" prependId="false">
 			<div align="center">
-				<p:panelGrid columns="2" id="divjugador">
+			<p:panel header="Datos jugador" style="margin-bottom: 13px;">
+				<p:panelGrid columns="2" id="divjugador" style="margin-bottom: 13px;">
 					<p:outputLabel value="Nombre: " />
 					<h:outputText value="#{jugadorBB.jugador.fullName}" />
 
@@ -44,24 +45,34 @@
 					<h:outputText value="#{jugadorBB.jugador.defensa}" />
 
 				</p:panelGrid>
+			</p:panel>
 
 				<p:commandButton value="Retirar de venta"
 					action="#{jugadorBB.cancelarVentaJugador}"
-					rendered="#{jugadorBB.jugador.enVenta} and #{!jugadorBB.puedeComprar}" />
-				<p:outputLabel value="Precio de venta: " rendered="#{jugadorBB.ponerEnVenta}"/>
-				<h:inputText value="#{jugadorBB.precio}" rendered="#{jugadorBB.ponerEnVenta}"/>
-				<p:commandButton value="Ofertar"
-					action="#{jugadorBB.ofertarJugador}"
-					rendered="#{jugadorBB.puedeComprar}"
-					update=":form">
-				</p:commandButton>
-				<p:outputLabel value="Oferta: " rendered="#{jugadorBB.puedeComprar}"/>
-				<h:inputText value="#{jugadorBB.precio}" rendered="#{jugadorBB.puedeComprar}"/>
-				<p:commandButton value="Poner en venta"
-					rendered="#{jugadorBB.ponerEnVenta}"
-					actionListener="#{jugadorBB.confirmarVenta}" update=":form">
-				</p:commandButton>
-				
+					rendered="#{jugadorBB.jugador.enVenta and !jugadorBB.puedeComprar}" />
+
+				<p:panelGrid columns="2" rendered="#{jugadorBB.puedeComprar}">
+					<p:commandButton value="Ofertar"
+						action="#{jugadorBB.ofertarJugador}"
+						rendered="#{jugadorBB.puedeComprar}" update=":form">
+					</p:commandButton>
+					<p:outputLabel value="Oferta: "
+						rendered="#{jugadorBB.puedeComprar}" />
+					<h:inputText value="#{jugadorBB.precio}"
+						rendered="#{jugadorBB.puedeComprar}" />
+				</p:panelGrid>
+
+				<p:panelGrid columns="2" rendered="#{jugadorBB.ponerEnVenta}">
+					<p:outputLabel value="Precio de venta: "
+						rendered="#{jugadorBB.ponerEnVenta}" />
+					<h:inputText value="#{jugadorBB.precio}"
+						rendered="#{jugadorBB.ponerEnVenta}" />
+					<p:commandButton value="Poner en venta"
+						rendered="#{jugadorBB.ponerEnVenta}"
+						actionListener="#{jugadorBB.confirmarVenta}" update=":form">
+					</p:commandButton>
+				</p:panelGrid>
+
 			</div>
 		</h:form>
 	</ui:define>
