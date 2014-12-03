@@ -21,19 +21,19 @@
 	
 	<ui:define name="Principal">
 		<h:form id="alineacionForm">
-			<div>
+			<div id="divGrande" style="font-size: x-small;">
 			<p:fieldset id="alineacionDropable">
 				<div style="float: left;" align="center">
 					<p:fieldset id="jugadoresDisponibles">
-					<p:dataGrid id="jugadoresDisponiblesList" var="jug"	value="#{alineacionBB.jugadores}" columns="1">
-						<p:panel id="pnl" style="text-align:center; width: 60px;">
-							#{jug.nombre} #{jug.apellido1} #{jug.apellido2}
+					<p:dataGrid style="border:none;" id="jugadoresDisponiblesList" var="jug"	value="#{alineacionBB.jugadores}" columns="1">
+						<p:panel id="pnl" style="text-align:center; width: 60px; padding: 0px">
+							#{jug.nombre} #{jug.apellido1}
 						</p:panel>
 						<p:draggable for="pnl" revert="true" stack=".ui-panel"/>
 					</p:dataGrid>
 					</p:fieldset>
 				</div>
-				<div style="float: left; margin: 20px" align="center">
+				<div id="cancha"  align="center">
 					<p:panelGrid>
 						<p:row>
 							<p:column colspan="4">
@@ -47,7 +47,7 @@
 									</f:facet>
 									<p:row>
 										<p:column>
-											<p:panel id="arquero">#{arqueros.nombre}</p:panel>
+											<p:panel id="arquero">#{arqueros.nombre} #{arqueros.apellido1}</p:panel>
 											<p:draggable for="arquero" revert="true" stack=".ui-panel"/>
 										</p:column>
 									</p:row>
@@ -60,7 +60,7 @@
 							<p:column colspan="4">
 							<p:fieldset id="jugadoresDefensa">
 							<p:outputPanel id="dropAreaDefensa">
-							<p:dataGrid syle="margin: 30px;" id="jugadoresDefensaList" var="defensas" value="#{alineacionBB.datosAlineacion.defensas}" emptyMessage="Arrastre un jugador">
+							<p:dataGrid syle="margin: 30px;" id="jugadoresDefensaList" var="defensas" value="#{alineacionBB.defensas}" emptyMessage="Arrastre un jugador">
 								<f:facet name="header">
 									<p:row>
 										<p:column>Defensas</p:column>
@@ -68,7 +68,7 @@
 								</f:facet>
 								<p:row>
 									<p:column>
-										<p:panel id="defensa">#{defensas.nombre}</p:panel>
+										<p:panel id="defensa">#{defensas.nombre} #{defensas.apellido1}</p:panel>
 										<p:draggable for="defensa" revert="true" stack=".ui-panel"/>
 									</p:column>
 								</p:row>
@@ -81,7 +81,7 @@
 							<p:column colspan="4">	
 								<p:fieldset id="jugadoresMedio">
 								<p:outputPanel id="dropAreaMedio">
-								<p:dataGrid syle="margin: 30px" id="jugadoresMedioList" var="medios" value="#{alineacionBB.datosAlineacion.mediocampistas}" emptyMessage="Arrastre un jugador">
+								<p:dataGrid syle="margin: 30px" id="jugadoresMedioList" var="medios" value="#{alineacionBB.mediocampistas}" emptyMessage="Arrastre un jugador">
 									<f:facet name="header">
 										<p:row>
 											<p:column>Medios</p:column>
@@ -89,7 +89,7 @@
 									</f:facet>
 									<p:row>
 										<p:column>
-											<p:panel id="medio">#{medios.nombre}</p:panel>
+											<p:panel id="medio">#{medios.nombre} #{medios.apellido1}</p:panel>
 											<p:draggable for="medio" revert="true" stack=".ui-panel"/>
 										</p:column>
 									</p:row>
@@ -102,7 +102,7 @@
 							<p:column colspan="4">
 								<p:fieldset id="jugadoresDelantera">
 								<p:outputPanel id="dropAreaDelantera">
-								<p:dataGrid syle="margin: 30px" id="jugadoresDelanteraList" var="delanteros" value="#{alineacionBB.datosAlineacion.delanteros}" emptyMessage="Arrastre un jugador">
+								<p:dataGrid syle="margin: 30px" id="jugadoresDelanteraList" var="delanteros" value="#{alineacionBB.delanteros}" emptyMessage="Arrastre un jugador">
 									<f:facet name="header">
 										<p:row>
 											<p:column>Delanteros</p:column>
@@ -110,7 +110,7 @@
 									</f:facet>
 									<p:row>
 										<p:column>
-											<p:panel id="delantero">#{delanteros.nombre}</p:panel>
+											<p:panel id="delantero">#{delanteros.nombre} #{delanteros.apellido1}</p:panel>
 											<p:draggable for="delantero" revert="true" stack=".ui-panel"/>
 										</p:column>
 									</p:row>
@@ -131,7 +131,7 @@
 									</f:facet>
 									<p:row>
 										<p:column>
-											<p:panel id="lesionG">#{lesionGolero.nombre}</p:panel>
+											<p:panel id="lesionG">#{lesionGolero.nombre} #{lesionGolero.apellido1}</p:panel>
 											<p:draggable for="lesionG" revert="true" stack=".ui-panel"/>
 										</p:column>
 									</p:row>
@@ -150,7 +150,7 @@
 									</f:facet>
 									<p:row>
 										<p:column>
-											<p:panel id="lesionDef">#{lesionDefensa.nombre}</p:panel>
+											<p:panel id="lesionDef">#{lesionDefensa.nombre} #{lesionDefensa.apellido1}</p:panel>
 											<p:draggable for="lesionDef" revert="true" stack=".ui-panel"/>
 										</p:column>
 									</p:row>
@@ -169,7 +169,7 @@
 									</f:facet>
 									<p:row>
 										<p:column>
-											<p:panel id="lesionM">#{lesionMediocampista.nombre}</p:panel>
+											<p:panel id="lesionM">#{lesionMediocampista.nombre} #{lesionMediocampista.apellido1}</p:panel>
 											<p:draggable for="lesionM" revert="true" stack=".ui-panel"/>
 										</p:column>
 									</p:row>
@@ -188,7 +188,7 @@
 									</f:facet>
 									<p:row>
 										<p:column>
-											<p:panel id="lesionDel">#{lesionDelantero.nombre}</p:panel>
+											<p:panel id="lesionDel">#{lesionDelantero.nombre} #{lesionDelantero.apellido1}</p:panel>
 											<p:draggable for="lesionDel" revert="true" stack=".ui-panel"/>
 										</p:column>
 									</p:row>

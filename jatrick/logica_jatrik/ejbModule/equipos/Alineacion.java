@@ -247,4 +247,16 @@ public class Alineacion implements Serializable {
 		return list;
 	}
 	
+	public void setDefensasSet(List<Jugador> defensas) {
+		this.defensas = new HashSet<Jugador>(defensas);
+	}
+	
+	public void setMediocampistasSet(List<Jugador> mediocampistas) {
+		this.mediocampistas = new HashSet<Jugador>(mediocampistas);
+	}
+	
+	public void setDelanterosSet(List<Jugador> delanteros) {
+		this.delanteros= new HashSet<Jugador>(delanteros);
+	}
+	
 }
